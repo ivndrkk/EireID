@@ -1,0 +1,571 @@
+/* =============================================================================
+   header.css — EireID Header & Navigation
+   All styles scoped to .header, .nav, .menu-toggle, and related elements.
+   Depends on: common.css (variables, reset, .logo-box--glass)
+   ============================================================================= */
+
+
+/* ─── Header Shell ────────────────────────────────────────────────────────── */
+
+.header {
+    padding: var(--space-sm) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn var(--transition-slow) forwards;
+    position: relative;
+    z-index: 100;
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: var(--space-sm) 0;
+        justify-content: center;
+    }
+}
+
+
+/* ─── Mobile Menu Toggle (Burger) ────────────────────────────────────────── */
+
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-xs);
+    z-index: 110;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text-heading);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animated X state when menu is open */
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+
+/* ─── Nav List ────────────────────────────────────────────────────────────── */
+
+/* Mobile: hidden off-screen panel, revealed by .is-open */
+.nav__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+
+    /* Absolutely positioned below header on mobile */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: var(--space-xl) var(--space-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+
+    /* Hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.nav__list.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Desktop: inline row, no panel */
+@media (min-width: 768px) {
+    .nav__list {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        padding: 0;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        gap: clamp(1rem, 1.5vw, 2.5rem);
+    }
+}
+
+
+/* ─── Nav Item ────────────────────────────────────────────────────────────── */
+
+.nav__item {
+    position: relative;
+    list-style: none;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .nav__item {
+        width: auto;
+    }
+}
+
+
+/* ─── Nav Link ────────────────────────────────────────────────────────────── */
+
+.nav__link {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--color-text-heading);
+    text-decoration: none;
+    position: relative;
+    padding: var(--space-sm) 0;
+    transition: color var(--transition-fast);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Glassmorphism pill that appears on hover/focus */
+.nav__link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% + 24px);
+    height: 40px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.nav__link:hover::before,
+.nav__link:focus-visible::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.nav__link:active::before {
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.1s ease;
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.nav__link:focus-visible {
+    outline: 2px solid var(--color-text-heading);
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .nav__link {
+        font-size: var(--font-size-sm);
+        width: auto;
+        padding: var(--space-sm) 0;
+    }
+}
+
+
+/* ─── Dropdown ────────────────────────────────────────────────────────────── */
+
+.nav__dropdown-icon {
+    font-size: 0.6em;
+    margin-left: 6px;
+    vertical-align: middle;
+    display: inline-block;
+    transition: transform var(--transition-fast);
+}
+
+.nav__item--dropdown:hover .nav__dropdown-icon,
+.nav__item--dropdown.is-active .nav__dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.nav__dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: var(--space-sm);
+    z-index: 100;
+    width: 220px;
+}
+
+.nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown.is-active .nav__dropdown {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* On mobile, dropdown stretches full width */
+@media (max-width: 767px) {
+    .nav__dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        transform: none;
+        width: 100%;
+        padding-top: var(--space-xs);
+        z-index: 105;
+    }
+}
+
+.nav__dropdown-inner {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-sm);
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.nav__dropdown-link {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-body);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.nav__dropdown-link:hover,
+.nav__dropdown-link:focus-visible {
+    background: var(--color-bg-primary);
+    color: var(--color-text-heading);
+    transform: translateX(4px);
+}
+
+@media (min-width: 768px) {
+    .nav__dropdown-link {
+        text-align: left;
+    }
+}
+
+
+
+/* ─── Hero Wrapper ────────────────────────────────────────────────────────── */
+
+.hero {
+    min-height: calc(100vh - 120px);
+    /* Full viewport minus approximate header height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: translateYFadeIn 0.8s ease-out 0.2s both;
+}
+
+
+/* ─── Hero Content (logos + heading + subtitle) ───────────────────────────── */
+
+.hero__content {
+    flex: 1;
+    /* Pushes .hero__actions to the bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+/* ─── Logo Pair ───────────────────────────────────────────────────────────── */
+
+.hero__logos {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: var(--space-lg);
+    /* Mobile default */
+}
+
+@media (min-width: 769px) {
+    .hero__logos {
+        margin-bottom: var(--space-xl);
+    }
+}
+
+
+/* ─── Logo Box sizes (hero context) ──────────────────────────────────────── */
+/*
+ * Base styles and .logo-box--glass live in common.css.
+ * These rules only override the size at each breakpoint.
+ */
+
+.logo-box {
+    width: 80px;
+    /* Mobile */
+    height: 80px;
+    border-radius: 16px;
+}
+
+@media (min-width: 481px) {
+    .logo-box {
+        width: 88px;
+        height: 88px;
+        border-radius: 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .logo-box {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--radius-lg);
+    }
+}
+
+
+/* ─── Heading & Subtitle ──────────────────────────────────────────────────── */
+
+.hero__title {
+    font-size: 2.25rem;
+    /* Mobile */
+    font-weight: 400;
+    /* Light weight — EireID brand */
+    color: var(--color-text-heading);
+    letter-spacing: -0.01em;
+    margin-top: 1rem;
+    line-height: 1.1;
+}
+
+.hero__subtitle {
+    font-size: var(--font-size-base);
+    /* Mobile */
+    color: var(--color-text-muted);
+    margin-top: var(--space-md);
+    font-weight: 400;
+}
+
+@media (min-width: 481px) {
+    .hero__title {
+        font-size: clamp(2.5rem, 4vw, 3rem);
+    }
+
+    .hero__subtitle {
+        font-size: var(--font-size-lg);
+    }
+}
+
+@media (min-width: 769px) {
+    .hero__title {
+        font-size: clamp(2rem, 3.5vw, 3.25rem);
+    }
+
+    .hero__subtitle {
+        font-size: var(--font-size-xl);
+    }
+}
+
+
+/* ─── CTA Buttons Row ─────────────────────────────────────────────────────── */
+
+.hero__actions {
+    margin-top: var(--space-xl);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    animation: fadeIn 0.8s ease-out 0.4s both;
+    width: 100%;
+}
+
+@media (min-width: 481px) {
+    .hero__actions {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--space-2xl);
+    }
+}
+
+
+/* ─── Individual CTA Button ───────────────────────────────────────────────── */
+
+.hero__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-heading);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    padding: var(--space-sm) 0;
+    width: 200px;
+}
+
+/* Glassmorphism pill that materialises on hover/focus */
+.hero__action::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 48px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.hero__action:hover::before,
+.hero__action:focus-visible::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.hero__action:active::before {
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.1s ease;
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.hero__action:focus-visible {
+    outline: 2px dashed var(--color-text-heading);
+    outline-offset: 4px;
+}
+
+
+/* ─── Scroll Indicator Icon (inside "Explore EireID" button) ─────────────── */
+
+.scroll-icon {
+    width: 16px;
+    height: 24px;
+    border: 1.5px solid var(--color-text-heading);
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.scroll-icon::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    width: 2px;
+    height: 4px;
+    background-color: var(--color-text-heading);
+    border-radius: 2px;
+    animation: scrollWheel 2s infinite ease-in-out;
+}
+
+
+/* ─── Keyframes (hero-owned) ──────────────────────────────────────────────── */
+/*
+ * fadeIn and translateYFadeIn are also declared in common.css.
+ * scrollWheel and float are hero/logo-specific — listed here for portability.
+ * If common.css is already loaded, these declarations are harmless duplicates.
+ */
+
+@keyframes translateYFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(5px);
+        opacity: 0;
+    }
+
+    51% {
+        transform: translateY(-3px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

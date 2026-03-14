@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EireID - Your Digital Identity">
+    <title>EireID</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- === HEADER NAVIGATION === -->
+        <header class="header">
+
+            <!-- Mobile toggler -->
+            <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav" aria-label="Main Navigation">
+                <ul id="nav-list" class="nav__list">
+                    <li><a href="./index.html" class="nav__link">About EireID</a></li>
+                    <li class="nav__item nav__item--dropdown">
+                        <a href="#" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <div class="nav__dropdown">
+                            <div class="nav__dropdown-inner logo-box--glass">
+                                <a href="./pages/allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="./pages/resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="./pages/business.html" class="nav__dropdown-link">For businesses</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="./pages/security.html" class="nav__link">Security</a></li>
+                    <li><a href="./pages/support.html" class="nav__link">Support</a></li>
+                    <li><a href="./pages/team.html" class="nav__link">Our Team</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- === HERO SECTION === -->
+        <main class="hero">
+        
+            <section id="hero" class="hero__content" aria-labelledby="hero-title">
+        
+                <div class="hero__logos">
+        
+                    <!-- Irish Harp Logo -->
+                    <button class="logo-box logo-box--glass" aria-label="Irish Harp">
+                        <img src="assets/logo/harp_black.svg" alt="Irish Harp" class="logo-box__svg"
+                            style="width: 52px; height: 52px; object-fit: contain; display: block; margin: 0 auto; opacity: 0.8;">
+                    </button>
+        
+                    <!-- EireID Logo -->
+                    <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                        <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
+                            style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
+                    </button>
+        
+                </div>
+        
+                <h1 id="hero-title" class="hero__title">Your Ireland, now digital</h1>
+                <p class="hero__subtitle">One app. Every resident. Every service.</p>
+        
+            </section>
+        
+            <!-- CTA Buttons -->
+            <div class="hero__actions">
+        
+                <button class="hero__action" aria-label="Join the waitlist">
+                    <span>JOIN THE WAITLIST</span>
+                </button>
+        
+                <button class="hero__action" aria-label="Scroll down to explore" id="explore-btn">
+                    <div class="scroll-icon" aria-hidden="true"></div>
+                    <span>EXPLORE EIREID</span>
+                </button>
+        
+            </div>
+        
+        </main>
+        <!-- /hero -->
+        </div>
+    <script src="js/scripts.js" defer></script>
+</body>
+
+</html>
