@@ -36,7 +36,7 @@
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./index.html" class="nav__link">About EireID</a></li>
+                    <li><a href="#" class="nav__link" id="explore-btn">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
                         <a href="#" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
@@ -95,6 +95,177 @@
         
         </main>
         <!-- /hero -->
+        <!-- === ABOUT SECTION === -->
+        <section id="about" class="about">
+            <div class="about__grid">
+        
+                <!-- ── Tile 1: Digital Document Wallet (Tall) ── -->
+                <article class="about__tile about__tile--tall logo-box--glass">
+        
+                    <div class="tile-header">
+                        <h3>Digital Document Wallet</h3>
+                        <p>EireID can store 11 different official documents securely on your device.</p>
+                    </div>
+        
+                    <div class="phone-mockup">
+                        <div class="phone-mockup__screen">
+                            <div class="doc-carousel">
+                                <div class="doc-carousel__track" id="doc-carousel-track">
+                                    <img src="assets/img/ui/docs/Documents(HSE) 1.jpg" alt="Health Service Executive (HSE)">
+                                    <img src="assets/img/ui/docs/Documents(IRP) 1.jpg" alt="Irish Residence Permit (IRP)">
+                                    <img src="assets/img/ui/docs/Documents(NDLS) 1.jpg"
+                                        alt="National Driver Licence Service (NDLS)">
+                                    <img src="assets/img/ui/docs/Documents(PSC) 1.jpg" alt="Public Services Card (PSC)">
+                                    <img src="assets/img/ui/docs/Documents(Passport) 1.jpg" alt="Irish Passport">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- mix-blend-mode: multiply removes white fringe if PNG isn't fully transparent -->
+                        <img src="assets/img/mockup/iphone-mockup.png" alt="iPhone Frame" class="phone-mockup__frame"
+                            style="mix-blend-mode: multiply;">
+                    </div>
+        
+                    <div class="doc-caption" id="doc-caption" aria-live="polite">
+                        Health Service Executive (HSE)
+                    </div>
+        
+                </article>
+        
+                <!-- ── Tile 2: Service Hub (Wide) ── -->
+                <article class="about__tile about__tile--wide logo-box--glass">
+        
+                    <div class="tile-header">
+                        <h3>Seamless Integrations</h3>
+                        <p>EireID serves as a central hub for all government departments and services. Zero-lift integrations
+                            natively within the app.</p>
+                    </div>
+        
+                    <div class="service-hub">
+        
+                        <div class="orbit-center logo-box--glass pulse-animation">
+                            <img src="assets/logo/logo(color).png" alt="EireID Logo" style="width: 48px; border-radius: 8px;">
+                        </div>
+        
+                        <div class="service-hub__orbit-container">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-ring orbit-ring--inner"></div>
+        
+                            <div class="orbit-item logo-box--glass" style="--angle: 0deg">
+                                <img src="assets/services_logo/DOJHAM_logo.png" alt="DOJHAM">
+                                <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
+                            </div>
+                            <div class="orbit-item logo-box--glass" style="--angle: 72deg">
+                                <img src="assets/services_logo/HSE_logo.jpg" alt="HSE">
+                                <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
+                            </div>
+                            <div class="orbit-item logo-box--glass" style="--angle: 144deg">
+                                <img src="assets/services_logo/NDLS-logo.png" alt="NDLS">
+                                <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
+                            </div>
+                            <div class="orbit-item logo-box--glass" style="--angle: 216deg">
+                                <img src="assets/services_logo/Revenue_logo.png" alt="Revenue">
+                                <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
+                            </div>
+                            <div class="orbit-item logo-box--glass" style="--angle: 288deg">
+                                <img src="assets/services_logo/citizen-info_logo.png" alt="Citizen Info">
+                                <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </article>
+        
+                <!-- ── Tile 3: All Services / Agent Assistance (Wide) ── -->
+                <article class="about__tile about__tile--wide logo-box--glass">
+        
+                    <div class="tile-header">
+                        <h3>All services in one place</h3>
+                        <p>Quick access to all services with one click. Designed for ultimate convenience and accessibility for
+                            all residents.</p>
+                    </div>
+        
+                    <div class="agent-ui">
+                        <div class="agent-center logo-box--glass">
+                            <div class="agent-avatar"></div>
+                            <div class="agent-badge"></div>
+                        </div>
+                        <div class="agent-action agent-action--1 logo-box--glass"><span>&#9889;</span> Sign a document</div>
+                        <div class="agent-action agent-action--2 logo-box--glass"><span>&#9889;</span> Pay a bill</div>
+                        <div class="agent-action agent-action--3 logo-box--glass"><span>&#9889;</span> Renew a Permit</div>
+                    </div>
+        
+                </article>
+        
+                <!-- ── Tile 4: Simple & Smart AI (Small) ── -->
+                <article class="about__tile about__tile--small logo-box--glass">
+        
+                    <div class="tile-header">
+                        <h3>Simple &amp; Smart AI</h3>
+                        <p>Navigating government services is now as easy as sending a text.</p>
+                    </div>
+        
+                    <div class="ai-message">
+                        <div class="ai-message__avatar-container">
+                            <img src="assets/img/mascot.png" alt="Assistant Mascot" class="ai-message__avatar">
+                        </div>
+                        <div class="ai-message__bubble">
+                            <div class="ai-message__text-container">
+                                <p class="ai-message__text">
+                                    To renew your Irish Residence Permit (IRP), you'll need your current permit, valid passport,
+                                    proof of address, and the €300 registration fee. Since all your documents are securely
+                                    stored
+                                    in EireID, I can start the application and auto-fill the details for you right now.
+                                    Would you like to proceed?
+                                </p>
+                                <div class="ai-message__fade"></div>
+                            </div>
+                            <div class="ai-message__actions">
+                                <button class="ai-action-btn ai-action-btn--primary">
+                                    <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="ai-action-btn__icon">
+                                    <span>Renew IRP Permit</span>
+                                </button>
+                                <button class="ai-action-btn ai-action-btn--secondary">
+                                    <span>Read Full Requirements</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+        
+                </article>
+        
+                <!-- ── Tile 5: Statistics Bar (Full-width) ── -->
+                <article class="about__tile about__tile--full logo-box--glass stat-bar">
+        
+                    <div class="stat-bar__col">
+                        <div class="stat-bar__number">11</div>
+                        <div class="stat-bar__label">Documents in one wallet</div>
+                    </div>
+                    <div class="stat-bar__divider"></div>
+                    <div class="stat-bar__col">
+                        <div class="stat-bar__number">20+</div>
+                        <div class="stat-bar__label">Gov. systems integrated</div>
+                    </div>
+                    <div class="stat-bar__divider"></div>
+                    <div class="stat-bar__col">
+                        <div class="stat-bar__number">5<span class="stat-bar__unit">min</span></div>
+                        <div class="stat-bar__label">Average onboarding time</div>
+                    </div>
+                    <div class="stat-bar__divider"></div>
+                    <div class="stat-bar__col">
+                        <div class="stat-bar__number">80<span class="stat-bar__unit">%</span></div>
+                        <div class="stat-bar__label">Irish digital ID adoption target by 2030</div>
+                    </div>
+                    <div class="stat-bar__divider"></div>
+                    <div class="stat-bar__col">
+                        <div class="stat-bar__number">0</div>
+                        <div class="stat-bar__label">Forms to fill on signup</div>
+                    </div>
+        
+                </article>
+        
+            </div>
+        </section>
+        <!-- /about -->
         </div>
     <script src="js/scripts.js" defer></script>
 </body>
