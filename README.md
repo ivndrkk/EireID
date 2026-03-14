@@ -1,8 +1,5 @@
 # EireID — Frontend Repository
 
-> **EireID** is a unified, mobile-first digital identity platform for Irish residents.  
-> This repository contains the static HTML/CSS/JS website (Part 3 of the DCU Digital Innovation Management project).
-
 ---
 
 ## Table of Contents
