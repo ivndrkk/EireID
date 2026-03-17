@@ -315,6 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
   initStatCounters();
   initHowItWorksAnimation();
+  initComparisonTable();
 });
 
 /* =============================================================================
@@ -385,6 +386,29 @@ function initHowItWorksAnimation() {
     }, { threshold: 0 });
 
     sectionObserver.observe(section);
+}
+
+/* ─── Comparison Table Mobile Logic ─────────────────── */
+function initComparisonTable() {
+    if (window.innerWidth >= 1024) return; // Only run on mobile/tablet
+
+    const comp1 = document.querySelectorAll('.comp-1');
+    const comp2 = document.querySelectorAll('.comp-2');
+    const comp3 = document.querySelectorAll('.comp-3');
+    
+    const competitors = [comp1, comp2, comp3];
+    let currentIndex = 0;
+
+    setInterval(() => {
+        // Hide current competitor columns
+        competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
+        
+        // Move to next competitor
+        currentIndex = (currentIndex + 1) % competitors.length;
+        
+        // Show new competitor columns
+        competitors[currentIndex].forEach(cell => cell.classList.add('is-active'));
+    }, 10000); // 10 seconds
 }
 
 /* ─── AI Assistant Logic ─────────────────── */

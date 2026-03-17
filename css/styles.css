@@ -590,6 +590,113 @@
     }
 }
 /* =============================================================================
+   quick-links.css — Quick Links Section
+   ============================================================================= */
+
+.quick-links {
+    width: 100%;
+    margin-top: var(--space-xl);
+    position: relative;
+    z-index: 10;
+}
+
+.quick-links__container {
+    display: flex;
+    gap: var(--space-md);
+    height: 120px;
+    width: 100%;
+}
+
+.quick-link-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-xl);
+    text-decoration: none;
+    color: var(--color-text-heading);
+    position: relative;
+    overflow: hidden;
+    transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+}
+
+.quick-links__container:hover .quick-link-btn:not(:hover) {
+    flex: 0.5;
+}
+
+.quick-link-btn:hover,
+.quick-link-btn:focus-visible {
+    flex: 2;
+    background-color: var(--color-bg-primary); 
+}
+
+.quick-link-btn__bg-icon {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+    font-size: 140px;
+    opacity: 0.05;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+    pointer-events: none;
+    color: var(--color-text-heading);
+}
+
+.quick-link-btn:hover .quick-link-btn__bg-icon,
+.quick-link-btn:focus-visible .quick-link-btn__bg-icon {
+    transform: translateY(-50%) scale(1.15) rotate(-5deg);
+    opacity: 0.2;
+}
+
+.quick-link-btn__text {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+.quick-link-btn__arrow {
+    font-size: 24px;
+    z-index: 2;
+    opacity: 0.3;
+    transform: translateX(0);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.quick-link-btn:hover .quick-link-btn__arrow,
+.quick-link-btn:focus-visible .quick-link-btn__arrow {
+    opacity: 1;
+    transform: translateX(10px);
+}
+
+@media (min-width: 768px) {
+    .quick-link-btn__text {
+        font-size: var(--font-size-xl);
+    }
+}
+
+@media (max-width: 767px) {
+    .quick-links__container {
+        height: 90px;
+        gap: var(--space-sm);
+    }
+    .quick-link-btn {
+        padding: 0 var(--space-md);
+    }
+    .quick-link-btn__text {
+        font-size: var(--font-size-sm);
+        white-space: normal;
+        text-align: left;
+    }
+    .quick-link-btn__bg-icon {
+        font-size: 90px;
+    }
+}
+
+
+/* =============================================================================
    about.css — EireID About / Bento Grid Section
    All styles scoped to the #about section and its five tiles.
    Depends on: common.css (variables, reset, .logo-box--glass, .pulse-animation)
@@ -1442,6 +1549,227 @@
         padding-bottom: 40vh;
     }
 }
+
+/* =============================================================================
+   comparison.css — EireID Brand Comparison Section
+   Glassmorphism-based pricing/feature comparison.
+   ============================================================================= */
+
+.comparison {
+    padding: var(--space-section) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.comparison__header {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: var(--space-3xl);
+}
+
+.comparison__badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-md);
+    animation: fadeIn 0.8s ease-out;
+}
+
+.comparison__title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-sm);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.comparison__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    opacity: 0.8;
+}
+
+/* ─── Table Structure ─── */
+
+.compare-table-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: visible; /* Needed for EireID pop-out */
+}
+
+.compare-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1.6fr 1.2fr 1.2fr 1.2fr;
+}
+
+.compare-cell {
+    padding: var(--space-lg) var(--space-md);
+    font-size: 14px;
+    color: var(--color-text-body);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
+    transition: background-color var(--transition-fast);
+}
+
+.compare-head {
+    font-weight: 800;
+    color: var(--color-text-heading);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    align-items: flex-end;
+    justify-content: center; /* Center text in top row */
+    text-align: center;
+    padding-bottom: var(--space-lg);
+    height: 120px;
+}
+
+.text-sm {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    display: block;
+    margin-top: 4px;
+}
+
+/* ─── Column Highlighting ─── */
+
+.label-col {
+    font-weight: 700;
+    color: var(--color-text-heading);
+    border-right: 1px solid rgba(0, 0, 0, 0.04);
+    padding-left: var(--space-xl);
+    position: relative;
+    overflow: hidden; /* Keep large background icons contained */
+}
+
+.label-icon {
+    position: absolute;
+    font-size: 64px; /* ~3.5x original 18px */
+    color: var(--color-bg-primary);
+    opacity: 0.25; /* Subtle background feel */
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.label-col > *:not(.label-icon) {
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── The Premium EireID Column ─── */
+.eireid-col {
+    background: linear-gradient(180deg, var(--color-bg-primary) 0%, rgba(164, 229, 183, 0.8) 100%);
+    color: var(--color-text-heading);
+    font-weight: 600;
+    position: relative;
+    z-index: 10;
+    border-left: 1px solid rgba(164, 229, 183, 0.3);
+    border-right: 1px solid rgba(164, 229, 183, 0.3);
+}
+
+.eireid-top {
+    background: linear-gradient(180deg, var(--color-bg-primary) 0%, rgba(164, 229, 183, 0.8) 100%);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    border-left: 1px solid rgba(255, 255, 252, 0.4);
+    border-right: 1px solid rgba(255, 255, 252, 0.4);
+    border-top: 1px solid rgba(255, 255, 252, 0.4);
+    transform: scale(1.02);
+    height: 140px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    padding-top: var(--space-xl);
+}
+
+.eireid-bottom {
+    background: rgba(164, 229, 183, 0.8);
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.eireid-head-logo {
+    width: 70px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
+
+/* Column hover effect for better readability */
+.compare-grid:hover .compare-cell:not(.eireid-col):hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Mobile Adjustments (Rotating Competitor Focus) ─── */
+@media (max-width: 1023px) {
+    .compare-grid {
+        grid-template-columns: 1fr 1fr; /* EireID vs Chosen Competitor */
+    }
+
+    .label-col {
+        grid-column: 1 / -1;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 12px var(--space-xl);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .comp-col {
+        display: none;
+        animation: translateYFadeIn 0.4s ease-out;
+    }
+
+    .comp-col.is-active {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .eireid-top {
+        transform: translateY(0) scale(1.05);
+        height: 100px;
+        border-radius: 0;
+        border-top-left-radius: var(--radius-lg);
+        border-top-right-radius: var(--radius-lg);
+    }
+
+    .eireid-bottom {
+        transform: scale(1.05);
+        border-radius: 0;
+        border-bottom-left-radius: var(--radius-lg);
+        border-bottom-right-radius: var(--radius-lg);
+    }
+    
+    .compare-head {
+        height: 90px;
+    }
+}
+
 
 /* ─── Floating AI Assistant ─────────────────── */
 .ai-fab {
