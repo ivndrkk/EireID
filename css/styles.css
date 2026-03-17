@@ -1380,3 +1380,214 @@
     line-height: 1.5;
     max-width: 400px;
 }
+/* ─── Floating AI Assistant ─────────────────── */
+.ai-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 990;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ai-fab.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.ai-fab:hover, .ai-fab:focus-visible {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.ai-fab__img {
+  width: 120%;
+  height: 120%;
+  object-fit: contain;
+}
+
+
+.ai-modal {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 1000;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9) translateY(20px);
+  transform-origin: bottom right;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Mobile default sizing (almost full screen) */
+  width: calc(100vw - 40px);
+  height: calc(100vh - 140px);
+  max-height: 500px;
+}
+
+.ai-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+.ai-modal__header {
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: #f8f9fa;
+}
+
+.ai-modal__header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-heading);
+  margin: 0;
+}
+
+.ai-modal__close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.ai-modal__close:hover {
+  color: var(--color-text-heading);
+  background: rgba(0,0,0,0.05);
+}
+
+.ai-modal__body {
+  padding: var(--space-md);
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  gap: var(--space-md);
+}
+
+.ai-message {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-end;
+  max-width: 90%;
+}
+
+.ai-message--user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.ai-message--user .ai-message__bubble {
+  background: var(--color-bg-primary);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 4px;
+}
+
+.ai-message__time {
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  text-align: right;
+  margin-top: 4px;
+  opacity: 0.6;
+}
+
+.ai-modal__footer {
+  padding: var(--space-md);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  background: #f8f9fa;
+}
+
+.ai-chat-form {
+  display: flex;
+  gap: var(--space-sm);
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 4px 4px 16px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.ai-chat-input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-body);
+}
+
+.ai-chat-input:focus {
+  outline: none;
+}
+
+.ai-chat-submit {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-text-heading);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.ai-chat-submit:hover {
+  transform: scale(1.05);
+}
+
+.ai-chat-submit:focus-visible {
+  outline: 2px solid var(--color-text-heading);
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .ai-fab {
+    bottom: 40px;
+    right: 40px;
+    width: 72px;
+    height: 72px;
+  }
+  
+  .ai-modal {
+    bottom: 130px;
+    right: 40px;
+    /* Desktop default sizing (1/4 screen style popup) */
+    width: 380px;
+    height: 550px;
+  }
+}

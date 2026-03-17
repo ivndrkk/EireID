@@ -36,7 +36,7 @@
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="#" class="nav__link" id="explore-btn">About EireID</a></li>
+                    <li><a href="#" class="nav__link" id="nav-about-btn">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
                         <a href="#" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
@@ -356,6 +356,45 @@
         <!-- /how-it-works -->
 
     </div>
+    <!-- === FLOATING AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open AI Assistant">
+      <img src="assets/img/mascot_2.png" alt="AI Agent" class="ai-fab__img">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your EireID Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="assets/img/mascot_2.png" alt="Assistant Mascot" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <script src="js/scripts.js" defer></script>
 </body>
 
