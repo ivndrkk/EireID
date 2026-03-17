@@ -153,44 +153,46 @@ function initHowItWorksAnimation() {
    * and updates the vertical line and active step states.
    */
   function updateTimeline() {
-    const timelineRect = timeline.getBoundingClientRect();
+    const sectionRect = section.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Calculate how much of the timeline is above the center of the viewport
-    const startPoint = windowHeight * 0.5;
-    const timelineTop = timelineRect.top;
-    const timelineHeight = timelineRect.height;
+    // How much of the total section height has been scrolled past the top of viewport
+    // Section height is 600vh, we want to start animation when top hits 0 and end when bottom hits windowHeight
+    const totalScrollable = sectionRect.height - windowHeight;
+    let scrollProgress = -sectionRect.top / totalScrollable;
+    scrollProgress = Math.max(0, Math.min(1, scrollProgress));
 
-    // Progress is 0 at the start of the timeline and 1 at the end (relative to viewport center)
-    let progress = (startPoint - timelineTop) / timelineHeight;
-    progress = Math.max(0, Math.min(1, progress));
+    // Update the progress line and dot based on the OVERALL section progress
+    progressLine.style.height = `${scrollProgress * 100}%`;
+    progressDot.style.top = `${scrollProgress * 100}%`;
+    progressDot.style.opacity = scrollProgress > 0 ? '1' : '0';
 
-    // Update the progress line and dot
-    progressLine.style.height = `${progress * 100}%`;
-    progressDot.style.top = `${progress * 100}%`;
+    // Calculate which step is active based on 5 steps
+    const numSteps = steps.length;
+    // We divide the 0-1 progress into ranges for each step
+    const stepInterval = 1 / numSteps;
 
-    if (progress > 0) {
-      progressDot.style.opacity = '1';
-    } else {
-      progressDot.style.opacity = '0';
-    }
-
-    // Update steps based on their position relative to the viewport center
     steps.forEach((step, index) => {
-      const stepRect = step.getBoundingClientRect();
-      const stepCenter = stepRect.top + stepRect.height / 2;
+      const stepStart = index * stepInterval;
+      const stepEnd = (index + 1) * stepInterval;
 
-      if (stepCenter < startPoint) {
-        // Step is above the viewport center
+      // Reset specific classes
+      step.classList.remove('is-past', 'is-active', 'is-upcoming', 'is-past-immediate', 'is-hidden-upcoming');
+
+      if (scrollProgress >= stepEnd) {
         step.classList.add('is-past');
-        step.classList.remove('is-active');
-      } else if (stepRect.top < startPoint + 50) {
-        // Step is near the viewport center (active)
+        // Check if it's the one immediately before the active one
+        if (scrollProgress < (index + 2) * stepInterval) {
+          step.classList.add('is-past-immediate');
+        }
+      } else if (scrollProgress >= stepStart) {
         step.classList.add('is-active');
-        step.classList.remove('is-past');
       } else {
-        // Step is below
-        step.classList.remove('is-active', 'is-past');
+        step.classList.add('is-upcoming');
+        // If it's more than one step away, hide it
+        if (scrollProgress < (index - 1) * stepInterval) {
+          step.classList.add('is-hidden-upcoming');
+        }
       }
     });
   }
