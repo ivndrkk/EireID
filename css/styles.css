@@ -1241,38 +1241,27 @@
 }
 /* =============================================================================
    how-it-works.css — EireID How It Works Section
-   Sticky left column with native scrolling timeline on the right.
+   Mobile: Standard list | Desktop: Sticky left & Scroll timeline
    ============================================================================= */
 
 .how-it-works {
     position: relative;
     padding: var(--space-xl) 0;
-    margin-top: var(--space-xl);
+    margin-top: var(--space-md);
     overflow: visible;
-    /* Required for sticky children to work */
 }
 
 .how-it-works__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
+    /* Нормальный отступ для мобилок */
     align-items: start;
-    /* Crucial: aligns the grid to the top so sticky works */
 }
 
-@media (min-width: 1024px) {
-    .how-it-works__grid {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-3xl);
-    }
-}
-
-/* ─── Pinned Left Content ────────────────────────────────────────────────── */
-
+/* ─── Левая колонка (Обычная на мобилках, Sticky на ПК) ─── */
 .how-it-works__content {
-    position: sticky;
-    top: 30vh;
-    /* Pins the title to the upper third of the screen */
+    position: relative;
 }
 
 .how-it-works__title {
@@ -1286,7 +1275,7 @@
     font-size: var(--font-size-lg);
     color: var(--color-text-muted);
     line-height: 1.6;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
     max-width: 480px;
 }
 
@@ -1295,11 +1284,11 @@
     padding: var(--space-sm) var(--space-xl);
 }
 
-/* ─── Scrolling Right Timeline ───────────────────────────────────────────── */
-
+/* ─── Правая колонка с линией ─── */
 .how-it-works__timeline-wrapper {
     position: relative;
-    padding-left: 40px;
+    padding-left: 32px;
+    /* Чуть компактнее для телефонов */
 }
 
 .how-it-works__timeline {
@@ -1307,7 +1296,6 @@
     height: 100%;
 }
 
-/* The faint background track */
 .timeline-line {
     position: absolute;
     left: 0px;
@@ -1319,26 +1307,21 @@
     border-radius: 2px;
 }
 
-/* The glowing progress line */
 .timeline-line__progress {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 0%;
-    /* JS will update this */
     background: var(--color-bg-primary);
     box-shadow: 0 0 15px var(--color-bg-primary);
-    /* The glow */
     transition: height 0.1s ease-out;
     border-radius: 2px;
 }
 
-/* The leading dot */
 .timeline-line__dot {
     position: absolute;
     top: 0;
-    /* JS will update this */
     left: 50%;
     transform: translate(-50%, -50%);
     width: 12px;
@@ -1352,32 +1335,28 @@
     transition: top 0.1s ease-out, opacity 0.3s ease;
 }
 
-/* ─── Steps ─────────────────────────────────────────────────────────────── */
-
+/* ─── Шаги (Нормальные на мобилках, растянутые на ПК) ─── */
 .timeline-steps {
     display: flex;
     flex-direction: column;
-    gap: 25vh;
-    /* Massive gap to force user to scroll between steps */
-    padding-top: 10vh;
-    padding-bottom: 40vh;
-    /* Extra space so the last step can reach the middle */
+    gap: var(--space-2xl);
+    /* Адекватное расстояние между шагами на телефоне */
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-xl);
 }
 
 .timeline-step {
     position: relative;
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     z-index: 2;
 
-    /* Default Dimmed State */
-    opacity: 0.2;
-    transform: translateX(20px);
+    /* Состояние "по умолчанию" (тусклое) */
+    opacity: 0.3;
+    transform: translateX(10px);
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    /* Apple-style spring curve */
 }
 
-/* Active State (Triggered by JS when in middle of screen) */
 .timeline-step.is-active {
     opacity: 1;
     transform: translateX(0);
@@ -1385,9 +1364,10 @@
 
 .timeline-step__icon-box {
     flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
+    width: 48px;
+    /* Чуть меньше на мобилках */
+    height: 48px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1397,17 +1377,16 @@
 }
 
 .timeline-step__icon-box .iconify {
-    font-size: 28px;
+    font-size: 24px;
     color: var(--color-text-heading);
     transition: color 0.4s ease;
 }
 
-/* Active Icon Styling */
 .timeline-step.is-active .timeline-step__icon-box {
     background: var(--color-bg-primary);
     border-color: var(--color-bg-primary);
     transform: scale(1.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-step.is-active .timeline-step__icon-box .iconify {
@@ -1415,17 +1394,53 @@
 }
 
 .timeline-step__text h4 {
-    font-size: var(--font-size-2xl);
+    font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: var(--space-xs);
+    margin-bottom: 4px;
     color: var(--color-text-heading);
 }
 
 .timeline-step__text p {
-    font-size: var(--font-size-base);
+    font-size: 0.95rem;
     color: var(--color-text-muted);
     line-height: 1.5;
-    max-width: 480px;
+}
+
+
+@media (min-width: 1024px) {
+    .how-it-works__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3xl);
+    }
+
+    .how-it-works__content {
+        position: sticky;
+        top: 30vh;
+    }
+
+    .how-it-works__timeline-wrapper {
+        padding-left: 40px;
+    }
+
+    .timeline-step__icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+    }
+
+    .timeline-step__icon-box .iconify {
+        font-size: 28px;
+    }
+
+    .timeline-step__text h4 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .timeline-steps {
+        gap: 25vh;
+        padding-top: 10vh;
+        padding-bottom: 40vh;
+    }
 }
 
 /* ─── Floating AI Assistant ─────────────────── */

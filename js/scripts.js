@@ -331,7 +331,7 @@ function initHowItWorksAnimation() {
 
     if (!section || !timelineWrapper || !progressLine || !steps.length) return;
 
-    // 1. Step Activation (Lights up when passing the middle of the screen)
+    // 1. Step Activation
     const stepObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -342,9 +342,7 @@ function initHowItWorksAnimation() {
         });
     }, {
         root: null,
-        // The "activation zone" is the middle 20% of the screen. 
-        // Anything above or below dims out.
-        rootMargin: '-40% 0px -40% 0px', 
+        rootMargin: '-20% 0px -20% 0px', 
         threshold: 0
     });
 
