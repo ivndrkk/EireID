@@ -1207,3 +1207,176 @@
         align-self: center;
     }
 }
+/* =============================================================================
+   how-it-works.css — EireID How It Works Section
+   Vertical timeline with scroll-driven animations.
+   ============================================================================= */
+
+.how-it-works {
+    padding: var(--space-section) 0;
+    margin-top: var(--space-3xl);
+}
+
+.how-it-works__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .how-it-works__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3xl);
+    }
+}
+
+.how-it-works__content {
+    position: sticky;
+    top: var(--space-xl);
+}
+
+.how-it-works__title {
+    font-size: var(--font-size-3xl);
+    font-weight: 400;
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-md);
+}
+
+.how-it-works__description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-xl);
+    max-width: 480px;
+}
+
+.how-it-works__cta {
+    width: fit-content;
+    padding: var(--space-sm) var(--space-xl);
+}
+
+/* ─── Timeline ───────────────────────────────────────────────────────────── */
+
+.how-it-works__timeline-wrapper {
+    position: relative;
+    padding-left: var(--space-md);
+}
+
+@media (min-width: 768px) {
+    .how-it-works__timeline-wrapper {
+        padding-left: var(--space-2xl);
+    }
+}
+
+.how-it-works__timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+}
+
+.timeline-line {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.timeline-line__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: var(--color-bg-primary);
+    transition: height 0.1s ease-out;
+}
+
+.timeline-line__dot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--color-bg-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-bg-primary);
+    z-index: 2;
+    opacity: 0;
+    transition: top 0.1s ease-out, opacity 0.3s ease;
+}
+
+.timeline-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.timeline-step {
+    position: relative;
+    display: flex;
+    gap: var(--space-lg);
+    z-index: 2;
+    opacity: 0.3;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.timeline-step.is-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-step.is-past {
+    opacity: 0.6;
+    transform: translateY(0);
+}
+
+.timeline-step__icon-box {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+}
+
+.timeline-step.is-active .timeline-step__icon-box {
+    background: var(--color-bg-primary);
+    border-color: var(--color-bg-primary);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(164, 229, 183, 0.4);
+}
+
+.timeline-step__icon-box .iconify {
+    font-size: 20px;
+    color: var(--color-text-heading);
+}
+
+.timeline-step.is-active .timeline-step__icon-box .iconify {
+    color: white;
+}
+
+.timeline-step__text h4 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-heading);
+    transition: color 0.4s ease;
+}
+
+.timeline-step__text p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    max-width: 400px;
+}
