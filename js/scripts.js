@@ -178,31 +178,45 @@ function initAboutFadeIn() {
 
 /**
  * initScrollReveal
- * Implements scroll-driven animations for the About section tiles.
- * Uses IntersectionObserver to toggle .is-visible class for reversible animations.
+ * Implements Apple-style scroll-linked animations for the About section tiles.
+ * Directly links opacity and transform to the scroll position.
  */
 function initScrollReveal() {
   const tiles = document.querySelectorAll('.about__tile');
 
   if (!tiles.length) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        } else {
-          entry.target.classList.remove('is-visible');
-        }
-      });
-    },
-    {
-      threshold: 0.08,
-      rootMargin: '0px 0px -40px 0px'
-    }
-  );
+  function updateTiles() {
+    const windowHeight = window.innerHeight;
 
-  tiles.forEach(tile => observer.observe(tile));
+    tiles.forEach(tile => {
+      const rect = tile.getBoundingClientRect();
+      const tileTop = rect.top;
+
+      // Animation triggers based on the tile's position in the viewport
+      // Starts appearing at 95% of viewport height, fully visible at 75%
+      const startTrigger = windowHeight * 0.95;
+      const endTrigger = windowHeight * 0.75;
+
+      let progress = (startTrigger - tileTop) / (startTrigger - endTrigger);
+      progress = Math.max(0, Math.min(1, progress));
+
+      // 1:1 Scroll mapping
+      tile.style.opacity = progress;
+      tile.style.transform = `translateY(${30 * (1 - progress)}px)`;
+
+      // Toggle class for hover states and other CSS interactions
+      if (progress > 0.1) {
+        tile.classList.add('is-visible');
+      } else {
+        tile.classList.remove('is-visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateTiles);
+  window.addEventListener('resize', updateTiles);
+  updateTiles();
 }
 
 
