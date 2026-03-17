@@ -319,86 +319,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
-   Handles scroll-driven animations for the vertical timeline.
+   Handles scroll-driven timeline progress and step activation.
    ============================================================================= */
 
 function initHowItWorksAnimation() {
     const section = document.querySelector('.how-it-works');
-    const timeline = document.querySelector('.how-it-works__timeline');
+    const timelineWrapper = document.querySelector('.how-it-works__timeline-wrapper');
     const progressLine = document.getElementById('timeline-progress');
     const progressDot = document.getElementById('timeline-dot');
     const steps = document.querySelectorAll('.timeline-step');
 
-    if (!section || !timeline || !progressLine || !steps.length) return;
+    if (!section || !timelineWrapper || !progressLine || !steps.length) return;
 
-  /**
-   * updateTimeline
-   * Calculates the scroll progress within the timeline container
-   * and updates the vertical line and active step states.
-   */
-  function updateTimeline() {
-    const sectionRect = section.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // How much of the total section height has been scrolled past the top of viewport
-    // Section height is 600vh, we want to start animation when top hits 0 and end when bottom hits windowHeight
-    const totalScrollable = sectionRect.height - windowHeight;
-    let scrollProgress = -sectionRect.top / totalScrollable;
-    scrollProgress = Math.max(0, Math.min(1, scrollProgress));
-
-    // Update the progress line and dot based on the OVERALL section progress
-    progressLine.style.height = `${scrollProgress * 100}%`;
-    progressDot.style.top = `${scrollProgress * 100}%`;
-    progressDot.style.opacity = scrollProgress > 0 ? '1' : '0';
-
-    // Calculate which step is active based on 5 steps
-    const numSteps = steps.length;
-    // We divide the 0-1 progress into ranges for each step
-    const stepInterval = 1 / numSteps;
-
-    steps.forEach((step, index) => {
-      const stepStart = index * stepInterval;
-      const stepEnd = (index + 1) * stepInterval;
-
-      // Reset specific classes
-      step.classList.remove('is-past', 'is-active', 'is-upcoming', 'is-past-immediate', 'is-hidden-upcoming');
-
-      // Check if this is the last step
-      const isLastStep = index === numSteps - 1;
-
-      if (!isLastStep && scrollProgress >= stepEnd) {
-        // Step is in the past
-        step.classList.add('is-past');
-        // Check if it's the one immediately before the active one
-        if (scrollProgress < (index + 2) * stepInterval) {
-          step.classList.add('is-past-immediate');
-        }
-      } else if (scrollProgress >= stepStart) {
-        // Step is currently active
-        step.classList.add('is-active');
-      } else {
-        // Step is in the future
-        step.classList.add('is-upcoming');
-        // If it's more than one step away, hide it for a cleaner transition
-        if (scrollProgress < (index - 1) * stepInterval) {
-          step.classList.add('is-hidden-upcoming');
-        }
-      }
-    });
-  }
-
-    const observer = new IntersectionObserver((entries) => {
+    // 1. Step Activation (Lights up when passing the middle of the screen)
+    const stepObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                window.addEventListener('scroll', updateTimeline);
-                updateTimeline();
+                entry.target.classList.add('is-active');
             } else {
-                window.removeEventListener('scroll', updateTimeline);
+                entry.target.classList.remove('is-active');
             }
         });
-    }, { threshold: 0.1 });
+    }, {
+        root: null,
+        // The "activation zone" is the middle 20% of the screen. 
+        // Anything above or below dims out.
+        rootMargin: '-40% 0px -40% 0px', 
+        threshold: 0
+    });
 
-    observer.observe(section);
+    steps.forEach(step => stepObserver.observe(step));
+
+    // 2. Timeline Progress Line
+    function updateProgressLine() {
+        const rect = timelineWrapper.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // The exact center line of the browser window
+        const screenCenter = windowHeight / 2; 
+        
+        // Calculate how far the top of the wrapper has moved past the center line
+        const scrolled = screenCenter - rect.top;
+        
+        // Total height of the track
+        const totalHeight = rect.height;
+
+        // Calculate percentage (0 to 1)
+        let progress = scrolled / totalHeight;
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Apply visual updates
+        progressLine.style.height = `${progress * 100}%`;
+        progressDot.style.top = `${progress * 100}%`;
+        
+        // Hide dot if we haven't reached the timeline yet
+        progressDot.style.opacity = progress > 0 && progress < 1 ? '1' : '0';
+    }
+
+    // Only listen to window scroll events if the section is actually on screen
+    const sectionObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            window.addEventListener('scroll', updateProgressLine, { passive: true });
+            updateProgressLine(); // Fire once to set initial state
+        } else {
+            window.removeEventListener('scroll', updateProgressLine);
+        }
+    }, { threshold: 0 });
+
+    sectionObserver.observe(section);
 }
 
 /* ─── AI Assistant Logic ─────────────────── */

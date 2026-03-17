@@ -442,6 +442,26 @@
     width: 200px;
 }
 
+/* Animated Underline Effect */
+.hero__action::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 20%;
+  width: 60%;
+  height: 1px;
+  background-color: var(--color-text-heading);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s;
+  pointer-events: none;
+}
+
+.hero__action:hover::after, 
+.hero__action:focus-visible::after {
+  transform: scaleX(1);
+}
+
 /* Glassmorphism pill that materialises on hover/focus */
 .hero__action::before {
     content: '';
@@ -1221,26 +1241,23 @@
 }
 /* =============================================================================
    how-it-works.css — EireID How It Works Section
-   Vertical timeline with scroll-driven animations.
+   Sticky left column with native scrolling timeline on the right.
    ============================================================================= */
 
 .how-it-works {
-    /* Height for pinning - 5 steps */
-    height: 400vh;
     position: relative;
-    margin-top: var(--space-lg);
+    padding: var(--space-xl) 0;
+    margin-top: var(--space-xl);
+    overflow: visible;
+    /* Required for sticky children to work */
 }
 
 .how-it-works__grid {
-    position: sticky;
-    top: 0;
-    height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
-    align-items: center;
-    padding: var(--space-xl) 0;
-    overflow: hidden;
+    align-items: start;
+    /* Crucial: aligns the grid to the top so sticky works */
 }
 
 @media (min-width: 1024px) {
@@ -1250,8 +1267,12 @@
     }
 }
 
+/* ─── Pinned Left Content ────────────────────────────────────────────────── */
+
 .how-it-works__content {
-    /* No longer sticky since the whole grid is sticky */
+    position: sticky;
+    top: 30vh;
+    /* Pins the title to the upper third of the screen */
 }
 
 .how-it-works__title {
@@ -1274,19 +1295,11 @@
     padding: var(--space-sm) var(--space-xl);
 }
 
-/* ─── Timeline ───────────────────────────────────────────────────────────── */
+/* ─── Scrolling Right Timeline ───────────────────────────────────────────── */
 
 .how-it-works__timeline-wrapper {
     position: relative;
-    padding-left: var(--space-md);
-    height: 400px; /* Fixed height for the "viewport" of steps */
-    overflow: visible;
-}
-
-@media (min-width: 768px) {
-    .how-it-works__timeline-wrapper {
-        padding-left: var(--space-2xl);
-    }
+    padding-left: 40px;
 }
 
 .how-it-works__timeline {
@@ -1294,34 +1307,44 @@
     height: 100%;
 }
 
+/* The faint background track */
 .timeline-line {
     position: absolute;
-    left: 20px;
+    left: 0px;
     top: 0;
     bottom: 0;
     width: 2px;
     background: rgba(0, 0, 0, 0.05);
     z-index: 1;
+    border-radius: 2px;
 }
 
+/* The glowing progress line */
 .timeline-line__progress {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 0%;
+    /* JS will update this */
     background: var(--color-bg-primary);
+    box-shadow: 0 0 15px var(--color-bg-primary);
+    /* The glow */
     transition: height 0.1s ease-out;
+    border-radius: 2px;
 }
 
+/* The leading dot */
 .timeline-line__dot {
     position: absolute;
     top: 0;
+    /* JS will update this */
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background: var(--color-bg-primary);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 2px solid var(--color-bg-primary);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--color-bg-primary);
     z-index: 2;
@@ -1329,62 +1352,35 @@
     transition: top 0.1s ease-out, opacity 0.3s ease;
 }
 
+/* ─── Steps ─────────────────────────────────────────────────────────────── */
+
 .timeline-steps {
-    position: relative;
-    height: 100%;
-    /* Steps will be absolutely positioned for the stacking effect */
+    display: flex;
+    flex-direction: column;
+    gap: 25vh;
+    /* Massive gap to force user to scroll between steps */
+    padding-top: 10vh;
+    padding-bottom: 40vh;
+    /* Extra space so the last step can reach the middle */
 }
 
 .timeline-step {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
+    position: relative;
     display: flex;
     gap: var(--space-lg);
     z-index: 2;
-    opacity: 0;
-    transform: translateY(200px);
-    transition:
-        opacity 0.8s ease,
-        transform 1s cubic-bezier(0.25, 1, 0.5, 1),
-        filter 0.8s ease;
-    pointer-events: none;
-    will-change: transform, opacity;
+
+    /* Default Dimmed State */
+    opacity: 0.2;
+    transform: translateX(20px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Apple-style spring curve */
 }
 
+/* Active State (Triggered by JS when in middle of screen) */
 .timeline-step.is-active {
     opacity: 1;
-    transform: translateY(-50%);
-    pointer-events: all;
-    z-index: 10;
-}
-
-.timeline-step.is-past {
-    opacity: 0.2;
-    transform: translateY(-180%) scale(0.85);
-    filter: blur(2px);
-    z-index: 5;
-}
-
-/* Most recent past step is slightly more visible */
-.timeline-step.is-past-immediate {
-    opacity: 0.5;
-    transform: translateY(-130%) scale(0.95);
-    filter: blur(0);
-    z-index: 6;
-}
-
-.timeline-step.is-upcoming {
-    opacity: 0.4;
-    transform: translateY(100px) scale(0.95);
-    z-index: 4;
-}
-
-/* Hidden upcoming steps (further down) */
-.timeline-step.is-hidden-upcoming {
-    opacity: 0;
-    transform: translateY(250px);
+    transform: translateX(0);
 }
 
 .timeline-step__icon-box {
@@ -1397,19 +1393,21 @@
     justify-content: center;
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.4s ease;
-}
-
-.timeline-step.is-active .timeline-step__icon-box {
-    background: var(--color-bg-primary);
-    border-color: var(--color-bg-primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(164, 229, 183, 0.4);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .timeline-step__icon-box .iconify {
     font-size: 28px;
     color: var(--color-text-heading);
+    transition: color 0.4s ease;
+}
+
+/* Active Icon Styling */
+.timeline-step.is-active .timeline-step__icon-box {
+    background: var(--color-bg-primary);
+    border-color: var(--color-bg-primary);
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-step.is-active .timeline-step__icon-box .iconify {
@@ -1421,7 +1419,6 @@
     font-weight: 700;
     margin-bottom: var(--space-xs);
     color: var(--color-text-heading);
-    transition: color 0.4s ease;
 }
 
 .timeline-step__text p {
@@ -1430,6 +1427,7 @@
     line-height: 1.5;
     max-width: 480px;
 }
+
 /* ─── Floating AI Assistant ─────────────────── */
 .ai-fab {
   position: fixed;
