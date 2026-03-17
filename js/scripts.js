@@ -292,24 +292,8 @@ function initStatCounters() {
             const statIndex = allStats.indexOf(el);
             animateCount(el, statIndex);
             el.setAttribute('data-counted', 'true');
-          }
-        } else {
-          // Reset when leaving viewport
-          cancelAnimationFrame(el._animationFrame);
-          el.setAttribute('data-counted', 'false');
-
-          const targetText = el.getAttribute('data-target') || el.innerText;
-          const suffix = targetText.replace(/[0-9.]/g, '');
-
-          const unitSpan = el.querySelector('.stat-bar__unit');
-          if (unitSpan) {
-            if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
-              el.childNodes[0].textContent = '0';
-            } else {
-              el.innerHTML = '0' + unitSpan.outerHTML;
-            }
-          } else {
-            el.innerText = '0' + suffix;
+            // Ensure animation happens only once
+            observer.unobserve(el);
           }
         }
       });
