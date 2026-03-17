@@ -639,13 +639,32 @@
     /* Overrides .logo-box--glass default opacity — tiles sit on a frosted surface */
     background: rgba(255, 255, 255, 0.7);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+
+    /* Scroll Animation Base State */
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity var(--transition-slow) var(--tile-delay, 0ms),
+        transform var(--transition-slow) var(--tile-delay, 0ms),
+        box-shadow var(--transition-base);
 }
 
-.about__tile:hover {
+.about__tile.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about__tile.is-visible:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
 }
+
+/* Staggered Delays */
+.about__tile:nth-child(1) { --tile-delay: 0ms; }
+.about__tile:nth-child(2) { --tile-delay: 100ms; }
+.about__tile:nth-child(3) { --tile-delay: 200ms; }
+.about__tile:nth-child(4) { --tile-delay: 300ms; }
+.about__tile:nth-child(5) { --tile-delay: 400ms; }
 
 
 /* ─── Tile Size Modifiers ─────────────────────────────────────────────────── */
