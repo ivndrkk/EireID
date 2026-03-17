@@ -127,7 +127,85 @@ function initAboutFadeIn() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initExploreButton();
-    initHeroInteractions();
-    initDocCarousel();
-    initAboutFadeIn();
+  initHeroInteractions();
+  initDocCarousel();
+  initAboutFadeIn();
+  initHowItWorksAnimation();
 });
+
+/* =============================================================================
+   how-it-works.js — EireID How It Works Section
+   Handles scroll-driven animations for the vertical timeline.
+   ============================================================================= */
+
+function initHowItWorksAnimation() {
+  const section = document.querySelector('.how-it-works');
+  const timeline = document.querySelector('.how-it-works__timeline');
+  const progressLine = document.getElementById('timeline-progress');
+  const progressDot = document.getElementById('timeline-dot');
+  const steps = document.querySelectorAll('.timeline-step');
+
+  if (!section || !timeline || !progressLine || !steps.length) return;
+
+  /**
+   * updateTimeline
+   * Calculates the scroll progress within the timeline container
+   * and updates the vertical line and active step states.
+   */
+  function updateTimeline() {
+    const timelineRect = timeline.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Calculate how much of the timeline is above the center of the viewport
+    const startPoint = windowHeight * 0.5;
+    const timelineTop = timelineRect.top;
+    const timelineHeight = timelineRect.height;
+
+    // Progress is 0 at the start of the timeline and 1 at the end (relative to viewport center)
+    let progress = (startPoint - timelineTop) / timelineHeight;
+    progress = Math.max(0, Math.min(1, progress));
+
+    // Update the progress line and dot
+    progressLine.style.height = `${progress * 100}%`;
+    progressDot.style.top = `${progress * 100}%`;
+
+    if (progress > 0) {
+      progressDot.style.opacity = '1';
+    } else {
+      progressDot.style.opacity = '0';
+    }
+
+    // Update steps based on their position relative to the viewport center
+    steps.forEach((step, index) => {
+      const stepRect = step.getBoundingClientRect();
+      const stepCenter = stepRect.top + stepRect.height / 2;
+
+      if (stepCenter < startPoint) {
+        // Step is above the viewport center
+        step.classList.add('is-past');
+        step.classList.remove('is-active');
+      } else if (stepRect.top < startPoint + 50) {
+        // Step is near the viewport center (active)
+        step.classList.add('is-active');
+        step.classList.remove('is-past');
+      } else {
+        // Step is below
+        step.classList.remove('is-active', 'is-past');
+      }
+    });
+  }
+
+  // Use IntersectionObserver to only listen to scroll when section is visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        window.addEventListener('scroll', updateTimeline);
+        updateTimeline(); // Initial call
+      } else {
+        window.removeEventListener('scroll', updateTimeline);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(section);
+}
