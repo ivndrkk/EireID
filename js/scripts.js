@@ -175,7 +175,154 @@ function initAboutFadeIn() {
     faders.forEach(el => observer.observe(el));
 }
 
-/* ─── How It Works (Timeline) ─────────────────── */
+
+/**
+ * initScrollReveal
+ * Implements scroll-driven animations for the About section tiles.
+ * Uses IntersectionObserver to toggle .is-visible class for reversible animations.
+ */
+function initScrollReveal() {
+  const tiles = document.querySelectorAll('.about__tile');
+
+  if (!tiles.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        } else {
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    },
+    {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    }
+  );
+
+  tiles.forEach(tile => observer.observe(tile));
+}
+
+
+/**
+ * initStatCounters
+ * Handles the count-up animation for statistics in the About section.
+ * Replays when scrolled back into view and resets when out of view.
+ */
+function initStatCounters() {
+  const stats = document.querySelectorAll('.stat-bar__number');
+
+  if (!stats.length) return;
+
+  // Pre-capture target values to prevent loss during initial IntersectionObserver callback
+  stats.forEach(el => {
+    if (!el.getAttribute('data-target')) {
+      el.setAttribute('data-target', el.innerText.trim());
+    }
+  });
+
+  /**
+   * animateCount
+   * Smoothly increments a number from 0 to its target value.
+   * @param {HTMLElement} el - The element containing the number.
+   * @param {number} index - The index of the stat for variable duration.
+   */
+  function animateCount(el, index) {
+    const targetText = el.getAttribute('data-target');
+    const targetValue = parseFloat(targetText.replace(/[^0-9.]/g, '')) || 0;
+    const suffix = targetText.replace(/[0-9.]/g, '');
+
+    if (targetValue === 0) return; // Nothing to animate
+    const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease out expo
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const currentValue = Math.floor(easeProgress * targetValue);
+
+      // Preserve unit/suffix if it exists in a span
+      const unitSpan = el.querySelector('.stat-bar__unit');
+      if (unitSpan) {
+        if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
+          el.childNodes[0].textContent = currentValue;
+        } else {
+          // Fallback if structure is unexpected
+          el.innerHTML = currentValue + unitSpan.outerHTML;
+        }
+      } else {
+        el.innerText = currentValue + suffix;
+      }
+
+      if (progress < 1) {
+        el._animationFrame = requestAnimationFrame(update);
+      }
+    }
+
+    el._animationFrame = requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const el = entry.target;
+
+        if (entry.isIntersecting) {
+          if (el.getAttribute('data-counted') !== 'true') {
+            const allStats = Array.from(stats);
+            const statIndex = allStats.indexOf(el);
+            animateCount(el, statIndex);
+            el.setAttribute('data-counted', 'true');
+          }
+        } else {
+          // Reset when leaving viewport
+          cancelAnimationFrame(el._animationFrame);
+          el.setAttribute('data-counted', 'false');
+
+          const targetText = el.getAttribute('data-target') || el.innerText;
+          const suffix = targetText.replace(/[0-9.]/g, '');
+
+          const unitSpan = el.querySelector('.stat-bar__unit');
+          if (unitSpan) {
+            if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
+              el.childNodes[0].textContent = '0';
+            } else {
+              el.innerHTML = '0' + unitSpan.outerHTML;
+            }
+          } else {
+            el.innerText = '0' + suffix;
+          }
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  stats.forEach(stat => observer.observe(stat));
+}
+
+
+/* ─── Init ────────────────────────────────────────────────────────────────── */
+
+document.addEventListener("DOMContentLoaded", () => {
+  initExploreButton();
+  initHeroInteractions();
+  initDocCarousel();
+  initAboutFadeIn();
+  initScrollReveal();
+  initStatCounters();
+  initHowItWorksAnimation();
+});
+
+/* =============================================================================
+   how-it-works.js — EireID How It Works Section
+   Handles scroll-driven animations for the vertical timeline.
+   ============================================================================= */
 
 function initHowItWorksAnimation() {
     const section = document.querySelector('.how-it-works');
@@ -186,41 +333,53 @@ function initHowItWorksAnimation() {
 
     if (!section || !timeline || !progressLine || !steps.length) return;
 
-    function updateTimeline() {
-        const timelineRect = timeline.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+  /**
+   * updateTimeline
+   * Calculates the scroll progress within the timeline container
+   * and updates the vertical line and active step states.
+   */
+  function updateTimeline() {
+    const timelineRect = timeline.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
 
-        const startPoint = windowHeight * 0.5;
-        const timelineTop = timelineRect.top;
-        const timelineHeight = timelineRect.height;
+    // Calculate how much of the timeline is above the center of the viewport
+    const startPoint = windowHeight * 0.5;
+    const timelineTop = timelineRect.top;
+    const timelineHeight = timelineRect.height;
 
-        let progress = (startPoint - timelineTop) / timelineHeight;
-        progress = Math.max(0, Math.min(1, progress));
+    // Progress is 0 at the start of the timeline and 1 at the end (relative to viewport center)
+    let progress = (startPoint - timelineTop) / timelineHeight;
+    progress = Math.max(0, Math.min(1, progress));
 
-        progressLine.style.height = `${progress * 100}%`;
-        progressDot.style.top = `${progress * 100}%`;
+    // Update the progress line and dot
+    progressLine.style.height = `${progress * 100}%`;
+    progressDot.style.top = `${progress * 100}%`;
 
-        if (progress > 0) {
-            progressDot.style.opacity = '1';
-        } else {
-            progressDot.style.opacity = '0';
-        }
-
-        steps.forEach((step) => {
-            const stepRect = step.getBoundingClientRect();
-            const stepCenter = stepRect.top + stepRect.height / 2;
-
-            if (stepCenter < startPoint) {
-                step.classList.add('is-past');
-                step.classList.remove('is-active');
-            } else if (stepRect.top < startPoint + 50) {
-                step.classList.add('is-active');
-                step.classList.remove('is-past');
-            } else {
-                step.classList.remove('is-active', 'is-past');
-            }
-        });
+    if (progress > 0) {
+      progressDot.style.opacity = '1';
+    } else {
+      progressDot.style.opacity = '0';
     }
+
+    // Update steps based on their position relative to the viewport center
+    steps.forEach((step, index) => {
+      const stepRect = step.getBoundingClientRect();
+      const stepCenter = stepRect.top + stepRect.height / 2;
+
+      if (stepCenter < startPoint) {
+        // Step is above the viewport center
+        step.classList.add('is-past');
+        step.classList.remove('is-active');
+      } else if (stepRect.top < startPoint + 50) {
+        // Step is near the viewport center (active)
+        step.classList.add('is-active');
+        step.classList.remove('is-past');
+      } else {
+        // Step is below
+        step.classList.remove('is-active', 'is-past');
+      }
+    });
+  }
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
