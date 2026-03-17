@@ -179,17 +179,23 @@ function initHowItWorksAnimation() {
       // Reset specific classes
       step.classList.remove('is-past', 'is-active', 'is-upcoming', 'is-past-immediate', 'is-hidden-upcoming');
 
-      if (scrollProgress >= stepEnd) {
+      // Check if this is the last step
+      const isLastStep = index === numSteps - 1;
+
+      if (!isLastStep && scrollProgress >= stepEnd) {
+        // Step is in the past
         step.classList.add('is-past');
         // Check if it's the one immediately before the active one
         if (scrollProgress < (index + 2) * stepInterval) {
           step.classList.add('is-past-immediate');
         }
       } else if (scrollProgress >= stepStart) {
+        // Step is currently active
         step.classList.add('is-active');
       } else {
+        // Step is in the future
         step.classList.add('is-upcoming');
-        // If it's more than one step away, hide it
+        // If it's more than one step away, hide it for a cleaner transition
         if (scrollProgress < (index - 1) * stepInterval) {
           step.classList.add('is-hidden-upcoming');
         }
