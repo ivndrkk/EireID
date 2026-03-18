@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EireID - Your Digital Identity">
-    <title>EireID</title>
+    <meta name="description" content="EireID - All Services">
+    <title>All Services | EireID</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,8 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/styles.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -33,33 +33,244 @@
                 <span></span>
                 <span></span>
             </button>
+            
+            
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html#about" class="nav__link">About EireID</a></li>
+                    <li><a href="./../index.html" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
                         <a href="#" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="./resident.html" class="nav__dropdown-link">For residents</a>
-                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
+                                <a href="allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="business.html" class="nav__dropdown-link">For businesses</a>
+                                <a href="investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="./security.html" class="nav__link">Security</a></li>
-                    <li><a href="./support.html" class="nav__link">Support</a></li>
-                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="security.html" class="nav__link">Security</a></li>
+                    <li><a href="support.html" class="nav__link">Support</a></li>
+                    <li><a href="team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
-
+            <!-- Mobile Logo -->
+            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
+                <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
+            </a>
         </header>
+
+        <!-- === ALL SERVICES === -->
+        <main class="services-library">
+            <!-- Hero / Title Area -->
+            <section class="services-hero">
+                <h1 class="services-hero__title">All Services</h1>
+                <p class="services-hero__subtitle">Find and access every Irish government service in one place.</p>
+            </section>
+
+            <!-- Filters Area -->
+            <section class="services-controls logo-box--glass">
+                <div class="filter-group">
+                    <label class="filter-label" id="provider-label">Provider</label>
+                    <div class="custom-dropdown" id="provider-dropdown">
+                        <button class="custom-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="provider-label provider-trigger">
+                            <span class="custom-dropdown__label" id="provider-trigger">All Providers</span>
+                            <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
+                        </button>
+                        <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="provider-list">
+                            <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Providers</li>
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" id="tag-label">Tags</label>
+                    <div class="custom-dropdown" id="tag-dropdown">
+                        <button class="custom-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="tag-label tag-trigger">
+                            <span class="custom-dropdown__label" id="tag-trigger">All Tags</span>
+                            <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
+                        </button>
+                        <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="tag-list">
+                            <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Tags</li>
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="filter-group filter-group--search">
+                    <label for="search-input" class="filter-label">Search</label>
+                    <div class="search-wrapper">
+                        <span class="iconify search-icon" data-icon="lucide:search"></span>
+                        <input type="text" id="search-input" class="filter-input" placeholder="Search services...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grid -->
+            <div class="services-grid" id="services-grid">
+                <!-- Cards will be populated here by JS -->
+            </div>
+            
+            <div id="no-results" class="no-results" style="display: none;">
+                <p>No services found matching your criteria.</p>
+            </div>
+
+            <!-- Pagination Control -->
+            <div class="services-pagination" id="services-pagination">
+                <button id="load-more-btn" class="btn--branded">Load More</button>
+            </div>
+        </main>
 
     </div>
 
-    <!-- === SCRIPTS === -->
+    <!-- === SERVICE MODAL === -->
+    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+        <div class="service-modal__overlay" id="sm-overlay"></div>
+        <div class="service-modal__content logo-box--glass">
+            <button id="sm-close" class="service-modal__close" aria-label="Close modal">
+                <span class="iconify" data-icon="lucide:x"></span>
+            </button>
+            
+            <div id="sm-content-details" class="sm-state-container is-active">
+                <div class="service-modal__header">
+                    <span id="sm-provider" class="service-modal__provider">Provider</span>
+                    <h2 id="sm-title" class="service-modal__title">Service Title</h2>
+                    <div id="sm-tags" class="service-card__tags service-modal__tags-container">
+                        <!-- Tags will go here -->
+                    </div>
+                </div>
+                
+                <div class="service-modal__body">
+                    <p id="sm-desc" class="service-modal__desc">Detailed service description will go here.</p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-apply-btn">Apply Now</button>
+                    </div>
+                </div>
+                
+                <div class="service-modal__footer">
+                    <h3 class="service-modal__similar-title">Similar Services</h3>
+                    <div id="sm-similar-grid" class="service-modal__similar-grid">
+                        <!-- Similar services cards injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Step 1: Confirmation Form -->
+            <div id="sm-content-step1" class="sm-state-container">
+                <div class="service-modal__header">
+                    <h2 class="service-modal__title">Application (1/2) - DEMO</h2>
+                </div>
+                <div class="service-modal__body">
+                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo application.</p>
+                    <div class="demo-form logo-box--glass">
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">Full Name</span>
+                            <span class="demo-form__value">John Doe</span>
+                        </div>
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">PPS Number</span>
+                            <span class="demo-form__value">1234567T</span>
+                        </div>
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">Date of Birth</span>
+                            <span class="demo-form__value">01 Jan 1990</span>
+                        </div>
+                    </div>
+                    <div class="service-modal__actions sm-actions--split">
+                        <button class="btn btn--branded" id="sm-cancel-btn">Cancel</button>
+                        <button class="btn btn--primary" id="sm-confirm-btn">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancellation State -->
+            <div id="sm-content-cancelled" class="sm-state-container sm-state--center">
+                <div class="service-modal__body">
+                    <span class="iconify sm-status-icon sm-status-icon--error" data-icon="lucide:x-circle"></span>
+                    <h2 class="service-modal__title">Application Cancelled</h2>
+                    <p class="service-modal__desc">The application has been aborted. No data was saved.</p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-close-cancelled-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Step 2: Face scanning & Loading -->
+            <div id="sm-content-step2" class="sm-state-container sm-state--center">
+                <div class="service-modal__header">
+                    <h2 class="service-modal__title">Face Verification (2/2) - DEMO</h2>
+                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No recording is made)</p>
+                </div>
+                <div class="service-modal__body">
+                    <div class="face-scanner" id="sm-face-scanner">
+                        <div class="face-scanner__frame"></div>
+                        <div class="face-scanner__line"></div>
+                        <span class="iconify face-scanner__icon" data-icon="lucide:user"></span>
+                    </div>
+                    <div class="loading-spinner" id="sm-loading-spinner" style="display: none;"></div>
+                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...</p>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="sm-content-success" class="sm-state-container sm-state--center">
+                <div class="service-modal__body">
+                    <span class="iconify sm-status-icon sm-status-icon--success" data-icon="lucide:check-circle"></span>
+                    <h2 class="service-modal__title">Application Successful</h2>
+                    <p class="service-modal__desc">Your application has been processed successfully.</p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-close-success-btn">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === FLOATING AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open AI Assistant">
+      <img src="../assets/img/mascot_2.png" alt="AI Agent" class="ai-fab__img">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your EireID Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="../assets/img/mascot_2.png" alt="Assistant Mascot" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>
+    <script src="../js/allservices.js" defer></script>
 </body>
 
 </html>

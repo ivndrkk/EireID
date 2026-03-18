@@ -1,0 +1,587 @@
+const irishGovServicesData =
+    [
+      {
+        "id": 1,
+        "name": "General Employment Permit",
+        "description": "Permit for non-EEA nationals to take up employment in Ireland in roles not covered by the Critical Skills permit.",
+        "provider": "DETE",
+        "tags": ["employment", "immigration"],
+        "for": ["Businesses", "Residents"]
+      },
+      {
+        "id": 2,
+        "name": "Income Tax Return (Form 11)",
+        "description": "File a self-assessed income tax return for the previous tax year. Mandatory for self-employed individuals and those with non-PAYE income.",
+        "provider": "Revenue",
+        "tags": ["tax", "income", "self-employment"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 3,
+        "name": "VAT Registration",
+        "description": "Register your business for Value Added Tax. Required if your turnover exceeds the VAT threshold or if you trade across EU borders.",
+        "provider": "Revenue",
+        "tags": ["tax", "vat", "business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 4,
+        "name": "VAT Return Filing (VAT3)",
+        "description": "Submit bi-monthly or annual VAT returns online via ROS (Revenue Online Service). Declare VAT collected and reclaim VAT on purchases.",
+        "provider": "Revenue",
+        "tags": ["tax", "vat", "business"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 5,
+        "name": "Corporation Tax Filing (CT1)",
+        "description": "File the annual corporation tax return for your company. Includes declaration of profits, losses, and applicable reliefs.",
+        "provider": "Revenue",
+        "tags": ["tax", "business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 6,
+        "name": "Tax Clearance Certificate",
+        "description": "Obtain a certificate confirming that your tax affairs are in order. Required for public contracts, licences, and grants.",
+        "provider": "Revenue",
+        "tags": ["tax", "business", "licensing"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 7,
+        "name": "Relevant Contracts Tax (RCT)",
+        "description": "Register as a principal or subcontractor in the construction, forestry, or meat-processing sectors. Manage deduction authorisations online.",
+        "provider": "Revenue",
+        "tags": ["tax", "business", "employment"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 8,
+        "name": "Customs Declaration (CDS)",
+        "description": "Submit import and export customs declarations electronically for goods crossing Irish borders, including post-Brexit UK trade.",
+        "provider": "Revenue",
+        "tags": ["customs", "business", "tax"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 9,
+        "name": "Stamp Duty Payment",
+        "description": "Pay stamp duty on property purchases, share transfers, and certain leases. Filed and paid electronically via Revenue's eStamping system.",
+        "provider": "Revenue",
+        "tags": ["tax", "property"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 10,
+        "name": "Employer PAYE Registration",
+        "description": "Register as an employer with Revenue to operate payroll, deduct income tax, USC, and PRSI from employees' wages.",
+        "provider": "Revenue",
+        "tags": ["tax", "employment", "business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 12,
+        "name": "PPSN Application",
+        "description": "Apply for a Personal Public Service Number, required to access social welfare, public services, and Revenue systems in Ireland.",
+        "provider": "DSP",
+        "tags": ["identity", "social-welfare", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 13,
+        "name": "Passport Application (Online)",
+        "description": "Apply for or renew an Irish passport using the Passport Online system. Fully digital process with delivery to your door.",
+        "provider": "DFA",
+        "tags": ["passport", "identity"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 14,
+        "name": "Passport Express",
+        "description": "Apply for or renew a passport through An Post branches using the Passport Express postal service for applicants who cannot use online services.",
+        "provider": "DFA",
+        "tags": ["passport", "identity"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 15,
+        "name": "Irish Citizenship by Naturalisation",
+        "description": "Apply to become an Irish citizen through naturalisation after meeting residency and legal status requirements.",
+        "provider": "INIS",
+        "tags": ["immigration", "identity", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 16,
+        "name": "Irish Residence Permit (IRP)",
+        "description": "Register as a non-EEA national residing in Ireland and receive a biometric residence card confirming your immigration permission.",
+        "provider": "GNIB",
+        "tags": ["immigration", "identity", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 17,
+        "name": "Visa Application",
+        "description": "Apply for a short-stay or long-stay Irish visa for non-EEA nationals wishing to visit, study, work, or join family in Ireland.",
+        "provider": "INIS",
+        "tags": ["immigration", "identity"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 18,
+        "name": "Driver Licence Application",
+        "description": "Apply for, renew, or exchange a driving licence at an NDLS centre. Covers all vehicle categories including cars, motorcycles, and trucks.",
+        "provider": "NDLS",
+        "tags": ["driving", "identity", "transport"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 19,
+        "name": "Driving Theory Test",
+        "description": "Book and sit the mandatory theory test required before applying for a learner permit for any vehicle category.",
+        "provider": "RSA",
+        "tags": ["driving", "transport"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 20,
+        "name": "Learner Permit",
+        "description": "Apply for a learner permit allowing supervised driving practice on public roads. Required before taking a driving test.",
+        "provider": "NDLS",
+        "tags": ["driving", "transport", "identity"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 21,
+        "name": "Vehicle Registration Certificate (VRC)",
+        "description": "Register a new or imported vehicle and receive a Vehicle Registration Certificate. Required for all vehicles on Irish roads.",
+        "provider": "Revenue",
+        "tags": ["driving", "transport", "registration"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 22,
+        "name": "Motor Tax Online",
+        "description": "Pay annual motor tax for your vehicle online or at your local motor tax office. Required to legally drive on public roads.",
+        "provider": "DTTAS",
+        "tags": ["driving", "transport", "tax"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 23,
+        "name": "National Car Test (NCT)",
+        "description": "Book a mandatory roadworthiness test for vehicles over 4 years old. Cars require testing every 2 years.",
+        "provider": "RSA",
+        "tags": ["driving", "transport"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 24,
+        "name": "Medical Card",
+        "description": "Apply for a medical card granting free GP visits, prescribed medicines, and other health services for those below income thresholds.",
+        "provider": "HSE",
+        "tags": ["health", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 25,
+        "name": "GP Visit Card",
+        "description": "Apply for a GP Visit Card for free visits to your family doctor without a full medical card, available to all children under 8 and qualifying adults.",
+        "provider": "HSE",
+        "tags": ["health", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 26,
+        "name": "Drugs Payment Scheme",
+        "description": "Register for the scheme to cap monthly prescription costs for individuals and families who do not hold a medical card.",
+        "provider": "HSE",
+        "tags": ["health"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 27,
+        "name": "National Immunisation Programme",
+        "description": "Access free vaccinations including childhood immunisations, flu vaccines, and HPV vaccine through GPs and school programmes.",
+        "provider": "HSE",
+        "tags": ["health", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 28,
+        "name": "Mental Health Services (CAMHS & Adult)",
+        "description": "Refer to or access community-based mental health teams for children, adolescents, and adults, including outpatient and inpatient care.",
+        "provider": "HSE",
+        "tags": ["health", "disability"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 29,
+        "name": "Maternity Services",
+        "description": "Access antenatal, birth, and postnatal care through HSE-funded maternity hospitals and community midwife services.",
+        "provider": "HSE",
+        "tags": ["health", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 30,
+        "name": "Inpatient & Outpatient Hospital Services",
+        "description": "Receive treatment in public hospitals including emergency care, specialist consultations, and surgical procedures.",
+        "provider": "HSE",
+        "tags": ["health"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 31,
+        "name": "Jobseeker's Allowance",
+        "description": "Means-tested weekly payment for people who are unemployed, available for work, and actively seeking employment.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "employment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 32,
+        "name": "Jobseeker's Benefit",
+        "description": "PRSI-based weekly payment for people who become unemployed and have sufficient social insurance contributions.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "employment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 33,
+        "name": "Child Benefit",
+        "description": "Monthly universal payment to parents and guardians for each child under 16, or under 18 if in full-time education or training.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "family", "childcare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 34,
+        "name": "Carer's Allowance",
+        "description": "Means-tested payment for people who are caring full-time for a person who needs support due to age, disability, or illness.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "disability", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 35,
+        "name": "Disability Allowance",
+        "description": "Weekly means-tested payment for people aged 16–66 with a disability that substantially restricts their ability to work.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "disability"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 36,
+        "name": "Illness Benefit",
+        "description": "PRSI-based short-term payment for workers who are unable to work due to illness or injury, subject to medical certification.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "health", "employment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 37,
+        "name": "State Pension (Contributory)",
+        "description": "Weekly pension payment for people aged 66 or over who have sufficient PRSI contributions from employment.",
+        "provider": "DSP",
+        "tags": ["pension", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 38,
+        "name": "State Pension (Non-Contributory)",
+        "description": "Means-tested weekly payment for people aged 66 or over who do not qualify for the contributory pension.",
+        "provider": "DSP",
+        "tags": ["pension", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 39,
+        "name": "Back to Education Allowance",
+        "description": "Financial support for social welfare recipients returning to full-time second or third-level education to improve employment prospects.",
+        "provider": "DSP",
+        "tags": ["social-welfare", "education", "employment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 40,
+        "name": "Free Travel Pass",
+        "description": "Free travel on all public transport for people aged 66 and over, and certain social welfare recipients and their companions.",
+        "provider": "DSP",
+        "tags": ["transport", "social-welfare", "pension"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 41,
+        "name": "Housing Assistance Payment (HAP)",
+        "description": "Rental subsidy paid directly to private landlords on behalf of eligible tenants in housing need who cannot access social housing.",
+        "provider": "Local Authorities",
+        "tags": ["housing", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 42,
+        "name": "Social Housing Application",
+        "description": "Apply to your local authority for social housing. Eligibility is assessed on income, current housing, and household need.",
+        "provider": "Local Authorities",
+        "tags": ["housing", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 43,
+        "name": "Planning Permission",
+        "description": "Apply to your local authority for permission to build, extend, or change the use of a property. Required for most significant developments.",
+        "provider": "Local Authorities",
+        "tags": ["property", "housing", "licensing"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 44,
+        "name": "First Home Scheme",
+        "description": "Government and bank equity scheme helping first-time buyers bridge the gap between their deposit and mortgage and the price of a new home.",
+        "provider": "DHLGH",
+        "tags": ["housing", "property"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 45,
+        "name": "Help to Buy Scheme",
+        "description": "Income tax refund of up to €30,000 for first-time buyers purchasing or self-building a new home with a qualifying mortgage.",
+        "provider": "Revenue",
+        "tags": ["housing", "tax", "property"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 46,
+        "name": "Birth Certificate / Registration",
+        "description": "Register the birth of a child with the Civil Registration Service to obtain an official birth certificate.",
+        "provider": "GRO",
+        "tags": ["identity", "family", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 47,
+        "name": "Marriage Registration",
+        "description": "Register a marriage or civil partnership and obtain an official marriage certificate from the General Register Office.",
+        "provider": "GRO",
+        "tags": ["identity", "family", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 48,
+        "name": "Death Registration",
+        "description": "Register a death within the statutory timeframe to obtain a death certificate, required for probate and settling the deceased's affairs.",
+        "provider": "GRO",
+        "tags": ["identity", "family", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 49,
+        "name": "Company Registration (CRO)",
+        "description": "Incorporate a new company in Ireland by filing the constitution, director, and share details with the Companies Registration Office.",
+        "provider": "CRO",
+        "tags": ["business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 50,
+        "name": "Business Name Registration",
+        "description": "Register a trading name (sole trader or partnership) with the Companies Registration Office for use in business activities.",
+        "provider": "CRO",
+        "tags": ["business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 51,
+        "name": "Annual Return Filing (B1)",
+        "description": "File a company's annual return with the CRO each year, including financial statements, to maintain active status.",
+        "provider": "CRO",
+        "tags": ["business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 52,
+        "name": "Beneficial Ownership Register",
+        "description": "Register the beneficial owners of a company or trust as required by EU anti-money laundering directives.",
+        "provider": "RBO",
+        "tags": ["business", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 53,
+        "name": "Property Registration (Land Registry)",
+        "description": "Register ownership of land and property and record charges, mortgages, and easements through Property Registration Authority.",
+        "provider": "PRA",
+        "tags": ["property", "registration"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 54,
+        "name": "Folio & Map Search (Land Registry)",
+        "description": "Search the Land Registry to view the ownership and title of any registered property in Ireland.",
+        "provider": "PRA",
+        "tags": ["property"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 55,
+        "name": "SUSI Grant (Student Universal Support)",
+        "description": "Apply for a means-tested maintenance and fee grant for full-time higher education students, assessed on household income.",
+        "provider": "SUSI",
+        "tags": ["education", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 56,
+        "name": "School Admissions & Enrolment",
+        "description": "Apply for a place in a primary or secondary school under local admission policies coordinated by the school and Education & Training Boards.",
+        "provider": "DES",
+        "tags": ["education", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 57,
+        "name": "Critical Skills Employment Permit",
+        "description": "Apply for permission to work in Ireland in a high-demand occupation. Permits are employer-sponsored and occupation-specific.",
+        "provider": "DETE",
+        "tags": ["employment", "immigration"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 58,
+        "name": "SEAI Home Energy Upgrade Grants",
+        "description": "Access grants for home insulation, heat pumps, solar panels, and other energy-efficient upgrades through the SEAI scheme.",
+        "provider": "SEAI",
+        "tags": ["energy", "housing", "environment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 59,
+        "name": "Building Energy Rating (BER) Assessment",
+        "description": "Commission a BER certificate from an SEAI-registered assessor. Mandatory when selling or renting a property in Ireland.",
+        "provider": "SEAI",
+        "tags": ["energy", "property", "housing"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 60,
+        "name": "Environmental Licence (EPA)",
+        "description": "Apply for an Integrated Pollution Control or Industrial Emissions licence required for large-scale industrial and waste activities.",
+        "provider": "EPA",
+        "tags": ["environment", "licensing", "business"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 61,
+        "name": "Food Business Registration (FSAI)",
+        "description": "Register or approve your food business with your local authority or the FSAI before commencing food production or processing.",
+        "provider": "FSAI",
+        "tags": ["business", "licensing", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 62,
+        "name": "Basic Income Support for Sustainability (BISS)",
+        "description": "Apply for the annual EU farm support payment replacing the Basic Payment Scheme, administered through DAFM's Agfood portal.",
+        "provider": "DAFM",
+        "tags": ["agriculture", "business"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 63,
+        "name": "Herd Number Registration",
+        "description": "Register a herd number with the Department of Agriculture to legally keep cattle, sheep, or other farmed livestock.",
+        "provider": "DAFM",
+        "tags": ["agriculture", "registration"],
+        "for": ["Businesses"]
+      },
+      {
+        "id": 64,
+        "name": "Fishing (Angling) Licence",
+        "description": "Purchase an annual or short-term licence to fish for salmon and sea trout in Irish rivers and lakes.",
+        "provider": "IFI",
+        "tags": ["licensing", "environment"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 65,
+        "name": "Legal Aid (Civil)",
+        "description": "Apply for state-funded legal advice and representation in civil matters for people who meet the means test.",
+        "provider": "Legal Aid Board",
+        "tags": ["legal", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 66,
+        "name": "Safe Pass Registration",
+        "description": "Complete a mandatory one-day health and safety awareness course and register a Safe Pass card required for all construction site workers.",
+        "provider": "SOLAS",
+        "tags": ["employment", "licensing", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 67,
+        "name": "Intreo Employment Services",
+        "description": "Access one-to-one support, job-matching, training referrals, and activation programmes at your local Intreo centre.",
+        "provider": "DSP",
+        "tags": ["employment", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 68,
+        "name": "Child and Family Support (Tusla)",
+        "description": "Access child protection, family welfare, alternative care, and early intervention services delivered by Tusla.",
+        "provider": "Tusla",
+        "tags": ["family", "childcare", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 69,
+        "name": "Early Childhood Care and Education (ECCE)",
+        "description": "Access the free pre-school year for children aged 2 years 8 months to 5 years, funded directly to participating childcare providers.",
+        "provider": "DCEDIY",
+        "tags": ["childcare", "education", "family"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 70,
+        "name": "National Childcare Scheme (NCS)",
+        "description": "Apply for subsidised childcare for children under 15, with universal and income-based subsidy rates applied directly to fees.",
+        "provider": "DCEDIY",
+        "tags": ["childcare", "family", "social-welfare"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 71,
+        "name": "An Garda Síochána Crime Reporting",
+        "description": "Report a crime online or in person at a Garda station. Receive a PULSE number for insurance or follow-up purposes.",
+        "provider": "An Garda Síochána",
+        "tags": ["legal", "identity"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 72,
+        "name": "Garda Vetting",
+        "description": "Submit a vetting application through a registered organisation to obtain a Garda vetting disclosure, required for working with children and vulnerable adults.",
+        "provider": "An Garda Síochána",
+        "tags": ["employment", "legal"],
+        "for": ["Residents", "Businesses"]
+      },
+      {
+        "id": 73,
+        "name": "Foreign Birth Registration",
+        "description": "Register your Irish citizenship acquired through a parent or grandparent born in Ireland to obtain an Irish passport.",
+        "provider": "DFA",
+        "tags": ["passport", "identity", "registration"],
+        "for": ["Residents"]
+      },
+      {
+        "id": 74,
+        "name": "Leap Card (TFI)",
+        "description": "Obtain and top-up a reloadable smart card for discounted travel on bus, Luas, DART, and Irish Rail services nationwide.",
+        "provider": "NTA",
+        "tags": ["transport"],
+        "for": ["Residents"]
+      }
+    ]
