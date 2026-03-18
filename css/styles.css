@@ -2508,3 +2508,255 @@
 .header__mobile-logo { display: block; }
 .header__mobile-logo img { height: 32px; width: auto; }
 @media (min-width: 768px) { .header__mobile-logo { display: none; } }
+
+/* =============================================================================
+   genesis-security.css — Genesis Protocol Visualization
+   ============================================================================= */
+
+.genesis-security {
+    position: relative;
+    z-index: 10;
+}
+
+.genesis-security__container {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── Background Matrix Effect ─── */
+.genesis-matrix {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.genesis-matrix__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+    z-index: 1;
+}
+
+.genesis-matrix__code {
+    position: absolute;
+    top: -50%;
+    left: var(--space-lg);
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-bg-primary); /* green */
+    opacity: 0.15;
+    white-space: pre;
+    z-index: 0;
+    transform: translateY(0);
+    animation: matrixScroll 20s linear infinite;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes matrixScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(50%); }
+}
+
+/* ─── Content Grid ─── */
+.genesis-security__grid {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+    .genesis-security__grid {
+        flex-direction: row;
+        align-items: center;
+        padding: var(--space-2xl);
+    }
+}
+
+/* ─── Text Area ─── */
+.genesis-security__text-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.genesis-security__title {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.genesis-security__desc {
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+.genesis-security__cta {
+    width: 250px;
+    margin-top: var(--space-md);
+    align-self: flex-start;
+    color: #ffffff !important;
+}
+
+.genesis-security__cta::after {
+    background-color: #ffffff !important;
+}
+
+@media (max-width: 1023px) {
+    .genesis-security__text-area {
+        align-items: center;
+        text-align: center;
+    }
+    .genesis-security__cta {
+        align-self: center;
+    }
+}
+
+/* ─── Visual Area ─── */
+.genesis-security__visual-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-xl) 0;
+    position: relative;
+    min-height: 300px;
+}
+
+@media (max-width: 767px) {
+    .genesis-security__visual-area {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+}
+
+/* Node Shared Styles */
+.genesis-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    z-index: 2;
+    animation: float 4s ease-in-out infinite;
+}
+
+.genesis-node:nth-child(even) { animation-delay: -2s; }
+
+.genesis-node__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.genesis-node__icon--hex {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+    border-color: var(--color-bg-primary);
+    box-shadow: 0 0 30px rgba(164, 229, 183, 0.2); /* green glow */
+}
+
+.genesis-node__label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Connectors */
+.genesis-connector {
+    flex: 1;
+    position: relative;
+    height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 var(--space-xs);
+}
+
+@media (max-width: 767px) {
+    .genesis-connector {
+        flex: 0 0 center;
+        width: 2px;
+        height: 40px;
+        margin: var(--space-xs) 0;
+    }
+    .genesis-connector__line {
+        background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 100%);
+    }
+    .genesis-connector__particles { 
+       display: none !important; /* simplify for mobile */
+    }
+}
+
+.genesis-connector__line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 100%);
+}
+
+.genesis-connector__particles {
+    position: absolute;
+    top: -2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-bg-primary);
+    box-shadow: 0 0 10px var(--color-bg-primary);
+    animation: particleMove 2s linear infinite;
+}
+
+.genesis-connector__particles--alt {
+    animation-delay: -1s;
+}
+
+@keyframes particleMove {
+    0% { left: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+/* Interactions */
+.genesis-security__visual-area:hover .genesis-matrix__code {
+    animation-duration: 5s;
+    opacity: 0.3;
+}
+
+.genesis-security__visual-area:hover .genesis-node__icon--hex {
+    box-shadow: 0 0 50px rgba(164, 229, 183, 0.5);
+    transform: scale(1.1);
+}
+
+.genesis-security__visual-area:hover .genesis-connector__particles {
+    animation-duration: 1s;
+}

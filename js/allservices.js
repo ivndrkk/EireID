@@ -160,17 +160,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let tagsHtml = '';
         if (service.tags && Array.isArray(service.tags)) {
-            tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+            tagsHtml = service.tags.map(tag => `<span class="service-card__tag" data-reveal>${tag}</span>`).join('');
         }
         
         const contentHtml = `
             <div class="service-card__header">
-                <span class="service-card__provider">${service.provider}</span>
+                <span class="service-card__provider" data-reveal>${service.provider}</span>
                 <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right"></span>
             </div>
             <div class="service-card__body">
-                <h3 class="service-card__title">${service.name}</h3>
-                <p class="service-card__desc">${service.description}</p>
+                <h3 class="service-card__title" data-reveal>${service.name}</h3>
+                <p class="service-card__desc" data-reveal>${service.description}</p>
             </div>
             <div class="service-card__footer">
                 <div class="service-card__tags">
@@ -222,6 +222,11 @@ document.addEventListener("DOMContentLoaded", () => {
             paginationContainer.style.display = 'none';
         } else {
             paginationContainer.style.display = 'flex';
+        }
+
+        // Re-initialize living text effectively observing new nodes
+        if (typeof initTextReveal === 'function') {
+            initTextReveal();
         }
     }
 

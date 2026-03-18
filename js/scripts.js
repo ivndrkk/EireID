@@ -17,12 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
     initDocCarousel();
     initAboutFadeIn();
     initScrollReveal();
+    initTextReveal();
     initStatCounters();
     initHowItWorksAnimation();
     initComparisonTable();
     
     // AI Assistant
-    // initFloatingAssistant() was originally not part of the DOMContentLoaded block, so it is removed here.
+    initFloatingAssistant();
     initAIChat();
 });
 
@@ -235,6 +236,37 @@ function initScrollReveal() {
   window.addEventListener('scroll', onScrollOrResize, { passive: true });
   window.addEventListener('resize', onScrollOrResize);
   updateTiles();
+}
+
+/**
+ * initTextReveal
+ * Implements global "living text" effect. 
+ * Text elements transition from muted grey to natural color when in view.
+ */
+function initTextReveal() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const elementsToAnimate = document.querySelectorAll('[data-reveal]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+      } else {
+        // Optional: remove if you want color to fade back out when leaving screen
+        entry.target.classList.remove('is-revealed');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  elementsToAnimate.forEach((el, index) => {
+    // Optionally create slight cascading delays for grouped elements
+    el.style.transitionDelay = `${(index % 5) * 50}ms`;
+    observer.observe(el);
+  });
 }
 
 

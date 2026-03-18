@@ -62,8 +62,8 @@
         <main class="services-library">
             <!-- Hero / Title Area -->
             <section class="services-hero">
-                <h1 class="services-hero__title">All Services</h1>
-                <p class="services-hero__subtitle">Find and access every Irish government service in one place.</p>
+                <h1 class="services-hero__title" data-reveal>All Services</h1>
+                <p class="services-hero__subtitle" data-reveal>Find and access every Irish government service in one place.</p>
             </section>
 
             <!-- Filters Area -->
@@ -111,7 +111,7 @@
             </div>
             
             <div id="no-results" class="no-results" style="display: none;">
-                <p>No services found matching your criteria.</p>
+                <p data-reveal>No services found matching your criteria.</p>
             </div>
 
             <!-- Pagination Control -->
@@ -132,22 +132,22 @@
             
             <div id="sm-content-details" class="sm-state-container is-active">
                 <div class="service-modal__header">
-                    <span id="sm-provider" class="service-modal__provider">Provider</span>
-                    <h2 id="sm-title" class="service-modal__title">Service Title</h2>
+                    <span id="sm-provider" class="service-modal__provider" data-reveal>Provider</span>
+                    <h2 id="sm-title" class="service-modal__title" data-reveal>Service Title</h2>
                     <div id="sm-tags" class="service-card__tags service-modal__tags-container">
                         <!-- Tags will go here -->
                     </div>
                 </div>
                 
                 <div class="service-modal__body">
-                    <p id="sm-desc" class="service-modal__desc">Detailed service description will go here.</p>
+                    <p id="sm-desc" class="service-modal__desc" data-reveal>Detailed service description will go here.</p>
                     <div class="service-modal__actions">
                         <button class="btn btn--primary" id="sm-apply-btn">Apply Now</button>
                     </div>
                 </div>
                 
                 <div class="service-modal__footer">
-                    <h3 class="service-modal__similar-title">Similar Services</h3>
+                    <h3 class="service-modal__similar-title" data-reveal>Similar Services</h3>
                     <div id="sm-similar-grid" class="service-modal__similar-grid">
                         <!-- Similar services cards injected here -->
                     </div>
