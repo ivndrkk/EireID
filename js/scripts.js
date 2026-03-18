@@ -135,7 +135,7 @@ function initDocCarousel() {
 
     let currentIndex = 0;
 
-    setInterval(() => {
+    const carouselInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
 
         // Exact pixel offset based on the rendered image width
@@ -399,7 +399,7 @@ function initComparisonTable() {
     const competitors = [comp1, comp2, comp3];
     let currentIndex = 0;
 
-    setInterval(() => {
+    const comparisonInterval = setInterval(() => {
         // Hide current competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
         
