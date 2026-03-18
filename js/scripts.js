@@ -6,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     // Navigation & Menus
+    initFloatingPill();
     initMobileMenu();
     initDropdowns();
     
@@ -25,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Rua AI Assistant
     initFloatingAssistant();
     initAIChat();
+    
+    // FAQ
+    initFAQAccordion();
 });
 
 /* ─── Navigation ─────────────────── */
@@ -634,4 +638,99 @@ function initAIChat() {
             input.focus();
         }
     });
+}
+
+/* ─── FAQ Accordion ─────────────────── */
+function initFAQAccordion() {
+    const faqItems = document.querySelectorAll('.faq__item');
+    
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq__question');
+        
+        questionBtn.addEventListener('click', () => {
+            const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
+            
+            // Close all items first
+            faqItems.forEach(otherItem => {
+                otherItem.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
+                otherItem.classList.remove('is-active');
+            });
+            
+            // If the clicked item was not expanded, open it
+            if (!isExpanded) {
+                questionBtn.setAttribute('aria-expanded', 'true');
+                item.classList.add('is-active');
+            }
+        });
+    });
+}
+
+/* ─── Floating Menu Pill ─────────────────── */
+function initFloatingPill() {
+    const header = document.querySelector('.header');
+    const originalNavList = document.getElementById('nav-list');
+    
+    if (!header || !originalNavList) return;
+    
+    // Create the pill overlay
+    const pill = document.createElement('nav');
+    pill.id = 'floating-pill';
+    pill.className = 'floating-pill logo-box--glass';
+    pill.setAttribute('aria-label', 'Quick Navigation');
+    
+    // Desktop layout wrapper
+    const pd = document.createElement('div');
+    pd.className = 'floating-pill__desktop';
+    
+    // Clone original nav list
+    const clonedList = originalNavList.cloneNode(true);
+    clonedList.id = 'floating-nav-list';
+    pd.appendChild(clonedList);
+    
+    // Mobile layout wrapper
+    const pm = document.createElement('div');
+    pm.className = 'floating-pill__mobile';
+    
+    const originalBurger = document.getElementById('mobile-menu-toggle');
+    if (originalBurger) {
+        const clonedBurger = originalBurger.cloneNode(true);
+        clonedBurger.id = 'floating-mobile-menu-toggle';
+        
+        clonedBurger.addEventListener('click', () => {
+            originalBurger.click();
+            setTimeout(() => {
+                clonedBurger.setAttribute('aria-expanded', originalBurger.getAttribute('aria-expanded'));
+            }, 10);
+        });
+        
+        originalBurger.addEventListener('click', () => {
+            setTimeout(() => {
+                clonedBurger.setAttribute('aria-expanded', originalBurger.getAttribute('aria-expanded'));
+            }, 10);
+        });
+        
+        pm.appendChild(clonedBurger);
+    }
+    
+    pill.appendChild(pd);
+    pill.appendChild(pm);
+    
+    document.body.appendChild(pill);
+    
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const triggerPoint = header.offsetTop + header.offsetHeight + 50;
+                if (window.scrollY > triggerPoint) {
+                    pill.classList.add('is-visible');
+                } else {
+                    pill.classList.remove('is-visible');
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 }
