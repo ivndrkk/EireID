@@ -521,7 +521,7 @@ function initAIChat() {
 
     if (!form || !input || !body) return;
 
-    const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/';
+    const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/chat';
 
     if (initialTimeEl) {
         initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
