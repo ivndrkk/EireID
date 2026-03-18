@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Section Specific
     initDocCarousel();
     initAboutFadeIn();
+    initScrollReveal();
+    initStatCounters();
     initHowItWorksAnimation();
+    initComparisonTable();
     
     // AI Assistant
     initFloatingAssistant();
@@ -305,18 +308,6 @@ function initStatCounters() {
 }
 
 
-/* ─── Init ────────────────────────────────────────────────────────────────── */
-
-document.addEventListener("DOMContentLoaded", () => {
-  initExploreButton();
-  initHeroInteractions();
-  initDocCarousel();
-  initAboutFadeIn();
-  initScrollReveal();
-  initStatCounters();
-  initHowItWorksAnimation();
-  initComparisonTable();
-});
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
