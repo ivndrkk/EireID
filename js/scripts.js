@@ -4,6 +4,10 @@
    and Floating AI Assistant.
    ============================================================================= */
 
+// Global Interval IDs for cleanup/management
+let carouselInterval;
+let comparisonInterval;
+
 document.addEventListener("DOMContentLoaded", () => {
     // Navigation & Menus
     initMobileMenu();
@@ -16,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Section Specific
     initDocCarousel();
     initAboutFadeIn();
+    initScrollReveal();
+    initStatCounters();
     initHowItWorksAnimation();
+    initComparisonTable();
     
     // AI Assistant
     initFloatingAssistant();
@@ -135,7 +142,7 @@ function initDocCarousel() {
 
     let currentIndex = 0;
 
-    setInterval(() => {
+    carouselInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
 
         // Exact pixel offset based on the rendered image width
@@ -307,16 +314,6 @@ function initStatCounters() {
 
 /* ─── Init ────────────────────────────────────────────────────────────────── */
 
-document.addEventListener("DOMContentLoaded", () => {
-  initExploreButton();
-  initHeroInteractions();
-  initDocCarousel();
-  initAboutFadeIn();
-  initScrollReveal();
-  initStatCounters();
-  initHowItWorksAnimation();
-  initComparisonTable();
-});
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
@@ -399,7 +396,7 @@ function initComparisonTable() {
     const competitors = [comp1, comp2, comp3];
     let currentIndex = 0;
 
-    setInterval(() => {
+    comparisonInterval = setInterval(() => {
         // Hide current competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
         
