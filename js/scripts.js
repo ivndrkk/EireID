@@ -1,7 +1,7 @@
 /* =============================================================================
    EireID Core Scripts
    Includes: Navigation, Hero Interactions, About Carousel, Animations,
-   and Floating AI Assistant.
+   and Floating Rua AI Assistant.
    ============================================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initHowItWorksAnimation();
     initComparisonTable();
     
-    // AI Assistant
+    // Rua AI Assistant
     initFloatingAssistant();
     initAIChat();
 });
@@ -463,7 +463,7 @@ function initComparisonTable() {
     }, 10000); // 10 seconds
 }
 
-/* ─── AI Assistant Logic ─────────────────── */
+/* ─── Rua AI Assistant Logic ─────────────────── */
 
 function initFloatingAssistant() {
     const fab = document.getElementById('ai-fab');
@@ -559,7 +559,7 @@ function initAIChat() {
         div.className = 'ai-message';
         div.innerHTML = `
             <div class="ai-message__avatar-container">
-                <img src="assets/img/mascot_2.png" alt="Assistant" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+                <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
@@ -579,7 +579,7 @@ function initAIChat() {
         div.id = 'ai-typing';
         div.innerHTML = `
             <div class="ai-message__avatar-container">
-                <img src="assets/img/mascot_2.png" alt="Assistant" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+                <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
