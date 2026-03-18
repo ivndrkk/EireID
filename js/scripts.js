@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initComparisonTable();
     
     // AI Assistant
-    initFloatingAssistant();
+    // initFloatingAssistant() was originally not part of the DOMContentLoaded block, so it is removed here.
     initAIChat();
 });
 
@@ -138,7 +138,7 @@ function initDocCarousel() {
 
     let currentIndex = 0;
 
-    setInterval(() => {
+    const carouselInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
 
         // Exact pixel offset based on the rendered image width
@@ -189,19 +189,25 @@ function initScrollReveal() {
 
   if (!tiles.length) return;
 
+  let ticking = false;
+
   function updateTiles() {
     const windowHeight = window.innerHeight;
 
-    tiles.forEach(tile => {
-      const rect = tile.getBoundingClientRect();
-      const tileTop = rect.top;
+    // Phase 1: Read all necessary DOM properties first to avoid layout thrashing
+    const tileRects = Array.from(tiles).map(tile => ({
+      tile,
+      top: tile.getBoundingClientRect().top
+    }));
 
+    // Phase 2: Apply all DOM writes together
+    tileRects.forEach(({tile, top}) => {
       // Animation triggers based on the tile's position in the viewport
       // Starts appearing at 95% of viewport height, fully visible at 75%
       const startTrigger = windowHeight * 0.95;
       const endTrigger = windowHeight * 0.75;
 
-      let progress = (startTrigger - tileTop) / (startTrigger - endTrigger);
+      let progress = (startTrigger - top) / (startTrigger - endTrigger);
       progress = Math.max(0, Math.min(1, progress));
 
       // 1:1 Scroll mapping
@@ -215,10 +221,19 @@ function initScrollReveal() {
         tile.classList.remove('is-visible');
       }
     });
+
+    ticking = false;
   }
 
-  window.addEventListener('scroll', updateTiles);
-  window.addEventListener('resize', updateTiles);
+  function onScrollOrResize() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateTiles);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
   updateTiles();
 }
 
@@ -308,6 +323,8 @@ function initStatCounters() {
 }
 
 
+/* ─── Init ────────────────────────────────────────────────────────────────── */
+
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
@@ -341,18 +358,21 @@ function initHowItWorksAnimation() {
     steps.forEach(step => stepObserver.observe(step));
 
     // 2. Timeline Progress Line
+    let ticking = false;
+
     function updateProgressLine() {
+        // Phase 1: Read all necessary DOM properties first to avoid layout thrashing
         const rect = timelineWrapper.getBoundingClientRect();
         const windowHeight = window.innerHeight;
+        const totalHeight = rect.height;
+        const rectTop = rect.top;
 
+        // Phase 2: Calculate and apply all DOM writes together
         // The exact center line of the browser window
         const screenCenter = windowHeight / 2; 
         
         // Calculate how far the top of the wrapper has moved past the center line
-        const scrolled = screenCenter - rect.top;
-        
-        // Total height of the track
-        const totalHeight = rect.height;
+        const scrolled = screenCenter - rectTop;
 
         // Calculate percentage (0 to 1)
         let progress = scrolled / totalHeight;
@@ -364,15 +384,24 @@ function initHowItWorksAnimation() {
         
         // Hide dot if we haven't reached the timeline yet
         progressDot.style.opacity = progress > 0 && progress < 1 ? '1' : '0';
+
+        ticking = false;
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateProgressLine);
+            ticking = true;
+        }
     }
 
     // Only listen to window scroll events if the section is actually on screen
     const sectionObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-            window.addEventListener('scroll', updateProgressLine, { passive: true });
-            updateProgressLine(); // Fire once to set initial state
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll(); // Fire once to set initial state
         } else {
-            window.removeEventListener('scroll', updateProgressLine);
+            window.removeEventListener('scroll', onScroll);
         }
     }, { threshold: 0 });
 
@@ -390,7 +419,7 @@ function initComparisonTable() {
     const competitors = [comp1, comp2, comp3];
     let currentIndex = 0;
 
-    setInterval(() => {
+    const comparisonInterval = setInterval(() => {
         // Hide current competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
         
@@ -411,7 +440,9 @@ function initFloatingAssistant() {
 
     if (!fab || !modal) return;
 
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+
+    function updateFloatingAssistant() {
         if (window.scrollY > window.innerHeight / 2) {
             fab.classList.add('is-visible');
         } else {
@@ -421,7 +452,15 @@ function initFloatingAssistant() {
                 modal.setAttribute('aria-hidden', 'true');
             }
         }
-    });
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateFloatingAssistant);
+            ticking = true;
+        }
+    }, { passive: true });
 
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
