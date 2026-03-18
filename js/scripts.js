@@ -514,60 +514,124 @@ function initFloatingAssistant() {
 }
 
 function initAIChat() {
-    const form = document.getElementById('ai-chat-form');
-    const input = document.getElementById('ai-chat-input');
-    const body = document.getElementById('ai-modal-body');
+    const form     = document.getElementById('ai-chat-form');
+    const input    = document.getElementById('ai-chat-input');
+    const body     = document.getElementById('ai-modal-body');
     const initialTimeEl = document.getElementById('ai-initial-time');
 
     if (!form || !input || !body) return;
 
-    const STORAGE_KEY = 'eireid_ai_chat_messages';
-    let messages = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-
-    function renderMessage(text, timeStr, isUser = true) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `ai-message ${isUser ? 'ai-message--user' : ''}`;
-        
-        const contentHtml = `
-           <div class="ai-message__bubble">
-              <div class="ai-message__text-container" style="max-height: none;">
-                 <p class="ai-message__text">${text}</p>
-              </div>
-              <div class="ai-message__time">${timeStr}</div>
-           </div>
-        `;
-
-        msgDiv.innerHTML = contentHtml;
-        body.appendChild(msgDiv);
-    }
+    const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/';
 
     if (initialTimeEl) {
-        const now = new Date();
-        initialTimeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    messages.forEach(msg => {
-        renderMessage(msg.text, msg.time, msg.isUser);
-    });
-    
-    setTimeout(() => {
+    // Рендер сообщения пользователя
+    function renderUserMessage(text, timeStr) {
+        const div = document.createElement('div');
+        div.className = 'ai-message ai-message--user';
+        div.innerHTML = `
+            <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                    <p class="ai-message__text">${text}</p>
+                </div>
+                <div class="ai-message__time">${timeStr}</div>
+            </div>`;
+        body.appendChild(div);
         body.scrollTop = body.scrollHeight;
-    }, 100);
+    }
 
-    form.addEventListener('submit', (e) => {
+    // Рендер ответа ассистента (с аватаром)
+    function renderBotMessage(text, timeStr, sources = []) {
+        // Форматируем: переносы строк → <br>
+        const formatted = text.replace(/\n/g, '<br>');
+
+        // Источники
+        const sourcesHtml = sources.length > 0
+            ? `<div class="ai-message__sources">
+                 <p class="ai-message__sources-label">Sources:</p>
+                 ${sources.map(s => `<a href="${s.url}" target="_blank" class="ai-message__source-link">${s.title}</a>`).join('')}
+               </div>`
+            : '';
+
+        const div = document.createElement('div');
+        div.className = 'ai-message';
+        div.innerHTML = `
+            <div class="ai-message__avatar-container">
+                <img src="assets/img/mascot_2.png" alt="Assistant" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+            </div>
+            <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                    <p class="ai-message__text">${formatted}</p>
+                    ${sourcesHtml}
+                </div>
+                <div class="ai-message__time">${timeStr}</div>
+            </div>`;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    // Индикатор загрузки ("печатает...")
+    function showTyping() {
+        const div = document.createElement('div');
+        div.className = 'ai-message';
+        div.id = 'ai-typing';
+        div.innerHTML = `
+            <div class="ai-message__avatar-container">
+                <img src="assets/img/mascot_2.png" alt="Assistant" class="ai-message__avatar" style="mix-blend-mode: multiply;">
+            </div>
+            <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                    <p class="ai-message__text" style="opacity:0.5">Thinking...</p>
+                </div>
+            </div>`;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function removeTyping() {
+        document.getElementById('ai-typing')?.remove();
+    }
+
+    // Отправка
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const text = input.value.trim();
         if (!text) return;
 
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        messages.push({ text, time: timeStr, isUser: true });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-
-        renderMessage(text, timeStr, true);
+        renderUserMessage(text, timeStr);
         input.value = '';
-        body.scrollTop = body.scrollHeight;
+        showTyping();
+
+        // Блокируем input пока ждём ответ
+        input.disabled = true;
+        form.querySelector('button').disabled = true;
+
+        try {
+            const res = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            const data = await res.json();
+            removeTyping();
+
+            const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            renderBotMessage(data.reply || 'Sorry, something went wrong.', replyTime, data.sources || []);
+
+        } catch (err) {
+            removeTyping();
+            const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
+        } finally {
+            input.disabled = false;
+            form.querySelector('button').disabled = false;
+            input.focus();
+        }
     });
 }
