@@ -180,65 +180,78 @@ function initAboutFadeIn() {
         }
     );
 
-    faders.forEach(el => observer.observe(el));
+    faders.forEach(el => {
+        if (!el.dataset.observed) {
+            observer.observe(el);
+            el.dataset.observed = 'true';
+        }
+    });
 }
 
 
 /**
  * initScrollReveal
  * Implements Apple-style scroll-linked animations for the About section tiles.
- * Directly links opacity and transform to the scroll position.
+ * Optimized to prevent layout thrashing by pre-calculating offsets.
  */
 function initScrollReveal() {
   const tiles = document.querySelectorAll('.about__tile');
-
   if (!tiles.length) return;
 
-  let ticking = false;
+  let tileData = [];
+  let windowHeight = window.innerHeight;
+
+  function cacheOffsets() {
+    windowHeight = window.innerHeight;
+    const scrollY = window.scrollY;
+    tileData = Array.from(tiles).map(tile => ({
+      el: tile,
+      // Calculate absolute top position relative to the document
+      top: tile.getBoundingClientRect().top + scrollY
+    }));
+  }
 
   function updateTiles() {
-    const windowHeight = window.innerHeight;
+    const scrollY = window.scrollY;
 
-    // Phase 1: Read all necessary DOM properties first to avoid layout thrashing
-    const tileRects = Array.from(tiles).map(tile => ({
-      tile,
-      top: tile.getBoundingClientRect().top
-    }));
+    tileData.forEach(({el, top}) => {
+      // Position relative to current viewport
+      const relativeTop = top - scrollY;
 
-    // Phase 2: Apply all DOM writes together
-    tileRects.forEach(({tile, top}) => {
       // Animation triggers based on the tile's position in the viewport
-      // Starts appearing at 95% of viewport height, fully visible at 75%
       const startTrigger = windowHeight * 0.95;
       const endTrigger = windowHeight * 0.75;
 
-      let progress = (startTrigger - top) / (startTrigger - endTrigger);
+      let progress = (startTrigger - relativeTop) / (startTrigger - endTrigger);
       progress = Math.max(0, Math.min(1, progress));
 
       // 1:1 Scroll mapping
-      tile.style.opacity = progress;
-      tile.style.transform = `translateY(${30 * (1 - progress)}px)`;
+      el.style.opacity = progress;
+      el.style.transform = `translateY(${30 * (1 - progress)}px)`;
 
-      // Toggle class for hover states and other CSS interactions
       if (progress > 0.1) {
-        tile.classList.add('is-visible');
+        el.classList.add('is-visible');
       } else {
-        tile.classList.remove('is-visible');
+        el.classList.remove('is-visible');
       }
     });
 
     ticking = false;
   }
 
-  function onScrollOrResize() {
+  let ticking = false;
+  function onScroll() {
     if (!ticking) {
       window.requestAnimationFrame(updateTiles);
       ticking = true;
     }
   }
 
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', cacheOffsets);
+
+  // Initial cache and run
+  cacheOffsets();
   updateTiles();
 }
 
@@ -267,9 +280,12 @@ function initTextReveal() {
   });
 
   elementsToAnimate.forEach((el, index) => {
-    // Optionally create slight cascading delays for grouped elements
-    el.style.transitionDelay = `${(index % 5) * 50}ms`;
-    observer.observe(el);
+    if (!el.dataset.observed) {
+        // Optionally create slight cascading delays for grouped elements
+        el.style.transitionDelay = `${(index % 5) * 50}ms`;
+        observer.observe(el);
+        el.dataset.observed = 'true';
+    }
   });
 }
 
@@ -395,28 +411,36 @@ function initHowItWorksAnimation() {
 
     // 2. Timeline Progress Line
     let ticking = false;
+    let wrapperOffsetTop = 0;
+    let wrapperHeight = 0;
+    let windowHeight = window.innerHeight;
+
+    function cacheTimelineOffsets() {
+        const rect = timelineWrapper.getBoundingClientRect();
+        wrapperOffsetTop = rect.top + window.scrollY;
+        wrapperHeight = rect.height;
+        windowHeight = window.innerHeight;
+    }
 
     function updateProgressLine() {
-        // Phase 1: Read all necessary DOM properties first to avoid layout thrashing
-        const rect = timelineWrapper.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const totalHeight = rect.height;
-        const rectTop = rect.top;
+        const scrollY = window.scrollY;
 
-        // Phase 2: Calculate and apply all DOM writes together
         // The exact center line of the browser window
         const screenCenter = windowHeight / 2; 
         
+        // Relative top position of the wrapper
+        const relativeTop = wrapperOffsetTop - scrollY;
+
         // Calculate how far the top of the wrapper has moved past the center line
-        const scrolled = screenCenter - rectTop;
+        const scrolled = screenCenter - relativeTop;
 
         // Calculate percentage (0 to 1)
-        let progress = scrolled / totalHeight;
+        let progress = scrolled / wrapperHeight;
         progress = Math.max(0, Math.min(1, progress));
 
-        // Apply visual updates
-        progressLine.style.height = `${progress * 100}%`;
-        progressDot.style.top = `${progress * 100}%`;
+        // Apply visual updates using transforms for smoothness
+        progressLine.style.transform = `scaleY(${progress})`;
+        progressDot.style.transform = `translate(-50%, -50%) translateY(${progress * wrapperHeight}px)`;
         
         // Hide dot if we haven't reached the timeline yet
         progressDot.style.opacity = progress > 0 && progress < 1 ? '1' : '0';
@@ -434,10 +458,13 @@ function initHowItWorksAnimation() {
     // Only listen to window scroll events if the section is actually on screen
     const sectionObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
+            cacheTimelineOffsets();
             window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', cacheTimelineOffsets);
             onScroll(); // Fire once to set initial state
         } else {
             window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', cacheTimelineOffsets);
         }
     }, { threshold: 0 });
 
@@ -477,9 +504,10 @@ function initFloatingAssistant() {
     if (!fab || !modal) return;
 
     let ticking = false;
+    let windowHeight = window.innerHeight;
 
     function updateFloatingAssistant() {
-        if (window.scrollY > window.innerHeight / 2) {
+        if (window.scrollY > windowHeight / 2) {
             fab.classList.add('is-visible');
         } else {
             fab.classList.remove('is-visible');
@@ -497,6 +525,10 @@ function initFloatingAssistant() {
             ticking = true;
         }
     }, { passive: true });
+
+    window.addEventListener('resize', () => {
+        windowHeight = window.innerHeight;
+    });
 
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
@@ -685,6 +717,12 @@ function initFloatingPill() {
     // Clone original nav list
     const clonedList = originalNavList.cloneNode(true);
     clonedList.id = 'floating-nav-list';
+
+    // Remove IDs from cloned elements to avoid duplicates
+    clonedList.querySelectorAll('[id]').forEach(el => {
+        el.removeAttribute('id');
+    });
+
     pd.appendChild(clonedList);
     
     // Mobile layout wrapper
@@ -718,11 +756,15 @@ function initFloatingPill() {
     document.body.appendChild(pill);
     
     let ticking = false;
+    let triggerPoint = 0;
+
+    function cacheHeaderOffset() {
+        triggerPoint = header.offsetTop + header.offsetHeight + 50;
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const triggerPoint = header.offsetTop + header.offsetHeight + 50;
                 if (window.scrollY > triggerPoint) {
                     pill.classList.add('is-visible');
                 } else {
@@ -733,4 +775,7 @@ function initFloatingPill() {
             ticking = true;
         }
     }, { passive: true });
+
+    window.addEventListener('resize', cacheHeaderOffset);
+    cacheHeaderOffset();
 }

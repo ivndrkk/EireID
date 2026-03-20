@@ -111,22 +111,32 @@ body {
   font-family: var(--font-family-base);
   color: var(--color-text-body);
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
+  background-color: #e3f7e8;
+}
 
-  /* EireID brand mesh-gradient background */
+/* GPU-optimized animated mesh gradient background */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: -2;
+  pointer-events: none;
   background:
     radial-gradient(circle at 10% 20%, #effaee 0%, transparent 55%),
     radial-gradient(circle at 85% 85%, #bcebc7 0%, transparent 65%),
     radial-gradient(circle at 95% 15%, #9fdcae 0%, transparent 60%),
     radial-gradient(circle at 20% 90%, #d1f4da 0%, transparent 60%),
     #e3f7e8;
-  /* solid fallback */
-  background-size: 200% 200%;
-  background-attachment: fixed;
   animation: gradientShift 20s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 /* Full-page Irish harp watermark */
@@ -288,18 +298,16 @@ body::before {
   }
 }
 
-/* Animate the body mesh gradient */
+/* Animate the body mesh gradient using GPU-accelerated transforms */
 @keyframes gradientShift {
   0% {
-    background-position: 0% 50%;
+    transform: translate(0, 0) rotate(0deg);
   }
-
   50% {
-    background-position: 100% 50%;
+    transform: translate(2%, 2%) rotate(1deg);
   }
-
   100% {
-    background-position: 0% 50%;
+    transform: translate(0, 0) rotate(0deg);
   }
 }
 
