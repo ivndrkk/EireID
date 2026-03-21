@@ -1,6 +1,4 @@
 /* =============================================================================
-   header.css — EireID Header & Navigation
-   All styles scoped to .header, .nav, .menu-toggle, and related elements.
    Depends on: common.css (variables, reset, .logo-box--glass)
    ============================================================================= */
 
@@ -421,6 +419,70 @@
 }
 
 
+/* ─── Hero Pill Wrapper (for joining buttons) ─────────────────────────────── */
+.hero__pill-wrapper {
+    display: flex;
+    align-items: stretch; /* Change from center to stretch to equalize bottom lines */
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    padding: 0;
+    overflow: visible;
+    position: relative;
+    z-index: 10;
+}
+
+.hero__pill-divider {
+    width: 1px;
+    height: 100%; /* divider fills height too */
+    background: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    margin: 8px 0; /* but let's make it look centered by using margins if needed? No, let's keep it clean */
+}
+
+/* Let's actually center the divider content by adjusting it */
+.hero__pill-divider {
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    align-self: center;
+    height: 24px;
+}
+
+.hero__pill-wrapper .hero__action {
+    width: auto;
+    padding: 16px 32px;
+    border-radius: 0;
+}
+
+.hero__pill-wrapper .hero__action:first-of-type {
+    border-radius: 999px 0 0 999px;
+}
+
+.hero__pill-wrapper .hero__action:last-of-type {
+    border-radius: 0 999px 999px 0;
+}
+
+.hero__pill-wrapper .hero__action::before {
+    display: none; /* remove individual pill backgrounds */
+}
+
+/* Specific hover backdrops for sides */
+.hero__pill-wrapper .hero__action {
+    transition: background 0.3s ease;
+}
+
+.hero__pill-wrapper .hero__action:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.hero__pill-wrapper .hero__action:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 /* ─── Individual CTA Button ───────────────────────────────────────────────── */
 
 .hero__action {
@@ -439,7 +501,8 @@
     text-decoration: none;
     position: relative;
     z-index: 1;
-    padding: var(--space-sm) 0;
+    padding: 0 var(--space-xl);
+    height: 48px;
     width: 200px;
 }
 
@@ -447,23 +510,24 @@
 .hero__action::after {
     content: '';
     position: absolute;
-    bottom: -4px;
-    left: 20%;
-    width: 60%;
+    bottom: 12px;
+    left: 30%;
+    width: 40%;
     height: 1px;
     background-color: var(--color-text-heading);
-    transform: scaleX(0);
+    transform: scaleX(0) translateZ(0); /* Hardware accelerated to prevent thickening */
     transform-origin: center;
+    z-index: 5;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s;
     pointer-events: none;
 }
 
 .hero__action:hover::after,
 .hero__action:focus-visible::after {
-    transform: scaleX(1);
+    transform: scaleX(1) translateZ(0);
 }
 
-/* Glassmorphism pill that materialises on hover/focus */
+/* Glassmorphism pill that is constant and enhances on hover/focus */
 .hero__action::before {
     content: '';
     position: absolute;
@@ -472,13 +536,13 @@
     width: 100%;
     height: 48px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    opacity: 0;
-    transform: translate(-50%, -40%) scale(0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: -1;
     pointer-events: none;
@@ -486,14 +550,14 @@
 
 .hero__action:hover::before,
 .hero__action:focus-visible::before {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    background: rgba(255, 255, 255, 0.25);
+    transform: translate(-50%, -50%) scale(1.02);
 }
 
 .hero__action:active::before {
     background: rgba(255, 255, 255, 0.5);
     transition: all 0.1s ease;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translate(-50%, -50%) scale(0.98);
 }
 
 .hero__action:focus-visible {
@@ -706,17 +770,9 @@
     /* Overrides .logo-box--glass default opacity — tiles sit on a frosted surface */
     background: rgba(255, 255, 255, 0.7);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-
-    /* Scroll Animation Base State */
-    opacity: 0;
-    transform: translateY(30px);
-    transition:
-        box-shadow var(--transition-base);
-    will-change: transform, opacity;
 }
 
-.about__tile.is-visible:hover {
-    transform: translateY(-2px);
+.about__tile:hover {
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
 }
 
@@ -1481,8 +1537,7 @@
     }
 
     .how-it-works__content {
-        position: sticky;
-        top: 30vh;
+        margin-top: 5rem;
     }
 
     .how-it-works__timeline-wrapper {
@@ -1682,10 +1737,7 @@
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
 }
 
-/* Column hover effect for better readability */
-.compare-grid:hover .compare-cell:not(.eireid-col):hover {
-    background: rgba(255, 255, 255, 0.4);
-}
+/* Column hover effect removed per user request */
 
 /* ─── Mobile Adjustments (Rotating Competitor Focus) ─── */
 @media (max-width: 1023px) {
@@ -2845,7 +2897,7 @@
 }
 
 .genesis-security__cta {
-    width: 250px;
+    width: 285px;
     margin-top: var(--space-md);
     align-self: flex-start;
     color: #ffffff !important;
@@ -3098,10 +3150,30 @@
 .faq__question-text {
     font-family: var(--font-family-base);
     font-weight: 400;
+    transition: transform var(--transition-base);
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.faq__item:hover .faq__question {
-    color: var(--color-bg-primary);
+.faq__question-text::before {
+    content: '>';
+    position: absolute;
+    left: -24px;
+    opacity: 0;
+    transition: all var(--transition-base);
+    font-weight: 700;
+    color: var(--color-text-heading);
+    transform: translateX(-10px);
+}
+
+.faq__item:hover .faq__question-text {
+    transform: translateX(24px);
+}
+
+.faq__item:hover .faq__question-text::before {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .faq__icon {
@@ -3568,29 +3640,72 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 2.25rem;
+    padding: 0 var(--space-xl);
+    height: 48px;
     font-family: var(--font-family-base);
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #fff;
-    background: var(--color-btn-primary);
+    color: var(--color-text-heading);
+    background: transparent;
     border: none;
-    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: background var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-base);
+    transition: transform var(--transition-fast);
+    position: relative;
+    z-index: 1;
 }
 
-.cta__btn:hover {
-    background: var(--color-btn-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.cta__btn::after {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 30%;
+    width: 40%;
+    height: 1px;
+    background-color: var(--color-text-heading);
+    transform: scaleX(0) translateZ(0); /* Hardware accelerated */
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    z-index: 5;
 }
 
-.cta__btn:active {
-    transform: translateY(0);
-    box-shadow: none;
+.cta__btn:hover::after,
+.cta__btn:focus-visible::after {
+    transform: scaleX(1) translateZ(0);
+}
+
+.cta__btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 48px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05); /* Constant slightly transparent */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    opacity: 1; /* Always visible */
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.cta__btn:hover::before,
+.cta__btn:focus-visible::before {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translate(-50%, -50%) scale(1.02);
+}
+
+.cta__btn:active::before {
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.1s ease;
+    transform: translate(-50%, -50%) scale(0.98);
 }
 
 /* ─── Footer Main ─────────────────── */

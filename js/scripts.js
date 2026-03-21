@@ -195,64 +195,7 @@ function initAboutFadeIn() {
  * Optimized to prevent layout thrashing by pre-calculating offsets.
  */
 function initScrollReveal() {
-  const tiles = document.querySelectorAll('.about__tile');
-  if (!tiles.length) return;
-
-  let tileData = [];
-  let windowHeight = window.innerHeight;
-
-  function cacheOffsets() {
-    windowHeight = window.innerHeight;
-    const scrollY = window.scrollY;
-    tileData = Array.from(tiles).map(tile => ({
-      el: tile,
-      // Calculate absolute top position relative to the document
-      top: tile.getBoundingClientRect().top + scrollY
-    }));
-  }
-
-  function updateTiles() {
-    const scrollY = window.scrollY;
-
-    tileData.forEach(({el, top}) => {
-      // Position relative to current viewport
-      const relativeTop = top - scrollY;
-
-      // Animation triggers based on the tile's position in the viewport
-      const startTrigger = windowHeight * 0.95;
-      const endTrigger = windowHeight * 0.75;
-
-      let progress = (startTrigger - relativeTop) / (startTrigger - endTrigger);
-      progress = Math.max(0, Math.min(1, progress));
-
-      // 1:1 Scroll mapping
-      el.style.opacity = progress;
-      el.style.transform = `translateY(${30 * (1 - progress)}px)`;
-
-      if (progress > 0.1) {
-        el.classList.add('is-visible');
-      } else {
-        el.classList.remove('is-visible');
-      }
-    });
-
-    ticking = false;
-  }
-
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(updateTiles);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', cacheOffsets);
-
-  // Initial cache and run
-  cacheOffsets();
-  updateTiles();
+  // Animation removed as per user request
 }
 
 /**
@@ -261,32 +204,7 @@ function initScrollReveal() {
  * Text elements transition from muted grey to natural color when in view.
  */
 function initTextReveal() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const elementsToAnimate = document.querySelectorAll('[data-reveal]');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-      } else {
-        // Optional: remove if you want color to fade back out when leaving screen
-        entry.target.classList.remove('is-revealed');
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  elementsToAnimate.forEach((el, index) => {
-    if (!el.dataset.observed) {
-        // Optionally create slight cascading delays for grouped elements
-        el.style.transitionDelay = `${(index % 5) * 50}ms`;
-        observer.observe(el);
-        el.dataset.observed = 'true';
-    }
-  });
+  // Text reveal removed as per user request
 }
 
 
