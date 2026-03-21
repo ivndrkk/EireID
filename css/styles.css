@@ -1446,7 +1446,7 @@
 .timeline-step.is-active .timeline-step__icon-box {
     background: var(--color-bg-primary);
     border-color: var(--color-bg-primary);
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-25px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
