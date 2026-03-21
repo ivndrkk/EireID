@@ -7,15 +7,12 @@
     <meta name="description" content="EireID - All Services">
     <title>All Services | EireID</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -27,7 +24,6 @@
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
 
-            <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -52,7 +48,6 @@
                     <li><a href="team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
-            <!-- Mobile Logo -->
             <a href="../index.html" class="header__mobile-logo" aria-label="Home">
                 <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
             </a>
@@ -60,13 +55,11 @@
 
         <!-- === ALL SERVICES === -->
         <main class="services-library">
-            <!-- Hero / Title Area -->
             <section class="services-hero">
                 <h1 class="services-hero__title" data-reveal>All Services</h1>
                 <p class="services-hero__subtitle" data-reveal>Find and access every Irish government service in one place.</p>
             </section>
 
-            <!-- Filters Area -->
             <section class="services-controls logo-box--glass">
                 <div class="filter-group">
                     <label class="filter-label" id="provider-label">Provider</label>
@@ -77,7 +70,6 @@
                         </button>
                         <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="provider-list">
                             <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Providers</li>
-                            <!-- Populated by JS -->
                         </ul>
                     </div>
                 </div>
@@ -91,7 +83,6 @@
                         </button>
                         <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="tag-list">
                             <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Tags</li>
-                            <!-- Populated by JS -->
                         </ul>
                     </div>
                 </div>
@@ -105,16 +96,13 @@
                 </div>
             </section>
 
-            <!-- Grid -->
             <div class="services-grid" id="services-grid">
-                <!-- Cards will be populated here by JS -->
             </div>
             
             <div id="no-results" class="no-results" style="display: none;">
                 <p data-reveal>No services found matching your criteria.</p>
             </div>
 
-            <!-- Pagination Control -->
             <div class="services-pagination" id="services-pagination">
                 <button id="load-more-btn" class="btn--branded">Load More</button>
             </div>
@@ -135,7 +123,6 @@
                     <span id="sm-provider" class="service-modal__provider" data-reveal>Provider</span>
                     <h2 id="sm-title" class="service-modal__title" data-reveal>Service Title</h2>
                     <div id="sm-tags" class="service-card__tags service-modal__tags-container">
-                        <!-- Tags will go here -->
                     </div>
                 </div>
                 
@@ -149,12 +136,10 @@
                 <div class="service-modal__footer">
                     <h3 class="service-modal__similar-title" data-reveal>Similar Services</h3>
                     <div id="sm-similar-grid" class="service-modal__similar-grid">
-                        <!-- Similar services cards injected here -->
                     </div>
                 </div>
             </div>
 
-            <!-- Demo Step 1: Confirmation Form -->
             <div id="sm-content-step1" class="sm-state-container">
                 <div class="service-modal__header">
                     <h2 class="service-modal__title">Application (1/2) - DEMO</h2>
@@ -182,7 +167,6 @@
                 </div>
             </div>
 
-            <!-- Cancellation State -->
             <div id="sm-content-cancelled" class="sm-state-container sm-state--center">
                 <div class="service-modal__body">
                     <span class="iconify sm-status-icon sm-status-icon--error" data-icon="lucide:x-circle"></span>
@@ -194,7 +178,6 @@
                 </div>
             </div>
 
-            <!-- Demo Step 2: Face scanning & Loading -->
             <div id="sm-content-step2" class="sm-state-container sm-state--center">
                 <div class="service-modal__header">
                     <h2 class="service-modal__title">Face Verification (2/2) - DEMO</h2>
@@ -211,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- Success State -->
             <div id="sm-content-success" class="sm-state-container sm-state--center">
                 <div class="service-modal__body">
                     <span class="iconify sm-status-icon sm-status-icon--success" data-icon="lucide:check-circle"></span>
@@ -264,7 +246,6 @@
       </div>
     </div>
 
-    <!-- Scripts -->
     <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>
     <script src="../js/allservices.js" defer></script>

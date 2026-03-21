@@ -4,91 +4,55 @@
    All page-specific or component-specific styles live in their own files.
    ============================================================================= */
 
-
 /* ─── 1. CSS Custom Properties (Design Tokens) ───────────────────────────── */
 :root {
 
-  /* --- Colors --- */
   --color-bg-primary: #a4e5b7;
-  /* Brand green — used for highlights, accents */
   --color-text-heading: #000000;
-  /* Pure black — headings, strong UI text */
   --color-text-body: #1a1a1a;
-  /* Near-black — paragraph / body text */
   --color-text-muted: #333333;
-  /* Softer dark — captions, secondary text */
   --color-border: #000000;
-  /* Hard border color */
   --color-btn-primary: #000000;
-  /* Primary button fill */
   --color-btn-hover: #1a1a1a;
-  /* Primary button hover fill */
 
-  /* --- Typography --- */
   --font-family-base: 'Lato', sans-serif;
 
   --font-size-xs: 0.75rem;
-  /*  12px */
   --font-size-sm: 0.875rem;
-  /*  14px */
   --font-size-base: 1rem;
-  /*  16px */
   --font-size-lg: 1.125rem;
-  /*  18px */
   --font-size-xl: 1.25rem;
-  /*  20px */
   --font-size-2xl: 1.5rem;
-  /*  24px */
   --font-size-3xl: 2rem;
-  /*  32px */
   --font-size-4xl: 3rem;
-  /*  48px */
   --font-size-hero: clamp(2rem, 3.5vw, 3.25rem);
-  /*  Fluid hero heading */
 
-  /* --- Spacing --- */
   --space-xs: 0.25rem;
-  /*   4px */
   --space-sm: 0.5rem;
-  /*   8px */
   --space-md: 1rem;
-  /*  16px */
   --space-lg: 1.5rem;
-  /*  24px */
   --space-xl: 2.5rem;
-  /*  40px */
   --space-2xl: 3rem;
-  /*  48px */
   --space-3xl: 4rem;
-  /*  64px */
   --space-section: clamp(3rem, 8vw, 6rem);
-  /*  Fluid section gap */
 
-  /* --- Layout --- */
   --container-max: 1280px;
   --container-padding: clamp(1rem, 5vw, 2rem);
-  /* Fluid side padding */
 
-  /* --- Border Radius --- */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  /* Perfect pill / circle */
 
-  /* --- Shadows --- */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.16);
   --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.20);
-  /* Used on interactive hover */
 
-  /* --- Transitions --- */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
 }
-
 
 /* ─── 2. Reset ────────────────────────────────────────────────────────────── */
 
@@ -104,7 +68,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
 /* ─── 3. Base Body ────────────────────────────────────────────────────────── */
 
 body {
@@ -119,7 +82,6 @@ body {
   background-color: #e3f7e8;
 }
 
-/* GPU-optimized animated mesh gradient background */
 body::after {
   content: '';
   position: fixed;
@@ -139,7 +101,6 @@ body::after {
   will-change: transform;
 }
 
-/* Full-page Irish harp watermark */
 body::before {
   content: '';
   position: fixed;
@@ -156,17 +117,8 @@ body::before {
   z-index: -1;
 }
 
-
 /* ─── 4. Layout Utility ───────────────────────────────────────────────────── */
 
-/**
- * .container
- * Centred, max-width wrapper used as the root layout shell.
- * Wrap every page's content inside this to stay on-brand.
- *
- * Usage:
- *   <div class="container"> … </div>
- */
 .container {
   width: 100%;
   max-width: var(--container-max);
@@ -177,17 +129,8 @@ body::before {
   flex-direction: column;
 }
 
-
 /* ─── 5. Brand Utility Classes ────────────────────────────────────────────── */
 
-/**
- * .logo-box
- * Square card used for logo containers, icon tiles, and interactive badges.
- * Sizes are set contextually (80px default on mobile, override as needed).
- *
- * Usage:
- *   <button class="logo-box logo-box--glass"> … </button>
- */
 .logo-box {
   width: 80px;
   height: 80px;
@@ -220,17 +163,6 @@ body::before {
   outline-offset: 4px;
 }
 
-/**
- * .logo-box--glass
- * Glassmorphism modifier. Apply to any surface that should float above the
- * brand gradient — tiles, cards, nav dropdowns, modals, etc.
- *
- * This modifier is the most widely reused class in the project.
- *
- * Usage:
- *   <div class="logo-box--glass"> … </div>
- *   <article class="about__tile logo-box--glass"> … </article>
- */
 .logo-box--glass {
   background: rgba(255, 255, 255, 0.35);
   border-radius: 16px;
@@ -245,21 +177,12 @@ body::before {
   height: 100%;
 }
 
-/**
- * .pulse-animation
- * Adds a looping pulse glow effect. Used on the orbit centre logo.
- *
- * Usage:
- *   <div class="orbit-center logo-box--glass pulse-animation"> … </div>
- */
 .pulse-animation {
   animation: pulseLogo 4s infinite ease-in-out;
 }
 
-
 /* ─── 6. Keyframe Animations ──────────────────────────────────────────────── */
 
-/* Page entrance — opacity only */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -270,7 +193,6 @@ body::before {
   }
 }
 
-/* Page entrance — slide up + fade */
 @keyframes translateYFadeIn {
   from {
     opacity: 0;
@@ -283,7 +205,6 @@ body::before {
   }
 }
 
-/* Gentle vertical bobbing — logo boxes, action chips */
 @keyframes float {
   0% {
     transform: translateY(0);
@@ -298,7 +219,6 @@ body::before {
   }
 }
 
-/* Animate the body mesh gradient using GPU-accelerated transforms */
 @keyframes gradientShift {
   0% {
     transform: translate(0, 0) rotate(0deg);
@@ -311,7 +231,6 @@ body::before {
   }
 }
 
-/* Scroll indicator dot bounce */
 @keyframes scrollWheel {
   0% {
     transform: translateY(0);
@@ -334,7 +253,6 @@ body::before {
   }
 }
 
-/* Orbit system rotation (outer ring) */
 @keyframes orbitRotate {
   from {
     transform: rotate(0deg);
@@ -345,7 +263,6 @@ body::before {
   }
 }
 
-/* Counter-rotation so orbit icons stay upright */
 @keyframes orbitCounterRotate {
   from {
     transform: rotate(var(--angle)) translateY(-90px) rotate(calc(var(--angle) * -1)) rotate(0deg);
@@ -356,7 +273,6 @@ body::before {
   }
 }
 
-/* Pulse glow on orbit centre logo */
 @keyframes pulseLogo {
   0% {
     box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.4);
@@ -374,7 +290,6 @@ body::before {
   }
 }
 
-/* Living text effect (scroll color reveal) */
 [data-reveal]:not(.is-revealed) {
   color: #6b7280 !important;
 }

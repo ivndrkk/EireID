@@ -4,9 +4,7 @@
    Depends on: common.css (variables, reset, .logo-box--glass)
    ============================================================================= */
 
-
-/* ─── Header Shell ────────────────────────────────────────────────────────── */
-
+/* ─── Header Shell ───────────────── */
 .header {
     padding: var(--space-sm) 0;
     display: flex;
@@ -25,9 +23,7 @@
     }
 }
 
-
-/* ─── Mobile Menu Toggle (Burger) ────────────────────────────────────────── */
-
+/* ─── Nav List ───────────────── */
 .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -49,7 +45,6 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Animated X state when menu is open */
 .menu-toggle[aria-expanded="true"] span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -68,10 +63,6 @@
     }
 }
 
-
-/* ─── Nav List ────────────────────────────────────────────────────────────── */
-
-/* Mobile: hidden off-screen panel, revealed by .is-open */
 .nav__list {
     list-style: none;
     display: flex;
@@ -79,7 +70,7 @@
     align-items: center;
     gap: var(--space-md);
 
-    /* Absolutely positioned below header on mobile */
+
     position: absolute;
     top: 100%;
     left: 0;
@@ -91,7 +82,7 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
 
-    /* Hidden state */
+
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -104,7 +95,6 @@
     transform: translateY(0);
 }
 
-/* Desktop: inline row, no panel */
 @media (min-width: 768px) {
     .nav__list {
         position: static;
@@ -123,9 +113,6 @@
     }
 }
 
-
-/* ─── Nav Item ────────────────────────────────────────────────────────────── */
-
 .nav__item {
     position: relative;
     list-style: none;
@@ -137,9 +124,6 @@
         width: auto;
     }
 }
-
-
-/* ─── Nav Link ────────────────────────────────────────────────────────────── */
 
 .nav__link {
     font-size: var(--font-size-base);
@@ -156,7 +140,6 @@
     width: 100%;
 }
 
-/* Glassmorphism pill that appears on hover/focus */
 .nav__link::before {
     content: '';
     position: absolute;
@@ -202,9 +185,6 @@
     }
 }
 
-
-/* ─── Dropdown ────────────────────────────────────────────────────────────── */
-
 .nav__dropdown-icon {
     font-size: 0.6em;
     margin-left: 6px;
@@ -235,7 +215,6 @@
     animation: fadeIn 0.2s ease-out;
 }
 
-/* On mobile, dropdown stretches full width */
 @media (max-width: 767px) {
     .nav__dropdown {
         position: absolute;
@@ -283,13 +262,9 @@
     }
 }
 
-
-
-/* ─── Hero Wrapper ────────────────────────────────────────────────────────── */
-
 .hero {
     min-height: calc(100svh - 120px);
-    /* Full viewport minus approximate header height */
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -297,12 +272,9 @@
     animation: translateYFadeIn 0.8s ease-out 0.2s both;
 }
 
-
-/* ─── Hero Content (logos + heading + subtitle) ───────────────────────────── */
-
 .hero__content {
     flex: 1;
-    /* Pushes .hero__actions to the bottom */
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -310,14 +282,11 @@
     width: 100%;
 }
 
-
-/* ─── Logo Pair ───────────────────────────────────────────────────────────── */
-
 .hero__logos {
     display: flex;
     gap: 1.25rem;
     margin-bottom: var(--space-lg);
-    /* Mobile default */
+
 }
 
 @media (min-width: 769px) {
@@ -326,16 +295,9 @@
     }
 }
 
-
-/* ─── Logo Box sizes (hero context) ──────────────────────────────────────── */
-/*
- * Base styles and .logo-box--glass live in common.css.
- * These rules only override the size at each breakpoint.
- */
-
 .logo-box {
     width: 80px;
-    /* Mobile */
+
     height: 80px;
     border-radius: 16px;
 }
@@ -356,14 +318,11 @@
     }
 }
 
-
-/* ─── Heading & Subtitle ──────────────────────────────────────────────────── */
-
 .hero__title {
     font-size: 2.25rem;
-    /* Mobile */
+
     font-weight: 400;
-    /* Light weight — EireID brand */
+
     color: var(--color-text-heading);
     letter-spacing: -0.01em;
     margin-top: 1rem;
@@ -372,7 +331,7 @@
 
 .hero__subtitle {
     font-size: var(--font-size-base);
-    /* Mobile */
+
     color: var(--color-text-muted);
     margin-top: var(--space-md);
     font-weight: 400;
@@ -398,9 +357,6 @@
     }
 }
 
-
-/* ─── CTA Buttons Row ─────────────────────────────────────────────────────── */
-
 .hero__actions {
     margin-top: var(--space-xl);
 
@@ -419,9 +375,6 @@
         gap: var(--space-2xl);
     }
 }
-
-
-/* ─── Individual CTA Button ───────────────────────────────────────────────── */
 
 .hero__action {
     display: flex;
@@ -443,7 +396,6 @@
     width: 200px;
 }
 
-/* Animated Underline Effect */
 .hero__action::after {
     content: '';
     position: absolute;
@@ -463,7 +415,6 @@
     transform: scaleX(1);
 }
 
-/* Glassmorphism pill that materialises on hover/focus */
 .hero__action::before {
     content: '';
     position: absolute;
@@ -501,9 +452,6 @@
     outline-offset: 4px;
 }
 
-
-/* ─── Scroll Indicator Icon (inside "Explore EireID" button) ─────────────── */
-
 .scroll-icon {
     width: 16px;
     height: 24px;
@@ -524,7 +472,6 @@
     border-radius: 2px;
     animation: scrollWheel 2s infinite ease-in-out;
 }
-
 
 /* =============================================================================
    quick-links.css — Quick Links Section
@@ -635,15 +582,11 @@
     }
 }
 
-
 /* =============================================================================
    about.css — EireID About / Bento Grid Section
    All styles scoped to the #about section and its five tiles.
    Depends on: common.css (variables, reset, .logo-box--glass, .pulse-animation)
    ============================================================================= */
-
-
-/* ─── Section Shell ───────────────────────────────────────────────────────── */
 
 .about {
     background-color: rgba(255, 255, 255, 0.4);
@@ -667,17 +610,13 @@
     }
 }
 
-
-/* ─── Bento Grid ──────────────────────────────────────────────────────────── */
-
 .about__grid {
     display: grid;
     grid-template-columns: 1fr;
-    /* Mobile: single column stack */
+
     gap: var(--space-lg);
 }
 
-/* Tablet: 2-column layout */
 @media (min-width: 768px) {
     .about__grid {
         grid-template-columns: repeat(2, 1fr);
@@ -685,16 +624,12 @@
     }
 }
 
-/* Desktop: 3-column bento (3fr 4fr 3fr) */
 @media (min-width: 1024px) {
     .about__grid {
         grid-template-columns: 3fr 4fr 3fr;
         grid-template-rows: minmax(300px, auto) minmax(300px, auto);
     }
 }
-
-
-/* ─── Tile Base ───────────────────────────────────────────────────────────── */
 
 .about__tile {
     padding: var(--space-lg);
@@ -703,11 +638,11 @@
     gap: var(--space-md);
     overflow: hidden;
     position: relative;
-    /* Overrides .logo-box--glass default opacity — tiles sit on a frosted surface */
+
     background: rgba(255, 255, 255, 0.7);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
 
-    /* Scroll Animation Base State */
+
     opacity: 0;
     transform: translateY(30px);
     transition:
@@ -720,7 +655,6 @@
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
 }
 
-/* Staggered Delays */
 .about__tile:nth-child(1) {
     --tile-delay: 0ms;
 }
@@ -741,10 +675,6 @@
     --tile-delay: 400ms;
 }
 
-
-/* ─── Tile Size Modifiers ─────────────────────────────────────────────────── */
-
-/* Tablet */
 @media (min-width: 768px) {
     .about__tile--tall {
         grid-row: span 2;
@@ -759,7 +689,6 @@
     }
 }
 
-/* Desktop — explicit grid placement */
 @media (min-width: 1024px) {
     .about__tile--tall {
         grid-column: 1 / 2;
@@ -771,13 +700,13 @@
         grid-row: 1 / 2;
     }
 
-    /* Service Hub */
+
     .about__tile:nth-child(3) {
         grid-column: 2 / 3;
         grid-row: 2 / 3;
     }
 
-    /* Agent Assistance */
+
     .about__tile--small {
         grid-column: 3 / 4;
         grid-row: 2 / 3;
@@ -788,7 +717,6 @@
         grid-row: 3 / 4;
     }
 }
-
 
 /* ─── Tile Header (shared across all tiles) ───────────────────────────────── */
 
@@ -804,9 +732,6 @@
     color: var(--color-text-muted);
     line-height: 1.4;
 }
-
-
-/* ─── Tile 1: Phone Mockup & Document Carousel ────────────────────────────── */
 
 .phone-mockup {
     position: relative;
@@ -874,9 +799,6 @@
     min-height: 20px;
     transition: opacity 0.3s ease;
 }
-
-
-/* ─── Tile 2: Service Hub / Orbit System ─────────────────────────────────── */
 
 .service-hub {
     position: relative;
@@ -975,10 +897,6 @@
     pointer-events: none;
 }
 
-
-
-/* ─── Tile 3: Agent Assistance ────────────────────────────────────────────── */
-
 .agent-ui {
     position: relative;
     height: 167px;
@@ -1064,10 +982,6 @@
     animation: float 3s ease-in-out infinite 1.5s;
 }
 
-
-
-/* ─── Tile 4: AI Message Preview ──────────────────────────────────────────── */
-
 .ai-message {
     display: flex;
     gap: var(--space-sm);
@@ -1143,7 +1057,7 @@
 
 .ai-message__fade {
     display: none;
-    /* No longer needed */
+
 }
 
 .ai-message__sources {
@@ -1230,13 +1144,10 @@
     border-radius: 4px;
 }
 
-
-/* ─── Tile 5: Statistics Bar (Full-width) ─────────────────────────────────── */
-
 .stat-bar {
     display: flex;
     flex-direction: column;
-    /* Mobile: stacked */
+
     justify-content: center;
     align-items: center;
     gap: var(--space-md);
@@ -1276,7 +1187,7 @@
     font-weight: 700;
     margin-left: 2px;
     -webkit-text-fill-color: #333;
-    /* Restore solid colour for unit suffix */
+
 }
 
 .stat-bar__label {
@@ -1317,11 +1228,10 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-xl);
-    /* Нормальный отступ для мобилок */
+
     align-items: start;
 }
 
-/* ─── Левая колонка (Обычная на мобилках, Sticky на ПК) ─── */
 .how-it-works__content {
     position: relative;
 }
@@ -1346,11 +1256,10 @@
     padding: var(--space-sm) var(--space-xl);
 }
 
-/* ─── Правая колонка с линией ─── */
 .how-it-works__timeline-wrapper {
     position: relative;
     padding-left: 32px;
-    /* Чуть компактнее для телефонов */
+
 }
 
 .how-it-works__timeline {
@@ -1401,12 +1310,11 @@
     will-change: transform, opacity;
 }
 
-/* ─── Шаги (Нормальные на мобилках, растянутые на ПК) ─── */
 .timeline-steps {
     display: flex;
     flex-direction: column;
     gap: var(--space-2xl);
-    /* Адекватное расстояние между шагами на телефоне */
+
     padding-top: var(--space-md);
     padding-bottom: var(--space-xl);
 }
@@ -1417,7 +1325,7 @@
     gap: var(--space-md);
     z-index: 2;
 
-    /* Состояние "по умолчанию" (тусклое) */
+
     opacity: 0.3;
     transform: translateX(10px);
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1432,7 +1340,7 @@
 .timeline-step__icon-box {
     flex-shrink: 0;
     width: 48px;
-    /* Чуть меньше на мобилках */
+
     height: 48px;
     border-radius: 12px;
     display: flex;
@@ -1472,7 +1380,6 @@
     color: var(--color-text-muted);
     line-height: 1.5;
 }
-
 
 @media (min-width: 1024px) {
     .how-it-works__grid {
@@ -1560,8 +1467,6 @@
     opacity: 0.8;
 }
 
-/* ─── Table Structure ─── */
-
 .compare-table-wrapper {
     width: 100%;
     max-width: 1100px;
@@ -1572,8 +1477,8 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    /* Needed for EireID pop-out in the comparison table */
     overflow: visible;
-    /* Needed for EireID pop-out */
 }
 
 .compare-grid {
@@ -1598,7 +1503,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     align-items: flex-end;
     justify-content: center;
-    /* Center text in top row */
+
     text-align: center;
     padding-bottom: var(--space-lg);
     height: 120px;
@@ -1612,8 +1517,6 @@
     margin-top: 4px;
 }
 
-/* ─── Column Highlighting ─── */
-
 .label-col {
     font-weight: 700;
     color: var(--color-text-heading);
@@ -1621,16 +1524,16 @@
     padding-left: var(--space-xl);
     position: relative;
     overflow: hidden;
-    /* Keep large background icons contained */
+
 }
 
 .label-icon {
     position: absolute;
     font-size: 64px;
-    /* ~3.5x original 18px */
+
     color: var(--color-bg-primary);
     opacity: 0.25;
-    /* Subtle background feel */
+
     left: -10px;
     top: 50%;
     transform: translateY(-50%);
@@ -1643,7 +1546,6 @@
     z-index: 1;
 }
 
-/* ─── The Premium EireID Column ─── */
 .eireid-col {
     background: linear-gradient(180deg, var(--color-bg-primary) 0%, rgba(164, 229, 183, 0.8) 100%);
     color: var(--color-text-heading);
@@ -1682,16 +1584,14 @@
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
 }
 
-/* Column hover effect for better readability */
 .compare-grid:hover .compare-cell:not(.eireid-col):hover {
     background: rgba(255, 255, 255, 0.4);
 }
 
-/* ─── Mobile Adjustments (Rotating Competitor Focus) ─── */
 @media (max-width: 1023px) {
     .compare-grid {
         grid-template-columns: 1fr 1fr;
-        /* EireID vs Chosen Competitor */
+
     }
 
     .label-col {
@@ -1736,8 +1636,6 @@
     }
 }
 
-
-/* ─── Floating Rua AI Assistant ─────────────────── */
 .ai-fab {
     position: fixed;
     bottom: 24px;
@@ -1775,7 +1673,6 @@
     object-fit: contain;
 }
 
-
 .ai-modal {
     position: fixed;
     bottom: 100px;
@@ -1789,14 +1686,14 @@
     flex-direction: column;
     overflow: hidden;
 
-    /* Hidden state */
+
     opacity: 0;
     visibility: hidden;
     transform: scale(0.9) translateY(20px);
     transform-origin: bottom right;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* Mobile default sizing (almost full screen) */
+
     width: calc(100vw - 40px);
     height: calc(100vh - 140px);
     max-height: 500px;
@@ -1944,7 +1841,7 @@
     .ai-modal {
         bottom: 130px;
         right: 40px;
-        /* Desktop default sizing (1/4 screen style popup) */
+
         width: 380px;
         height: 550px;
     }
@@ -1953,8 +1850,6 @@
 /* =============================================================================
    allservices.css — EireID All Services Page (appended to styles.css)
    ============================================================================= */
-
-/* ─── Layout Shell ────────────────────────────────────────────────────────── */
 
 .services-library {
     width: 100%;
@@ -1965,15 +1860,12 @@
     gap: var(--space-xl);
 }
 
-/* ─── Hero Section ────────────────────────────────────────────────────────── */
-
 .services-hero {
     text-align: center;
     position: relative;
     padding: var(--space-2xl) 0 var(--space-xl);
 }
 
-/* Beautiful glow effect behind the title to mimic the reference screenshot */
 .services-hero::before {
     content: '';
     position: absolute;
@@ -2013,8 +1905,6 @@
     }
 }
 
-/* ─── Controls (Filters) ──────────────────────────────────────────────────── */
-
 .services-controls {
     position: relative;
     z-index: 100;
@@ -2023,7 +1913,7 @@
     gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     background: rgba(255, 255, 255, 0.495);
-    /* Override glass to be a bit more solid */
+
 }
 
 @media (min-width: 768px) {
@@ -2073,12 +1963,12 @@
     outline: none;
     transition: all var(--transition-fast);
     appearance: none;
-    /* Hide default arrow */
+
 }
 
 .filter-input {
     padding-left: 2.5rem;
-    /* space for search icon */
+
 }
 
 .filter-select:hover,
@@ -2091,7 +1981,7 @@
     background: rgba(255, 255, 255, 1);
     border-color: var(--color-bg-primary);
     box-shadow: 0 0 0 3px rgba(164, 229, 183, 0.3);
-    /* Brand green focus ring */
+
 }
 
 .select-icon {
@@ -2107,8 +1997,6 @@
     pointer-events: none;
     color: var(--color-text-muted);
 }
-
-/* ─── Services Grid ───────────────────────────────────────────────────────── */
 
 .services-grid {
     display: grid;
@@ -2130,19 +2018,17 @@
     font-size: var(--font-size-lg);
 }
 
-/* ─── Service Card ────────────────────────────────────────────────────────── */
-
 .service-card {
     display: flex;
     flex-direction: column;
     padding: var(--space-lg);
     gap: var(--space-md);
     background: rgba(255, 255, 255, 0.5);
-    /* slightly more opaque glass */
+
     cursor: pointer;
     text-align: left;
     height: 100%;
-    /* force equal heights in grid */
+
     transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
     animation: fadeIn 0.4s ease-out backwards;
 }
@@ -2153,17 +2039,15 @@
     box-shadow: var(--shadow-hover);
 }
 
-/* Emphasize the highlight card (mimicking "Hierarchy" in screenshot) */
 .service-card--featured {
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
-    /* slightly stronger shadow */
+
     position: relative;
     overflow: hidden;
 }
 
-/* Add a subtle noise/specular texture to the featured card to match the screenshot */
 .service-card--featured::after {
     content: '';
     position: absolute;
@@ -2222,7 +2106,7 @@
 
 .service-card__body {
     flex: 1;
-    /* Pushes footer to bottom */
+
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
@@ -2241,7 +2125,7 @@
     font-size: var(--font-size-sm);
     color: var(--color-text-body);
     line-height: 1.5;
-    /* Limit to 3 lines */
+
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -2269,16 +2153,12 @@
     border-radius: var(--radius-full);
 }
 
-/* ─── Pagination ──────────────────────────────────────────────────────────── */
-
 .services-pagination {
     display: flex;
     justify-content: center;
     margin-top: var(--space-xl);
     padding-bottom: var(--space-xl);
 }
-
-/* ─── Service Modal ───────────────────────────────────────────────────────── */
 
 .service-modal {
     position: fixed;
@@ -2314,7 +2194,7 @@
 .service-modal__content {
     position: relative;
     background: rgba(255, 255, 255, 0.85) !important;
-    /* more solid glass for readability */
+
     width: 100%;
     height: 100%;
     margin: var(--space-sm);
@@ -2370,7 +2250,7 @@
 .service-modal__header {
     margin-bottom: var(--space-md);
     padding-right: 40px;
-    /* space for close btn */
+
 }
 
 .service-modal__provider {
@@ -2449,7 +2329,6 @@
     }
 }
 
-/* Adjustments for similar cards */
 .service-modal__similar-grid .service-card {
     padding: var(--space-md);
     background: rgba(255, 255, 255, 0.6);
@@ -2464,7 +2343,6 @@
     line-clamp: 2;
 }
 
-/* ─── Custom Dropdown ─── */
 .custom-dropdown {
     position: relative;
     width: 100%;
@@ -2580,7 +2458,6 @@
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* ─── Modal Multi-Step States ─── */
 .sm-state-container {
     display: none;
     flex-direction: column;
@@ -2598,7 +2475,6 @@
     text-align: center;
 }
 
-/* Demo Form */
 .demo-form {
     margin: var(--space-md) 0;
     padding: var(--space-md);
@@ -2633,7 +2509,6 @@
     text-align: right;
 }
 
-/* Split Actions */
 .sm-actions--split {
     display: flex;
     gap: var(--space-sm);
@@ -2642,10 +2517,9 @@
 .sm-actions--split .btn {
     flex: 1;
     min-width: 0;
-    /* Override minimum width */
+
 }
 
-/* Status Icons */
 .sm-status-icon {
     font-size: 64px;
     margin: 0 auto;
@@ -2654,15 +2528,14 @@
 
 .sm-status-icon--error {
     color: #ef4444;
-    /* red */
+
 }
 
 .sm-status-icon--success {
     color: #10b981;
-    /* green */
+
 }
 
-/* Face Scanner Animation */
 .face-scanner {
     position: relative;
     width: 200px;
@@ -2706,7 +2579,6 @@
     }
 }
 
-/* Loading Spinner */
 .loading-spinner {
     width: 48px;
     height: 48px;
@@ -2727,7 +2599,6 @@
     }
 }
 
-/* Mobile Logo Header */
 .header__mobile-logo {
     display: block;
 }
@@ -2760,7 +2631,6 @@
     flex-direction: column;
 }
 
-/* ─── Background Matrix Effect ─── */
 .genesis-matrix {
     position: absolute;
     inset: 0;
@@ -2786,7 +2656,7 @@
     font-size: 14px;
     line-height: 2;
     color: var(--color-bg-primary);
-    /* green */
+
     opacity: 0.15;
     white-space: pre;
     z-index: 0;
@@ -2805,7 +2675,6 @@
     }
 }
 
-/* ─── Content Grid ─── */
 .genesis-security__grid {
     position: relative;
     z-index: 2;
@@ -2823,7 +2692,6 @@
     }
 }
 
-/* ─── Text Area ─── */
 .genesis-security__text-area {
     flex: 1;
     display: flex;
@@ -2866,7 +2734,6 @@
     }
 }
 
-/* ─── Visual Area ─── */
 .genesis-security__visual-area {
     flex: 1;
     display: flex;
@@ -2884,7 +2751,6 @@
     }
 }
 
-/* Node Shared Styles */
 .genesis-node {
     display: flex;
     flex-direction: column;
@@ -2921,7 +2787,7 @@
     font-size: 36px;
     border-color: var(--color-bg-primary);
     box-shadow: 0 0 30px rgba(164, 229, 183, 0.2);
-    /* green glow */
+
 }
 
 .genesis-node__label {
@@ -2933,7 +2799,6 @@
     text-align: center;
 }
 
-/* Connectors */
 .genesis-connector {
     flex: 1;
     position: relative;
@@ -2958,7 +2823,7 @@
 
     .genesis-connector__particles {
         display: none !important;
-        /* simplify for mobile */
+
     }
 }
 
@@ -3006,7 +2871,6 @@
     }
 }
 
-/* Interactions */
 .genesis-security__visual-area:hover .genesis-matrix__code {
     animation-duration: 5s;
     opacity: 0.3;
@@ -3071,7 +2935,7 @@
     overflow: hidden;
     transition: all var(--transition-base);
     background: rgba(255, 255, 255, 0.6);
-    /* Slightly more opaque for readability */
+
 }
 
 .faq__item.is-active {
@@ -3126,7 +2990,7 @@
 
 .faq__item.is-active .faq__answer {
     max-height: 500px;
-    /* Large enough for content */
+
     padding-bottom: var(--space-lg);
     opacity: 1;
 }
@@ -3151,8 +3015,6 @@
         padding-bottom: var(--space-md);
     }
 }
-
-
 
 /* =============================================================================
    floating-pill.css — Sticky Top Menu Pill
@@ -3219,7 +3081,7 @@
 
 @media (max-width: 768px) {
 
-    /* Swap mobile logo and menu toggle order so burger is always top-right */
+
     .header__mobile-logo {
         order: 1;
     }
@@ -3232,7 +3094,7 @@
         order: 3;
         position: relative;
         z-index: 5001;
-        /* Stay above any overlays */
+
     }
 
     .floating-pill {
@@ -3241,7 +3103,7 @@
         justify-content: center;
         padding: 4px;
         top: 24px;
-        /* Matches container padding roughly */
+
         right: var(--container-padding);
         left: auto;
         transform: translateY(-150%);
@@ -3266,13 +3128,13 @@
         display: block;
     }
 
-    /* Ensure the mobile burger in the floating pill matches size and scale of original */
+
     .floating-pill__mobile .menu-toggle {
         display: flex;
         padding: 6px;
     }
 
-    /* Compact Mobile Card Nav */
+
     .nav__list.is-open {
         position: fixed;
         top: 70px;
@@ -3282,7 +3144,7 @@
 
         height: auto;
         min-height: 35vh;
-        /* slightly shorter card */
+
         z-index: 4500;
 
         display: flex;
@@ -3290,13 +3152,13 @@
         justify-content: center;
         align-items: center;
         gap: var(--space-md);
-        /* tighter gap */
+
 
         background: #ffffff;
         border-radius: 20px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         padding: var(--space-xl) var(--space-md);
-        /* reduced vertical padding */
+
 
         visibility: visible;
         opacity: 1;
@@ -3330,7 +3192,6 @@
     z-index: 10;
 }
 
-/* --- Top CTA Card --- */
 .footer__cta {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
@@ -3350,7 +3211,7 @@
 
 .footer__cta-title {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
-    font-weight: 400; /* Match EireID headings */
+    font-weight: 400;
     margin-bottom: var(--space-md);
     position: relative;
     z-index: 1;
@@ -3368,7 +3229,6 @@
     font-weight: 400;
 }
 
-/* --- Main Footer Card --- */
 .footer__main {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
@@ -3531,7 +3391,7 @@
 .footer__legal a:hover {
     color: var(--color-bg-primary);
 }
-/* ─── CTA Section ─────────────────── */
+
 .cta {
     display: flex;
     justify-content: center;
@@ -3593,7 +3453,6 @@
     box-shadow: none;
 }
 
-/* ─── Footer Main ─────────────────── */
 .footer-main {
     padding: var(--space-3xl) var(--container-padding) var(--space-xl);
     border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -3628,7 +3487,6 @@
     }
 }
 
-/* Brand column */
 .footer-brand__logo {
     display: flex;
     align-items: center;
@@ -3675,7 +3533,6 @@
     transform: translateY(-2px);
 }
 
-/* Link columns */
 .footer-col__title {
     font-size: var(--font-size-xs);
     font-weight: 700;
@@ -3703,7 +3560,6 @@
     color: var(--color-text-heading);
 }
 
-/* Bottom bar */
 .footer-main__bottom {
     display: flex;
     flex-direction: column;

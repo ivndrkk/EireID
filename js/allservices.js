@@ -5,15 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const paginationContainer = document.getElementById('services-pagination');
     const loadMoreBtn = document.getElementById('load-more-btn');
     
-    // Custom Dropdown Elements
     const providerDropdown = document.getElementById('provider-dropdown');
     const tagDropdown = document.getElementById('tag-dropdown');
     
-    // Hidden state for filters
     let currentProviderFilter = 'all';
     let currentTagFilter = 'all';
     
-    // Modal Elements
     const modal = document.getElementById('service-modal');
     const modalClose = document.getElementById('sm-close');
     const modalOverlay = document.getElementById('sm-overlay');
@@ -23,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const mTags = document.getElementById('sm-tags');
     const mSimilarGrid = document.getElementById('sm-similar-grid');
 
-    // Multi-state Modal Elements
     const stateContainers = document.querySelectorAll('.sm-state-container');
     const applyBtn = document.getElementById('sm-apply-btn');
     const cancelBtn = document.getElementById('sm-cancel-btn');
@@ -40,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let filteredData = [];
     let currentPage = 1;
 
-    // Custom Dropdown Logic Function
     function setupCustomDropdown(dropdownEl, onSelectCallback) {
         const trigger = dropdownEl.querySelector('.custom-dropdown__trigger');
         const label = dropdownEl.querySelector('.custom-dropdown__label');
@@ -49,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
         trigger.addEventListener('click', (e) => {
             e.stopPropagation();
             const isOpen = dropdownEl.classList.contains('is-open');
-            // Close all others
             document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
                 el.classList.remove('is-open');
                 el.querySelector('.custom-dropdown__trigger').setAttribute('aria-expanded', 'false');
@@ -65,15 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const item = e.target.closest('.custom-dropdown__item');
             if (!item) return;
 
-            // Update selection state UI
             list.querySelectorAll('.custom-dropdown__item').forEach(li => li.classList.remove('is-selected', 'aria-selected'));
             item.classList.add('is-selected');
             item.setAttribute('aria-selected', 'true');
             
-            // Update Label
             label.textContent = item.textContent;
             
-            // Close dropdown
             dropdownEl.classList.remove('is-open');
             trigger.setAttribute('aria-expanded', 'false');
             
@@ -82,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Close dropdowns on outside click
     document.addEventListener('click', () => {
         document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
             el.classList.remove('is-open');
@@ -90,7 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Use global data variable instead of fetch to prevent file:// protocol CORS errors
+    /* Note: Data is loaded via a global variable (irishGovServicesData) instead of fetch()
+       to avoid CORS errors when running via the file:// protocol. */
     if (typeof irishGovServicesData !== 'undefined') {
         allServices = irishGovServicesData;
         populateFilters(allServices);
@@ -105,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
             filterData();
         });
 
-        // Initial filter sets filteredData
         filterData();
     } else {
         console.error("Failed to load services data structure.");
@@ -129,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const providerList = document.getElementById('provider-list');
         const tagList = document.getElementById('tag-list');
 
-        // Add providers
         Array.from(providers).sort().forEach(provider => {
             const li = document.createElement("li");
             li.className = "custom-dropdown__item";
@@ -139,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
             providerList.appendChild(li);
         });
 
-        // Add tags
         Array.from(tags).sort().forEach(tag => {
             const li = document.createElement("li");
             li.className = "custom-dropdown__item";
@@ -181,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         card.innerHTML = contentHtml;
         
-        // Click opens modal
         card.addEventListener("click", () => {
             card.style.transform = "scale(0.98)";
             setTimeout(() => {
@@ -224,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
             paginationContainer.style.display = 'flex';
         }
 
-        // Re-initialize living text effectively observing new nodes
         if (typeof initTextReveal === 'function') {
             initTextReveal();
         }
@@ -266,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // Reset scroll position when switching states
         const modalContent = document.querySelector('.service-modal__content');
         if (modalContent) modalContent.scrollTop = 0;
     }
@@ -281,13 +266,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function startFaceVerification() {
         switchModalState('sm-content-step2');
         
-        // Phase 1: Scanning (3s)
         setTimeout(() => {
             faceScanner.style.display = 'none';
             loadingSpinner.style.display = 'block';
             step2Status.textContent = 'Processing application...';
             
-            // Phase 2: Loading (5s)
             setTimeout(() => {
                 switchModalState('sm-content-success');
             }, 5000);
@@ -295,9 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    // Modal Logic
     function openModal(service) {
-        resetModal(); // Always start from details
+        resetModal();
         mProvider.textContent = service.provider;
         mTitle.textContent = service.name;
         mDesc.textContent = service.description;
@@ -305,7 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
         mTags.innerHTML = tagsHtml;
 
-        // Similar services logic
         let similar = allServices.filter(s => {
             if (s.id === service.id) return false;
             const matchesProvider = s.provider === service.provider;
@@ -349,11 +330,9 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-        // Small delay to reset state after animation finishes
         setTimeout(resetModal, 300);
     }
 
-    // Set up application demo listeners
     if (applyBtn) {
         applyBtn.addEventListener('click', () => switchModalState('sm-content-step1'));
     }

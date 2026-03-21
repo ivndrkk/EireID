@@ -7,15 +7,12 @@
     <meta name="description" content="EireID - Your Digital Identity">
     <title>EireID</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -27,7 +24,6 @@
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
 
-            <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -61,13 +57,11 @@
         
                 <div class="hero__logos">
         
-                    <!-- Irish Harp Logo -->
                     <button class="logo-box logo-box--glass" aria-label="Irish Harp">
                         <img src="assets/logo/harp_black.svg" alt="Irish Harp" class="logo-box__svg"
                             style="width: 52px; height: 52px; object-fit: contain; display: block; margin: 0 auto; opacity: 0.8;">
                     </button>
         
-                    <!-- EireID Logo -->
                     <button class="logo-box logo-box--glass" aria-label="EireID Logo">
                         <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
                             style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
@@ -80,7 +74,6 @@
         
             </section>
         
-            <!-- CTA Buttons -->
             <div class="hero__actions">
         
                 <button class="hero__action" aria-label="Join the waitlist">
@@ -122,7 +115,6 @@
         <section id="about" class="about">
             <div class="about__grid">
         
-                <!-- ── Tile 1: Digital Document Wallet (Tall) ── -->
                 <article class="about__tile about__tile--tall logo-box--glass">
         
                     <div class="tile-header">
@@ -143,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- mix-blend-mode: multiply removes white fringe if PNG isn't fully transparent -->
+                        <!-- mix-blend-mode: multiply is used to hide the non-transparent fringes of the phone mockup PNG -->
                         <img src="assets/img/mockup/iphone-mockup.png" alt="iPhone Frame" class="phone-mockup__frame"
                             style="mix-blend-mode: multiply;">
                     </div>
@@ -154,7 +146,6 @@
         
                 </article>
         
-                <!-- ── Tile 2: Service Hub (Wide) ── -->
                 <article class="about__tile about__tile--wide logo-box--glass">
         
                     <div class="tile-header">
@@ -198,7 +189,6 @@
                     </div>
                 </article>
         
-                <!-- ── Tile 3: All Services / Agent Assistance (Wide) ── -->
                 <article class="about__tile about__tile--wide logo-box--glass">
         
                     <div class="tile-header">
@@ -219,7 +209,6 @@
         
                 </article>
         
-                <!-- ── Tile 4: Simple & Smart AI (Small) ── -->
                 <article class="about__tile about__tile--small logo-box--glass">
         
                     <div class="tile-header">
@@ -256,7 +245,6 @@
         
                 </article>
         
-                <!-- ── Tile 5: Statistics Bar (Full-width) ── -->
                 <article class="about__tile about__tile--full logo-box--glass stat-bar">
         
                     <div class="stat-bar__col">
@@ -294,7 +282,6 @@
         <section id="how-it-works" class="how-it-works">
             <div class="how-it-works__grid">
 
-                <!-- Left Content -->
                 <div class="how-it-works__content">
                     <h2 class="how-it-works__title" data-reveal>How it works</h2>
                     <p class="how-it-works__description" data-reveal>
@@ -306,17 +293,14 @@
                     </button>
                 </div>
 
-                <!-- Right Timeline -->
                 <div class="how-it-works__timeline-wrapper">
                     <div class="how-it-works__timeline">
-                        <!-- The vertical progress line -->
                         <div class="timeline-line">
                             <div class="timeline-line__progress" id="timeline-progress"></div>
                             <div class="timeline-line__dot" id="timeline-dot"></div>
                         </div>
 
                         <div class="timeline-steps">
-                            <!-- Step 1 -->
                             <div class="timeline-step" data-step="1">
                                 <div class="timeline-step__icon-box logo-box--glass">
                                     <span class="iconify" data-icon="lucide:user-plus"></span>
@@ -328,7 +312,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Step 2 -->
                             <div class="timeline-step" data-step="2">
                                 <div class="timeline-step__icon-box logo-box--glass">
                                     <span class="iconify" data-icon="lucide:hash"></span>
@@ -340,7 +323,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Step 3 -->
                             <div class="timeline-step" data-step="3">
                                 <div class="timeline-step__icon-box logo-box--glass">
                                     <span class="iconify" data-icon="lucide:scan-face"></span>
@@ -351,7 +333,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Step 4 -->
                             <div class="timeline-step" data-step="4">
                                 <div class="timeline-step__icon-box logo-box--glass">
                                     <span class="iconify" data-icon="lucide:server"></span>
@@ -363,7 +344,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Step 5 -->
                             <div class="timeline-step" data-step="5">
                                 <div class="timeline-step__icon-box logo-box--glass">
                                     <span class="iconify" data-icon="lucide:wallet-cards"></span>
@@ -465,7 +445,6 @@
             <div class="container">
                 <div class="about__tile--full logo-box--glass genesis-security__container">
                     
-                    <!-- Background Matrix Effect -->
                     <div class="genesis-matrix" aria-hidden="true">
                         <div class="genesis-matrix__overlay"></div>
                         <div class="genesis-matrix__code">
@@ -480,7 +459,6 @@
                     </div>
 
                     <div class="genesis-security__grid">
-                        <!-- Text Area -->
                         <div class="genesis-security__text-area">
                             <h2 class="genesis-security__title" data-reveal>EireID Genesis Protocol: The Architecture of Trust</h2>
                             <p class="genesis-security__desc" data-reveal>Unlike traditional databases, the Genesis Protocol ensures your identity data never leaves your device. We use
@@ -491,7 +469,6 @@
                             </a>
                         </div>
 
-                        <!-- Visualization Area -->
                         <div class="genesis-security__visual-area">
                             <div class="genesis-node genesis-node--user">
                                 <div class="genesis-node__icon">
@@ -633,7 +610,6 @@
 <footer class="footer-main">
     <div class="footer-main__inner">
 
-        <!-- Brand -->
         <div class="footer-brand">
             <div class="footer-brand__logo">
                 <img src="assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;">
@@ -649,7 +625,6 @@
             </div>
         </div>
 
-        <!-- Product -->
         <div class="footer-col">
             <h4 class="footer-col__title">Product</h4>
             <ul class="footer-col__list">
@@ -660,7 +635,6 @@
             </ul>
         </div>
 
-        <!-- Services -->
         <div class="footer-col">
             <h4 class="footer-col__title">Services</h4>
             <ul class="footer-col__list">
@@ -672,7 +646,6 @@
             </ul>
         </div>
 
-        <!-- Company -->
         <div class="footer-col">
             <h4 class="footer-col__title">Company</h4>
             <ul class="footer-col__list">

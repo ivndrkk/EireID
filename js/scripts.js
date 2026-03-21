@@ -5,16 +5,13 @@
    ============================================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Navigation & Menus
     initFloatingPill();
     initMobileMenu();
     initDropdowns();
     
-    // UI Interactions
     initExploreButton();
     initHeroInteractions();
     
-    // Section Specific
     initDocCarousel();
     initAboutFadeIn();
     initScrollReveal();
@@ -23,11 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initHowItWorksAnimation();
     initComparisonTable();
     
-    // Rua AI Assistant
     initFloatingAssistant();
     initAIChat();
     
-    // FAQ
     initFAQAccordion();
 });
 
@@ -54,7 +49,6 @@ function initDropdowns() {
         
         if (link) {
             link.addEventListener('click', (e) => {
-                // If on mobile/tablet where it might be a click to open
                 if (window.innerWidth < 768) {
                     e.preventDefault();
                     item.classList.toggle('is-active');
@@ -63,7 +57,6 @@ function initDropdowns() {
         }
     });
 
-    // Close all dropdowns if clicking outside
     document.addEventListener('click', (e) => {
         dropdownItems.forEach(item => {
             if (!item.contains(e.target)) {
@@ -85,7 +78,6 @@ function initExploreButton() {
         if (!btn) return;
         btn.addEventListener("click", (e) => {
             e.preventDefault();
-            // Scroll to the #about section
             const aboutSection = document.getElementById('about');
             if (aboutSection) {
                 aboutSection.scrollIntoView({ behavior: 'smooth' });
@@ -96,7 +88,6 @@ function initExploreButton() {
                 });
             }
             
-            // Close mobile menu if open
             const navList = document.getElementById('nav-list');
             const menuToggle = document.getElementById('mobile-menu-toggle');
             if (navList && navList.classList.contains('is-open')) {
@@ -146,18 +137,16 @@ function initDocCarousel() {
     const carouselInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
 
-        // Exact pixel offset based on the rendered image width
         const slideWidth = images[0].offsetWidth;
         track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
-        // Fade caption out → update text → fade back in
         caption.style.opacity = '0';
         setTimeout(() => {
             caption.textContent = images[currentIndex].alt;
             caption.style.opacity = '1';
         }, 300);
 
-    }, 10000); // Advance every 10 seconds
+    }, 10000);
 }
 
 function initAboutFadeIn() {
@@ -170,7 +159,7 @@ function initAboutFadeIn() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('appear');
-                    obs.unobserve(entry.target); // Trigger once only
+                    obs.unobserve(entry.target);
                 }
             });
         },
@@ -188,12 +177,6 @@ function initAboutFadeIn() {
     });
 }
 
-
-/**
- * initScrollReveal
- * Implements Apple-style scroll-linked animations for the About section tiles.
- * Optimized to prevent layout thrashing by pre-calculating offsets.
- */
 function initScrollReveal() {
   const tiles = document.querySelectorAll('.about__tile');
   if (!tiles.length) return;
@@ -206,7 +189,6 @@ function initScrollReveal() {
     const scrollY = window.scrollY;
     tileData = Array.from(tiles).map(tile => ({
       el: tile,
-      // Calculate absolute top position relative to the document
       top: tile.getBoundingClientRect().top + scrollY
     }));
   }
@@ -215,17 +197,14 @@ function initScrollReveal() {
     const scrollY = window.scrollY;
 
     tileData.forEach(({el, top}) => {
-      // Position relative to current viewport
       const relativeTop = top - scrollY;
 
-      // Animation triggers based on the tile's position in the viewport
       const startTrigger = windowHeight * 0.95;
       const endTrigger = windowHeight * 0.75;
 
       let progress = (startTrigger - relativeTop) / (startTrigger - endTrigger);
       progress = Math.max(0, Math.min(1, progress));
 
-      // 1:1 Scroll mapping
       el.style.opacity = progress;
       el.style.transform = `translateY(${30 * (1 - progress)}px)`;
 
@@ -250,16 +229,10 @@ function initScrollReveal() {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', cacheOffsets);
 
-  // Initial cache and run
   cacheOffsets();
   updateTiles();
 }
 
-/**
- * initTextReveal
- * Implements global "living text" effect. 
- * Text elements transition from muted grey to natural color when in view.
- */
 function initTextReveal() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -270,7 +243,6 @@ function initTextReveal() {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
       } else {
-        // Optional: remove if you want color to fade back out when leaving screen
         entry.target.classList.remove('is-revealed');
       }
     });
@@ -281,7 +253,6 @@ function initTextReveal() {
 
   elementsToAnimate.forEach((el, index) => {
     if (!el.dataset.observed) {
-        // Optionally create slight cascading delays for grouped elements
         el.style.transitionDelay = `${(index % 5) * 50}ms`;
         observer.observe(el);
         el.dataset.observed = 'true';
@@ -289,54 +260,39 @@ function initTextReveal() {
   });
 }
 
-
-/**
- * initStatCounters
- * Handles the count-up animation for statistics in the About section.
- * Replays when scrolled back into view and resets when out of view.
- */
 function initStatCounters() {
   const stats = document.querySelectorAll('.stat-bar__number');
 
   if (!stats.length) return;
 
-  // Pre-capture target values to prevent loss during initial IntersectionObserver callback
   stats.forEach(el => {
     if (!el.getAttribute('data-target')) {
       el.setAttribute('data-target', el.innerText.trim());
     }
   });
 
-  /**
-   * animateCount
-   * Smoothly increments a number from 0 to its target value.
-   * @param {HTMLElement} el - The element containing the number.
-   * @param {number} index - The index of the stat for variable duration.
-   */
+
   function animateCount(el, index) {
     const targetText = el.getAttribute('data-target');
     const targetValue = parseFloat(targetText.replace(/[^0-9.]/g, '')) || 0;
     const suffix = targetText.replace(/[0-9.]/g, '');
 
-    if (targetValue === 0) return; // Nothing to animate
-    const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
+    if (targetValue === 0) return;
+    const duration = 1000 + (index * 500);
     const startTime = performance.now();
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Ease out expo
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
-      // Preserve unit/suffix if it exists in a span
       const unitSpan = el.querySelector('.stat-bar__unit');
       if (unitSpan) {
         if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
           el.childNodes[0].textContent = currentValue;
         } else {
-          // Fallback if structure is unexpected
           el.innerHTML = currentValue + unitSpan.outerHTML;
         }
       } else {
@@ -362,7 +318,6 @@ function initStatCounters() {
             const statIndex = allStats.indexOf(el);
             animateCount(el, statIndex);
             el.setAttribute('data-counted', 'true');
-            // Ensure animation happens only once
             observer.unobserve(el);
           }
         }
@@ -374,9 +329,7 @@ function initStatCounters() {
   stats.forEach(stat => observer.observe(stat));
 }
 
-
 /* ─── Init ────────────────────────────────────────────────────────────────── */
-
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
@@ -425,24 +378,18 @@ function initHowItWorksAnimation() {
     function updateProgressLine() {
         const scrollY = window.scrollY;
 
-        // The exact center line of the browser window
         const screenCenter = windowHeight / 2; 
         
-        // Relative top position of the wrapper
         const relativeTop = wrapperOffsetTop - scrollY;
 
-        // Calculate how far the top of the wrapper has moved past the center line
         const scrolled = screenCenter - relativeTop;
 
-        // Calculate percentage (0 to 1)
         let progress = scrolled / wrapperHeight;
         progress = Math.max(0, Math.min(1, progress));
 
-        // Apply visual updates using transforms for smoothness
         progressLine.style.transform = `scaleY(${progress})`;
         progressDot.style.transform = `translate(-50%, -50%) translateY(${progress * wrapperHeight}px)`;
         
-        // Hide dot if we haven't reached the timeline yet
         progressDot.style.opacity = progress > 0 && progress < 1 ? '1' : '0';
 
         ticking = false;
@@ -455,13 +402,12 @@ function initHowItWorksAnimation() {
         }
     }
 
-    // Only listen to window scroll events if the section is actually on screen
     const sectionObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
             cacheTimelineOffsets();
             window.addEventListener('scroll', onScroll, { passive: true });
             window.addEventListener('resize', cacheTimelineOffsets);
-            onScroll(); // Fire once to set initial state
+            onScroll();
         } else {
             window.removeEventListener('scroll', onScroll);
             window.removeEventListener('resize', cacheTimelineOffsets);
@@ -473,7 +419,7 @@ function initHowItWorksAnimation() {
 
 /* ─── Comparison Table Mobile Logic ─────────────────── */
 function initComparisonTable() {
-    if (window.innerWidth >= 1024) return; // Only run on mobile/tablet
+    if (window.innerWidth >= 1024) return;
 
     const comp1 = document.querySelectorAll('.comp-1');
     const comp2 = document.querySelectorAll('.comp-2');
@@ -483,15 +429,12 @@ function initComparisonTable() {
     let currentIndex = 0;
 
     const comparisonInterval = setInterval(() => {
-        // Hide current competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
         
-        // Move to next competitor
         currentIndex = (currentIndex + 1) % competitors.length;
         
-        // Show new competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.add('is-active'));
-    }, 10000); // 10 seconds
+    }, 10000);
 }
 
 /* ─── Rua AI Assistant Logic ─────────────────── */
@@ -563,7 +506,6 @@ function initAIChat() {
         initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    // Рендер сообщения пользователя
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
         div.className = 'ai-message ai-message--user';
@@ -578,12 +520,9 @@ function initAIChat() {
         body.scrollTop = body.scrollHeight;
     }
 
-    // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
-        // Форматируем: переносы строк → <br>
         const formatted = text.replace(/\n/g, '<br>');
 
-        // Источники
         const sourcesHtml = sources.length > 0
             ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
@@ -608,7 +547,6 @@ function initAIChat() {
         body.scrollTop = body.scrollHeight;
     }
 
-    // Индикатор загрузки ("печатает...")
     function showTyping() {
         const div = document.createElement('div');
         div.className = 'ai-message';
@@ -630,7 +568,6 @@ function initAIChat() {
         document.getElementById('ai-typing')?.remove();
     }
 
-    // Отправка
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -643,7 +580,6 @@ function initAIChat() {
         input.value = '';
         showTyping();
 
-        // Блокируем input пока ждём ответ
         input.disabled = true;
         form.querySelector('button').disabled = true;
 
@@ -682,13 +618,11 @@ function initFAQAccordion() {
         questionBtn.addEventListener('click', () => {
             const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
             
-            // Close all items first
             faqItems.forEach(otherItem => {
                 otherItem.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
                 otherItem.classList.remove('is-active');
             });
             
-            // If the clicked item was not expanded, open it
             if (!isExpanded) {
                 questionBtn.setAttribute('aria-expanded', 'true');
                 item.classList.add('is-active');
@@ -704,28 +638,23 @@ function initFloatingPill() {
     
     if (!header || !originalNavList) return;
     
-    // Create the pill overlay
     const pill = document.createElement('nav');
     pill.id = 'floating-pill';
     pill.className = 'floating-pill logo-box--glass';
     pill.setAttribute('aria-label', 'Quick Navigation');
     
-    // Desktop layout wrapper
     const pd = document.createElement('div');
     pd.className = 'floating-pill__desktop';
     
-    // Clone original nav list
     const clonedList = originalNavList.cloneNode(true);
     clonedList.id = 'floating-nav-list';
 
-    // Remove IDs from cloned elements to avoid duplicates
     clonedList.querySelectorAll('[id]').forEach(el => {
         el.removeAttribute('id');
     });
 
     pd.appendChild(clonedList);
     
-    // Mobile layout wrapper
     const pm = document.createElement('div');
     pm.className = 'floating-pill__mobile';
     
