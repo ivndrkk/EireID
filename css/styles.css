@@ -2143,7 +2143,7 @@
 
 .services-hero__title {
     font-size: var(--font-size-4xl);
-    font-weight: 700;
+    font-weight: 400;
     color: var(--color-text-heading);
     margin-bottom: var(--space-md);
     letter-spacing: -0.02em;
@@ -2155,6 +2155,7 @@
     color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto;
+    text-align: center;
 }
 
 @media (min-width: 768px) {
