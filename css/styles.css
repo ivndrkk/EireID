@@ -2241,10 +2241,13 @@
     animation: fadeIn 0.4s ease-out backwards;
 }
 
-.service-card:hover {
+.service-card:hover,
+.service-card:focus-visible {
     background: rgba(255, 255, 255, 0.8);
     transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
+    outline: 3px solid var(--color-bg-primary);
+    outline-offset: 4px;
 }
 
 /* Emphasize the highlight card (mimicking "Hierarchy" in screenshot) */
@@ -3187,6 +3190,12 @@
     font-weight: 400;
     color: var(--color-text-heading);
     transition: color var(--transition-base);
+}
+
+.faq__question:focus-visible {
+    outline: 3px solid var(--color-bg-primary);
+    outline-offset: -4px;
+    border-radius: var(--radius-lg);
 }
 
 .faq__question-text {
