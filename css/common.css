@@ -504,4 +504,73 @@ body::before {
 
 .is-active .timeline-step__text p {
   transition-delay: 0.2s;
-}
+}
+
+/* ─── 9. Preloader & Loading Animation ───────────────────────────────────── */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  background:
+    radial-gradient(circle at 10% 20%, #effaee 0%, transparent 55%),
+    radial-gradient(circle at 85% 85%, #bcebc7 0%, transparent 65%),
+    radial-gradient(circle at 95% 15%, #9fdcae 0%, transparent 60%),
+    radial-gradient(circle at 20% 90%, #d1f4da 0%, transparent 60%),
+    #e3f7e8;
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), 
+              visibility 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.8s ease;
+  pointer-events: all;
+}
+
+.preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.05); /* Subtle zoom out effect */
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.loader {
+  width: 140px;
+  height: 140px;
+  background-color: #1b4d3e;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset, 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  border-radius: 45%;
+  top: -155%;
+  left: -50%;
+  background-color: #a4e5b7; /* Brand Light Green */
+  animation: wave 5s linear infinite;
+  transition: top 1s ease;
+}
+
+.loader:before {
+  border-radius: 30%;
+  background: rgba(255, 255, 255, 0.25);
+  top: -160%;
+  animation: wave 7s linear infinite; /* Slightly slower for variety */
+}
+
+@keyframes wave {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+

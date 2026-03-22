@@ -24,6 +24,9 @@
 </head>
 
 <body>
+    <div id="preloader" class="preloader">
+        <span class="loader"></span>
+    </div>
 
     <div class="container" data-scroll-container>
 
@@ -65,30 +68,30 @@
 
         <!-- === RESIDENT LAYOUT REBUILD === -->
         <main class="resident-hero" data-scroll-section>
-            <div class="orbit-resident">
-                <div class="orbit__ring"></div>
-                <div class="orbit__ring"></div>
-                <div class="orbit__centre">
-                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo">
+            <div class="hero__content" aria-labelledby="hero-title">
+                <div class="hero-leftcol">
+                    <div class="hero__logos">
+                    
+                        <!-- User Icon -->
+                        <button class="logo-box logo-box--glass" aria-label="User Profile">
+                            <span class="iconify logo-box__svg" data-icon="lucide:user"
+                                style="width: 52px; height: 52px; display: block; margin: 0 auto; opacity: 0.8; color: var(--color-text-heading);"></span>
+                        </button>
+                    
+                        <!-- EireID Logo -->
+                        <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                            <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
+                                style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
+                        </button>
+                    
+                    </div>
+                    
+                    <h1 id="hero-title" class="hero__title" data-reveal>For residents</h1>
+                    <p class="hero__subtitle" data-reveal>Your Identity. Every Service. One Secure Login.</p>
                 </div>
-                
-                <div class="item-set__orbit">
-                    <div class="item-set__item" style="--angle: 0deg;"></div>
-                    <div class="item-set__item" style="--angle: 72deg;"></div>
-                    <div class="item-set__item" style="--angle: 144deg;"></div>
-                    <div class="item-set__item" style="--angle: 216deg;"></div>
-                    <div class="item-set__item" style="--angle: 288deg;"></div>
-                </div>
-                
-                <div class="item-set__orbit_sm">
-                    <div class="item-set__item" style="--angle: 45deg;"></div>
-                    <div class="item-set__item" style="--angle: 135deg;"></div>
-                    <div class="item-set__item" style="--angle: 225deg;"></div>
-                    <div class="item-set__item" style="--angle: 315deg;"></div>
-                </div>
+
             </div>
 
-            
 
         </main>
 

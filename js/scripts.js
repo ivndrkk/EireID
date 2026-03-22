@@ -145,6 +145,21 @@ function initTextReveal() {
     revealElements.forEach(el => observer.observe(el));
 }
 
+// ─── Preloader Dismissal ────────────────────────────────────────────────
+window.addEventListener("load", () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Allow a small delay for branding visibility
+        setTimeout(() => {
+            preloader.classList.add('fade-out');
+            // Remove from DOM after fade animation
+            setTimeout(() => {
+                preloader.remove();
+            }, 800);
+        }, 500); 
+    }
+});
+
 /* ─── Navigation ─────────────────── */
 
 function initMobileMenu() {
@@ -465,6 +480,7 @@ function initComparisonTable() {
         competitors[currentIndex].forEach(cell => cell.classList.add('is-active'));
     }, 10000); // 10 seconds
 }
+
 
 
 /* ─── Rua AI Assistant Logic ─────────────────── */
