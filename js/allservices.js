@@ -372,11 +372,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mSimilarGrid.innerHTML = '';
         similar.forEach(s => {
             const scard = document.createElement('article');
+            // Remove data-scroll which causes visibility issues inside a fixed modal
             scard.className = 'service-card logo-box--glass';
-            scard.setAttribute("data-scroll", "");
-            scard.setAttribute("data-scroll-class", "is-revealed");
             scard.style.cursor = 'pointer';
             scard.style.minHeight = '140px';
+            scard.style.opacity = '1';
+            scard.style.visibility = 'visible';
+            scard.style.transform = 'none';
+
             scard.innerHTML = `
                 <div class="service-card__body">
                     <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${s.name}</h3>
@@ -385,7 +388,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             scard.addEventListener('click', () => {
                 openModal(s);
-                document.querySelector('.service-modal__content').scrollTop = 0;
+                const mContent = document.querySelector('.service-modal__content');
+                if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
             });
             mSimilarGrid.appendChild(scard);
         });
