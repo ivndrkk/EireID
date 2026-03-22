@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EireID - Your Digital Identity">
-    <title>EireID</title>
+    <meta name="description" content="EireID - For Residents">
+    <title>EireID | For Residents</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,36 +15,38 @@
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
+    <!-- Locomotive Scroll -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
     <!-- CSS -->
-    <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/styles.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container" data-scroll-container>
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
-        
+
             <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-        
-        
-        
+
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
                     <li><a href="./../index.html" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="allservices.html" class="nav__link">Services <span
+                                class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
                                 <a href="allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="resident.html" class="nav__dropdown-link" aria-current="page">For residents</a>
                                 <a href="business.html" class="nav__dropdown-link">For businesses</a>
                                 <a href="investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
@@ -57,10 +59,48 @@
             </nav>
             <!-- Mobile Logo -->
             <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
+                <img src="../assets/logo/logo(transparent).png" alt="EireID Logo">
             </a>
         </header>
+
+        <!-- === RESIDENT LAYOUT REBUILD === -->
+        <main class="resident-hero" data-scroll-section>
+            <div class="orbit-resident">
+                <div class="orbit__ring"></div>
+                <div class="orbit__ring"></div>
+                <div class="orbit__centre">
+                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo">
+                </div>
+                
+                <div class="item-set__orbit">
+                    <div class="item-set__item" style="--angle: 0deg;"></div>
+                    <div class="item-set__item" style="--angle: 72deg;"></div>
+                    <div class="item-set__item" style="--angle: 144deg;"></div>
+                    <div class="item-set__item" style="--angle: 216deg;"></div>
+                    <div class="item-set__item" style="--angle: 288deg;"></div>
+                </div>
+                
+                <div class="item-set__orbit_sm">
+                    <div class="item-set__item" style="--angle: 45deg;"></div>
+                    <div class="item-set__item" style="--angle: 135deg;"></div>
+                    <div class="item-set__item" style="--angle: 225deg;"></div>
+                    <div class="item-set__item" style="--angle: 315deg;"></div>
+                </div>
+            </div>
+
+            
+
+        </main>
+
     </div>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Locomotive Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
     <!-- === SCRIPTS === -->
     <script src="../js/scripts.js" defer></script>
 </body>

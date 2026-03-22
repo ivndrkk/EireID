@@ -223,25 +223,6 @@ function initAboutFadeIn() {
 
 
 /**
- * initScrollReveal
- * Implements Apple-style scroll-linked animations for the About section tiles.
- * Optimized to prevent layout thrashing by pre-calculating offsets.
- */
-function initScrollReveal() {
-  // Animation removed as per user request
-}
-
-/**
- * initTextReveal
- * Implements global "living text" effect. 
- * Text elements transition from muted grey to natural color when in view.
- */
-function initTextReveal() {
-  // Text reveal removed as per user request
-}
-
-
-/**
  * initStatCounters
  * Handles the count-up animation for statistics in the About section.
  * Replays when scrolled back into view and resets when out of view.
