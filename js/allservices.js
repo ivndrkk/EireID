@@ -13,6 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentProviderFilter = 'all';
     let currentTagFilter = 'all';
     
+    // Optimization: Debounce helper
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     // Modal Elements
     const modal = document.getElementById('service-modal');
     const modalClose = document.getElementById('sm-close');
@@ -93,6 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Use global data variable instead of fetch to prevent file:// protocol CORS errors
     if (typeof irishGovServicesData !== 'undefined') {
         allServices = irishGovServicesData;
+
+        // Optimization: Pre-compute lowercase search strings
+        allServices.forEach(s => {
+            s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+        });
+
         populateFilters(allServices);
         
         setupCustomDropdown(providerDropdown, (val) => {
@@ -212,13 +231,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        // Optimization: Use DocumentFragment to batch DOM updates
+        const fragment = document.createDocumentFragment();
+
         dataToShow.forEach((service, index) => {
             const actualIndex = start + index;
             const isFeatured = actualIndex === 0;
             const card = createCardElement(service, isFeatured);
             card.style.animationDelay = `${(index % 10) * 0.05}s`;
-            grid.appendChild(card);
+            fragment.appendChild(card);
         });
+
+        grid.appendChild(fragment);
 
         if (limit >= filteredData.length) {
             paginationContainer.style.display = 'none';
@@ -259,8 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (searchVal) {
-                const searchStr = `${service.name} ${service.description} ${service.provider}`.toLowerCase();
-                matchSearch = searchStr.includes(searchVal);
+                // Optimization: Use cached search string
+                matchSearch = service._searchStr.includes(searchVal);
             }
 
             return matchProvider && matchTag && matchSearch;
@@ -384,7 +408,8 @@ document.addEventListener("DOMContentLoaded", () => {
         closeSuccessBtn.addEventListener('click', closeModal);
     }
 
-    searchInput.addEventListener("input", filterData);
+    // Optimization: Debounce search input
+    searchInput.addEventListener("input", debounce(filterData, 250));
     
     loadMoreBtn.addEventListener('click', () => {
         currentPage++;
