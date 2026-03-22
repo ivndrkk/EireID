@@ -4945,3 +4945,16 @@
     line-height: 1.6;
     margin: 0;
 }
+
+@media (max-width: 991px) {
+    .how-it-works__content,
+    .services-controls {
+        position: relative !important;
+        transform: none !important;
+        top: 0 !important;
+    }
+    
+    .floating-pill {
+        display: none !important;
+    }
+}

@@ -722,33 +722,8 @@ function initFloatingPill() {
 
     pd.appendChild(clonedList);
     
-    // Mobile layout wrapper
-    const pm = document.createElement('div');
-    pm.className = 'floating-pill__mobile';
-    
-    const originalBurger = document.getElementById('mobile-menu-toggle');
-    if (originalBurger) {
-        const clonedBurger = originalBurger.cloneNode(true);
-        clonedBurger.id = 'floating-mobile-menu-toggle';
-        
-        clonedBurger.addEventListener('click', () => {
-            originalBurger.click();
-            setTimeout(() => {
-                clonedBurger.setAttribute('aria-expanded', originalBurger.getAttribute('aria-expanded'));
-            }, 10);
-        });
-        
-        originalBurger.addEventListener('click', () => {
-            setTimeout(() => {
-                clonedBurger.setAttribute('aria-expanded', originalBurger.getAttribute('aria-expanded'));
-            }, 10);
-        });
-        
-        pm.appendChild(clonedBurger);
-    }
-    
+    // Desktop layout wrapper ONLY. The floating burger is fully removed for mobile devices.
     pill.appendChild(pd);
-    pill.appendChild(pm);
     
     document.body.appendChild(pill);
     
