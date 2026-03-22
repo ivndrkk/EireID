@@ -23,6 +23,25 @@
     }
 }
 
+/* ─── Scroll Animations (Locomotive) ────────────────────────────────────────── */
+
+[data-scroll-class="is-revealed"] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: opacity, transform;
+}
+
+[data-scroll-class="is-revealed"].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Base stagger for main tiles */
+.about__tile:nth-child(2) { transition-delay: 0.1s; }
+.about__tile:nth-child(3) { transition-delay: 0.2s; }
+.about__tile:nth-child(4) { transition-delay: 0.15s; }
+.about__tile:nth-child(5) { transition-delay: 0.25s; }
 
 /* ─── Mobile Menu Toggle (Burger) ────────────────────────────────────────── */
 
@@ -1418,7 +1437,7 @@
     position: absolute;
     left: 0px;
     top: 0;
-    bottom: 0;
+    bottom: 24px;
     width: 2px;
     background: rgba(0, 0, 0, 0.05);
     z-index: 1;
@@ -1559,9 +1578,9 @@
     }
 
     .timeline-steps {
-        gap: 25vh;
-        padding-top: 10vh;
-        padding-bottom: 40vh;
+        gap: 15vh;
+        padding-top: 5vh;
+        padding-bottom: 0;
     }
 }
 
@@ -1806,7 +1825,7 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px) scale(0.9);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .ai-fab.is-visible {
@@ -1846,7 +1865,7 @@
     visibility: hidden;
     transform: scale(0.9) translateY(20px);
     transform-origin: bottom right;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
     /* Mobile default sizing (almost full screen) */
     width: calc(100vw - 40px);
@@ -2017,6 +2036,22 @@
     gap: var(--space-xl);
 }
 
+.services-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .services-content-wrapper {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        align-items: start;
+        gap: var(--space-2xl);
+    }
+}
+
 /* ─── Hero Section ────────────────────────────────────────────────────────── */
 
 .services-hero {
@@ -2078,10 +2113,17 @@
     /* Override glass to be a bit more solid */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
     .services-controls {
         flex-direction: row;
         align-items: flex-end;
+    }
+}
+
+@media (min-width: 1024px) {
+    .services-controls {
+        flex-direction: column;
+        align-items: stretch;
     }
 }
 
@@ -3241,7 +3283,7 @@
     border: 1px solid rgba(255, 255, 255, 0.8);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
     border-radius: var(--radius-full);
     will-change: transform, opacity;
 }
@@ -3321,7 +3363,7 @@
         border-radius: var(--radius-full);
         box-shadow: var(--shadow-sm);
         z-index: 5000;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
     }
 
     .floating-pill.is-visible {

@@ -15,6 +15,9 @@
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
+    <!-- Locomotive Scroll -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/styles.css">
@@ -22,7 +25,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" data-scroll-container>
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
@@ -75,8 +78,8 @@
         
                 </div>
         
-                <h1 id="hero-title" class="hero__title" data-reveal>Your Ireland, now digital</h1>
-                <p class="hero__subtitle" data-reveal>One app. Every resident. Every service.</p>
+                <h1 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2">Your Ireland, now digital</h1>
+                <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1">One app. Every resident. Every service.</p>
         
             </section>
         
@@ -127,7 +130,7 @@
             <div class="about__grid">
         
                 <!-- ── Tile 1: Digital Document Wallet (Tall) ── -->
-                <article class="about__tile about__tile--tall logo-box--glass">
+                <article class="about__tile about__tile--tall logo-box--glass" data-scroll data-scroll-class="is-revealed">
         
                     <div class="tile-header">
                         <h3 data-reveal>Digital Document Wallet</h3>
@@ -159,7 +162,7 @@
                 </article>
         
                 <!-- ── Tile 2: Service Hub (Wide) ── -->
-                <article class="about__tile about__tile--wide logo-box--glass">
+                <article class="about__tile about__tile--wide logo-box--glass" data-scroll data-scroll-class="is-revealed">
         
                     <div class="tile-header">
                         <h3 data-reveal>Seamless Integrations</h3>
@@ -177,23 +180,23 @@
                             <div class="orbit-ring"></div>
                             <div class="orbit-ring orbit-ring--inner"></div>
         
-                            <div class="orbit-item logo-box--glass" style="--angle: 0deg">
+                            <div class="orbit-item logo-box--glass" style="--angle: 0deg" data-scroll data-scroll-speed="-1">
                                 <img src="assets/services_logo/DOJHAM_logo.png" alt="DOJHAM">
                                 <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 72deg">
+                            <div class="orbit-item logo-box--glass" style="--angle: 72deg" data-scroll data-scroll-speed="-1">
                                 <img src="assets/services_logo/HSE_logo.jpg" alt="HSE">
                                 <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 144deg">
+                            <div class="orbit-item logo-box--glass" style="--angle: 144deg" data-scroll data-scroll-speed="-1">
                                 <img src="assets/services_logo/NDLS-logo.png" alt="NDLS">
                                 <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 216deg">
+                            <div class="orbit-item logo-box--glass" style="--angle: 216deg" data-scroll data-scroll-speed="-1">
                                 <img src="assets/services_logo/Revenue_logo.png" alt="Revenue">
                                 <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 288deg">
+                            <div class="orbit-item logo-box--glass" style="--angle: 288deg" data-scroll data-scroll-speed="-1">
                                 <img src="assets/services_logo/citizen-info_logo.png" alt="Citizen Info">
                                 <div class="orbit-modal">Lorem ipsum dolor sit amet consectetur.</div>
                             </div>
@@ -203,7 +206,7 @@
                 </article>
         
                 <!-- ── Tile 3: All Services / Agent Assistance (Wide) ── -->
-                <article class="about__tile about__tile--wide logo-box--glass">
+                <article class="about__tile about__tile--wide logo-box--glass" data-scroll data-scroll-class="is-revealed">
         
                     <div class="tile-header">
                         <h3 data-reveal>All services in one place</h3>
@@ -224,7 +227,7 @@
                 </article>
         
                 <!-- ── Tile 4: Simple & Smart AI (Small) ── -->
-                <article class="about__tile about__tile--small logo-box--glass">
+                <article class="about__tile about__tile--small logo-box--glass" data-scroll data-scroll-class="is-revealed">
         
                     <div class="tile-header">
                         <h3 data-reveal>Simple &amp; Smart AI</h3>
@@ -261,7 +264,7 @@
                 </article>
         
                 <!-- ── Tile 5: Statistics Bar (Full-width) ── -->
-                <article class="about__tile about__tile--full logo-box--glass stat-bar">
+                <article class="about__tile about__tile--full logo-box--glass stat-bar" data-scroll data-scroll-class="is-revealed">
         
                     <div class="stat-bar__col">
                         <div class="stat-bar__number">11</div>
@@ -299,7 +302,7 @@
             <div class="how-it-works__grid">
 
                 <!-- Left Content -->
-                <div class="how-it-works__content">
+                <div class="how-it-works__content" data-scroll data-scroll-sticky data-scroll-target="#how-it-works .how-it-works__grid">
                     <h2 class="how-it-works__title" data-reveal>How it works</h2>
                     <p class="how-it-works__description" data-reveal>
                         EireID changes how you manage your identity. We don't store your documents; instead, we hold secure,
@@ -547,7 +550,7 @@
                 </div>
 
                 <div class="faq__accordion">
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Is EireID free to use?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -559,7 +562,7 @@
                         </div>
                     </div>
                 
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Where is my personal data stored?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -571,7 +574,7 @@
                         </div>
                     </div>
                 
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Does EireID replace my physical passport or driving licence?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -583,7 +586,7 @@
                         </div>
                     </div>
                 
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">What exactly does the person I'm sharing with see?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -595,7 +598,7 @@
                         </div>
                     </div>
                 
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Does EireID work without an internet connection?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -607,7 +610,7 @@
                         </div>
                     </div>
                 
-                    <div class="faq__item logo-box--glass">
+                    <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">I'm not an Irish citizen — can I still use EireID?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
@@ -739,6 +742,11 @@
       </div>
     </div>
 
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="js/scripts.js" defer></script>
 </body>
 

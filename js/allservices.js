@@ -153,6 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function createCardElement(service, isFeatured = false) {
         const card = document.createElement("article");
         card.className = "service-card logo-box--glass";
+        card.setAttribute("data-scroll", "");
+        card.setAttribute("data-scroll-class", "is-revealed");
         
         if (isFeatured) {
             card.classList.add("service-card--featured");
@@ -228,6 +230,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof initTextReveal === 'function') {
             initTextReveal();
         }
+
+        // Inform Locomotive Scroll about new DOM elements and updated heights
+        setTimeout(() => {
+            if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                window.locoScroll.update();
+            }
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }, 150);
     }
 
     function filterData() {
@@ -325,6 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
         similar.forEach(s => {
             const scard = document.createElement('article');
             scard.className = 'service-card logo-box--glass';
+            scard.setAttribute("data-scroll", "");
+            scard.setAttribute("data-scroll-class", "is-revealed");
             scard.style.cursor = 'pointer';
             scard.style.minHeight = '140px';
             scard.innerHTML = `

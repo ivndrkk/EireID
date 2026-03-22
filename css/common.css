@@ -117,6 +117,7 @@ body {
   position: relative;
   overflow-x: hidden;
   background-color: #e3f7e8;
+  scroll-behavior: smooth;
 }
 
 /* GPU-optimized animated mesh gradient background */

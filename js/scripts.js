@@ -5,13 +5,49 @@
    ============================================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+    // 0. Initialize Locomotive Scroll & GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scroller = document.querySelector('[data-scroll-container]');
+    let locoScroll = null;
+    
+    if (scroller) {
+        locoScroll = new LocomotiveScroll({
+            el: scroller,
+            smooth: true,
+            lerp: 0.05,
+            smartphone: { smooth: true },
+            tablet: { smooth: true }
+        });
+
+        // Each time Locomotive Scroll updates, tell ScrollTrigger to update too
+        locoScroll.on("scroll", ScrollTrigger.update);
+
+        // Tell ScrollTrigger to use these proxy methods for the ".data-scroll-container" element
+        ScrollTrigger.scrollerProxy(scroller, {
+            scrollTop(value) {
+                return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+            },
+            getBoundingClientRect() {
+                return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+            },
+            pinType: scroller.style.transform ? "transform" : "fixed"
+        });
+
+        // Each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
+        ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+        ScrollTrigger.refresh();
+    }
+
+    window.locoScroll = locoScroll; // Make globally accessible if needed
+
     // Navigation & Menus
     initFloatingPill();
     initMobileMenu();
     initDropdowns();
     
     // UI Interactions
-    initExploreButton();
+    initExploreButton(locoScroll);
     initHeroInteractions();
     
     // Section Specific
@@ -75,7 +111,7 @@ function initDropdowns() {
 
 /* ─── Hero & Explore ─────────────────── */
 
-function initExploreButton() {
+function initExploreButton(locoScroll) {
     const exploreBtns = [
         document.getElementById("explore-btn"),
         document.getElementById("nav-about-btn")
@@ -85,18 +121,15 @@ function initExploreButton() {
         if (!btn) return;
         btn.addEventListener("click", (e) => {
             e.preventDefault();
-            // Scroll to the #about section
             const aboutSection = document.getElementById('about');
-            if (aboutSection) {
+            if (aboutSection && locoScroll) {
+                locoScroll.scrollTo(aboutSection);
+            } else if (aboutSection) {
                 aboutSection.scrollIntoView({ behavior: 'smooth' });
             } else {
-                window.scrollBy({
-                    top: window.innerHeight,
-                    behavior: "smooth",
-                });
+                window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
             }
             
-            // Close mobile menu if open
             const navList = document.getElementById('nav-list');
             const menuToggle = document.getElementById('mobile-menu-toggle');
             if (navList && navList.classList.contains('is-open')) {
@@ -310,83 +343,45 @@ function initHowItWorksAnimation() {
 
     if (!section || !timelineWrapper || !progressLine || !steps.length) return;
 
-    // 1. Step Activation
-    const stepObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-active');
-            } else {
-                entry.target.classList.remove('is-active');
-            }
+    // 1. Step Activation using ScrollTrigger (Fixes Locomotive Translation offset issues)
+    steps.forEach((step, index) => {
+        ScrollTrigger.create({
+            trigger: step,
+            scroller: "[data-scroll-container]",
+            start: "top 85%",
+            onEnter: () => {
+                setTimeout(() => {
+                    step.classList.add('is-active');
+                }, 150 * (index % 3)); // Stylish stagger
+            },
+            once: true
         });
-    }, {
-        root: null,
-        rootMargin: '-20% 0px -20% 0px', 
-        threshold: 0
     });
 
-    steps.forEach(step => stepObserver.observe(step));
+    // 2. pure GSAP Timeline Progress Line Refactor
+    let maxProgress = 0;
+    
+    // Create paused timeline mapping progressing from 0 to 1
+    let tl = gsap.timeline({ paused: true });
+    tl.to(progressLine, { scaleY: 1, duration: 1, ease: "none" }, 0);
+    tl.to(progressDot, { top: "100%", duration: 1, ease: "none" }, 0);
+    // Keep dot visible initially
+    tl.to(progressDot, { opacity: 1, duration: 0.01 }, 0);
+    
+    // Ensure translation for the dot is kept centered over the line
+    gsap.set(progressDot, { xPercent: -50, yPercent: -50 });
 
-    // 2. Timeline Progress Line
-    let ticking = false;
-    let wrapperOffsetTop = 0;
-    let wrapperHeight = 0;
-    let windowHeight = window.innerHeight;
-
-    function cacheTimelineOffsets() {
-        const rect = timelineWrapper.getBoundingClientRect();
-        wrapperOffsetTop = rect.top + window.scrollY;
-        wrapperHeight = rect.height;
-        windowHeight = window.innerHeight;
-    }
-
-    function updateProgressLine() {
-        const scrollY = window.scrollY;
-
-        // The exact center line of the browser window
-        const screenCenter = windowHeight / 2; 
-        
-        // Relative top position of the wrapper
-        const relativeTop = wrapperOffsetTop - scrollY;
-
-        // Calculate how far the top of the wrapper has moved past the center line
-        const scrolled = screenCenter - relativeTop;
-
-        // Calculate percentage (0 to 1)
-        let progress = scrolled / wrapperHeight;
-        progress = Math.max(0, Math.min(1, progress));
-
-        // Apply visual updates using transforms for smoothness
-        progressLine.style.transform = `scaleY(${progress})`;
-        progressDot.style.transform = `translate(-50%, -50%) translateY(${progress * wrapperHeight}px)`;
-        
-        // Hide dot if we haven't reached the timeline yet
-        progressDot.style.opacity = progress > 0 && progress < 1 ? '1' : '0';
-
-        ticking = false;
-    }
-
-    function onScroll() {
-        if (!ticking) {
-            window.requestAnimationFrame(updateProgressLine);
-            ticking = true;
+    ScrollTrigger.create({
+        trigger: timelineWrapper,
+        scroller: "[data-scroll-container]",
+        start: "top 50%",      // Start when wrapper hits screen center
+        end: "bottom 50%",   // End when wrapper bottom hits screen center
+        onUpdate: self => {
+            // Ensure the progress only grows (no scrub backward over completed active items)
+            maxProgress = Math.max(maxProgress, self.progress);
+            tl.progress(maxProgress);
         }
-    }
-
-    // Only listen to window scroll events if the section is actually on screen
-    const sectionObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            cacheTimelineOffsets();
-            window.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', cacheTimelineOffsets);
-            onScroll(); // Fire once to set initial state
-        } else {
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', cacheTimelineOffsets);
-        }
-    }, { threshold: 0 });
-
-    sectionObserver.observe(section);
+    });
 }
 
 /* ─── Comparison Table Mobile Logic ─────────────────── */
@@ -424,8 +419,8 @@ function initFloatingAssistant() {
     let ticking = false;
     let windowHeight = window.innerHeight;
 
-    function updateFloatingAssistant() {
-        if (window.scrollY > windowHeight / 2) {
+    function updateFloatingAssistant(scrollY) {
+        if (scrollY > windowHeight / 2) {
             fab.classList.add('is-visible');
         } else {
             fab.classList.remove('is-visible');
@@ -437,9 +432,17 @@ function initFloatingAssistant() {
         ticking = false;
     }
 
+    if (window.locoScroll) {
+        window.locoScroll.on('scroll', (args) => {
+            updateFloatingAssistant(args.scroll.y);
+        });
+    }
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
-            window.requestAnimationFrame(updateFloatingAssistant);
+            window.requestAnimationFrame(() => {
+                updateFloatingAssistant(window.scrollY);
+            });
             ticking = true;
         }
     }, { passive: true });
@@ -680,14 +683,24 @@ function initFloatingPill() {
         triggerPoint = header.offsetTop + header.offsetHeight + 50;
     }
     
+    function togglePill(scrollY) {
+        if (scrollY > triggerPoint) {
+            pill.classList.add('is-visible');
+        } else {
+            pill.classList.remove('is-visible');
+        }
+    }
+
+    if (window.locoScroll) {
+        window.locoScroll.on('scroll', (args) => {
+            togglePill(args.scroll.y);
+        });
+    }
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                if (window.scrollY > triggerPoint) {
-                    pill.classList.add('is-visible');
-                } else {
-                    pill.classList.remove('is-visible');
-                }
+                togglePill(window.scrollY);
                 ticking = false;
             });
             ticking = true;
