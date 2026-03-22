@@ -1469,7 +1469,7 @@
     box-shadow: 0 0 15px var(--color-bg-primary);
     transform: scaleY(0);
     transform-origin: top;
-    transition: transform 0.1s ease-out;
+    /* transition: transform 0.1s ease-out; — GSAP handles this now */
     border-radius: 2px;
     will-change: transform;
 }
@@ -1487,7 +1487,7 @@
     z-index: 2;
     opacity: 0;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out, opacity 0.3s ease;
+    /* transition: transform 0.1s ease-out, opacity 0.3s ease; — GSAP handles this now */
     will-change: transform, opacity;
 }
 
@@ -1691,6 +1691,7 @@
     text-align: center;
     padding-bottom: var(--space-lg);
     height: 120px;
+    transform: translate(0px, 11px);
 }
 
 .text-sm {
@@ -1771,7 +1772,12 @@
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
 }
 
-/* Column hover effect removed per user request */
+.compare-table-wrapper {
+    overflow: hidden;
+}
+.compare-cell {
+    will-change: transform, opacity;
+}
 
 /* ─── Mobile Adjustments (Rotating Competitor Focus) ─── */
 @media (max-width: 1023px) {
@@ -2271,6 +2277,7 @@
     color: var(--color-text-heading);
     margin-bottom: var(--space-md);
     letter-spacing: -0.02em;
+    text-align: center;
 }
 
 .services-hero__subtitle {

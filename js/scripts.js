@@ -33,10 +33,59 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             pinType: scroller.style.transform ? "transform" : "fixed"
         });
+        // ─── COMPARISON: Split Entry Animation ──────────────────
+(function initComparisonAnim() {
+  const grid = document.querySelector('.compare-grid');
+  if (!grid) return;
 
+  const labels = grid.querySelectorAll('.label-col');
+  const eireID = grid.querySelectorAll('.eireid-col');
+  const comps1 = grid.querySelectorAll('.comp-1');
+  const comps2 = grid.querySelectorAll('.comp-2');
+  const comps3 = grid.querySelectorAll('.comp-3');
+
+  // Начальные скрытые состояния
+  gsap.set(labels, { x: -50, opacity: 0 });
+  gsap.set(eireID, {
+    scale: 0.88, opacity: 0,
+    transformOrigin: 'center center'
+  });
+  gsap.set([comps1, comps2, comps3], { x: 60, opacity: 0 });
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.comparison',
+      start: 'top 70%',
+      scroller: '[data-scroll-container]', // Locomotive proxy
+      once: true,
+    }
+  })
+  .to(labels, {
+    x: 0, opacity: 1,
+    duration: 0.6,
+    ease: 'power3.out',
+  })
+  .to(eireID, {
+    scale: 1, opacity: 1,
+    duration: 0.7,
+    ease: 'back.out(1.7)', // фирменный bounce как у logo-box
+  }, '<0.1')
+  .to(comps1, {
+    x: 0, opacity: 1,
+    duration: 0.5, ease: 'power2.out',
+  }, '<0.2')
+  .to(comps2, {
+    x: 0, opacity: 1,
+    duration: 0.5, ease: 'power2.out',
+  }, '<0.1')
+  .to(comps3, {
+    x: 0, opacity: 1,
+    duration: 0.5, ease: 'power2.out',
+  }, '<0.1');
+        })();
+        
         // Each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
         ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-        ScrollTrigger.refresh();
     }
 
     window.locoScroll = locoScroll; // Make globally accessible if needed
@@ -65,7 +114,36 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // FAQ
     initFAQAccordion();
+
+    // Final Refresh
+    ScrollTrigger.refresh();
 });
+
+// Added to prevent crashes if certain animations are missing or renamed in other files
+function initScrollReveal() {
+    // Placeholder - handled by Locomotive Scroll's data-scroll-class directly
+    console.log("initScrollReveal: Using native Locomotive Scroll revealing");
+}
+
+function initTextReveal() {
+    const revealElements = document.querySelectorAll('[data-reveal]');
+    
+    if (!revealElements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+}
 
 /* ─── Navigation ─────────────────── */
 
@@ -387,6 +465,7 @@ function initComparisonTable() {
         competitors[currentIndex].forEach(cell => cell.classList.add('is-active'));
     }, 10000); // 10 seconds
 }
+
 
 /* ─── Rua AI Assistant Logic ─────────────────── */
 

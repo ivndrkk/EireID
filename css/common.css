@@ -478,3 +478,30 @@ body::before {
   transition: all 0.1s ease;
   transform: translate(-50%, -50%) scale(0.98);
 }
+
+/* ─── 8. Reveal Animations (Standardized) ─────────────────────────────────── */
+
+[data-reveal], 
+.timeline-step__text h4, 
+.timeline-step__text p {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-revealed, 
+.is-active .timeline-step__text h4, 
+.is-active .timeline-step__text p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Specific delay handling for sequential items inside active timeline steps */
+.is-active .timeline-step__text h4 {
+  transition-delay: 0.1s;
+}
+
+.is-active .timeline-step__text p {
+  transition-delay: 0.2s;
+}
