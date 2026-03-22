@@ -174,6 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
         card.className = "service-card logo-box--glass";
         card.setAttribute("data-scroll", "");
         card.setAttribute("data-scroll-class", "is-revealed");
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", service.name);
         
         if (isFeatured) {
             card.classList.add("service-card--featured");
@@ -203,12 +206,21 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = contentHtml;
         
         // Click opens modal
-        card.addEventListener("click", () => {
+        const triggerAction = () => {
             card.style.transform = "scale(0.98)";
             setTimeout(() => {
                 card.style.transform = "";
                 openModal(service);
             }, 150);
+        };
+
+        card.addEventListener("click", triggerAction);
+
+        card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                triggerAction();
+            }
         });
 
         return card;
