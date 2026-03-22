@@ -2077,7 +2077,6 @@
 /* ─── Resident Hero (Layout Replace) ───────────────────────────────────────── */
 
 .resident-hero {
-    padding: calc(var(--space-2xl) + 60px) 0 var(--space-4xl);
     position: relative;
     width: 100%;
     overflow: visible;
@@ -2092,13 +2091,27 @@
 .resident-hero .hero__content{
     align-items: start;
     flex-direction: row;
-    justify-content: space-between;
+    gap: var(--space-3xl);
 }
 
 .resident-hero .hero-leftcol{
     display: flex;
     flex-direction: column;
     align-items: start;
+}
+
+.resident-hero .hero__subtitle{
+    text-align: start;
+}
+
+.resident-hero .hero__subtitle br{
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .resident-hero .hero__subtitle br{
+        display: block;
+    }
 }
 
 
@@ -3963,4 +3976,972 @@
 
 .footer-main__legal a:hover {
     color: var(--color-text-heading);
+}
+
+/* ─── Resident Carousel Nav ─────────────────────────────────────────────── */
+.resident-services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: var(--space-sm);
+}
+
+
+.carousel-nav {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.carousel-nav__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--color-text-heading);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.carousel-nav__btn:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.carousel-nav__btn:active {
+    transform: scale(0.95);
+}
+
+
+
+
+
+/* Remove box shadow from cards on resident.html only */
+.resident-card {
+    box-shadow: none !important;
+}
+
+.resident-services-carousel {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    align-items: stretch;
+    scroll-behavior: smooth;
+    width: 100%;
+    /* Default to exactly 3 items */
+    max-width: calc(280px * 3 + 2rem);
+    /* Set up for finger scrolling */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    
+    /* Hide scrollbar since navigation arrows are primary */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;    /* Firefox */
+}
+
+.resident-services-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .resident-services-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+    
+    .resident-services-carousel {
+        /* Mobile: Only 1 item visible */
+        max-width: 280px; 
+    }
+}
+
+/* =============================================================================
+   Cyber Card Layout (from Uiverse.io, adapted) 
+   ============================================================================= */
+.cyber-container {
+  position: relative;
+  width: 420px;
+  height: 520px;
+  transition: 200ms;
+}
+
+@media (max-width: 991px) {
+  .cyber-container {
+    display: none !important;
+  }
+  .resident-hero .hero__content{
+    gap: 0;
+    width: fit-content;
+  }
+}
+
+.cyber-container:active {
+  width: 410px;
+  height: 510px;
+}
+
+#cyber-card {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  transition: 700ms;
+  background: rgba(242, 252, 238, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), inset 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.cyber-card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-id-info {
+  position: absolute;
+  inset: 0;
+  padding: 36px 36px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.cyber-card-context-title {
+  font-size: 1.7rem;
+  color: #1a1a1a;
+  font-weight: 500;
+  margin: 0;
+  text-align: left;
+}
+
+.cyber-card-main-body {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.cyber-photo-actual {
+  width: 170px;
+  height: 220px;
+  border-radius: 20px;
+  background-color: #fff;
+  background-image: url("./../assets/img/mascot_3.png");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.cyber-card-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.cyber-data-group label {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.cyber-pill-grey {
+  background: #e5e5e5;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #1a1a1a;
+  display: inline-block;
+  letter-spacing: 2px;
+}
+
+.cyber-expiry-date {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin-bottom: 0.4rem;
+}
+
+.cyber-valid-status {
+  color: #0c9b4e;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cyber-floating-update-chip {
+  position: absolute;
+  right: 0;
+  top: 290px;
+  background: #bbf7d0;
+  padding: 0.8rem 1rem;
+  border-radius: 16px 0 0 16px;
+  width: auto;
+  box-shadow: -5px 5px 15px rgba(0,0,0,0.05);
+  z-index: 15;
+}
+
+.cyber-floating-update-chip label {
+  font-size: 0.85rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+  display: block;
+  font-weight: 400;
+}
+
+.cyber-floating-update-chip div {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 500;
+}
+
+.cyber-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.cyber-name-large {
+  font-size: 2.2rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  text-align: left;
+}
+
+.cyber-more-btn {
+  background: #000;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+.cyber-more-btn span {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.cyber-protected-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  transform: translateY(20px);
+  z-index: 20;
+}
+
+.cyber-shield-icon {
+  font-size: 4rem;
+  color: #00ca72;
+  margin-bottom: var(--space-md);
+  filter: drop-shadow(0 0 15px rgba(0, 202, 114, 0.4));
+}
+
+.cyber-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--color-text-heading);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+}
+
+.cyber-subtitle {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--color-text-body);
+}
+
+.cyber-highlight {
+  color: #00ca72;
+  font-weight: bold;
+}
+
+.cyber-glowing-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cyber-glow-1,
+.cyber-glow-2,
+.cyber-glow-3 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 202, 114, 0.3) 0%,
+    rgba(0, 202, 114, 0) 70%
+  );
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-glow-1 {
+  top: -20px;
+  left: -20px;
+}
+.cyber-glow-2 {
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+}
+.cyber-glow-3 {
+  bottom: -20px;
+  left: 30%;
+}
+
+.cyber-card-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00ca72;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effects */
+.cyber-tracker:hover ~ #cyber-card .cyber-id-info {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+.cyber-tracker:hover ~ #cyber-card .cyber-protected-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cyber-tracker:hover ~ #cyber-card .cyber-glowing-elements div {
+  opacity: 1;
+}
+
+.cyber-tracker:hover ~ #cyber-card .cyber-card-particles span {
+  animation: cyberParticleFloat 2s infinite;
+}
+
+@keyframes cyberParticleFloat {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--x, 0) * 30px), calc(var(--y, 0) * 30px));
+    opacity: 0;
+  }
+}
+
+/* Particle positions */
+.cyber-card-particles span:nth-child(1) {
+  --x: 1;
+  --y: -1;
+  top: 40%;
+  left: 20%;
+}
+.cyber-card-particles span:nth-child(2) {
+  --x: -1;
+  --y: -1;
+  top: 60%;
+  right: 20%;
+}
+.cyber-card-particles span:nth-child(3) {
+  --x: 0.5;
+  --y: 1;
+  top: 20%;
+  left: 40%;
+}
+.cyber-card-particles span:nth-child(4) {
+  --x: -0.5;
+  --y: 1;
+  top: 80%;
+  right: 40%;
+}
+.cyber-card-particles span:nth-child(5) {
+  --x: 1;
+  --y: 0.5;
+  top: 30%;
+  left: 60%;
+}
+.cyber-card-particles span:nth-child(6) {
+  --x: -1;
+  --y: 0.5;
+  top: 70%;
+  right: 60%;
+}
+
+#cyber-card::before {
+  content: "";
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 202, 114, 0.1) 0%,
+    rgba(0, 162, 255, 0.05) 50%,
+    transparent 100%
+  );
+  filter: blur(20px);
+  opacity: 0;
+  width: 150%;
+  height: 150%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+.cyber-tracker:hover ~ #cyber-card::before {
+  opacity: 1;
+}
+
+.cyber-tracker {
+  position: absolute;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-tracker:hover {
+  cursor: pointer;
+}
+
+.cyber-tracker:hover ~ #cyber-card #cyber-prompt {
+  opacity: 0;
+}
+
+.cyber-tracker:hover ~ #cyber-card {
+  transition: 300ms;
+  filter: brightness(1.1);
+}
+
+.cyber-container:hover #cyber-card::before {
+  transition: 200ms;
+  content: "";
+  opacity: 80%;
+}
+
+.cyber-canvas {
+  perspective: 800px;
+  inset: 0;
+  z-index: 200;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "tr-1 tr-2 tr-3 tr-4 tr-5"
+    "tr-6 tr-7 tr-8 tr-9 tr-10"
+    "tr-11 tr-12 tr-13 tr-14 tr-15"
+    "tr-16 tr-17 tr-18 tr-19 tr-20"
+    "tr-21 tr-22 tr-23 tr-24 tr-25";
+}
+
+.tr-1 {
+  grid-area: tr-1;
+}
+
+.tr-2 {
+  grid-area: tr-2;
+}
+
+.tr-3 {
+  grid-area: tr-3;
+}
+
+.tr-4 {
+  grid-area: tr-4;
+}
+
+.tr-5 {
+  grid-area: tr-5;
+}
+
+.tr-6 {
+  grid-area: tr-6;
+}
+
+.tr-7 {
+  grid-area: tr-7;
+}
+
+.tr-8 {
+  grid-area: tr-8;
+}
+
+.tr-9 {
+  grid-area: tr-9;
+}
+
+.tr-10 {
+  grid-area: tr-10;
+}
+
+.tr-11 {
+  grid-area: tr-11;
+}
+
+.tr-12 {
+  grid-area: tr-12;
+}
+
+.tr-13 {
+  grid-area: tr-13;
+}
+
+.tr-14 {
+  grid-area: tr-14;
+}
+
+.tr-15 {
+  grid-area: tr-15;
+}
+
+.tr-16 {
+  grid-area: tr-16;
+}
+
+.tr-17 {
+  grid-area: tr-17;
+}
+
+.tr-18 {
+  grid-area: tr-18;
+}
+
+.tr-19 {
+  grid-area: tr-19;
+}
+
+.tr-20 {
+  grid-area: tr-20;
+}
+
+.tr-21 {
+  grid-area: tr-21;
+}
+
+.tr-22 {
+  grid-area: tr-22;
+}
+
+.tr-23 {
+  grid-area: tr-23;
+}
+
+.tr-24 {
+  grid-area: tr-24;
+}
+
+.tr-25 {
+  grid-area: tr-25;
+}
+
+.tr-1:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.tr-2:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg);
+}
+
+.tr-3:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.tr-4:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg);
+}
+
+.tr-5:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.tr-6:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.tr-7:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+}
+
+.tr-8:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.tr-9:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg);
+}
+
+.tr-10:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.tr-11:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.tr-12:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg);
+}
+
+.tr-13:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.tr-14:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg);
+}
+
+.tr-15:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.tr-16:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.tr-17:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg);
+}
+
+.tr-18:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.tr-19:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg);
+}
+
+.tr-20:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.tr-21:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.tr-22:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg);
+}
+
+.tr-23:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.tr-24:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg);
+}
+
+.tr-25:hover ~ #cyber-card {
+  transition: 125ms ease-in-out;
+  transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.cyber-noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cyber-card-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.cyber-lines span {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 202, 114, 0.2),
+    transparent
+  );
+}
+
+.cyber-lines span:nth-child(1) {
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: cyberLineGrow 3s linear infinite;
+}
+
+.cyber-lines span:nth-child(2) {
+  top: 40%;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: cyberLineGrow 3s linear infinite 1s;
+}
+
+.cyber-lines span:nth-child(3) {
+  top: 60%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: cyberLineGrow 3s linear infinite 2s;
+}
+
+.cyber-lines span:nth-child(4) {
+  top: 80%;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  animation: cyberLineGrow 3s linear infinite 1.5s;
+}
+
+.cyber-corner-elements span {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(0, 202, 114, 0.3);
+}
+
+.cyber-corner-elements span:nth-child(1) {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.cyber-corner-elements span:nth-child(2) {
+  top: 10px;
+  right: 10px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.cyber-corner-elements span:nth-child(3) {
+  bottom: 10px;
+  left: 10px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.cyber-corner-elements span:nth-child(4) {
+  bottom: 10px;
+  right: 10px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.cyber-scan-line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 202, 114, 0.1),
+    transparent
+  );
+  transform: translateY(-100%);
+  animation: cyberScanMove 2s linear infinite;
+}
+
+@keyframes cyberLineGrow {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes cyberScanMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Modification */
+#cyber-card:hover .cyber-card-glare {
+  opacity: 1;
+}
+
+.cyber-corner-elements span {
+  transition: all 0.3s ease;
+}
+
+#cyber-card:hover .cyber-corner-elements span {
+  border-color: rgba(0, 202, 114, 0.8);
+  box-shadow: 0 0 10px rgba(0, 202, 114, 0.5);
+}
+
+
+/* =============================================================================
+   Resident Flow Animation Styles
+   ============================================================================= */
+
+@media (min-width: 992px) {
+    .resident-flow {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 50;
+        margin-bottom: 6rem;
+    }
+}
+@media (max-width: 991px) {
+    .resident-flow {
+        height: auto !important;
+        display: block;
+        position: relative;
+        z-index: 50;
+        margin-bottom: 4rem;
+        padding-top: 2rem;
+    }
+    .resident-flow__sticky-wrap {
+        height: auto !important;
+        position: relative;
+        display: block !important;
+    }
+    .how-it-works-grid {
+        grid-template-columns: 1fr !important;
+        padding: 2rem !important;
+        gap: 1.5rem !important;
+        top: 0 !important;
+    }
+}
+
+.how-it-works-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    padding: 4rem;
+    background: rgba(255, 255, 255, 0.5);
+    top: -117px;
+}
+
+.resident-step {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: transform 0.3s ease;
+    will-change: transform, opacity, background-color;
+}
+
+.resident-step .flow-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: var(--color-text-heading);
+    will-change: background-color, color;
+}
+
+.resident-step .step-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text-heading);
+}
+
+.resident-step .step-desc {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
 }
