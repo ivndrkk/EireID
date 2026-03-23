@@ -125,24 +125,30 @@ function initScrollReveal() {
     console.log("initScrollReveal: Using native Locomotive Scroll revealing");
 }
 
+// Optimization: Use a singleton IntersectionObserver for text reveals to prevent memory leaks
+// and redundant observer instances when re-initializing (e.g., after pagination).
+let textRevealObserver;
+
 function initTextReveal() {
-    const revealElements = document.querySelectorAll('[data-reveal]');
+    const revealElements = document.querySelectorAll('[data-reveal]:not(.is-revealed)');
     
     if (!revealElements.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
-                observer.unobserve(entry.target);
-            }
+    if (!textRevealObserver) {
+        textRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    textRevealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    });
+    }
 
-    revealElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => textRevealObserver.observe(el));
 }
 
 // ─── Preloader Dismissal ────────────────────────────────────────────────
@@ -347,6 +353,11 @@ function initStatCounters() {
     const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
     const startTime = performance.now();
 
+    // Optimization: Pre-cache DOM references outside the animation loop
+    // to eliminate redundant 'Read' operations and layout thrashing.
+    const unitSpan = el.querySelector('.stat-bar__unit');
+    const textNode = el.childNodes[0] && el.childNodes[0].nodeType === 3 ? el.childNodes[0] : null;
+
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
@@ -355,13 +366,12 @@ function initStatCounters() {
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
-      // Preserve unit/suffix if it exists in a span
-      const unitSpan = el.querySelector('.stat-bar__unit');
+      // Optimization: Avoid redundant DOM queries in the 60fps loop.
       if (unitSpan) {
-        if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
-          el.childNodes[0].textContent = currentValue;
+        if (textNode) {
+          textNode.textContent = currentValue;
         } else {
-          // Fallback if structure is unexpected
+          // Fallback only if structure is unexpected
           el.innerHTML = currentValue + unitSpan.outerHTML;
         }
       } else {
