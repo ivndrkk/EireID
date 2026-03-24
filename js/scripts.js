@@ -287,7 +287,7 @@ function initDocCarousel() {
 
         // Exact pixel offset based on the rendered image width
         const slideWidth = images[0].offsetWidth;
-        track.style.transform = \`translateX(-\${currentIndex * slideWidth}px)\`;
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
         // Fade caption out → update text → fade back in
         caption.style.opacity = '0';
@@ -583,13 +583,13 @@ function initAIChat() {
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
         div.className = 'ai-message ai-message--user';
-        div.innerHTML = \`
+        div.innerHTML = `
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
-                    <p class="ai-message__text">\${text}</p>
+                    <p class="ai-message__text">${text}</p>
                 </div>
-                <div class="ai-message__time">\${timeStr}</div>
-            </div>\`;
+                <div class="ai-message__time">${timeStr}</div>
+            </div>`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -597,29 +597,29 @@ function initAIChat() {
     // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
         // Форматируем: переносы строк → <br>
-        const formatted = text.replace(/\\n/g, '<br>');
+        const formatted = text.replace(/\n/g, '<br>');
 
         // Источники
         const sourcesHtml = sources.length > 0
-            ? \`<div class="ai-message__sources">
+            ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
-                 \${sources.map(s => \`<a href="\${s.url}" target="_blank" class="ai-message__source-link">\${s.title}</a>\`).join('')}
-               </div>\`
+                 ${sources.map(s => `<a href="${s.url}" target="_blank" class="ai-message__source-link">${s.title}</a>`).join('')}
+               </div>`
             : '';
 
         const div = document.createElement('div');
         div.className = 'ai-message';
-        div.innerHTML = \`
+        div.innerHTML = `
             <div class="ai-message__avatar-container">
                 <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
-                    <p class="ai-message__text">\${formatted}</p>
-                    \${sourcesHtml}
+                    <p class="ai-message__text">${formatted}</p>
+                    ${sourcesHtml}
                 </div>
-                <div class="ai-message__time">\${timeStr}</div>
-            </div>\`;
+                <div class="ai-message__time">${timeStr}</div>
+            </div>`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -629,7 +629,7 @@ function initAIChat() {
         const div = document.createElement('div');
         div.className = 'ai-message';
         div.id = 'ai-typing';
-        div.innerHTML = \`
+        div.innerHTML = `
             <div class="ai-message__avatar-container">
                 <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
@@ -637,7 +637,7 @@ function initAIChat() {
                 <div class="ai-message__text-container">
                     <p class="ai-message__text" style="opacity:0.5">Thinking...</p>
                 </div>
-            </div>\`;
+            </div>`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -679,7 +679,7 @@ function initAIChat() {
         } catch (err) {
             removeTyping();
             const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            renderBotMessage('Sorry, I couldn\\'t connect to the server. Please try again.', replyTime);
+            renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
         } finally {
             input.disabled = false;
             form.querySelector('button').disabled = false;
