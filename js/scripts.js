@@ -124,6 +124,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Final Refresh
     ScrollTrigger.refresh();
+
+    // Global Scroll to Top Helper
+    window.scrollToTop = (smooth = true) => {
+        if (window.locoScroll) {
+            window.locoScroll.scrollTo(0, {
+                duration: smooth ? 600 : 0,
+                easing: [0.25, 0.0, 0.35, 1.0]
+            });
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+    };
+
+    // Initial scroll to top on page load
+    window.scrollToTop(true);
 });
 
 // Added to prevent crashes if certain animations are missing or renamed in other files

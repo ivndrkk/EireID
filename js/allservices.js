@@ -304,6 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         currentPage = 1;
         renderPagination();
+
+        // Always return to top when filtering/searching
+        if (typeof window.scrollToTop === 'function') {
+            window.scrollToTop(true);
+        }
     }
 
     function switchModalState(stateId) {
