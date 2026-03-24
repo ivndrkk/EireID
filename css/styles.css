@@ -5110,4 +5110,311 @@
     color: rgba(0, 0, 0, 0.9) !important;
 }
 
+.residents-column__container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* =============================================================================
+   Trust Section (Resident Page)
+   ============================================================================= */
+
+.trust-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-2xl) var(--space-md);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Контейнер для визуальной части (щит + бейджи) */
+.trust-visual {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-2xl);
+    z-index: 10;
+}
+
+/* Центральный сияющий фон */
+.trust-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(164, 229, 183, 0.4) 0%, rgba(164, 229, 183, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: pulseLogo 4s infinite ease-in-out;
+}
+
+/* Большой центральный стеклянный щит */
+.trust-shield {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.05),
+        inset 0 0 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.trust-shield .iconify {
+    font-size: 64px;
+    color: var(--color-bg-primary);
+    /* Фирменный зеленый */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Плавающие бейджи (Pills) */
+.trust-pill {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85) !important;
+    /* Делаем чуть плотнее, чем обычное стекло */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    color: var(--color-text-heading);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    z-index: 3;
+    will-change: transform;
+}
+
+.trust-pill .iconify {
+    font-size: 16px;
+    color: var(--color-text-muted);
+}
+
+/* Позиционирование и индивидуальные анимации для бейджей */
+.trust-pill--1 {
+    top: -5%;
+    left: -25%;
+    animation: sway-1 6s ease-in-out infinite;
+}
+
+.trust-pill--2 {
+    top: 15%;
+    right: -35%;
+    animation: sway-2 7s ease-in-out infinite 1s;
+}
+
+.trust-pill--3 {
+    bottom: 15%;
+    left: -30%;
+    animation: sway-3 6.5s ease-in-out infinite 0.5s;
+}
+
+.trust-pill--4 {
+    bottom: -5%;
+    right: -20%;
+    animation: sway-4 7.5s ease-in-out infinite 1.5s;
+}
+
+/* Текст снизу */
+.trust-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.trust-footer .iconify {
+    font-size: 24px;
+    color: var(--color-bg-primary);
+    flex-shrink: 0;
+}
+
+.trust-footer p {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* ─── Keyframe-анимации легкого покачивания ─── */
+@keyframes sway-1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(8px, -12px) rotate(2deg);
+    }
+}
+
+@keyframes sway-2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-10px, -8px) rotate(-2deg);
+    }
+}
+
+@keyframes sway-3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(6px, 10px) rotate(-1deg);
+    }
+}
+
+@keyframes sway-4 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-8px, 12px) rotate(1deg);
+    }
+}
+
+/* ─── Адаптивность ─── */
+@media (max-width: 991px) {
+    .residents-column__container {
+        flex-direction: column;
+        gap: var(--space-2xl);
+    }
+
+    .trust-section {
+        max-width: 100%;
+        padding-top: var(--space-xl);
+    }
+
+    .trust-visual {
+        transform: scale(0.9);
+        margin-bottom: var(--space-xl);
+    }
+
+    /* Сжимаем разлет бейджей на мобилках, чтобы не вылезали за экран */
+    .trust-pill--1 {
+        left: -10%;
+    }
+
+    .trust-pill--2 {
+        right: -15%;
+    }
+
+    .trust-pill--3 {
+        left: -15%;
+    }
+
+    .trust-pill--4 {
+        right: -5%;
+    }
+}
+
+/* =============================================================================
+   Resident FAQ Layout Tweaks
+   ============================================================================= */
+
+.resident-faq {
+    flex: 1.2;
+    /* Занимает чуть больше места, чем Trust секция */
+    padding: var(--space-2xl) var(--space-md);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.resident-faq__container {
+    text-align: left;
+    /* В узкой колонке текст лучше выравнивать по левому краю */
+    max-width: 100%;
+}
+
+.resident-faq__header {
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: var(--space-xl);
+}
+
+.resident-faq .faq__title {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    /* Чуть меньше, чем на главной */
+    margin-bottom: var(--space-xs);
+}
+
+.resident-faq .faq__subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: 0;
+}
+
+/* Делаем сами плашки вопросов чуть компактнее для сайдбара */
+.resident-faq .faq__question {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+}
+
+.resident-faq .faq__answer p {
+    font-size: var(--font-size-sm);
+}
+
+/* Стилизация кнопки */
+.resident-faq__action {
+    margin-top: var(--space-xl);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.resident-faq__btn {
+    width: auto;
+    min-width: 220px;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 991px) {
+    .resident-faq {
+        padding-top: 0;
+        /* Убираем лишний отступ сверху, так как идет сразу после Trust */
+        width: 100%;
+    }
+
+    .resident-faq__action {
+        justify-content: center;
+        /* Центрируем кнопку на мобилках */
+    }
+}
+
 
