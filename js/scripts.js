@@ -12,11 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let locoScroll = null;
     
     if (scroller) {
+        // Use a higher lerp (0.12) for mobile devices for better responsiveness
+        // while maintaining the default smooth 0.05 for desktop and tablet.
+        const isMobile = window.innerWidth < 768;
+
         locoScroll = new LocomotiveScroll({
             el: scroller,
             smooth: true,
-            lerp: 0.05,
-            smartphone: { smooth: true },
+            lerp: isMobile ? 0.12 : 0.05,
+            smartphone: {
+                smooth: true,
+                multiplier: 1.2 // Slightly faster on mobile
+            },
             tablet: { smooth: true }
         });
 
