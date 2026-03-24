@@ -280,7 +280,7 @@ function initDocCarousel() {
 
         // Exact pixel offset based on the rendered image width
         const slideWidth = images[0].offsetWidth;
-        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        track.style.transform = \`translateX(-\${currentIndex * slideWidth}px)\`;
 
         // Fade caption out → update text → fade back in
         caption.style.opacity = '0';
@@ -353,10 +353,10 @@ function initStatCounters() {
     const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
     const startTime = performance.now();
 
-    // Optimization: Pre-cache DOM references outside the animation loop
-    // to eliminate redundant 'Read' operations and layout thrashing.
+    // Optimization: Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
     const unitSpan = el.querySelector('.stat-bar__unit');
-    const textNode = el.childNodes[0] && el.childNodes[0].nodeType === 3 ? el.childNodes[0] : null;
+    const firstNode = el.childNodes[0];
+    const isTextNode = firstNode && firstNode.nodeType === 3;
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
@@ -368,14 +368,15 @@ function initStatCounters() {
 
       // Optimization: Avoid redundant DOM queries in the 60fps loop.
       if (unitSpan) {
-        if (textNode) {
-          textNode.textContent = currentValue;
+        if (isTextNode) {
+          firstNode.textContent = currentValue;
         } else {
-          // Fallback only if structure is unexpected
+          // Fallback if structure is unexpected (only runs if childNodes[0] is not a text node)
           el.innerHTML = currentValue + unitSpan.outerHTML;
         }
       } else {
-        el.innerText = currentValue + suffix;
+        // Use textContent for better performance (no layout/reflow)
+        el.textContent = currentValue + suffix;
       }
 
       if (progress < 1) {
@@ -574,13 +575,13 @@ function initAIChat() {
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
         div.className = 'ai-message ai-message--user';
-        div.innerHTML = `
+        div.innerHTML = \`
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
-                    <p class="ai-message__text">${text}</p>
+                    <p class="ai-message__text">\${text}</p>
                 </div>
-                <div class="ai-message__time">${timeStr}</div>
-            </div>`;
+                <div class="ai-message__time">\${timeStr}</div>
+            </div>\`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -588,29 +589,29 @@ function initAIChat() {
     // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
         // Форматируем: переносы строк → <br>
-        const formatted = text.replace(/\n/g, '<br>');
+        const formatted = text.replace(/\\n/g, '<br>');
 
         // Источники
         const sourcesHtml = sources.length > 0
-            ? `<div class="ai-message__sources">
+            ? \`<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
-                 ${sources.map(s => `<a href="${s.url}" target="_blank" class="ai-message__source-link">${s.title}</a>`).join('')}
-               </div>`
+                 \${sources.map(s => \`<a href="\${s.url}" target="_blank" class="ai-message__source-link">\${s.title}</a>\`).join('')}
+               </div>\`
             : '';
 
         const div = document.createElement('div');
         div.className = 'ai-message';
-        div.innerHTML = `
+        div.innerHTML = \`
             <div class="ai-message__avatar-container">
                 <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
-                    <p class="ai-message__text">${formatted}</p>
-                    ${sourcesHtml}
+                    <p class="ai-message__text">\${formatted}</p>
+                    \${sourcesHtml}
                 </div>
-                <div class="ai-message__time">${timeStr}</div>
-            </div>`;
+                <div class="ai-message__time">\${timeStr}</div>
+            </div>\`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -620,7 +621,7 @@ function initAIChat() {
         const div = document.createElement('div');
         div.className = 'ai-message';
         div.id = 'ai-typing';
-        div.innerHTML = `
+        div.innerHTML = \`
             <div class="ai-message__avatar-container">
                 <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
             </div>
@@ -628,7 +629,7 @@ function initAIChat() {
                 <div class="ai-message__text-container">
                     <p class="ai-message__text" style="opacity:0.5">Thinking...</p>
                 </div>
-            </div>`;
+            </div>\`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
@@ -670,7 +671,7 @@ function initAIChat() {
         } catch (err) {
             removeTyping();
             const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
+            renderBotMessage('Sorry, I couldn\\'t connect to the server. Please try again.', replyTime);
         } finally {
             input.disabled = false;
             form.querySelector('button').disabled = false;
