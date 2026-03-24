@@ -354,6 +354,7 @@ function initStatCounters() {
     const startTime = performance.now();
 
     // Optimization: Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
+    // Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
     const unitSpan = el.querySelector('.stat-bar__unit');
     const firstNode = el.childNodes[0];
     const isTextNode = firstNode && firstNode.nodeType === 3;
@@ -366,7 +367,7 @@ function initStatCounters() {
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
-      // Optimization: Avoid redundant DOM queries in the 60fps loop.
+      // Preserve unit/suffix if it exists in a span
       if (unitSpan) {
         if (isTextNode) {
           firstNode.textContent = currentValue;
