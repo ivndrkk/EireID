@@ -347,6 +347,11 @@ function initStatCounters() {
     const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
     const startTime = performance.now();
 
+    // Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
+    const unitSpan = el.querySelector('.stat-bar__unit');
+    const firstNode = el.childNodes[0];
+    const isTextNode = firstNode && firstNode.nodeType === 3;
+
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
@@ -356,16 +361,16 @@ function initStatCounters() {
       const currentValue = Math.floor(easeProgress * targetValue);
 
       // Preserve unit/suffix if it exists in a span
-      const unitSpan = el.querySelector('.stat-bar__unit');
       if (unitSpan) {
-        if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
-          el.childNodes[0].textContent = currentValue;
+        if (isTextNode) {
+          firstNode.textContent = currentValue;
         } else {
-          // Fallback if structure is unexpected
+          // Fallback if structure is unexpected (only runs if childNodes[0] is not a text node)
           el.innerHTML = currentValue + unitSpan.outerHTML;
         }
       } else {
-        el.innerText = currentValue + suffix;
+        // Use textContent for better performance (no layout/reflow)
+        el.textContent = currentValue + suffix;
       }
 
       if (progress < 1) {
