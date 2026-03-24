@@ -390,6 +390,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         renderCarousel();
+
+        // Always return to top (of the results/section) when searching
+        if (typeof window.scrollToTop === 'function') {
+            window.scrollToTop(true);
+        }
     }
 
     if (searchInput) {
