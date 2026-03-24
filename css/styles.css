@@ -5,6 +5,8 @@
 
 /* ─── Header Shell ────────────────────────────────────────────────────────── */
 
+
+
 .header {
     padding: var(--space-sm) 0;
     display: flex;
@@ -4866,6 +4868,13 @@
 }
 
 
+@media (max-width: 1024px) {
+    .resident-scroll-icon {
+        margin-bottom: var(--space-lg) !important;
+        opacity: 0;
+    }
+}
+
 /* =============================================================================
    Resident Flow Animation Styles
    ============================================================================= */
@@ -4898,7 +4907,6 @@
         grid-template-columns: 1fr !important;
         padding: 2rem !important;
         gap: 1.5rem !important;
-        top: 0 !important;
     }
 }
 
@@ -4909,7 +4917,6 @@
     gap: 3rem;
     padding: 4rem;
     background: rgba(255, 255, 255, 0.5);
-    top: -117px;
 }
 
 .resident-step {
@@ -4962,3 +4969,9 @@
         display: none !important;
     }
 }
+
+
+
+
+
+

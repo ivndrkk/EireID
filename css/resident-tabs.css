@@ -1,0 +1,321 @@
+/* ============================================================
+   RESIDENT STICKY TABS — resident-tabs.css
+   Relies on design tokens from common.css — link that first.
+   ============================================================ */
+
+/* ── Section wrapper ── */
+.rtabs-section {
+  position: relative;
+  /* inherits the body mesh-gradient — no bg override needed */
+}
+
+/* ── Scroll height: 3 slides × 100vh each gives smooth pacing ── */
+.rtabs-height {
+  height: 350vh;
+}
+
+/* ── Sticky shell ── */
+.rtabs-sticky {
+  position: sticky;
+  top: 5vh;
+  height: 90vh;
+  display: flex;
+  align-items: stretch;
+  padding: var(--space-md) var(--container-padding);
+  box-sizing: border-box;
+}
+
+/* ── Two-column grid ── */
+.rtabs-component {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.42fr 1fr;
+  gap: var(--space-lg);
+  height: 100%;
+}
+
+/* ──────────────────────────────
+   LEFT PANEL
+────────────────────────────── */
+.rtabs-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  /* logo-box--glass provides: background, border, backdrop-filter, border-radius, box-shadow */
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle decorative top-right accent dot */
+.rtabs-left::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 130px;
+  height: 130px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(164, 229, 183, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Slide container: using grid to stack them so the parent captures height ── */
+.rtabs-slides {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+/* ── Individual slides (stacked, opacity-swapped) ── */
+.rtabs-slide {
+  grid-area: 1 / 1 / 2 / 2;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  visibility: hidden; /* extra safety */
+  will-change: opacity, transform;
+}
+
+.rtabs-slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.rtabs-slide-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Step pill badge */
+.rtabs-tag {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a6640;                           /* dark green for legibility on glass */
+  background: rgba(164, 229, 183, 0.22);
+  border: 1px solid rgba(164, 229, 183, 0.5);
+  border-radius: var(--radius-full);
+  display: inline-block;
+  padding: 0.28rem 0.9rem;
+  width: fit-content;
+}
+
+/* Heading */
+.rtabs-heading {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-3xl);          /* 32px */
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text-heading);         /* #000 */
+  margin: 0;
+}
+
+/* Green accent words inside heading */
+.rtabs-accent {
+  color: #1a6640;                           /* rich dark green, legible on frosted white */
+}
+
+/* Horizontal rule below heading */
+.rtabs-line {
+  width: 36px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-primary);      /* #a4e5b7 */
+  flex-shrink: 0;
+}
+
+/* Body copy */
+.rtabs-body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);         /* 16px */
+  color: var(--color-text-muted);           /* #333 */
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* CTA — only shown on slide 3 */
+.rtabs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--color-btn-primary);     /* #000 */
+  color: #ffffff;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);           /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.8rem var(--space-xl);          /* 0.8rem 40px */
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  margin-top: var(--space-sm);
+  box-shadow: var(--shadow-md);
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.rtabs-cta:hover {
+  background: var(--color-btn-hover);       /* #1a1a1a */
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ── Progress dots ── */
+.rtabs-dots {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding-top: var(--space-md);
+  flex-shrink: 0;
+}
+
+.rtabs-dot {
+  height: 8px;
+  width: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.18);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background var(--transition-base),
+    width var(--transition-base);
+}
+
+.rtabs-dot.is-active {
+  background: var(--color-bg-primary);      /* #a4e5b7 */
+  width: 26px;
+}
+
+/* ──────────────────────────────
+   RIGHT PANEL (videos)
+────────────────────────────── */
+.rtabs-right {
+  position: relative;
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  /* logo-box--glass provides the frosted glass look */
+}
+
+.rtabs-video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: opacity;
+}
+
+.rtabs-video.is-active {
+  opacity: 1;
+}
+
+.rtabs-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+
+/* ──────────────────────────────
+   RESPONSIVE
+────────────────────────────── */
+@media (max-width: 900px) {
+  .rtabs-component {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto; /* Swap to auto-auto */
+    height: auto;
+    gap: var(--space-md);
+  }
+
+  .rtabs-sticky {
+    height: auto;
+    min-height: auto;
+    position: relative;          /* disable sticky on mobile */
+    top: 0;
+    padding: var(--space-md) var(--space-md);
+  }
+
+  .rtabs-height {
+    height: auto;
+  }
+
+  /* Swap order: Video on top */
+  .rtabs-right {
+    order: -1;
+    height: 60vw;
+    min-height: 240px;
+    position: relative;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  }
+
+  .rtabs-left {
+    order: 1;
+    padding: var(--space-xl) var(--space-lg); /* bigger padding for mobile readability */
+    min-height: 380px; /* increased to prevent cut-off */
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg) !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .rtabs-slides {
+    padding-bottom: var(--space-md);
+  }
+
+  .rtabs-slide {
+    transform: translateX(15px); /* horizontal shift for mobile */
+  }
+
+  .rtabs-slide.is-active {
+    transform: translateX(0);
+  }
+
+  /* Ensure the text has breathing room */
+  .rtabs-body {
+    font-size: 0.95rem;
+    padding: 0 4px;
+  }
+
+  .rtabs-heading {
+    font-size: var(--font-size-xl);
+  }
+
+  .rtabs-dots {
+    justify-content: center;
+    margin-top: var(--space-md);
+  }
+
+  .rtabs-line {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .rtabs-sticky {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .rtabs-heading {
+    font-size: var(--font-size-xl);
+  }
+}

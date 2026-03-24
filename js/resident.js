@@ -485,6 +485,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+
     function closeModal() {
         if (modal) {
             modal.classList.remove('is-open');

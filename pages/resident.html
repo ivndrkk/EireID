@@ -20,6 +20,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/resident-tabs.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -114,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="rightcol" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                <div class="rightcol" style="display: flex; justify-content: end; align-items: center; width: 100%; height: 100%;">
                     <div class="cyber-container cyber-noselect">
                       <div class="cyber-canvas">
                         <div class="cyber-tracker tr-1"></div><div class="cyber-tracker tr-2"></div><div class="cyber-tracker tr-3"></div><div class="cyber-tracker tr-4"></div><div class="cyber-tracker tr-5"></div>
@@ -196,7 +197,9 @@
                 </div>
 
             </div>
-        </main>    
+        </main>  
+        
+        <div class="scroll-icon resident-scroll-icon" aria-hidden="true" style="margin: 0 auto; margin-top: var(--space-3xl); margin-bottom: calc(var(--space-3xl) * -1);"></div>
 
     <!-- Resident Flow -->
     <section class="section resident-flow" id="how-it-works-track" style="height: 300vh; display: block;">
@@ -240,12 +243,109 @@
             </article>
         </div>
         </div>
-        </div>
     </section>
-    <section
-        style="height: 200vh; background-color: #e3f7e8; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; border-top: 2px dashed #a4e5b7;">
-        <h2 style="font-size: 2rem; margin-bottom: 1rem;">placeholder</h2>
-        <p>placeholder</p>
+
+    <!-- ============================================================
+         RESIDENT STICKY TABS SECTION
+         Paste into resident.html — after the "Resident flow" section
+         Add to <head>: <link rel="stylesheet" href="../css/resident-tabs.css">
+         Add before </body>: <script src="../js/resident-tabs.js"></script>
+         ============================================================ -->
+    
+    <section class="rtabs-section" id="resident-tabs">
+        <div class="rtabs-height">
+            <div class="rtabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#resident-tabs">
+                <div class="rtabs-component">
+    
+                    <!-- ── LEFT PANEL: text slides ── -->
+                    <div class="rtabs-left logo-box--glass">
+                        <div class="rtabs-slides">
+    
+                            <!-- Slide 1 -->
+                            <div class="rtabs-slide is-active" data-slide="1">
+                                <div class="rtabs-slide-inner">
+                                    <span class="rtabs-tag">Step 01</span>
+                                    <h2 class="rtabs-heading">
+                                        Track Every Application,
+                                        <span class="rtabs-accent">in Real Time</span>
+                                    </h2>
+                                    <div class="rtabs-line"></div>
+                                    <p class="rtabs-body">
+                                        Know exactly where your request stands at every step of the process. Every status change is delivered straight to your
+                                        phone.
+                                    </p>
+                                </div>
+                            </div>
+    
+                            <!-- Slide 2 -->
+                            <div class="rtabs-slide" data-slide="2">
+                                <div class="rtabs-slide-inner">
+                                    <span class="rtabs-tag">Step 02</span>
+                                    <h2 class="rtabs-heading">
+                                        Sign Anything.
+                                        <span class="rtabs-accent">From Anywhere.</span>
+                                    </h2>
+                                    <div class="rtabs-line"></div>
+                                    <p class="rtabs-body">
+                                        Legally binding electronic signatures, recognised across Irish government services. The whole process takes under a
+                                        minute — from your phone, wherever you are.
+                                    </p>
+                                </div>
+                            </div>
+    
+                            <!-- Slide 3 — CTA appears here only -->
+                            <div class="rtabs-slide" data-slide="3">
+                                <div class="rtabs-slide-inner">
+                                    <span class="rtabs-tag">Step 03</span>
+                                    <h2 class="rtabs-heading">
+                                        Free for <span class="rtabs-accent">Every</span> Irish <span class="rtabs-accent">Resident</span>
+                                    </h2>
+                                    <div class="rtabs-line"></div>
+                                    <p class="rtabs-body">
+                                        EireID is a public service, not a product. Downloading the app and accessing your documents costs nothing — and it
+                                        always will.
+                                    </p>
+                                    <a href="#waitlist" class="rtabs-cta">Join the Waitlist</a>
+                                </div>
+                            </div>
+    
+                        </div><!-- .rtabs-slides -->
+    
+                        <!-- Progress dots -->
+                        <div class="rtabs-dots" aria-label="Slide navigation">
+                            <button class="rtabs-dot is-active" data-target="1" aria-label="Go to slide 1"></button>
+                            <button class="rtabs-dot" data-target="2" aria-label="Go to slide 2"></button>
+                            <button class="rtabs-dot" data-target="3" aria-label="Go to slide 3"></button>
+                        </div>
+                    </div><!-- .rtabs-left -->
+    
+                    <!-- ── RIGHT PANEL: videos ── -->
+                    <div class="rtabs-right logo-box--glass">
+    
+                        <!-- Replace src with your own video files -->
+                        <div class="rtabs-video is-active" data-video="1">
+                            <video autoplay loop muted playsinline>
+                                <source src="../assets/video/application_tracking__video.mp4" type="video/mp4">
+                            </video>
+                        </div>
+    
+                        <div class="rtabs-video" data-video="2">
+                            <video autoplay loop muted playsinline>
+                                <source src="../assets/video/signature__video.mp4" type="video/mp4">
+                            </video>
+                        </div>
+    
+                        <div class="rtabs-video" data-video="3">
+                            <video autoplay loop muted playsinline>
+                                <source src="../assets/video/free.mp4" type="video/mp4">
+                            </video>
+                        </div>
+    
+                    </div><!-- .rtabs-right -->
+    
+                </div><!-- .rtabs-component -->
+            </div><!-- .rtabs-sticky -->
+        </div><!-- .rtabs-height -->
     </section>
 
     <!-- GSAP & ScrollTrigger -->
@@ -360,6 +460,7 @@
     <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>
     <script src="../js/resident.js" defer></script>
+    <script src="../js/resident-tabs.js" defer></script>
 </body>
 
 </html>

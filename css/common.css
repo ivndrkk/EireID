@@ -545,7 +545,6 @@ body::before {
   box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset, 0 5px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .loader:before,
@@ -596,4 +595,4 @@ body::before {
   outline: 3px solid var(--color-text-heading);
   outline-offset: 2px;
 }
-
+
