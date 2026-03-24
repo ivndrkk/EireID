@@ -2091,7 +2091,6 @@
 .resident-hero .hero__content{
     align-items: start;
     flex-direction: row;
-    gap: var(--space-3xl);
 }
 
 .resident-hero .hero-leftcol{
@@ -4033,8 +4032,8 @@
     align-items: stretch;
     scroll-behavior: smooth;
     width: 100%;
-    /* Default to exactly 3 items */
-    max-width: calc(280px * 3 + 2rem);
+    /* Default to exactly 2 items */
+    max-width: calc(280px * 2 + 2rem);
     /* Set up for finger scrolling */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -4053,6 +4052,10 @@
         flex-direction: column;
         align-items: flex-start;
         gap: var(--space-sm);
+    }
+
+    .resident-services-container{
+        width: 100% !important;
     }
     
     .resident-services-carousel {
