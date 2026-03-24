@@ -62,10 +62,6 @@
                     <li><a href="team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
-            <!-- Mobile Logo -->
-            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="../assets/logo/logo(transparent).png" alt="EireID Logo">
-            </a>
         </header>
 
         <!-- === RESIDENT LAYOUT REBUILD === -->
@@ -202,11 +198,10 @@
         <div class="scroll-icon resident-scroll-icon" aria-hidden="true" style="margin: 0 auto; margin-top: var(--space-3xl); margin-bottom: calc(var(--space-3xl) * -1);"></div>
 
     <!-- Resident Flow -->
-    <section class="section resident-flow" id="how-it-works-track" style="height: 300vh; display: block;">
+    <section class="section resident-flow" id="how-it-works-track" style="height: 300vh; display: block; padding-top: var(--space-3xl);">
         <div class="resident-flow__sticky-wrap" data-scroll data-scroll-sticky data-scroll-target="#how-it-works-track" style="height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;">
             <div class="container resident-flow__container">
                 <article id="how-it-works" class="about__tile logo-box--glass how-it-works-grid">
-    
                 <div class="how-it-works__step resident-step">
                     <div class="flow-icon logo-box--glass">
                         <span class="iconify" data-icon="lucide:log-in"></span>
@@ -252,7 +247,7 @@
          Add before </body>: <script src="../js/resident-tabs.js"></script>
          ============================================================ -->
     
-    <section class="rtabs-section" id="resident-tabs">
+    <section class="rtabs-section" id="resident-tabs" style="padding-top: var(--space-3xl);">
         <div class="rtabs-height">
             <div class="rtabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#resident-tabs">
                 <div class="rtabs-component">
@@ -264,6 +259,7 @@
                             <!-- Slide 1 -->
                             <div class="rtabs-slide is-active" data-slide="1">
                                 <div class="rtabs-slide-inner">
+                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
                                     <span class="rtabs-tag">Step 01</span>
                                     <h2 class="rtabs-heading">
                                         Track Every Application,
@@ -280,6 +276,7 @@
                             <!-- Slide 2 -->
                             <div class="rtabs-slide" data-slide="2">
                                 <div class="rtabs-slide-inner">
+                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
                                     <span class="rtabs-tag">Step 02</span>
                                     <h2 class="rtabs-heading">
                                         Sign Anything.
@@ -296,6 +293,7 @@
                             <!-- Slide 3 — CTA appears here only -->
                             <div class="rtabs-slide" data-slide="3">
                                 <div class="rtabs-slide-inner">
+                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
                                     <span class="rtabs-tag">Step 03</span>
                                     <h2 class="rtabs-heading">
                                         Free for <span class="rtabs-accent">Every</span> Irish <span class="rtabs-accent">Resident</span>
@@ -348,7 +346,116 @@
         </div><!-- .rtabs-height -->
     </section>
 
-    <!-- GSAP & ScrollTrigger -->
+    <section class="partners-glass-section">
+    
+        <div class="marquee-track track-right">
+            <div class="marquee-content">
+                <div class="logo-group">
+                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                    <div class="logo-item"><span>Gov.ie</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
+                    <div class="logo-item"><span>RSA</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                    <div class="logo-item"><span>DSP</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
+                    </div>
+                    <div class="logo-item"><span>An Post</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                            alt="Citizens Information"></div>
+                </div>
+                <div class="logo-group">
+                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                    <div class="logo-item"><span>Gov.ie</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
+                    <div class="logo-item"><span>RSA</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                    <div class="logo-item"><span>DSP</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
+                    </div>
+                    <div class="logo-item"><span>An Post</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                            alt="Citizens Information"></div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="marquee-track track-left">
+            <div class="marquee-content">
+                <div class="logo-group">
+                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                            alt="Citizens Information"></div>
+                    <div class="logo-item"><span>An Post</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
+                    </div>
+                    <div class="logo-item"><span>DSP</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                    <div class="logo-item"><span>RSA</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
+                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                    <div class="logo-item"><span>Gov.ie</span></div>
+                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                </div>
+                <div class="logo-group">
+                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                            alt="Citizens Information"></div>
+                    <div class="logo-item"><span>An Post</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
+                    </div>
+                    <div class="logo-item"><span>DSP</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                    <div class="logo-item"><span>RSA</span></div>
+                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
+                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                    <div class="logo-item"><span>Gov.ie</span></div>
+                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                </div>
+            </div>
+        </div>
+    
+    </section>
+    </div><!-- /.container [data-scroll-container] -->
+    
+    <!-- === FLOATING RUA AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
+      <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm Rua, your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 

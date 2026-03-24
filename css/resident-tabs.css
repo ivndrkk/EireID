@@ -148,6 +148,7 @@
 
 /* CTA — only shown on slide 3 */
 .rtabs-cta {
+  margin: 0 auto;
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);

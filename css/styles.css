@@ -4969,9 +4969,145 @@
         display: none !important;
     }
 }
+/* === Glass Marquee Section === */
+.partners-glass-section {
+    /* Принудительно вырываемся из любого контейнера на всю ширину экрана */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 
+    /* Увеличенный отступ перед секцией */
+    margin-top: 120px;
+    margin-bottom: 80px;
 
+    /* Отступ между двумя полосами */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
+    overflow: hidden;
+    z-index: 10;
+}
 
+/* Настройка стеклянных треков (каждая полоса - отдельное стекло) */
+.marquee-track {
+    display: flex;
+    /* Делаем полосу чуть шире экрана (110%), чтобы края гарантированно прятались за экраном */
+    width: 110vw;
+    margin-left: -5vw;
+
+    /* Реалистичное очень прозрачное стекло */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(4px);
+    /* Почти не матовое */
+    -webkit-backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    /* Тонкий блик сверху */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* Чуть темнее снизу */
+    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.05);
+
+    padding: 22px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Внутренний контейнер, который двигается */
+.marquee-content {
+    display: flex;
+    width: max-content;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 110vw;
+    /* Должно совпадать с шириной трека */
+}
+
+/* Анимации */
+.track-right .marquee-content {
+    animation: scroll-right 40s linear infinite;
+}
+
+.track-left .marquee-content {
+    animation: scroll-left 40s linear infinite;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll-right {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Торможение при наведении на ЛЮБУЮ часть секции */
+.partners-glass-section:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+/* Стилизация логотипов */
+.logo-item {
+    padding: 0 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-item img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    /* Монохромные, светло-серые/прозрачные */
+    filter: grayscale(100%) opacity(0.4) contrast(1.2);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Текстовые логотипы (если нет картинки) */
+.logo-item span {
+    font-family: inherit;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.5s ease;
+}
+
+/* При наведении: делаем логотипы чуть ярче */
+.partners-glass-section:hover .logo-item img {
+    filter: grayscale(100%) opacity(0.7) contrast(1.2);
+}
+
+.partners-glass-section:hover .logo-item span {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* Легкое увеличение конкретного логотипа, на который навели мышь */
+.logo-item:hover img {
+    transform: scale(1.05);
+    filter: grayscale(100%) opacity(0.9) contrast(1.2) !important;
+}
+
+.logo-item:hover span {
+    color: rgba(0, 0, 0, 0.9) !important;
+}
 
 
