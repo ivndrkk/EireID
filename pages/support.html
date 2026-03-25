@@ -63,9 +63,53 @@
 
         <main id="main-content" tabindex="-1">
             <!-- Content goes here -->
+              <div class="filter-group filter-group--search">
+                    <label for="search-input" class="filter-label">Frequent doubts</label>
+                    <div class="search-wrapper">
+                        <span class="iconify search-icon" data-icon="lucide:search"></span>
+                        <input type="text" id="search-input" class="filter-input" placeholder="Search services...">
+                    </div>
+            <section id="contact" class="contact-me container">
+        <div class="content">
+          <h2>Contact Us</h2>
+          <ul class="contact-links">
+            <li>
+              <img src="images/gmail.png" alt="Email" />
+              <a href="mailto:SupportEireID@mail.com">Email</a>
+            </li>        
+        <div class="content">
+            <form
+              action="https://formspree.io/SupportEireID@mail.com"
+              method="post"
+            >
+              <!-- Style this nicely.  Don't worry if the form doesn't work, marks here for how well you style it. -->
+              <p>
+                <label for="contact-name">Your Name</label>
+                <input id="contact-name" type="text" name="contact-name" />
+              </p>
+              <p>
+                <label for="contact-email">Your email address</label>
+                <input id="contact-email" type="email" name="contact-email" />
+              </p>
+              <p>
+                <label for="contact-phone">Your phone number</label>
+                <input id="contact-phone" type="tel" name="contact-phone" />
+              </p>
+              <p>
+                <label for="contact-message">Your message</label>
+                <textarea id="contact-message" name="contact-message" rows="5">
+                </textarea>
+              </p>
+              <p>
+                <input type="submit" value="Send my message" />
+              </p>
+            </form>
+          </div>
+        </div>    
         </main>
     </div>
     <script src="../js/scripts.js" defer></script>
+    
 </body>
 
 </html>
