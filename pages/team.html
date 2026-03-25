@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EireID - Your Digital Identity">
-    <title>EireID</title>
+    <meta name="description" content="Meet the team behind EireID – building Ireland's secure digital identity future">
+    <title>Our Team – EireID</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,58 +15,199 @@
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/styles.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/team.css"> 
 </head>
-
 <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <div class="container">
 
-        <!-- === HEADER NAVIGATION === -->
         <header class="header">
-
-            
-            <!-- Mobile Logo -->
-            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="../assets/logo/EireID_logo.png" alt="EireID Logo">
-            </a>
-            <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html#about" class="nav__link">About EireID</a></li>
+                    <li><a href="../index.html" class="nav__link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="../pages/allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="./resident.html" class="nav__dropdown-link">For residents</a>
-                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
+                                <a href="../pages/allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="../pages/resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="../pages/business.html" class="nav__dropdown-link">For businesses</a>
+                                <a href="../pages/investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="./support.html" class="nav__link">Support</a></li>
-                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="../pages/security.html" class="nav__link">Security</a></li>
+                    <li><a href="../pages/support.html" class="nav__link">Support</a></li>
+                    <li><a href="#" class="nav__link active">Our Team</a></li>
                 </ul>
             </nav>
-
         </header>
 
-        <main id="main-content" tabindex="-1">
-            <!-- Content goes here -->
+        <!-- Hero / Page Title -->
+        <main class="hero" style="min-height: 60svh; padding-block: var(--space-3xl) var(--space-2xl);">
+            <section class="hero__content" aria-labelledby="team-title">
+                <div class="hero__logos">
+                    <button class="logo-box logo-box--glass" aria-label="Irish Harp">
+                        <img src="../assets/logo/harp_black.svg" alt="Irish Harp" class="logo-box__svg"
+                             style="width: 64px; height: 64px; opacity: 0.8;">
+                    </button>
+                    <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                        <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
+                             style="width: 72px; height: 72px;">
+                    </button>
+                </div>
+
+                <h1 id="team-title" class="hero__title" data-reveal>Our Team</h1>
+                <p class="hero__subtitle" data-reveal>The people building Ireland's secure, private, and citizen-first digital identity.</p>
+            </section>
         </main>
+
+        <!-- Team Grid -->
+       <section class="team-section" aria-label="Team Members">
+    <div class="team-grid">
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Ivan Dereka" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/ivndrkk/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Ivan Dereka</h3>
+                <p class="team-card__role">CTO & Co-founder</p>
+                <p class="team-card__bio">Developed the initial revenue model framework and pricing strategy.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="./../assets/img/Eric Student photo.jpg" alt="Eric Breviglieri" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/eric-breviglieri-760807205/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Eric Breviglieri</h3>
+                <p class="team-card__role">Market Analysis</p>
+                <p class="team-card__bio">Conducted market segmentation for primary users and institutional stakeholders.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Trinabh Basu" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/trinabh-basu/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Trinabh Basu</h3>
+                <p class="team-card__role">Business Model & Revenue Stream</p>
+                <p class="team-card__bio">Developed the business model and revenue structure for EireID.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Meadbh Ferguson" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/meadbh-ferguson/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Meadbh Ferguson</h3>
+                <p class="team-card__role">Financial Plan</p>
+                <p class="team-card__bio">Researched average costs of development, cloud hosting, security testing, and other expenses.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Recep Tayyip Kutlu" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/recep-tayyip-kutlu/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Recep Tayyip Kutlu</h3>
+                <p class="team-card__role">Marketing & Sales Strategy</p>
+                <p class="team-card__bio">Developed the marketing and sales strategy for EireID.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Fionn McAuley" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/fionn-mcauley/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Fionn McAuley</h3>
+                <p class="team-card__role">Operations & Scalability Plan</p>
+                <p class="team-card__bio">Responsible for day-to-day operations and ensuring the scalability of the EireID platform.</p>
+            </div>
+        </article>
+
+        <article class="team-card logo-box--glass" data-reveal>
+            <div class="team-card__photo-wrapper">
+                <img src="../assets/team/placeholder-2.jpg" alt="Aron Gargan" class="team-card__photo">
+                <div class="team-card__overlay">
+                    <a href="https://www.linkedin.com/in/aron-gargan/" target="_blank" class="glass-icon-link" aria-label="LinkedIn">
+                        <span class="iconify" data-icon="lucide:linkedin"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="team-card__content">
+                <h3 class="team-card__name">Aron Gargan</h3>
+                <p class="team-card__role">Risks & Challenges</p>
+                <p class="team-card__bio">Identifies and mitigates potential risks and challenges for the EireID platform.</p>
+            </div>
+        </article>
+
+    </div>
+</section>
+                
+            </div>
+        </section>
+
+        <section class="cta" style="margin-block: var(--space-3xl);">
+            <div class="cta__inner logo-box--glass">
+                <h2 class="cta__title" data-reveal>Ready to go Digital?</h2>
+                <p class="cta__subtitle"></p>Join residents across Ireland who are taking control of their digital identity — in minutes.</p>
+                <a href="mailto:careers@eireid.ie" class="cta__btn">Join The Waitlist</a>
+            </div>
+        </section>
+
+        <footer class="footer-main">
+        </footer>
+
     </div>
 
-    <!-- === SCRIPTS === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
+        <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img">
+    </button>
+
     <script src="../js/scripts.js" defer></script>
 </body>
-
 </html>
