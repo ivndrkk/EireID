@@ -77,12 +77,12 @@
                 <div class="filter-group">
                     <label class="filter-label" id="provider-label">Provider</label>
                     <div class="custom-dropdown" id="provider-dropdown">
-                        <button class="custom-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="provider-label provider-trigger">
+                        <button class="custom-dropdown__trigger" role="combobox" aria-controls="provider-list" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="provider-label provider-trigger">
                             <span class="custom-dropdown__label" id="provider-trigger">All Providers</span>
                             <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
                         </button>
                         <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="provider-list">
-                            <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Providers</li>
+                            <li id="provider-option-all" class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Providers</li>
                             <!-- Populated by JS -->
                         </ul>
                     </div>
@@ -91,12 +91,12 @@
                 <div class="filter-group">
                     <label class="filter-label" id="tag-label">Tags</label>
                     <div class="custom-dropdown" id="tag-dropdown">
-                        <button class="custom-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="tag-label tag-trigger">
+                        <button class="custom-dropdown__trigger" role="combobox" aria-controls="tag-list" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="tag-label tag-trigger">
                             <span class="custom-dropdown__label" id="tag-trigger">All Tags</span>
                             <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
                         </button>
                         <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="tag-list">
-                            <li class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Tags</li>
+                            <li id="tag-option-all" class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Tags</li>
                             <!-- Populated by JS -->
                         </ul>
                     </div>
