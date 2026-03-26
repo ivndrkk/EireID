@@ -53,4 +53,4 @@ def test_mobile_menu_navigation_closes_menu(page: Page):
 
     # Assert menu is closed
     expect(menu_toggle).to_have_attribute("aria-expanded", "false")
-    expect(nav_list).not_to_have_class(r"is-open")
+    expect(nav_list).not_to_have_class(re.compile(r"is-open"))

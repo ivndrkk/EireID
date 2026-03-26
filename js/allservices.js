@@ -148,6 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const providerList = document.getElementById('provider-list');
         const tagList = document.getElementById('tag-list');
 
+        // Optimization: Use DocumentFragment to batch DOM insertions
+        const providerFragment = document.createDocumentFragment();
+        const tagFragment = document.createDocumentFragment();
+
         // Add providers
         Array.from(providers).sort().forEach(provider => {
             const li = document.createElement("li");
@@ -155,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
             li.setAttribute('role', 'option');
             li.setAttribute('data-value', provider);
             li.textContent = provider;
-            providerList.appendChild(li);
+            providerFragment.appendChild(li);
         });
 
         // Add tags
@@ -165,8 +169,11 @@ document.addEventListener("DOMContentLoaded", () => {
             li.setAttribute('role', 'option');
             li.setAttribute('data-value', tag);
             li.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
-            tagList.appendChild(li);
+            tagFragment.appendChild(li);
         });
+
+        providerList.appendChild(providerFragment);
+        tagList.appendChild(tagFragment);
     }
 
     function createCardElement(service, isFeatured = false) {
@@ -359,10 +366,12 @@ document.addEventListener("DOMContentLoaded", () => {
         mTags.innerHTML = tagsHtml;
 
         // Similar services logic
+        // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
+        const currentTags = new Set(service.tags || []);
         let similar = allServices.filter(s => {
             if (s.id === service.id) return false;
             const matchesProvider = s.provider === service.provider;
-            const matchesTags = (s.tags || []).some(t => (service.tags || []).includes(t));
+            const matchesTags = (s.tags || []).some(t => currentTags.has(t));
             return matchesProvider || matchesTags;
         });
         
