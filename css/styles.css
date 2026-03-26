@@ -3011,7 +3011,7 @@
 }
 
 .genesis-security__cta {
-    width: 285px;
+    width: fit-content;
     margin-top: var(--space-md);
     align-self: flex-start;
     color: #ffffff !important;
