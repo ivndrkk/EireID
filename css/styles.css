@@ -4356,21 +4356,21 @@
 }
 
 /* Hover effects */
-.cyber-tracker:hover~#cyber-card .cyber-id-info {
+.cyber-tracker:hover~.tilt-target .cyber-id-info {
     opacity: 0;
     filter: blur(5px);
 }
 
-.cyber-tracker:hover~#cyber-card .cyber-protected-overlay {
+.cyber-tracker:hover~.tilt-target .cyber-protected-overlay {
     opacity: 1;
     transform: translateY(0);
 }
 
-.cyber-tracker:hover~#cyber-card .cyber-glowing-elements div {
+.cyber-tracker:hover~.tilt-target .cyber-glowing-elements div {
     opacity: 1;
 }
 
-.cyber-tracker:hover~#cyber-card .cyber-card-particles span {
+.cyber-tracker:hover~.tilt-target .cyber-card-particles span {
     animation: cyberParticleFloat 2s infinite;
 }
 
@@ -4450,7 +4450,7 @@
     transition: opacity 0.3s ease;
 }
 
-.cyber-tracker:hover~#cyber-card::before {
+.cyber-tracker:hover~.tilt-target::before {
     opacity: 1;
 }
 
@@ -4465,11 +4465,11 @@
     cursor: pointer;
 }
 
-.cyber-tracker:hover~#cyber-card #cyber-prompt {
+.cyber-tracker:hover~.tilt-target #cyber-prompt {
     opacity: 0;
 }
 
-.cyber-tracker:hover~#cyber-card {
+.cyber-tracker:hover~.tilt-target {
     transition: 300ms;
     filter: brightness(1.1);
 }
@@ -4597,127 +4597,127 @@
     grid-area: tr-25;
 }
 
-.tr-1:hover~#cyber-card {
+.tr-1:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg);
 }
 
-.tr-2:hover~#cyber-card {
+.tr-2:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg);
 }
 
-.tr-3:hover~#cyber-card {
+.tr-3:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg);
 }
 
-.tr-4:hover~#cyber-card {
+.tr-4:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg);
 }
 
-.tr-5:hover~#cyber-card {
+.tr-5:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg);
 }
 
-.tr-6:hover~#cyber-card {
+.tr-6:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
 }
 
-.tr-7:hover~#cyber-card {
+.tr-7:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
 }
 
-.tr-8:hover~#cyber-card {
+.tr-8:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
 }
 
-.tr-9:hover~#cyber-card {
+.tr-9:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg);
 }
 
-.tr-10:hover~#cyber-card {
+.tr-10:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg);
 }
 
-.tr-11:hover~#cyber-card {
+.tr-11:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg);
 }
 
-.tr-12:hover~#cyber-card {
+.tr-12:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg);
 }
 
-.tr-13:hover~#cyber-card {
+.tr-13:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
 
-.tr-14:hover~#cyber-card {
+.tr-14:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg);
 }
 
-.tr-15:hover~#cyber-card {
+.tr-15:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg);
 }
 
-.tr-16:hover~#cyber-card {
+.tr-16:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg);
 }
 
-.tr-17:hover~#cyber-card {
+.tr-17:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg);
 }
 
-.tr-18:hover~#cyber-card {
+.tr-18:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg);
 }
 
-.tr-19:hover~#cyber-card {
+.tr-19:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg);
 }
 
-.tr-20:hover~#cyber-card {
+.tr-20:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg);
 }
 
-.tr-21:hover~#cyber-card {
+.tr-21:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg);
 }
 
-.tr-22:hover~#cyber-card {
+.tr-22:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg);
 }
 
-.tr-23:hover~#cyber-card {
+.tr-23:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
 }
 
-.tr-24:hover~#cyber-card {
+.tr-24:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg);
 }
 
-.tr-25:hover~#cyber-card {
+.tr-25:hover~.tilt-target {
     transition: 125ms ease-in-out;
     transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg);
 }
@@ -6109,3 +6109,412 @@
     .tech-spec-grid { grid-template-columns: 1fr; }
     .section-lead { font-size: 1rem; }
 }
+
+/* =============================================================================
+   Business Model Canvas Grid
+   ============================================================================= */
+.bmc-section {
+    position: relative;
+    z-index: 5;
+}
+
+.bmc-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .bmc-grid {
+        grid-template-columns: repeat(10, 1fr);
+        grid-auto-rows: 180px 180px auto;
+    }
+}
+
+.bmc-cell {
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .bmc-kp   { grid-column: 1 / span 2;  grid-row: 1 / span 2; }
+    .bmc-ka   { grid-column: 3 / span 2;  grid-row: 1; }
+    .bmc-kr   { grid-column: 3 / span 2;  grid-row: 2; }
+    .bmc-vp   { grid-column: 5 / span 2;  grid-row: 1 / span 2; }
+    .bmc-cr   { grid-column: 7 / span 2;  grid-row: 1; }
+    .bmc-ch   { grid-column: 7 / span 2;  grid-row: 2; }
+    .bmc-cs   { grid-column: 9 / span 2;  grid-row: 1 / span 2; }
+    .bmc-cost { grid-column: 1 / span 5;  grid-row: 3; }
+    .bmc-rev  { grid-column: 6 / span 5;  grid-row: 3; }
+}
+
+.bmc-tile-glass {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.bmc-tile {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    z-index: 1;
+    pointer-events: auto;
+    font-family: var(--font-family-base) !important;
+}
+
+@media (max-width: 1023px) {
+    .bmc-tile {
+        position: relative;
+        height: auto;
+        min-height: 200px;
+    }
+}
+
+.bmc-tile:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 1) !important;
+    z-index: 10;
+}
+
+.bmc-cell.is-expanded {
+    z-index: 99 !important;
+    position: relative;
+}
+
+.bmc-cell.is-expanded .bmc-tile {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.bmc-tile-header {
+    font-family: var(--font-family-base) !important;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-heading);
+    margin-bottom: 0;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.bmc-cell.is-expanded .bmc-tile-header {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-size: 1.25rem;
+}
+
+.bmc-tile-content {
+    display: none; /* Handled by GSAP */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    opacity: 0; /* Animated by GSAP */
+}
+
+.bmc-cell.is-expanded .bmc-tile.bmc-tile-glass {
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 1);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+}
+
+.bmc-pill {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-body);
+    white-space: nowrap;
+}
+
+.investor-hero {
+    margin-bottom: var(--space-3xl);
+}
+.bmc-cost,
+.bmc-rev {
+    min-height: 160px;
+}
+
+/* =============================================================================
+   Growth Roadmap (Cyber-Track)
+   ============================================================================= */
+
+.growth-roadmap-container {
+    position: relative;
+    padding: var(--space-3xl) var(--container-padding);
+}
+
+.growth-roadmap-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 40px; 
+    z-index: 5;
+}
+
+/* ─── The Track ─── */
+.cyber-track {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 20px;
+    width: 4px;
+    background: rgba(164, 229, 183, 0.1); /* Subtle dark track */
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.cyber-track-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 0%; 
+    background: var(--color-bg-primary); 
+    box-shadow: 0 0 15px var(--color-bg-primary), 0 0 30px var(--color-bg-primary);
+    border-radius: 4px;
+}
+
+.track-particle {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px #fff, 0 0 20px var(--color-bg-primary);
+    border-radius: 10px;
+    opacity: 0; /* JS will animate */
+}
+
+/* ─── Roadmap Nodes ─── */
+.roadmap-node-wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 10;
+}
+
+/* Connection line to track */
+.roadmap-node-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    width: 40px;
+    height: 2px;
+    background: rgba(164, 229, 183, 0.3);
+    z-index: -1;
+}
+
+.roadmap-node {
+    position: relative;
+    padding: var(--space-xl);
+    padding-left: var(--space-2xl); /* Some breathing room */
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: auto;
+    background: rgba(255, 255, 255, 0.03); /* Base glass */
+}
+
+.roadmap-node:hover {
+    transform: scale(1.02) translateY(-5px);
+    background: rgba(255, 255, 255, 0.08); /* Increase glass opacity on hover */
+    box-shadow: 0 10px 40px rgba(164, 229, 183, 0.15), inset 0 0 20px rgba(164, 229, 183, 0.1);
+}
+
+.node-year {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    color: var(--color-bg-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+}
+
+.node-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-sm);
+}
+
+.node-desc {
+    color: var(--color-text-body);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+/* ─── Active Pulsing State (Phase 1) ─── */
+.roadmap-node.active {
+    border: 1px solid rgba(164, 229, 183, 0.4);
+    box-shadow: 0 0 30px rgba(164, 229, 183, 0.1);
+}
+
+.node-pulse {
+    position: absolute;
+    top: 50%;
+    left: -48px; /* On the track connection */
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background: var(--color-bg-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-bg-primary);
+    z-index: 2;
+}
+
+.node-pulse::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--color-bg-primary);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: pulseGlow 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(3.5); opacity: 0; }
+}
+
+/* ─── Tech Data Tooltip ─── */
+.technical-tooltip {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    background: rgba(10, 10, 12, 0.75);
+    border: 1px solid rgba(164, 229, 183, 0.3);
+    border-radius: 8px;
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    backdrop-filter: blur(10px);
+    z-index: 20;
+}
+
+.technical-tooltip span {
+    font-family: var(--font-family-base);
+    font-size: 0.8rem;
+    color: var(--color-bg-primary);
+    white-space: nowrap;
+}
+
+.roadmap-node:hover .technical-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Desktop (Horizontal Layout) ─── */
+@media (min-width: 1024px) {
+    .growth-roadmap-inner {
+        flex-direction: row;
+        padding-left: 0;
+        padding-top: 80px; /* Space for horizontal track */
+        align-items: flex-start;
+    }
+
+    .cyber-track {
+        top: 20px;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        width: 100%;
+        height: 4px;
+    }
+
+    .cyber-track-fill {
+        width: 0%; 
+        height: 4px;
+    }
+
+    .track-particle {
+        top: 50%;
+        left: -20px;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 6px;
+    }
+
+    .roadmap-node-wrapper {
+        flex: 1;
+    }
+
+    .roadmap-node-wrapper::before {
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 60px;
+    }
+
+    .roadmap-node {
+        padding-left: var(--space-xl);
+        height: 100%;
+    }
+    
+    .node-pulse {
+        top: -68px; /* On the track connection */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .technical-tooltip {
+        top: auto;
+        bottom: 110%;
+        right: 50%;
+        transform: translate(50%, 10px);
+    }
+
+    .roadmap-node:hover .technical-tooltip {
+        transform: translate(50%, 0);
+    }
+}
+
+/* --- Global Font Forcing For Investor Page --- */
+.hero.investor-hero, 
+.hero.investor-hero *,
+.bmc-section .section-title,
+.growth-roadmap-container .section-title,
+.investor-hero .hero__subtitle,
+.bmc-tile-header,
+.node-year,
+.node-title,
+.node-desc,
+.technical-tooltip span,
+.bmc-pill {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.bmc-tile-content {
+    width: 100%;
+}
+

@@ -125,6 +125,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Genesis Modal
     initGenesisModal();
 
+    // Business Model Canvas Grid
+    if (typeof initBMCInteractiveGrid === 'function') {
+        initBMCInteractiveGrid();
+    }
+
+    // Growth Roadmap
+    if (typeof initGrowthRoadmap === 'function') {
+        initGrowthRoadmap();
+    }
+
     // Final Refresh
     ScrollTrigger.refresh();
 
@@ -1033,6 +1043,177 @@ function initGenesisModal() {
                     ease: "power2.out"
                 });
             }
+        });
+    });
+}
+
+/* ─── BMC Interactive Grid ─────────────────── */
+function initBMCInteractiveGrid() {
+    const tiles = document.querySelectorAll('.bmc-tile');
+    
+    if (!tiles.length) return;
+
+    tiles.forEach(tile => {
+        console.log("Adding click listener to BMC tile:", tile);
+        tile.addEventListener('click', (e) => {
+            console.log("BMC tile clicked:", tile);
+            const cell = tile.closest('.bmc-cell');
+            if (!cell) return;
+            const isExpanded = cell.classList.contains('is-expanded');
+            const expandDirectionRaw = tile.getAttribute('data-expand');
+            const isMobile = window.innerWidth < 1024;
+            // Force no expansion on mobile
+            const expandDirection = isMobile ? 'none' : expandDirectionRaw;
+            
+            // Close all other expanded cells
+            document.querySelectorAll('.bmc-cell.is-expanded').forEach(otherCell => {
+                if (otherCell !== cell) {
+                    otherCell.classList.remove('is-expanded');
+                    const otherTile = otherCell.querySelector('.bmc-tile');
+                    const otherExpandRaw = otherTile.getAttribute('data-expand');
+                    
+                    if (otherExpandRaw !== 'none' && !isMobile) {
+                        gsap.to(otherTile, {
+                            width: "100%",
+                            left: 0,
+                            right: 0,
+                            duration: 0.5,
+                            ease: "expo.out",
+                            clearProps: "all"
+                        });
+                    } else if (isMobile) {
+                        gsap.set(otherTile, { clearProps: "width,left,right" });
+                    }
+                    
+                    const otherContent = otherTile.querySelector('.bmc-tile-content');
+                    if(otherContent) {
+                        gsap.killTweensOf(otherContent);
+                        gsap.to(otherContent, { opacity: 0, duration: 0.2, onComplete: () => {
+                            gsap.set(otherContent, { display: "none" });
+                        }});
+                    }
+                }
+            });
+
+            // Toggle this cell
+            if (!isExpanded) {
+                cell.classList.add('is-expanded');
+                
+                if (expandDirection !== 'none') {
+                    // Get gap from CSS (1.5rem = 24px typically)
+                    const gap = 24; 
+                    
+                    let animProps = {
+                        width: `calc(200% + ${gap}px)`,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.7)" // Smooth, modern, apple-styled spring effect
+                    };
+                    
+                    if (expandDirection === "left") {
+                        gsap.set(tile, { left: "auto", right: 0 });
+                        gsap.set(tile, { transformOrigin: "right center" });
+                    } else {
+                        gsap.set(tile, { left: 0, right: "auto" });
+                        gsap.set(tile, { transformOrigin: "left center" });
+                    }
+                    
+                    gsap.to(tile, animProps);
+                } else {
+                    gsap.fromTo(tile, { scale: 0.98 }, { scale: 1, duration: 0.4, ease: "back.out(1.5)" });
+                }
+                
+                // Animate content appearance for ALL cases (including none)
+                const content = tile.querySelector('.bmc-tile-content');
+                if(content) {
+                    gsap.killTweensOf(content);
+                    gsap.set(content, { display: "flex", opacity: 0, y: 10 });
+                    gsap.to(content, { opacity: 1, y: 0, duration: 0.4, delay: expandDirection !== 'none' ? 0.2 : 0, ease: "power2.out" });
+                }
+                
+            } else {
+                cell.classList.remove('is-expanded');
+                
+                if (expandDirection !== 'none') {
+                    gsap.to(tile, {
+                        width: "100%",
+                        duration: 0.5,
+                        ease: "expo.out",
+                        clearProps: "all"
+                    });
+                }
+                
+                const content = tile.querySelector('.bmc-tile-content');
+                if(content) {
+                    gsap.killTweensOf(content);
+                    gsap.to(content, { opacity: 0, duration: 0.2, onComplete: () => {
+                        gsap.set(content, { display: "none" });
+                    }});
+                }
+            }
+        });
+    });
+}
+
+/* ─── Growth Roadmap (Investor Page) ──────────────── */
+function initGrowthRoadmap() {
+    const trackFill = document.querySelector('.cyber-track-fill');
+    const particle = document.querySelector('.track-particle');
+    const nodes = document.querySelectorAll('.roadmap-node');
+    const containers = document.querySelectorAll('.roadmap-node-wrapper');
+    
+    if (!trackFill) return;
+
+    // Check if desktop layout (matches the CSS media query)
+    const isDesktop = window.innerWidth >= 1024;
+    
+    // Animate the neon track fill
+    gsap.to(trackFill, {
+        scrollTrigger: {
+            trigger: '.growth-roadmap-inner',
+            start: 'top 70%',
+            end: 'bottom 80%',
+            scrub: 1.5,
+            scroller: '[data-scroll-container]',
+        },
+        height: isDesktop ? '4px' : '100%',
+        width: isDesktop ? '100%' : '4px',
+        ease: "none"
+    });
+
+    // Animate the glowing particle along the track
+    if (particle) {
+        gsap.to(particle, {
+            scrollTrigger: {
+                trigger: '.growth-roadmap-inner',
+                start: 'top 70%',
+                end: 'bottom 80%',
+                scrub: 1,
+                scroller: '[data-scroll-container]',
+            },
+            left: isDesktop ? "100%" : "20px",
+            top: isDesktop ? "20px" : "100%",
+            opacity: [0, 1, 1, 1, 0], 
+            ease: "none"
+        });
+    }
+
+    // Animate the roadmap nodes coming in one-by-one by using wrappers as trigger to avoid node conflicts
+    containers.forEach((wrapper, i) => {
+        const node = wrapper.querySelector('.roadmap-node');
+        if (!node) return;
+        
+        gsap.from(node, {
+            scrollTrigger: {
+                trigger: wrapper,
+                start: 'top 90%',
+                toggleActions: "play none none reverse",
+                scroller: '[data-scroll-container]',
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: isDesktop ? (i * 0.1) : 0
         });
     });
 }
