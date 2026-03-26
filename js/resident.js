@@ -447,10 +447,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (mSimilarGrid) {
+            // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
+            const currentTags = new Set(service.tags || []);
             let similar = residentServices.filter(s => {
                 if (s.id === service.id) return false;
                 const matchesProvider = s.provider === service.provider;
-                const matchesTags = (s.tags || []).some(t => (service.tags || []).includes(t));
+                const matchesTags = (s.tags || []).some(t => currentTags.has(t));
                 return matchesProvider || matchesTags;
             });
             
