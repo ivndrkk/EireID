@@ -811,45 +811,227 @@ function initGenesisModal() {
 
     if (!cta || !modal || !container) return;
 
+    // Cache elements
+    const originalContent = container.querySelectorAll('.genesis-matrix, .genesis-security__grid');
+    const manifestoHeadline = modal.querySelector('.genesis-manifesto__headline');
+    const manifestoLead = document.getElementById('genesis-manifesto-text');
+    const bentoCards = modal.querySelectorAll('.genesis-bento__card');
+    const scanLine = modal.querySelector('.genesis-scan');
+    const interactiveLayers = modal.querySelectorAll('.interactive-layer');
+    const vaultTooltip = document.getElementById('vault-tooltip');
+
+    const leadText = manifestoLead ? manifestoLead.textContent.trim() : "";
+
+    // 1. 3D Tilt Logic
+    function handleTilt(e) {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const percentX = (x - centerX) / centerX;
+        const percentY = (y - centerY) / centerY;
+        
+        gsap.to(card, {
+            rotateX: -percentY * 5,
+            rotateY: percentX * 5,
+            duration: 0.4,
+            ease: "power2.out"
+        });
+    }
+
+    function resetTilt(e) {
+        gsap.to(e.currentTarget, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.6,
+            ease: "power2.out"
+        });
+    }
+
+    bentoCards.forEach(card => {
+        card.addEventListener('mousemove', handleTilt);
+        card.addEventListener('mouseleave', resetTilt);
+    });
+
+    // 2. SVG Ring Interactivity
+    interactiveLayers.forEach(layer => {
+        layer.addEventListener('mouseenter', () => {
+            const title = layer.getAttribute('data-layer');
+            const desc = layer.getAttribute('data-desc');
+            if (vaultTooltip) {
+                gsap.to(vaultTooltip, { opacity: 0, duration: 0.2, onComplete: () => {
+                    vaultTooltip.innerHTML = `<strong>${title}:</strong> ${desc}`;
+                    gsap.to(vaultTooltip, { opacity: 1, duration: 0.2 });
+                }});
+            }
+        });
+    });
+
+    // 3. Tech Stack Interactivity (Path Pulses)
+    const techItems = modal.querySelectorAll('.tech-item');
+    const connectors = modal.querySelectorAll('.connector-pulse');
+    
+    techItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            gsap.to(connectors, { scale: 2, filter: "blur(4px)", duration: 0.3, stagger: 0.1 });
+        });
+        item.addEventListener('mouseleave', () => {
+            gsap.to(connectors, { scale: 1, filter: "blur(2px)", duration: 0.3 });
+        });
+    });
+
     cta.addEventListener('click', () => {
         const rect = container.getBoundingClientRect();
         
-        // Disable locomotive scroll while modal is open
         if (window.locoScroll) window.locoScroll.stop();
 
         modal.classList.add('is-active');
         modal.setAttribute('aria-hidden', 'false');
 
-        // Initial state: matches the section's position exactly
+        // Initial set
         gsap.set(modal, { 
             visibility: 'visible',
             opacity: 1,
             clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`
         });
 
-        // Expand to full screen
-        gsap.to(modal, {
-            clipPath: `inset(0px 0px 0px 0px round 0px)`,
-            duration: 0.8,
-            ease: "expo.inOut"
+        if (manifestoLead) manifestoLead.textContent = "";
+
+        const tl = gsap.timeline();
+
+        // Section content fade
+        tl.to(originalContent, {
+            opacity: 0,
+            y: -20,
+            duration: 0.5,
+            ease: "power2.inOut"
         });
+
+        // Window Expansion
+        tl.to(modal, {
+            clipPath: `inset(0px 0px 0px 0px round 0px)`,
+            duration: 1,
+            ease: "expo.inOut"
+        }, "-=0.3");
+
+        // Entrance Laser Scan (PRESERVED)
+        tl.fromTo(scanLine, 
+            { top: "0%", opacity: 0 },
+            { top: "100%", opacity: 0.8, duration: 1.2, ease: "power1.inOut" },
+            "-=0.5"
+        );
+        tl.set(scanLine, { opacity: 0 });
+
+        // 4. Reveal Headline & Subtitle Container (Ensures visibility on subsequent opens)
+        tl.fromTo([manifestoHeadline, manifestoLead], 
+            { opacity: 0, y: 40, filter: "blur(10px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.2, ease: "power4.out" },
+            "-=0.8"
+        );
+
+        // Typewriting lead
+        tl.add(() => {
+            if (manifestoLead) {
+                let i = 0;
+                const typing = setInterval(() => {
+                    manifestoLead.textContent += leadText[i];
+                    i++;
+                    if (i === leadText.length) {
+                        clearInterval(typing);
+                        gsap.to(manifestoLead, { borderRightColor: "transparent", duration: 0.5, delay: 1 });
+                    }
+                }, 20);
+            }
+        }, "-=0.4");
+
+        // 5. Special Reveal for Digital Vault (Blurred entrance like Title)
+        const vaultModule = modal.querySelector('[data-vault-module]');
+        if (vaultModule) {
+            tl.fromTo(vaultModule,
+                { opacity: 0, y: 50, filter: "blur(15px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4, ease: "power3.out" },
+                "-=0.6"
+            );
+        }
+
+        // 6. Staggered Content Entrance for all other cards & headers
+        const entranceItems = Array.from(modal.querySelectorAll('[data-item], .section-header, .section-lead'))
+                                   .filter(el => el !== vaultModule);
+        
+        tl.fromTo(entranceItems, 
+            { opacity: 0, y: 30 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1, 
+                stagger: 0.08, 
+                ease: "power2.out",
+                clearProps: "transform" 
+            }, 
+            "-=0.8" 
+        );
     });
+
+    // 4. Tech Spec Expander Logic
+    const techTrigger = document.getElementById('genesis-tech-expander');
+    const techPanel = document.getElementById('genesis-tech-panel');
+    
+    if (techTrigger && techPanel) {
+        techTrigger.addEventListener('click', () => {
+            techPanel.classList.toggle('is-active');
+            const isActive = techPanel.classList.contains('is-active');
+            techTrigger.querySelector('.bento-badge').textContent = isActive ? "- HIDE SPECIFICATIONS" : "+ VIEW TECHNICAL SPECIFICATIONS";
+            
+            if (isActive) {
+                gsap.from(techPanel.querySelectorAll('.tech-spec-item'), {
+                    opacity: 0,
+                    x: -10,
+                    duration: 0.4,
+                    stagger: 0.05,
+                    ease: "power2.out"
+                });
+            }
+        });
+    }
 
     closeBtn.addEventListener('click', () => {
         const rect = container.getBoundingClientRect();
+        const tlClose = gsap.timeline();
 
-        gsap.to(modal, {
+        // Target all content for fade out on close
+        const allContent = modal.querySelectorAll('.genesis-manifesto__headline, #genesis-manifesto-text, .genesis-bento__card, .genesis-hub-section');
+
+        tlClose.to(allContent, {
+            opacity: 0,
+            y: 20,
+            duration: 0.4,
+            ease: "power2.in",
+            stagger: 0.03
+        });
+
+        tlClose.to(modal, {
             clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`,
-            duration: 0.6,
+            duration: 0.8,
             ease: "expo.inOut",
             onComplete: () => {
                 gsap.set(modal, { visibility: 'hidden', opacity: 0 });
                 modal.classList.remove('is-active');
                 modal.setAttribute('aria-hidden', 'true');
+                
                 if (window.locoScroll) {
                     window.locoScroll.start();
                     window.locoScroll.update();
                 }
+
+                gsap.set(originalContent, { y: -20 });
+                gsap.to(originalContent, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
             }
         });
     });

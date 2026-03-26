@@ -279,6 +279,16 @@ html { scroll-behavior: smooth; }
   font-weight: 500;
 }
 
+@media (max-width: 768px) {
+  .card-back-text {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .card-back-body {
+    padding: 20px;
+  }
+}
+
 .card-back-barcode {
   height: 50px;
   margin: 20px 30px;
