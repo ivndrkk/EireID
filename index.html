@@ -56,7 +56,6 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="./pages/security.html" class="nav__link">Security</a></li>
                     <li><a href="./pages/support.html" class="nav__link">Support</a></li>
                     <li><a href="./pages/team.html" class="nav__link">Our Team</a></li>
                 </ul>
@@ -493,9 +492,9 @@
                             <p class="genesis-security__desc" data-reveal>Unlike traditional databases, the Genesis Protocol ensures your identity data never leaves your device. We use
                             end-to-end AES-256 hardware-level encryption to verify who you are — without ever accessing, storing, or transmitting
                             your documents.</p>
-                            <a href="./pages/security.html" class="hero__action genesis-security__cta">
+                            <button id="genesis-cta" class="hero__action genesis-security__cta">
                                 <span>EXPLORE THE GENESIS PROTOCOL</span>
-                            </a>
+                            </button>
                         </div>
 
                         <!-- Visualization Area -->
@@ -684,8 +683,8 @@
             <h4 class="footer-col__title">Company</h4>
             <ul class="footer-col__list">
                 <li><a href="#">About EireID</a></li>
-                <li><a href="#">Our Team</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="./pages/team.html">Our Team</a></li>
+                <li><a href="./pages/support.html">Contact Us</a></li>
                 <li><a href="./pages/investor.html">For Investors</a></li>
             </ul>
         </div>
@@ -702,7 +701,37 @@
     </div>
 </footer>
 
+
     </div>
+
+    <!-- === GENESIS MODAL === -->
+    <div id="genesis-modal" class="genesis-modal" aria-hidden="true">
+        <div class="genesis-modal__header">
+            <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="genesis-modal__logo">
+            <button id="genesis-modal-close" class="genesis-modal__close" aria-label="Close Genesis Exploration">
+                <span class="iconify" data-icon="lucide:x"></span>
+            </button>
+        </div>
+        <div class="genesis-modal__content">
+            <h2 class="text-white text-4xl font-bold mb-8">Genesis Protocol Exploration</h2>
+            <div class="logo-box--glass p-12 rounded-3xl">
+                <p class="text-white/70 text-lg leading-relaxed">
+                    The Genesis Protocol is the foundation of EireID's security architecture. 
+                    Unlike traditional identity systems that rely on a central database, Genesis uses your physical device as the root of trust.
+                    <br><br>
+                    <strong>Architecture Key Principles:</strong>
+                    <br>• Local-first decryption
+                    <br>• Zero-knowledge proofs for verification
+                    <br>• AES-256 hardware enclave isolation
+                </p>
+                <div class="mt-8 flex gap-4">
+                    <button class="btn btn--primary">View Whitepaper</button>
+                    <button class="btn btn--branded">Technical Specs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- === FLOATING RUA AI ASSISTANT === -->
     <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
       <img src="assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">

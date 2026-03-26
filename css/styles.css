@@ -149,7 +149,6 @@
         opacity: 1;
         visibility: visible;
         transform: none;
-        gap: clamp(1rem, 1.5vw, 2.5rem);
     }
 }
 
@@ -5424,3 +5423,85 @@
 }
 
 
+
+/* =============================================================================
+   Genesis Modal Styles
+   ============================================================================= */
+
+.genesis-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.7); /* Deep dark glass */
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: auto;
+    padding: clamp(1rem, 5vw, 4rem);
+    pointer-events: none;
+    transition: visibility 0s 0.6s; /* Wait for close animation */
+}
+
+.genesis-modal.is-active {
+    pointer-events: auto;
+    transition: visibility 0s 0s;
+}
+
+.genesis-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto var(--space-2xl) auto;
+}
+
+.genesis-modal__logo {
+    width: 32px;
+    height: auto;
+    filter: brightness(0) invert(1); /* Pure white logo */
+}
+
+.genesis-modal__close {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.genesis-modal__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.genesis-modal__content {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Utility classes for modal content */
+.text-white { color: #fff; }
+.text-white\/70 { color: rgba(255, 255, 255, 0.7); }
+.text-4xl { font-size: 2.25rem; }
+.font-bold { font-weight: 700; }
+.mb-8 { margin-bottom: 2rem; }
+.p-12 { padding: 3rem; }
+.rounded-3xl { border-radius: 1.5rem; }
+.text-lg { font-size: 1.125rem; }
+.leading-relaxed { line-height: 1.625; }

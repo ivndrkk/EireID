@@ -122,6 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // FAQ
     initFAQAccordion();
 
+    // Genesis Modal
+    initGenesisModal();
+
     // Final Refresh
     ScrollTrigger.refresh();
 
@@ -797,4 +800,57 @@ function initFloatingPill() {
 
     window.addEventListener('resize', cacheHeaderOffset);
     cacheHeaderOffset();
+}
+
+/* ─── Genesis Modal Expansion ─────────────────── */
+function initGenesisModal() {
+    const cta = document.getElementById('genesis-cta');
+    const modal = document.getElementById('genesis-modal');
+    const closeBtn = document.getElementById('genesis-modal-close');
+    const container = document.querySelector('.genesis-security__container');
+
+    if (!cta || !modal || !container) return;
+
+    cta.addEventListener('click', () => {
+        const rect = container.getBoundingClientRect();
+        
+        // Disable locomotive scroll while modal is open
+        if (window.locoScroll) window.locoScroll.stop();
+
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+
+        // Initial state: matches the section's position exactly
+        gsap.set(modal, { 
+            visibility: 'visible',
+            opacity: 1,
+            clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`
+        });
+
+        // Expand to full screen
+        gsap.to(modal, {
+            clipPath: `inset(0px 0px 0px 0px round 0px)`,
+            duration: 0.8,
+            ease: "expo.inOut"
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        const rect = container.getBoundingClientRect();
+
+        gsap.to(modal, {
+            clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`,
+            duration: 0.6,
+            ease: "expo.inOut",
+            onComplete: () => {
+                gsap.set(modal, { visibility: 'hidden', opacity: 0 });
+                modal.classList.remove('is-active');
+                modal.setAttribute('aria-hidden', 'true');
+                if (window.locoScroll) {
+                    window.locoScroll.start();
+                    window.locoScroll.update();
+                }
+            }
+        });
+    });
 }
