@@ -44,21 +44,23 @@
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html" class="nav__link">About EireID</a></li>
+                    <li><a href="../index.html" class="nav__link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="allservices.html" class="nav__link">Services <span
+                        <a href="./allservices.html" class="nav__link active">Services <span
                                 class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="resident.html" class="nav__dropdown-link" aria-current="page">For residents</a>
-                                <a href="business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="investor.html" class="nav__dropdown-link">For investors</a>
+                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="./resident.html" class="nav__dropdown-link" aria-current="page">For residents</a>
+                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
+                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="support.html" class="nav__link">Support</a></li>
-                    <li><a href="team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="./security.html" class="nav__link">Security</a></li>
+                    <li><a href="./support.html" class="nav__link">Support</a></li>
+                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
         </header>
@@ -67,7 +69,7 @@
         <main class="resident-hero" id="main-content" tabindex="-1">
             <div class="hero__content" aria-labelledby="hero-title">
                 <div class="hero-leftcol">
-                    <div class="hero__logos">
+                    <div class="hero__logos" data-scroll data-scroll-speed="-0.5">
                     
                         <!-- User Icon -->
                         <button class="logo-box logo-box--glass" aria-label="User Profile">
@@ -691,7 +693,115 @@
         </div>
     </div>
 
+    <!-- === FOOTER === -->
+    <footer class="footer-main" data-reveal>
+        <div class="footer-main__inner">
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-brand__logo">
+                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                    <span>EireID</span>
+                </div>
+                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                    verified once, trusted everywhere.</p>
+                <div class="footer-brand__socials">
+                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                </div>
+            </div>
+
+            <!-- Product -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Product</h4>
+                <ul class="footer-col__list">
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Supported Documents</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Security & Privacy</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Services</h4>
+                <ul class="footer-col__list">
+                    <li><a href="./allservices.html">All Services</a></li>
+                    <li><a href="./resident.html">For Residents</a></li>
+                    <li><a href="./business.html">For Businesses</a></li>
+                </ul>
+            </div>
+
+            <!-- Company -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Company</h4>
+                <ul class="footer-col__list">
+                    <li><a href="../index.html#about">About EireID</a></li>
+                    <li><a href="./team.html">Our Team</a></li>
+                    <li><a href="./support.html">Contact Us</a></li>
+                    <li><a href="./investor.html">For Investors</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-main__bottom">
+            <span>© 2026 EireID. All rights reserved.</span>
+            <div class="footer-main__legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- === FLOATING RUA AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
+        <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm Rua, your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <!-- === SCRIPTS === -->
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>
     <script src="../js/resident.js" defer></script>

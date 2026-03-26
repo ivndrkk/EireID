@@ -39,20 +39,22 @@
             </button> 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html" class="nav__link">About EireID</a></li>
+                    <li><a href="../index.html" class="nav__link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="#" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="./allservices.html" class="nav__link active" aria-current="page">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="resident.html" class="nav__dropdown-link">For residents</a>
-                                <a href="business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="investor.html" class="nav__dropdown-link">For investors</a>
+                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="./resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
+                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="support.html" class="nav__link">Support</a></li>
-                    <li><a href="team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="./security.html" class="nav__link">Security</a></li>
+                    <li><a href="./support.html" class="nav__link">Support</a></li>
+                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
             <!-- Mobile Logo -->
@@ -130,6 +132,68 @@
 
             </div> <!-- End Content Wrapper -->
         </main>
+
+    <!-- === FOOTER === -->
+    <footer class="footer-main" data-reveal>
+        <div class="footer-main__inner">
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-brand__logo">
+                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                    <span>EireID</span>
+                </div>
+                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                    verified once, trusted everywhere.</p>
+                <div class="footer-brand__socials">
+                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                </div>
+            </div>
+
+            <!-- Product -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Product</h4>
+                <ul class="footer-col__list">
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Supported Documents</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Security & Privacy</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Services</h4>
+                <ul class="footer-col__list">
+                    <li><a href="./allservices.html">All Services</a></li>
+                    <li><a href="./resident.html">For Residents</a></li>
+                    <li><a href="./business.html">For Businesses</a></li>
+                </ul>
+            </div>
+
+            <!-- Company -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Company</h4>
+                <ul class="footer-col__list">
+                    <li><a href="../index.html#about">About EireID</a></li>
+                    <li><a href="./team.html">Our Team</a></li>
+                    <li><a href="./support.html">Contact Us</a></li>
+                    <li><a href="./investor.html">For Investors</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-main__bottom">
+            <span>© 2026 EireID. All rights reserved.</span>
+            <div class="footer-main__legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
 
     </div>
 

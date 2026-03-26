@@ -15,15 +15,21 @@
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
+    <!-- Locomotive Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
     <!-- CSS -->
-    <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/styles.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
+    <div id="preloader" class="preloader">
+        <span class="loader"></span>
+    </div>
 
-    <div class="container">
+    <div class="container" data-scroll-container>
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
@@ -39,20 +45,22 @@
         
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html" class="nav__link">About EireID</a></li>
+                    <li><a href="../index.html" class="nav__link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
                         <a href="./allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="resident.html" class="nav__dropdown-link">For residents</a>
-                                <a href="business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="investor.html" class="nav__dropdown-link">For investors</a>
+                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
+                                <a href="./resident.html" class="nav__dropdown-link">For residents</a>
+                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
+                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="support.html" class="nav__link">Support</a></li>
-                    <li><a href="team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="./security.html" class="nav__link active" aria-current="page">Security</a></li>
+                    <li><a href="./support.html" class="nav__link">Support</a></li>
+                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
             <!-- Mobile Logo -->
@@ -62,11 +70,178 @@
         </header>
 
         <main id="main-content" tabindex="-1">
-            <!-- Content goes here -->
+            
+            <!-- Hero Section -->
+            <section class="security-hero section-padding">
+                <div class="security-hero__content">
+                    <h1 class="hero__title" data-reveal>Trust & Safety</h1>
+                    <p class="hero__subtitle" data-reveal>EireID is built on the globally recognized Zero Trust architecture, ensuring your identity remains yours alone.</p>
+                </div>
+            </section>
+
+            <!-- Defense in Depth Grid -->
+            <section class="defense-grid section-padding">
+                <h2 class="section-title" data-reveal>Defense in Depth</h2>
+                <div class="grid-3">
+                    <!-- Pillar 1 -->
+                    <div class="logo-box--glass p-8 rounded-2xl" data-reveal data-scroll data-scroll-speed="0.5">
+                        <div class="icon-circle mb-6">
+                            <span class="iconify text-3xl" data-icon="lucide:fingerprint"></span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Biometric Locking</h3>
+                        <p class="opacity-70 text-sm leading-relaxed">Your EireID is hardware-locked to your device's Secure Enclave. Access requires your unique biometric signature, verified locally without ever leaving your device.</p>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="logo-box--glass p-8 rounded-2xl" data-reveal data-scroll data-scroll-speed="0.8">
+                        <div class="icon-circle mb-6">
+                            <span class="iconify text-3xl" data-icon="lucide:shield-check"></span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Data Sovereignty</h3>
+                        <p class="opacity-70 text-sm leading-relaxed">You own your data. EireID uses end-to-end encryption for all transfers, meaning not even the Irish Government can access your private documents without your explicit consent.</p>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="logo-box--glass p-8 rounded-2xl" data-reveal data-scroll data-scroll-speed="0.3">
+                        <div class="icon-circle mb-6">
+                            <span class="iconify text-3xl" data-icon="lucide:lock"></span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">PPSN Shield</h3>
+                        <p class="opacity-70 text-sm leading-relaxed">Unlike physical cards, EireID uses dynamic tokens to verify your PPSN. This prevents identity theft and ensures that your sensitive numbers are never exposed to third parties.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Compliance / Trust Section -->
+            <section class="trust-strip section-padding">
+                <div class="logo-box--glass flex flex-wrap justify-around items-center p-12 rounded-3xl" data-reveal>
+                    <div class="trust-item text-center px-4">
+                        <span class="block text-4xl font-bold mb-2">AES-256</span>
+                        <span class="opacity-60 uppercase tracking-widest text-xs">Military Grade Encryption</span>
+                    </div>
+                    <div class="trust-item text-center px-4">
+                        <span class="block text-4xl font-bold mb-2">GDPR</span>
+                        <span class="opacity-60 uppercase tracking-widest text-xs">Full Compliance</span>
+                    </div>
+                    <div class="trust-item text-center px-4">
+                        <span class="block text-4xl font-bold mb-2">24/7</span>
+                        <span class="opacity-60 uppercase tracking-widest text-xs">Fraud Monitoring</span>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
-    <!-- === SCRIPTS === -->
+    <!-- === FOOTER === -->
+    <footer class="footer-main" data-reveal>
+        <div class="footer-main__inner">
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-brand__logo">
+                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                    <span>EireID</span>
+                </div>
+                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                    verified once, trusted everywhere.</p>
+                <div class="footer-brand__socials">
+                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                </div>
+            </div>
+
+            <!-- Product -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Product</h4>
+                <ul class="footer-col__list">
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Supported Documents</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Security & Privacy</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Services</h4>
+                <ul class="footer-col__list">
+                    <li><a href="./allservices.html">All Services</a></li>
+                    <li><a href="./resident.html">For Residents</a></li>
+                    <li><a href="./business.html">For Businesses</a></li>
+                </ul>
+            </div>
+
+            <!-- Company -->
+            <div class="footer-col">
+                <h4 class="footer-col__title">Company</h4>
+                <ul class="footer-col__list">
+                    <li><a href="../index.html#about">About EireID</a></li>
+                    <li><a href="./team.html">Our Team</a></li>
+                    <li><a href="./support.html">Contact Us</a></li>
+                    <li><a href="./investor.html">For Investors</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-main__bottom">
+            <span>© 2026 EireID. All rights reserved.</span>
+            <div class="footer-main__legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- === FLOATING RUA AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
+        <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm Rua, your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Locomotive Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="../js/scripts.js" defer></script>
 </body>
 
