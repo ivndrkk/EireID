@@ -260,50 +260,150 @@
                 noResults.style.display = "block";
                 paginationContainer.style.display = "none";
                 return;
+            } else {
+                noResults.style.display = "none";
             }
-            noResults.style.display = "none";
+        }
 
-            dataToShow.forEach((s, idx) => {
-                const card = document.createElement("article");
-                card.className = "service-card logo-box--glass";
-                card.innerHTML = `
-                    <div class="service-card__header">
-                        <span class="service-card__provider">${escapeHTML(s.provider)}</span>
-                        <span class="iconify" data-icon="lucide:arrow-up-right"></span>
-                    </div>
-                    <div class="service-card__body">
-                        <h3 class="service-card__title">${escapeHTML(s.name)}</h3>
-                        <p class="service-card__desc">${escapeHTML(s.description)}</p>
-                    </div>
-                    <div class="service-card__footer">
-                        <div class="service-card__tags">
-                            ${(s.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-                card.addEventListener("click", () => openModal(s));
-                grid.appendChild(card);
+        // Optimization: Use DocumentFragment to batch DOM updates
+        const fragment = document.createDocumentFragment();
+
+        dataToShow.forEach((service, index) => {
+            const actualIndex = start + index;
+            const isFeatured = actualIndex === 0;
+            const card = createCardElement(service, isFeatured);
+            card.style.animationDelay = `${(index % 10) * 0.05}s`;
+            fragment.appendChild(card);
+        });
+
+        grid.appendChild(fragment);
+
+        if (limit >= filteredData.length) {
+            paginationContainer.style.display = 'none';
+        } else {
+            paginationContainer.style.display = 'flex';
+        }
+
+        // Re-initialize living text effectively observing new nodes
+        if (typeof initTextReveal === 'function') {
+            initTextReveal();
+        }
+
+        // Inform Locomotive Scroll about new DOM elements and updated heights
+        setTimeout(() => {
+            if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                window.locoScroll.update();
+            }
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }, 150);
+    }
+
+    function filterData() {
+        const searchVal = searchInput.value.toLowerCase();
+
+        // Reset revealed states to allow re-animation after update
+        document.querySelectorAll('[data-scroll-class="is-revealed"]').forEach(el => {
+            el.classList.remove('is-revealed');
+        });
+
+        filteredData = allServices.filter(service => {
+            let matchProvider = true;
+            let matchTag = true;
+            let matchSearch = true;
+
+            if (currentProviderFilter !== "all") {
+                matchProvider = service.provider === currentProviderFilter;
+            }
+
+            if (currentTagFilter !== "all") {
+                matchTag = service._tagSet && service._tagSet.has(currentTagFilter);
+            }
+
+            if (searchVal) {
+                // Optimization: Use cached search string
+                matchSearch = service._searchStr.includes(searchVal);
+            }
+
+            return matchProvider && matchTag && matchSearch;
+        });
+
+        currentPage = 1;
+        renderPagination();
+
+        // Always return to top when filtering/searching
+        if (typeof window.scrollToTop === 'function') {
+            window.scrollToTop(true);
+        }
+    }
+
+    const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
+
+    // Modal Logic
+    function openModal(service) {
+        resetModalLocal(); // Always start from details
+        mProvider.textContent = service.provider;
+        mTitle.textContent = service.name;
+        mDesc.textContent = service.description;
+
+        const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
+        mTags.innerHTML = tagsHtml;
+
+        // Similar services logic
+        // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
+        const currentTags = service._tagSet || new Set();
+        let similar = allServices.filter(s => {
+            if (s.id === service.id) return false;
+            const matchesProvider = s.provider === service.provider;
+            const matchesTags = (s.tags || []).some(t => currentTags.has(t));
+            return matchesProvider || matchesTags;
+        });
+        
+        if (similar.length < 3) {
+            const similarSet = new Set(similar);
+            const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
+            similar = [...similar, ...others].slice(0, 3);
+        } else {
+            similar.sort(() => 0.5 - Math.random());
+            similar = similar.slice(0, 3);
+        }
+
+        mSimilarGrid.innerHTML = '';
+
+        // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+        const fragment = document.createDocumentFragment();
+
+        similar.forEach(s => {
+            const scard = document.createElement('article');
+            // Remove data-scroll which causes visibility issues inside a fixed modal
+            scard.className = 'service-card logo-box--glass';
+            scard.style.cursor = 'pointer';
+            scard.style.minHeight = '140px';
+            scard.style.opacity = '1';
+            scard.style.visibility = 'visible';
+            scard.style.transform = 'none';
+
+            scard.innerHTML = `
+                <div class="service-card__body">
+                    <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                    <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
+                </div>
+            `;
+            scard.addEventListener('click', () => {
+                openModal(s);
+                const mContent = document.querySelector('.service-modal__content');
+                if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
             });
+            fragment.appendChild(scard);
+        });
 
-            paginationContainer.style.display = (limit >= filteredData.length) ? 'none' : 'flex';
-            
-            // Re-sync scroll
-            setTimeout(() => {
-                if (window.locoScroll) window.locoScroll.update();
-                if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-            }, 100);
-        }
+        mSimilarGrid.appendChild(fragment);
 
-        function openModal(service) {
-            resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status);
-            if (mProvider) mProvider.textContent = service.provider;
-            if (mTitle) mTitle.textContent = service.name;
-            if (mDesc) mDesc.textContent = service.description;
-            if (mTags) mTags.innerHTML = (service.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('');
-            
-            modal.classList.add('is-open');
-            document.body.style.overflow = 'hidden';
-        }
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
 
         setupModalListenersDirect({
             modal, modalClose: document.getElementById('sm-close'), 
