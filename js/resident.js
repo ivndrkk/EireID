@@ -457,7 +457,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             
             if (similar.length < 3) {
-                const others = residentServices.filter(s => s.id !== service.id && !similar.includes(s));
+                // Optimization: Use a Set of IDs for O(1) lookup during the fallback filter
+                const similarIds = new Set(similar.map(s => s.id));
+                const others = residentServices.filter(s => s.id !== service.id && !similarIds.has(s.id));
                 similar = [...similar, ...others].slice(0, 3);
             } else {
                 similar.sort(() => 0.5 - Math.random());
