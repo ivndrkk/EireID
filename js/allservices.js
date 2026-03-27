@@ -489,7 +489,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         if (similar.length < 3) {
-            const others = allServices.filter(s => s.id !== service.id && !similar.includes(s));
+            const similarSet = new Set(similar);
+            const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
             similar = [...similar, ...others].slice(0, 3);
         } else {
             similar.sort(() => 0.5 - Math.random());
