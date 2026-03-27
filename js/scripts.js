@@ -721,18 +721,22 @@ function initAIChat() {
 
 /* ─── FAQ Accordion ─────────────────── */
 function initFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq__item');
+    const faqItems = Array.from(document.querySelectorAll('.faq__item')).map(item => ({
+        element: item,
+        button: item.querySelector('.faq__question')
+    }));
     
-    faqItems.forEach(item => {
-        const questionBtn = item.querySelector('.faq__question');
+    faqItems.forEach(itemObj => {
+        const { element: item, button: questionBtn } = itemObj;
+        if (!questionBtn) return;
         
         questionBtn.addEventListener('click', () => {
             const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
             
             // Close all items first
-            faqItems.forEach(otherItem => {
-                otherItem.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
-                otherItem.classList.remove('is-active');
+            faqItems.forEach(otherItemObj => {
+                otherItemObj.button.setAttribute('aria-expanded', 'false');
+                otherItemObj.element.classList.remove('is-active');
             });
             
             // If the clicked item was not expanded, open it
