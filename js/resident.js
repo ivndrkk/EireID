@@ -197,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         residentServices.forEach(s => {
             s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+            s._tagSet = new Set(s.tags || []);
         });
 
         // Pick 6 random services to show by default
@@ -477,7 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (mSimilarGrid) {
             // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
-            const currentTags = new Set(service.tags || []);
+            const currentTags = service._tagSet || new Set();
             let similar = residentServices.filter(s => {
                 if (s.id === service.id) return false;
                 const matchesProvider = s.provider === service.provider;
@@ -495,6 +496,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             mSimilarGrid.innerHTML = '';
+
+            // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+            const fragment = document.createDocumentFragment();
+
             similar.forEach(s => {
                 const scard = document.createElement('article');
                 scard.className = 'service-card logo-box--glass';
@@ -511,8 +516,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const mc = document.querySelector('.service-modal__content');
                     if (mc) mc.scrollTop = 0;
                 });
-                mSimilarGrid.appendChild(scard);
+                fragment.appendChild(scard);
             });
+
+            mSimilarGrid.appendChild(fragment);
         }
 
         if (modal) {

@@ -218,9 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof irishGovServicesData !== 'undefined') {
         allServices = irishGovServicesData;
 
-        // Optimization: Pre-compute lowercase search strings
+        // Optimization: Pre-compute lowercase search strings and tag sets
         allServices.forEach(s => {
             s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+            s._tagSet = new Set(s.tags || []);
         });
 
         populateFilters(allServices);
@@ -411,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (currentTagFilter !== "all") {
-                matchTag = service.tags && service.tags.includes(currentTagFilter);
+                matchTag = service._tagSet && service._tagSet.has(currentTagFilter);
             }
 
             if (searchVal) {
@@ -480,7 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Similar services logic
         // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
-        const currentTags = new Set(service.tags || []);
+        const currentTags = service._tagSet || new Set();
         let similar = allServices.filter(s => {
             if (s.id === service.id) return false;
             const matchesProvider = s.provider === service.provider;
@@ -498,6 +499,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         mSimilarGrid.innerHTML = '';
+
+        // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+        const fragment = document.createDocumentFragment();
+
         similar.forEach(s => {
             const scard = document.createElement('article');
             // Remove data-scroll which causes visibility issues inside a fixed modal
@@ -519,8 +524,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const mContent = document.querySelector('.service-modal__content');
                 if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
             });
-            mSimilarGrid.appendChild(scard);
+            fragment.appendChild(scard);
         });
+
+        mSimilarGrid.appendChild(fragment);
 
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
