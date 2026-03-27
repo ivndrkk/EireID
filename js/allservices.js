@@ -99,8 +99,12 @@
         const noResults = document.getElementById("no-results");
         const paginationContainer = document.getElementById('services-pagination');
         const loadMoreBtn = document.getElementById('load-more-btn');
+        
+        // Custom Dropdown Elements
         const providerDropdown = document.getElementById('provider-dropdown');
         const tagDropdown = document.getElementById('tag-dropdown');
+        
+        // Modal Elements
         const modal = document.getElementById('service-modal');
         const mProvider = document.getElementById('sm-provider');
         const mTitle = document.getElementById('sm-title');
@@ -108,22 +112,22 @@
         const mTags = document.getElementById('sm-tags');
         const mSimilarGrid = document.getElementById('sm-similar-grid');
         const stateContainers = document.querySelectorAll('.sm-state-container');
-        const applyBtn = document.getElementById('sm-apply-btn');
-        const cancelBtn = document.getElementById('sm-cancel-btn');
-        const confirmBtn = document.getElementById('sm-confirm-btn');
-        const closeCancelledBtn = document.getElementById('sm-close-cancelled-btn');
-        const closeSuccessBtn = document.getElementById('sm-close-success-btn');
         const faceScanner = document.getElementById('sm-face-scanner');
         const loadingSpinner = document.getElementById('sm-loading-spinner');
         const step2Status = document.getElementById('sm-step2-status');
 
         if (!grid) return;
 
+        // State Management
         let allServices = [];
         let filteredData = [];
         let currentPage = 1;
+        let currentProviderFilter = 'all';
+        let currentTagFilter = 'all';
 
-        // Custom Dropdown Logic
+        /**
+         * Custom Dropdown Logic
+         */
         function setupCustomDropdown(dropdownEl, onSelectCallback) {
             const trigger = dropdownEl?.querySelector('.custom-dropdown__trigger');
             const label = dropdownEl?.querySelector('.custom-dropdown__label');
@@ -135,10 +139,11 @@
             function updateHighlightedItem(index) {
                 const items = list.querySelectorAll('.custom-dropdown__item');
                 items.forEach(li => li.classList.remove('is-highlighted'));
+                
                 if (index >= 0 && index < items.length) {
                     const item = items[index];
                     item.classList.add('is-highlighted');
-                    trigger.setAttribute('aria-activedescendant', item.id);
+                    trigger.setAttribute('aria-activedescendant', item.id || `opt-${index}`);
                     item.scrollIntoView({ block: 'nearest' });
                     highlightedIndex = index;
                 } else {
@@ -155,9 +160,11 @@
                 });
                 item.classList.add('is-selected');
                 item.setAttribute('aria-selected', 'true');
+                
                 if (label) label.textContent = item.textContent;
                 dropdownEl.classList.remove('is-open');
                 trigger.setAttribute('aria-expanded', 'false');
+                
                 const val = item.getAttribute('data-value');
                 if (onSelectCallback) onSelectCallback(val);
             }
@@ -165,16 +172,24 @@
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isOpen = dropdownEl.classList.contains('is-open');
+                
+                // Close all others
                 document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
-                    el.classList.remove('is-open');
-                    el.querySelector('.custom-dropdown__trigger')?.setAttribute('aria-expanded', 'false');
+                    if (el !== dropdownEl) {
+                        el.classList.remove('is-open');
+                        el.querySelector('.custom-dropdown__trigger')?.setAttribute('aria-expanded', 'false');
+                    }
                 });
-                if (!isOpen) {
+
+                if (isOpen) {
+                    dropdownEl.classList.remove('is-open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                } else {
                     dropdownEl.classList.add('is-open');
                     trigger.setAttribute('aria-expanded', 'true');
                     const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
-                    const selIdx = items.findIndex(li => li.classList.contains('is-selected'));
-                    updateHighlightedItem(selIdx >= 0 ? selIdx : 0);
+                    const selectedIndex = items.findIndex(li => li.classList.contains('is-selected'));
+                    updateHighlightedItem(selectedIndex >= 0 ? selectedIndex : 0);
                 }
             });
 
@@ -184,6 +199,7 @@
             });
         }
 
+        // Close dropdowns on outside click
         document.addEventListener('click', () => {
             document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
                 el.classList.remove('is-open');
@@ -191,229 +207,231 @@
             });
         });
 
-        // Initialize Data
-        if (typeof irishGovServicesData !== 'undefined') {
-            allServices = irishGovServicesData;
-            allServices.forEach(s => {
-                s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
-            });
-            populateFilters(allServices);
-            setupCustomDropdown(providerDropdown, (val) => { window.currentProviderFilter = val; filterData(); });
-            setupCustomDropdown(tagDropdown, (val) => { window.currentTagFilter = val; filterData(); });
-            window.currentProviderFilter = 'all';
-            window.currentTagFilter = 'all';
-            filterData();
-        } else {
-            console.error("Data 'irishGovServicesData' not found.");
-        }
-
+        /**
+         * Populates the custom dropdown lists
+         */
         function populateFilters(data) {
             const providers = new Set();
             const tags = new Set();
+            
             data.forEach(s => {
                 if (s.provider) providers.add(s.provider);
                 if (s.tags) s.tags.forEach(t => tags.add(t));
             });
+
             const pList = document.getElementById('provider-list');
             const tList = document.getElementById('tag-list');
             if (!pList || !tList) return;
 
+            // Sort and add Providers
             Array.from(providers).sort().forEach((p, i) => {
                 const li = document.createElement("li");
                 li.className = "custom-dropdown__item";
+                li.id = `provider-opt-${i}`;
+                li.setAttribute('role', 'option');
                 li.setAttribute('data-value', p);
                 li.textContent = p;
                 pList.appendChild(li);
             });
+
+            // Sort and add Tags
             Array.from(tags).sort().forEach((t, i) => {
                 const li = document.createElement("li");
                 li.className = "custom-dropdown__item";
+                li.id = `tag-opt-${i}`;
+                li.setAttribute('role', 'option');
                 li.setAttribute('data-value', t);
                 li.textContent = t.charAt(0).toUpperCase() + t.slice(1);
                 tList.appendChild(li);
             });
         }
 
-        function filterData() {
-            const query = searchInput?.value.toLowerCase().trim();
-            const prov = window.currentProviderFilter || 'all';
-            const tag = window.currentTagFilter || 'all';
-
-            filteredData = allServices.filter(s => {
-                const mP = prov === 'all' || s.provider === prov;
-                const mT = tag === 'all' || (s.tags && s.tags.includes(tag));
-                const mS = !query || s._searchStr.includes(query);
-                return mP && mT && mS;
-            });
-
-            currentPage = 1;
-            renderPagination();
+        /**
+         * Creates a single service card
+         */
+        function createCardElement(service, isFeatured = false) {
+            const card = document.createElement("article");
+            card.className = "service-card logo-box--glass";
+            if (isFeatured) card.classList.add("service-card--featured");
+            
+            card.innerHTML = `
+                <div class="service-card__header">
+                    <span class="service-card__provider">${escapeHTML(service.provider)}</span>
+                    <span class="iconify" data-icon="lucide:arrow-up-right"></span>
+                </div>
+                <div class="service-card__body">
+                    <h3 class="service-card__title">${escapeHTML(service.name)}</h3>
+                    <p class="service-card__desc">${escapeHTML(service.description)}</p>
+                </div>
+                <div class="service-card__footer">
+                    <div class="service-card__tags">
+                        ${(service.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            
+            card.addEventListener("click", () => openModal(service));
+            return card;
         }
 
+        /**
+         * Renders the services grid with pagination
+         */
         function renderPagination() {
             if (!grid) return;
             grid.innerHTML = "";
-            const limit = currentPage * (window.innerWidth >= 1024 ? 9 : 6);
+            const itemsPerPage = window.innerWidth >= 1024 ? 9 : 6;
+            const limit = currentPage * itemsPerPage;
             const dataToShow = filteredData.slice(0, limit);
 
             if (dataToShow.length === 0) {
                 noResults.style.display = "block";
                 paginationContainer.style.display = "none";
                 return;
-            } else {
-                noResults.style.display = "none";
             }
-        }
+            noResults.style.display = "none";
 
-        // Optimization: Use DocumentFragment to batch DOM updates
-        const fragment = document.createDocumentFragment();
-
-        dataToShow.forEach((service, index) => {
-            const actualIndex = start + index;
-            const isFeatured = actualIndex === 0;
-            const card = createCardElement(service, isFeatured);
-            card.style.animationDelay = `${(index % 10) * 0.05}s`;
-            fragment.appendChild(card);
-        });
-
-        grid.appendChild(fragment);
-
-        if (limit >= filteredData.length) {
-            paginationContainer.style.display = 'none';
-        } else {
-            paginationContainer.style.display = 'flex';
-        }
-
-        // Re-initialize living text effectively observing new nodes
-        if (typeof initTextReveal === 'function') {
-            initTextReveal();
-        }
-
-        // Inform Locomotive Scroll about new DOM elements and updated heights
-        setTimeout(() => {
-            if (window.locoScroll && typeof window.locoScroll.update === 'function') {
-                window.locoScroll.update();
-            }
-            if (typeof ScrollTrigger !== 'undefined') {
-                ScrollTrigger.refresh();
-            }
-        }, 150);
-    }
-
-    function filterData() {
-        const searchVal = searchInput.value.toLowerCase();
-
-        // Reset revealed states to allow re-animation after update
-        document.querySelectorAll('[data-scroll-class="is-revealed"]').forEach(el => {
-            el.classList.remove('is-revealed');
-        });
-
-        filteredData = allServices.filter(service => {
-            let matchProvider = true;
-            let matchTag = true;
-            let matchSearch = true;
-
-            if (currentProviderFilter !== "all") {
-                matchProvider = service.provider === currentProviderFilter;
-            }
-
-            if (currentTagFilter !== "all") {
-                matchTag = service._tagSet && service._tagSet.has(currentTagFilter);
-            }
-
-            if (searchVal) {
-                // Optimization: Use cached search string
-                matchSearch = service._searchStr.includes(searchVal);
-            }
-
-            return matchProvider && matchTag && matchSearch;
-        });
-
-        currentPage = 1;
-        renderPagination();
-
-        // Always return to top when filtering/searching
-        if (typeof window.scrollToTop === 'function') {
-            window.scrollToTop(true);
-        }
-    }
-
-    const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
-
-    // Modal Logic
-    function openModal(service) {
-        resetModalLocal(); // Always start from details
-        mProvider.textContent = service.provider;
-        mTitle.textContent = service.name;
-        mDesc.textContent = service.description;
-
-        const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
-        mTags.innerHTML = tagsHtml;
-
-        // Similar services logic
-        // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
-        const currentTags = service._tagSet || new Set();
-        let similar = allServices.filter(s => {
-            if (s.id === service.id) return false;
-            const matchesProvider = s.provider === service.provider;
-            const matchesTags = (s.tags || []).some(t => currentTags.has(t));
-            return matchesProvider || matchesTags;
-        });
-        
-        if (similar.length < 3) {
-            const similarSet = new Set(similar);
-            const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
-            similar = [...similar, ...others].slice(0, 3);
-        } else {
-            similar.sort(() => 0.5 - Math.random());
-            similar = similar.slice(0, 3);
-        }
-
-        mSimilarGrid.innerHTML = '';
-
-        // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
-        const fragment = document.createDocumentFragment();
-
-        similar.forEach(s => {
-            const scard = document.createElement('article');
-            // Remove data-scroll which causes visibility issues inside a fixed modal
-            scard.className = 'service-card logo-box--glass';
-            scard.style.cursor = 'pointer';
-            scard.style.minHeight = '140px';
-            scard.style.opacity = '1';
-            scard.style.visibility = 'visible';
-            scard.style.transform = 'none';
-
-            scard.innerHTML = `
-                <div class="service-card__body">
-                    <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
-                    <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
-                </div>
-            `;
-            scard.addEventListener('click', () => {
-                openModal(s);
-                const mContent = document.querySelector('.service-modal__content');
-                if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
+            const fragment = document.createDocumentFragment();
+            dataToShow.forEach((s, idx) => {
+                const card = createCardElement(s, idx === 0 && currentPage === 1);
+                fragment.appendChild(card);
             });
-            fragment.appendChild(scard);
-        });
+            grid.appendChild(fragment);
 
-        mSimilarGrid.appendChild(fragment);
+            paginationContainer.style.display = (limit >= filteredData.length) ? 'none' : 'flex';
+            
+            // Re-sync scroll height for Locomotive
+            setTimeout(() => {
+                if (window.locoScroll) window.locoScroll.update();
+                if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+            }, 150);
+        }
 
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    }
+        /**
+         * Filters the list based on current UI state
+         */
+        function filterData() {
+            const query = searchInput?.value.toLowerCase().trim();
+            
+            filteredData = allServices.filter(s => {
+                const matchProv = currentProviderFilter === 'all' || s.provider === currentProviderFilter;
+                const matchTag = currentTagFilter === 'all' || (s.tags && s.tags.includes(currentTagFilter));
+                const matchSearch = !query || s._searchStr.includes(query);
+                return matchProv && matchTag && matchSearch;
+            });
+
+            currentPage = 1;
+            renderPagination();
+        }
+
+        /**
+         * Opens the detailed service modal
+         */
+        function openModal(service) {
+            resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status);
+            if (mProvider) mProvider.textContent = service.provider;
+            if (mTitle) mTitle.textContent = service.name;
+            if (mDesc) mDesc.textContent = service.description;
+            if (mTags) {
+                mTags.innerHTML = (service.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('');
+            }
+            
+            // Similar services logic
+            const currentTags = new Set(service.tags || []);
+            let similar = allServices.filter(s => {
+                if (s.id === service.id) return false;
+                const matchesProvider = s.provider === service.provider;
+                const matchesTags = (s.tags || []).some(t => currentTags.has(t));
+                return matchesProvider || matchesTags;
+            });
+            
+            // Fill with randoms if not enough similar ones
+            if (similar.length < 3) {
+                const similarIds = new Set(similar.map(s => s.id));
+                const others = allServices.filter(s => s.id !== service.id && !similarIds.has(s.id));
+                similar = [...similar, ...others].slice(0, 3);
+            } else {
+                similar.sort(() => 0.5 - Math.random());
+                similar = similar.slice(0, 3);
+            }
+
+            if (mSimilarGrid) {
+                mSimilarGrid.innerHTML = '';
+                similar.forEach(s => {
+                    const scard = document.createElement('article');
+                    scard.className = 'service-card logo-box--glass';
+                    scard.style.cursor = 'pointer';
+                    scard.style.minHeight = '120px';
+                    scard.innerHTML = `
+                        <div class="service-card__body">
+                            <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                            <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
+                        </div>
+                    `;
+                    scard.addEventListener('click', () => {
+                        openModal(s);
+                        const mContent = modal.querySelector('.service-modal__content');
+                        if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                    mSimilarGrid.appendChild(scard);
+                });
+            }
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Initialize Data and Listeners
+        if (typeof irishGovServicesData !== 'undefined') {
+            allServices = irishGovServicesData;
+            allServices.forEach(s => {
+                s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+            });
+            
+            populateFilters(allServices);
+            
+            setupCustomDropdown(providerDropdown, (val) => {
+                currentProviderFilter = val;
+                filterData();
+            });
+            
+            setupCustomDropdown(tagDropdown, (val) => {
+                currentTagFilter = val;
+                filterData();
+            });
+
+            filterData();
+        }
 
         setupModalListenersDirect({
-            modal, modalClose: document.getElementById('sm-close'), 
+            modal, 
+            modalClose: document.getElementById('sm-close'), 
             modalOverlay: document.getElementById('sm-overlay'),
-            applyBtn, cancelBtn, confirmBtn, closeCancelledBtn, closeSuccessBtn,
-            stateContainers, faceScanner, loadingSpinner, step2Status,
+            applyBtn: document.getElementById('sm-apply-btn'),
+            cancelBtn: document.getElementById('sm-cancel-btn'),
+            confirmBtn: document.getElementById('sm-confirm-btn'),
+            closeCancelledBtn: document.getElementById('sm-close-cancelled-btn'),
+            closeSuccessBtn: document.getElementById('sm-close-success-btn'),
+            stateContainers, 
+            faceScanner, 
+            loadingSpinner, 
+            step2Status,
             resetModalFn: () => resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status)
         });
 
-        if (searchInput) searchInput.addEventListener("input", () => { currentPage = 1; filterData(); });
-        if (loadMoreBtn) loadMoreBtn.addEventListener('click', () => { currentPage++; renderPagination(); });
+        if (searchInput) {
+            searchInput.addEventListener("input", () => {
+                currentPage = 1;
+                filterData();
+            });
+        }
+        
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                currentPage++;
+                renderPagination();
+            });
+        }
     });
 })();
