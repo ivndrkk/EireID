@@ -4,6 +4,23 @@
    and Floating Rua AI Assistant.
    ============================================================================= */
 
+/**
+ * Escapes special HTML characters in a string to prevent XSS.
+ * @param {string} str - The string to be escaped.
+ * @returns {string} The escaped string.
+ */
+function escapeHTML(str) {
+    if (typeof str !== 'string') return str;
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // 0. Initialize Locomotive Scroll & GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
