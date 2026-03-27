@@ -406,6 +406,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function filterData() {
         if (!searchInput) return;
+
+        // Reset revealed states to allow re-animation after update
+        document.querySelectorAll('[data-scroll-class="is-revealed"]').forEach(el => {
+            el.classList.remove('is-revealed');
+        });
         
         const searchVal = searchInput.value.toLowerCase().trim();
 

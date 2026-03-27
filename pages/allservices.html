@@ -26,7 +26,8 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
 
-    <div class="container" data-scroll-container>
+    <div id="scroll-wrapper" data-scroll-container>
+    <div class="container">
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
@@ -66,8 +67,8 @@
         <main class="services-library" id="main-content" tabindex="-1">
             <!-- Hero / Title Area -->
             <section class="services-hero">
-                <h1 class="services-hero__title" data-reveal>All Services</h1>
-                <p class="services-hero__subtitle" data-reveal>Find and access every Irish government service in one place.</p>
+                <h1 class="services-hero__title" data-reveal data-scroll data-scroll-speed="2.5">All Services</h1>
+                <p class="services-hero__subtitle" data-reveal data-scroll data-scroll-speed="1.5">Find and access every Irish government service in one place.</p>
             </section>
 
             <!-- Main Content Wrapper -->
@@ -201,6 +202,7 @@
         </div>
     </footer>
 
+    </div>
     </div>
 
     <!-- === SERVICE MODAL === -->

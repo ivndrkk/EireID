@@ -36,12 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
         locoScroll = new LocomotiveScroll({
             el: scroller,
             smooth: true,
-            lerp: isMobile ? 0.12 : 0.05,
+            lerp: isMobile ? 0.15 : 0.05,
             smartphone: {
                 smooth: true,
-                multiplier: 1.2 // Slightly faster on mobile
+                multiplier: 2.5 // Significantly faster and smoother on mobile
             },
-            tablet: { smooth: true }
+            tablet: {
+                smooth: true,
+                multiplier: 1.5
+            }
         });
 
         // Each time Locomotive Scroll updates, tell ScrollTrigger to update too
@@ -174,6 +177,15 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollToTop(true);
 });
 
+// Ensure Locomotive Scroll updates after all images are loaded
+window.addEventListener('load', () => {
+    if (window.locoScroll) {
+        window.locoScroll.update();
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+        }
+    }
+});
 /**
  * escapeHTML
  * Sanitizes a string to prevent XSS by escaping special HTML characters.
