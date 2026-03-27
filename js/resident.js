@@ -1,3 +1,5 @@
+import { setupModalListeners, resetModal } from './modal-utils.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const carousel = document.getElementById("resident-services-carousel");
     const searchInput = document.getElementById("resident-search-input");
@@ -431,42 +433,10 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener("input", debounce(filterData, 250));
     }
 
-    // Modal logic (copied from allservices.js to provide exactly the same functionality)
-    function switchModalState(stateId) {
-        stateContainers.forEach(container => {
-            container.classList.remove('is-active');
-            if (container.id === stateId) {
-                container.classList.add('is-active');
-            }
-        });
-        
-        const modalContent = document.querySelector('.service-modal__content');
-        if (modalContent) modalContent.scrollTop = 0;
-    }
-
-    function resetModal() {
-        switchModalState('sm-content-details');
-        if (faceScanner) faceScanner.style.display = 'flex';
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
-        if (step2Status) step2Status.textContent = 'Verifying identity...';
-    }
-
-    function startFaceVerification() {
-        switchModalState('sm-content-step2');
-        setTimeout(() => {
-            if (faceScanner) faceScanner.style.display = 'none';
-            if (loadingSpinner) loadingSpinner.style.display = 'block';
-            if (step2Status) step2Status.textContent = 'Processing application...';
-            
-            setTimeout(() => {
-                switchModalState('sm-content-success');
-            }, 5000);
-            
-        }, 3000);
-    }
+    const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
 
     function openModal(service) {
-        resetModal();
+        resetModalLocal();
         if (mProvider) mProvider.textContent = service.provider;
         if (mTitle) mTitle.textContent = service.name;
         if (mDesc) mDesc.textContent = service.description;
@@ -529,29 +499,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
-
-    function closeModal() {
-        if (modal) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            setTimeout(resetModal, 300);
-        }
-    }
-
-    if (applyBtn) applyBtn.addEventListener('click', () => switchModalState('sm-content-step1'));
-    if (cancelBtn) cancelBtn.addEventListener('click', () => switchModalState('sm-content-cancelled'));
-    if (confirmBtn) confirmBtn.addEventListener('click', () => startFaceVerification());
-    if (closeCancelledBtn) closeCancelledBtn.addEventListener('click', closeModal);
-    if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
-
-    if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
-            closeModal();
-        }
+    // Set up standard modal controls using utility
+    setupModalListeners({
+        modal,
+        modalClose,
+        modalOverlay,
+        applyBtn,
+        cancelBtn,
+        confirmBtn,
+        closeCancelledBtn,
+        closeSuccessBtn,
+        stateContainers,
+        faceScanner,
+        loadingSpinner,
+        step2Status,
+        resetModalFn: resetModalLocal
     });
 });
