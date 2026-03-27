@@ -1,0 +1,2587 @@
+[
+  {
+    "id": 1,
+    "category": "General & Getting Started",
+    "question": "What exactly is EireID and what does it do?",
+    "answer": "EireID is a unified, mobile-first digital identity platform for all residents of Ireland — citizens and non-citizens alike. It consolidates every official Irish identity document (Public Services Card, Irish Residence Permit, Passport, Driving Licence, Medical Card, and more) into a single legally valid, government-verified digital wallet on your phone. It also replaces in-person appointments and multi-portal navigation with a single app interface.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "digital wallet",
+      "Public Services Card",
+      "passport",
+      "driving licence",
+      "medical card",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 2,
+    "category": "Immigration & IRP",
+    "question": "Is EireID only for Irish citizens or can immigrants and non-citizens use it too?",
+    "answer": "EireID is designed for all residents of Ireland — citizens and non-citizens alike. Non-citizen residents, including migrant workers, international students, and those on Irish Residence Permits (IRP), are explicitly included and even represent a key target group, given that approximately 12–15% of Ireland's population are non-Irish nationals.",
+    "keywords": [
+      "IRP",
+      "immigration",
+      "mobile app",
+      "student"
+    ]
+  },
+  {
+    "id": 3,
+    "category": "General & Getting Started",
+    "question": "How do I get started with EireID?",
+    "answer": "Getting started is straightforward. You log in once using a supported document number (such as your PSC, IRP, or passport number) or a verified Irish bank account. You then complete a one-time biometric face verification. After that, all your documents and service entitlements are automatically pulled from government databases — no forms to fill, no documents to upload, and no office visits required.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "biometric",
+      "Public Services Card",
+      "passport",
+      "privacy",
+      "onboarding",
+      "bank"
+    ]
+  },
+  {
+    "id": 4,
+    "category": "General & Getting Started",
+    "question": "Do I need to visit a government office to register for EireID?",
+    "answer": "No. EireID is specifically designed to eliminate the need for in-person office visits. The entire registration process is completed through the app using your existing document number and a biometric face scan. Your details are automatically fetched from existing government databases such as Revenue, NDLS, Immigration Service, and DSP.",
+    "keywords": [
+      "biometric",
+      "driving licence",
+      "tax",
+      "immigration",
+      "privacy",
+      "mobile app",
+      "onboarding",
+      "government"
+    ]
+  },
+  {
+    "id": 5,
+    "category": "Immigration & IRP",
+    "question": "Can I use EireID to renew my Irish Residence Permit (IRP)?",
+    "answer": "Yes. IRP renewal is one of the key services EireID supports. The app provides real-time status visibility and tracking for immigration documentation, so you can monitor your renewal progress. The platform aims to reduce IRP renewal processes from months of waiting with limited transparency to a streamlined digital interaction with push notifications for updates.",
+    "keywords": [
+      "IRP",
+      "immigration",
+      "mobile app",
+      "push notifications",
+      "AML"
+    ]
+  },
+  {
+    "id": 6,
+    "category": "General & Getting Started",
+    "question": "Is the digital identity stored in EireID legally valid in Ireland?",
+    "answer": "Yes. EireID provides legally valid, state-verified digital documents. The platform is compliant with EU eIDAS regulation, which ensures legal recognition of digital identities and electronic signatures across EU member states. Documents stored in EireID carry the same legal weight as their physical counterparts for verification purposes.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "EU"
+    ]
+  },
+  {
+    "id": 7,
+    "category": "General & Getting Started",
+    "question": "What documents can I store in EireID?",
+    "answer": "EireID supports a wide range of official Irish identity documents including the Public Services Card (PSC), Irish Residence Permit (IRP), Passport, Driving Licence, and Medical Card, among others. The poster also shows that a Marriage Certificate can be stored. The goal is to be a comprehensive digital wallet for all government-issued documents relevant to Irish residents.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "digital wallet",
+      "Public Services Card",
+      "passport",
+      "driving licence",
+      "medical card",
+      "government"
+    ]
+  },
+  {
+    "id": 8,
+    "category": "Privacy & GDPR",
+    "question": "Is my personal data safe on EireID?",
+    "answer": "EireID uses multiple layers of security. It employs end-to-end encryption, HSM-backed cryptographic signing keys, PKI trust chains, biometric and multi-factor authentication, and an immutable audit trail. Importantly, EireID uses a federated data model — it holds only cryptographically signed credential references, never raw personal data. All infrastructure is hosted on EU-sovereign cloud to comply with GDPR.",
+    "keywords": [
+      "GDPR",
+      "biometric",
+      "security",
+      "privacy",
+      "cloud",
+      "HSM",
+      "encryption"
+    ]
+  },
+  {
+    "id": 9,
+    "category": "Security & Technology",
+    "question": "Can someone access my identity documents on EireID if my phone is lost or stolen?",
+    "answer": "No. EireID requires biometric unlock (Face ID or Touch ID) every time the app is opened, and cryptographic keys are stored in the device's Secure Enclave — a hardware-level security chip. Without your biometric authentication, the app cannot be accessed. You can also remotely lock or deactivate your EireID account from another device.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "security",
+      "mobile app",
+      "accessibility",
+      "lost phone"
+    ]
+  },
+  {
+    "id": 10,
+    "category": "Privacy & GDPR",
+    "question": "Does EireID comply with GDPR?",
+    "answer": "Yes. GDPR compliance is a core design requirement of EireID. The platform includes lawful data processing, user consent mechanisms, data minimisation through a Consent Engine, selective disclosure of personal data, and the right to access or delete personal data. All data is hosted on EU-sovereign cloud infrastructure, ensuring it remains under EU jurisdiction.",
+    "keywords": [
+      "GDPR",
+      "privacy",
+      "accessibility",
+      "cloud",
+      "EU"
+    ]
+  },
+  {
+    "id": 11,
+    "category": "Financial Services & B2B",
+    "question": "Can I use EireID to open a bank account in Ireland?",
+    "answer": "Yes. Banks can integrate with EireID's B2B identity verification API to accept EireID as proof of identity. This means you can share your verified identity via QR code instantly, eliminating the need to physically present documents or go through repeated manual checks when opening a bank account.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "API",
+      "B2B",
+      "bank"
+    ]
+  },
+  {
+    "id": 12,
+    "category": "Business & API Integration",
+    "question": "Can a landlord verify my identity and right to rent using EireID?",
+    "answer": "Yes. Landlords are among the private-sector organisations that can use EireID's identity verification system. Via instant QR-based sharing, you can prove your identity and right to reside in Ireland to a landlord digitally, removing the need to present physical documents or wait for manual verification processes.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "landlord"
+    ]
+  },
+  {
+    "id": 13,
+    "category": "Business & API Integration",
+    "question": "Can my employer use EireID to verify my right to work in Ireland?",
+    "answer": "Yes. Employers are explicitly mentioned as relying parties in EireID's ecosystem. They can verify your right to reside and work in Ireland using the identity verification API or QR-based sharing, making employment onboarding faster and reducing the administrative burden of repeated document checks.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "API",
+      "onboarding",
+      "employer"
+    ]
+  },
+  {
+    "id": 14,
+    "category": "General & Getting Started",
+    "question": "What is the QR sharing feature and how does it work?",
+    "answer": "QR-based sharing allows you to instantly share your verified identity with a third party — such as a bank, landlord, or employer — by displaying a QR code on your phone screen. The recipient scans the code, which triggers a real-time verification request to the EireID system, confirming your identity without you handing over physical documents or sharing sensitive data unnecessarily.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "privacy",
+      "landlord",
+      "employer",
+      "bank"
+    ]
+  },
+  {
+    "id": 15,
+    "category": "Documents & Digital Signatures",
+    "question": "Is there a digital signature feature in EireID?",
+    "answer": "Yes. EireID includes a built-in legally binding digital signature feature. This allows you to sign official documents, applications, and forms electronically through the app, with the same legal standing as a handwritten signature. This removes the need for printing, signing, and posting physical documents.",
+    "keywords": [
+      "mobile app",
+      "digital signature"
+    ]
+  },
+  {
+    "id": 16,
+    "category": "Tax & Employment",
+    "question": "Can I file my taxes through EireID?",
+    "answer": "Yes. Tax filing is one of the services accessible through EireID. Rather than logging into a separate Revenue myAccount portal, tax-related tasks are accessible within the EireID app using your already-verified identity. Revenue is one of the core government systems directly integrated into EireID's platform.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "mobile app",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 17,
+    "category": "Security & Technology",
+    "question": "Can I apply for social welfare or benefit supports through EireID?",
+    "answer": "Yes. Social welfare and benefit applications, currently managed through MyWelfare.ie, will be accessible within EireID. Because your identity is pre-verified once in the app, you do not need to re-verify separately for welfare-related interactions, streamlining the entire process.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "social welfare",
+      "accessibility",
+      "AML"
+    ]
+  },
+  {
+    "id": 18,
+    "category": "Comparison & Competitors",
+    "question": "What happens to my existing physical documents — do I need to keep them?",
+    "answer": "EireID aims to replace physical documents for routine verification purposes, but physical documents continue to exist as the source of truth. For most day-to-day interactions — banking, housing, employment, government services — your EireID digital documents will be accepted as legally valid. Specific circumstances (such as international travel) may still require physical documents depending on the receiving country or institution.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "employer",
+      "bank",
+      "government"
+    ]
+  },
+  {
+    "id": 19,
+    "category": "Rollout & Strategy",
+    "question": "Is EireID available on both Android and iPhone?",
+    "answer": "Yes. EireID is available on both platforms. The app is listed on the Google Play Store and the Apple App Store, as shown in the poster. The platform is built to work on modern smartphones across operating systems.",
+    "keywords": [
+      "mobile app"
+    ]
+  },
+  {
+    "id": 20,
+    "category": "General & Getting Started",
+    "question": "Do I need a smartphone to use EireID?",
+    "answer": "EireID is designed as a mobile-first platform and requires a smartphone to use the app. However, the platform is aware that not all residents have smartphone access and aims to address this through inclusive design. 95% of the Irish adult population already has smartphone access, so the majority of residents can use EireID immediately.",
+    "keywords": [
+      "mobile app",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 21,
+    "category": "Tax & Employment",
+    "question": "What if I am elderly and not confident using smartphones or apps?",
+    "answer": "EireID specifically addresses the needs of elderly and digitally anxious users. The app includes an AI-powered mascot (a friendly red squirrel) that provides contextual guidance, simplified explanations, and step-by-step assistance. The interface is designed to be intuitive and non-intimidating, significantly lowering the barrier to entry for less confident digital users.",
+    "keywords": [
+      "mobile app",
+      "elderly",
+      "PPS number",
+      "mascot"
+    ]
+  },
+  {
+    "id": 22,
+    "category": "Accessibility & Inclusion",
+    "question": "Is there an AI assistant within EireID to help me navigate the app?",
+    "answer": "Yes. EireID features an AI-powered mascot character — a red squirrel — designed to support users with varying levels of digital literacy. The mascot provides contextual guidance, simplified explanations of what each step requires, and step-by-step assistance throughout processes such as document submission, service applications, and identity sharing.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "mascot"
+    ]
+  },
+  {
+    "id": 23,
+    "category": "Accessibility & Inclusion",
+    "question": "Is EireID available in languages other than English?",
+    "answer": "The plan includes multilingual public information campaigns, which suggests EireID is intended to support multiple languages. Given that Ireland's non-citizen population includes significant communities from Poland, Romania, Lithuania, India, and Brazil, multilingual support is considered an important accessibility feature, though specific languages are not enumerated in the business plan.",
+    "keywords": [
+      "B2B",
+      "accessibility",
+      "multilingual"
+    ]
+  },
+  {
+    "id": 24,
+    "category": "General & Getting Started",
+    "question": "How long does it take to set up EireID for the first time?",
+    "answer": "EireID is designed for extremely fast onboarding. Because your data already exists in government databases, you only need to log in once with a document number or verified bank account, complete a biometric face scan, and your documents are automatically populated. The business plan states tasks that currently take days can be completed in under five minutes.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "privacy",
+      "B2B",
+      "onboarding",
+      "bank",
+      "government"
+    ]
+  },
+  {
+    "id": 25,
+    "category": "General & Getting Started",
+    "question": "Will EireID send me reminders when my documents are about to expire?",
+    "answer": "Yes. EireID includes push notifications for renewal reminders, service notifications, and instant actions. This means you will be automatically alerted before your IRP, driving licence, or other documents expire, reducing missed deadlines and service lapses — a significant improvement over the current system where it is the user's responsibility to track expiry dates.",
+    "keywords": [
+      "IRP",
+      "driving licence",
+      "push notifications"
+    ]
+  },
+  {
+    "id": 26,
+    "category": "Business & API Integration",
+    "question": "Can I use EireID to renew my driving licence?",
+    "answer": "Yes. The National Driver Licence Service (NDLS) is one of the core government systems integrated into EireID. You can apply for driving licence renewals directly within the app, and your driving licence is stored as a legally valid digital document, shareable instantly via QR for verification purposes.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "driving licence",
+      "mobile app",
+      "government",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 27,
+    "category": "Business & API Integration",
+    "question": "Will my digital driving licence in EireID be accepted by Gardaí during a traffic stop?",
+    "answer": "EireID's digital documents are designed to be legally valid, and the platform is compliant with eIDAS regulation. However, acceptance by law enforcement during traffic stops depends on national legislation confirming that digital driving licences satisfy roadside display requirements. The business plan positions EireID as a legally valid alternative but specific Garda policy is subject to government implementation decisions.",
+    "keywords": [
+      "eIDAS",
+      "driving licence",
+      "B2B",
+      "government"
+    ]
+  },
+  {
+    "id": 28,
+    "category": "Comparison & Competitors",
+    "question": "What is the difference between EireID and MyGovID?",
+    "answer": "MyGovID is primarily an authentication gateway — a login tool that provides access to various government portals, but it does not store documents, enable QR-based verification sharing, or function as a digital wallet. EireID replaces MyGovID as the identity layer and adds document storage, instant QR verification, legally binding digital signatures, and integrated access to all services within a single app.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "digital wallet",
+      "mobile app",
+      "digital signature",
+      "accessibility",
+      "government",
+      "MyGovID"
+    ]
+  },
+  {
+    "id": 29,
+    "category": "Rollout & Strategy",
+    "question": "Will MyGovID still exist after EireID launches?",
+    "answer": "EireID is positioned to replace MyGovID's authentication function by becoming the primary digital identity layer in Ireland. The phased rollout plan starts with government pilot programmes before full national rollout. During the transition period, MyGovID may continue to operate, but EireID is intended to ultimately supersede it as the standard.",
+    "keywords": [
+      "identity verification",
+      "government",
+      "MyGovID"
+    ]
+  },
+  {
+    "id": 30,
+    "category": "EU & Cross-Border",
+    "question": "Can I use EireID in other EU countries?",
+    "answer": "EireID's roadmap includes EU cross-border eIDAS interoperability in Phase 5 (Years 4–5). This would enable your EireID digital identity to be recognised in other EU member states under the eIDAS regulation framework, allowing cross-border digital identity verification for services across the EU.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "EU"
+    ]
+  },
+  {
+    "id": 31,
+    "category": "General & Getting Started",
+    "question": "Is EireID a government app or a private company product?",
+    "answer": "EireID is a state-backed national digital identity platform operated as public digital infrastructure. Its primary funding comes from Irish government digital transformation funding under the Digital Public Services Plan 2030. While it generates B2B revenue from private organisations using its API, it is not a profit-maximising commercial product.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "API",
+      "B2B",
+      "mobile app",
+      "cloud",
+      "government"
+    ]
+  },
+  {
+    "id": 32,
+    "category": "General & Getting Started",
+    "question": "Is EireID free to use for residents?",
+    "answer": "Yes. EireID is free for all residents. The platform is funded primarily through government digital transformation funding. Revenue is generated through B2B fees charged to businesses (banks, fintechs, landlords) that use the identity verification API — not from individual residents.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "API",
+      "B2B",
+      "landlord",
+      "bank",
+      "free",
+      "government"
+    ]
+  },
+  {
+    "id": 33,
+    "category": "Privacy & GDPR",
+    "question": "How does EireID handle data privacy — who can see my information?",
+    "answer": "EireID uses a Consent Engine with selective disclosure and data minimisation principles, meaning you control what information is shared and with whom. The app shares only what is necessary for each specific verification request. No raw personal data is stored on EireID's servers — only cryptographically signed credential references pointing back to government source systems.",
+    "keywords": [
+      "identity verification",
+      "privacy",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 34,
+    "category": "Privacy & GDPR",
+    "question": "Can I delete my data from EireID?",
+    "answer": "Yes. GDPR compliance requires that EireID supports the right to access, correct, and delete personal data. Users can request deletion of their EireID profile and associated credential references. Note that underlying government records (in Revenue, NDLS, etc.) are held by those agencies separately and are not deleted through EireID — only the EireID credential references are removed.",
+    "keywords": [
+      "GDPR",
+      "driving licence",
+      "tax",
+      "privacy",
+      "accessibility",
+      "government",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 35,
+    "category": "General & Getting Started",
+    "question": "What happens to my EireID account if I leave Ireland permanently?",
+    "answer": "If you leave Ireland permanently, you can deactivate or delete your EireID account. Since EireID holds only credential references rather than raw data, your underlying government records (tax history, IRP records, etc.) remain with the respective government agencies as per their standard retention policies. The EireID platform itself would no longer be relevant to you once you are no longer an Irish resident.",
+    "keywords": [
+      "IRP",
+      "tax",
+      "privacy",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 36,
+    "category": "Security & Technology",
+    "question": "Can EireID be hacked, and what protections are in place?",
+    "answer": "EireID has extensive cybersecurity measures: end-to-end encryption, HSM-backed signing keys, PKI trust chains, multi-factor authentication, immutable audit logs, annual cybersecurity audits, regular penetration testing, a bug bounty programme, and adherence to ISO 27001, GDPR, EU Digital Identity Wallet standards, and NIS2. A Security Operations Centre (SOC) provides 24/7 threat detection and incident response.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "digital wallet",
+      "security",
+      "privacy",
+      "EU",
+      "HSM",
+      "encryption"
+    ]
+  },
+  {
+    "id": 37,
+    "category": "Security & Technology",
+    "question": "What should I do if I suspect my EireID account has been compromised?",
+    "answer": "You should immediately contact EireID support and deactivate your account. The platform's Security Operations Centre monitors for anomalies in real time. You can also lock your account remotely. Because EireID does not store raw personal data, a compromise of the app itself does not expose underlying personal records held by government agencies.",
+    "keywords": [
+      "security",
+      "privacy",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 38,
+    "category": "Immigration & IRP",
+    "question": "As an international student, can I use EireID to register with my college or university?",
+    "answer": "Yes. Universities are listed as target enterprise integration clients for EireID. Once a university onboards EireID's API, students can share their verified identity for registration, enrollment, library access, and other administrative processes through the app, eliminating repeated manual document checks.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "mobile app",
+      "student",
+      "accessibility",
+      "onboarding"
+    ]
+  },
+  {
+    "id": 39,
+    "category": "Education & Students",
+    "question": "Can I use EireID to prove my student status?",
+    "answer": "EireID consolidates official government documents but can also support institution-verified credentials. Where your university is integrated with EireID, student status verification could be handled through the platform. The business plan identifies universities as target enterprise integration partners in Phase 4 of the rollout.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "student",
+      "government"
+    ]
+  },
+  {
+    "id": 40,
+    "category": "Education & Students",
+    "question": "As a non-EU student, does EireID support my visa documentation?",
+    "answer": "EireID integrates directly with Ireland's Immigration Service and supports the Irish Residence Permit (IRP), which is the primary documentation for non-EU residents including students. Your IRP can be stored and shared digitally, with real-time status tracking. For visa applications made outside Ireland, those remain the responsibility of the Irish Naturalisation and Immigration Service through their own processes.",
+    "keywords": [
+      "IRP",
+      "immigration",
+      "mobile app",
+      "student",
+      "EU"
+    ]
+  },
+  {
+    "id": 41,
+    "category": "Accessibility & Inclusion",
+    "question": "How does EireID help me if I live in a rural area far from government offices?",
+    "answer": "EireID is specifically designed to address rural exclusion. By moving all identity verification, document storage, and service access to a mobile app, residents in rural areas no longer need to travel to government offices, make postal applications, or wait for in-person appointments. All interactions happen digitally from any location with internet access.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "rural",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 42,
+    "category": "Accessibility & Inclusion",
+    "question": "I have limited mobility — how does EireID help me access government services?",
+    "answer": "EireID eliminates the need for in-person visits, which is particularly beneficial for people with limited mobility. All government services — tax, welfare, immigration, licensing — are accessible from home through the app. The one-time biometric setup means you only need to complete the registration process once, and all subsequent interactions are digital.",
+    "keywords": [
+      "biometric",
+      "tax",
+      "immigration",
+      "mobile app",
+      "social welfare",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 43,
+    "category": "Financial Services & B2B",
+    "question": "Can a business owner use EireID to verify customer identities for KYC compliance?",
+    "answer": "Yes. Businesses can integrate EireID's B2B Identity Verification API to conduct Know Your Customer (KYC) checks. The platform is designed to meet AML and KYC regulatory requirements. API pricing starts at €0.20 per verification for lower volumes, which is 85–90% cheaper than commercial KYC providers.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "KYC",
+      "AML",
+      "cost"
+    ]
+  },
+  {
+    "id": 44,
+    "category": "Business & API Integration",
+    "question": "How much does it cost for a business to use EireID's verification API?",
+    "answer": "EireID uses tiered B2B pricing: €0.20 per verification for up to 10,000 verifications per month, €0.12 per verification for 10,001–100,000 per month, and €0.07 per verification for over 100,000 per month. These rates are 85–90% below commercial KYC providers, making integration financially attractive.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "KYC",
+      "cost"
+    ]
+  },
+  {
+    "id": 45,
+    "category": "Business & API Integration",
+    "question": "What is the Enterprise Integration Licence and does my business need one?",
+    "answer": "The Enterprise Integration Licence is for large organisations that need deep, direct integration between their own internal systems and EireID's infrastructure. It provides advanced identity verification features beyond the standard API. Pricing is €4,800/year for SMEs and universities (Standard), €18,000/year for banks, fintechs, and insurers (Professional), and free for government and public bodies.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "cloud",
+      "bank",
+      "free",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 46,
+    "category": "Business & API Integration",
+    "question": "How long does it take for a business to integrate with EireID's API?",
+    "answer": "EireID offers a no-cost sandbox environment for businesses to test integration before signing. Once a contract is executed, the dedicated Developer Relations team provides onboarding support with a target go-live timeline of four to six weeks from contract execution.",
+    "keywords": [
+      "API",
+      "B2B",
+      "onboarding",
+      "cost"
+    ]
+  },
+  {
+    "id": 47,
+    "category": "Business & API Integration",
+    "question": "Is there a free trial or sandbox for businesses wanting to test EireID integration?",
+    "answer": "Yes. EireID offers a no-cost sandbox environment for prospective B2B clients to test identity verification flows against their existing AML and KYC workflows. This reduces technical risk and allows organisations to validate the integration before committing to a paid contract.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "KYC",
+      "AML",
+      "free",
+      "cost"
+    ]
+  },
+  {
+    "id": 48,
+    "category": "Business & API Integration",
+    "question": "What technical standards does EireID's API use?",
+    "answer": "EireID uses industry-standard OAuth 2.0 and OpenID Connect (OIDC) for identity and access management. The API gateway includes rate limiting, audit logging, and versioning. Verifiable Credentials and digital signatures are issued according to EU eIDAS standards. All traffic runs over TLS.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "API",
+      "digital signature",
+      "accessibility",
+      "EU",
+      "Verifiable Credentials"
+    ]
+  },
+  {
+    "id": 49,
+    "category": "General & Getting Started",
+    "question": "Will EireID work if there is no internet connection?",
+    "answer": "EireID is primarily an online platform, but certain features such as displaying stored credentials may work offline since documents are cryptographically signed and stored with references on the device. However, real-time verification (such as QR-based checks requiring live validation) requires an internet connection. The business plan does not specify a detailed offline mode.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "B2B",
+      "offline"
+    ]
+  },
+  {
+    "id": 50,
+    "category": "Social Services & Welfare",
+    "question": "Can I share my Medical Card through EireID when visiting a doctor or pharmacy?",
+    "answer": "Yes. The Medical Card is listed as one of the documents supported by EireID. You can share it digitally via QR code when visiting a healthcare provider. This eliminates the need to carry a physical card and makes verification faster for both you and the healthcare provider.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "medical card"
+    ]
+  },
+  {
+    "id": 51,
+    "category": "Healthcare",
+    "question": "Can EireID help me access the HSE or other healthcare services?",
+    "answer": "EireID provides access to government services broadly, and health services are part of that ecosystem. Your verified identity through EireID can be used to access HSE-linked services. While the business plan focuses on tax, immigration, welfare, and licensing as primary services, healthcare access is part of the wider public service integration roadmap.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "immigration",
+      "B2B",
+      "social welfare",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 52,
+    "category": "General & Getting Started",
+    "question": "How does EireID protect me from identity theft?",
+    "answer": "EireID protects against identity theft through biometric authentication (Face ID/Touch ID), on-device key storage in Secure Enclave, end-to-end encryption, MFA, cryptographically signed credentials, and an immutable audit trail of every access event. The QR verification system also means you never physically hand over documents, reducing theft and fraud risk.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "QR code",
+      "security",
+      "accessibility",
+      "encryption"
+    ]
+  },
+  {
+    "id": 53,
+    "category": "Privacy & GDPR",
+    "question": "Does EireID store a copy of my passport photo or biometric data?",
+    "answer": "EireID uses a federated data model — it does not store raw personal data including biometric images. Your biometric face verification is processed once during onboarding to confirm your identity against government records, after which only a cryptographically signed credential reference is held. Biometric data for ongoing authentication is processed on-device using the phone's Secure Enclave.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "passport",
+      "privacy",
+      "onboarding",
+      "government"
+    ]
+  },
+  {
+    "id": 54,
+    "category": "Accessibility & Inclusion",
+    "question": "What is the EireID mascot and why was it included?",
+    "answer": "The mascot is a friendly red squirrel, chosen as a native animal of Ireland. It was designed to make the app feel approachable and less intimidating, particularly for users who find legal and governmental processes daunting — such as elderly users, immigrants, and those with limited digital confidence. The mascot provides in-app guidance and contextual assistance.",
+    "keywords": [
+      "immigration",
+      "mobile app",
+      "elderly",
+      "mascot",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 55,
+    "category": "Business & API Integration",
+    "question": "Can I use EireID to register a business or company in Ireland?",
+    "answer": "EireID is primarily a personal identity and public services platform. Business registration (with the Companies Registration Office) is a separate process. However, EireID can streamline the identity verification component of business registration by providing legally valid digital proof of your identity as a director or sole trader, eliminating the need for physical document submission.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "onboarding",
+      "AML"
+    ]
+  },
+  {
+    "id": 56,
+    "category": "Tax & Employment",
+    "question": "Is EireID connected to the Revenue Commissioners?",
+    "answer": "Yes. Revenue is one of the four core government systems directly integrated into EireID through live API connections. This allows your tax records, PAYE details, and filing history to be accessible within the app, and enables tax-related tasks to be completed without logging into a separate Revenue myAccount portal.",
+    "keywords": [
+      "tax",
+      "API",
+      "mobile app",
+      "accessibility",
+      "PAYE",
+      "government"
+    ]
+  },
+  {
+    "id": 57,
+    "category": "Tax & Employment",
+    "question": "Can I submit my tax return through EireID?",
+    "answer": "Yes. Tax filing is explicitly listed as a service accessible through EireID. Because your identity is pre-verified and Revenue is directly integrated, you can complete tax submissions within the app. The platform aims to reduce such tasks from days to under five minutes.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "mobile app",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 58,
+    "category": "Social Services & Welfare",
+    "question": "What is the Public Services Card (PSC) and does EireID replace it?",
+    "answer": "The Public Services Card is a physical card issued by the Department of Social Protection that confirms your identity for accessing public services. EireID stores the PSC as a legally valid digital document, effectively replacing the need to carry the physical card. The underlying PSC record is maintained by the DSP; EireID provides a digital representation of it.",
+    "keywords": [
+      "identity verification",
+      "Public Services Card",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 59,
+    "category": "Social Services & Welfare",
+    "question": "Will I still be issued a physical PSC after EireID launches?",
+    "answer": "During the phased rollout, physical PSCs will continue to be issued. Over time, as EireID becomes the standard interface, the need for physical PSCs is expected to diminish. The business plan positions EireID as the digital replacement for physical documents but does not specify an exact end date for physical PSC issuance.",
+    "keywords": [
+      "Public Services Card",
+      "B2B"
+    ]
+  },
+  {
+    "id": 60,
+    "category": "Tax & Employment",
+    "question": "Can EireID verify my right to work in Ireland for PAYE employment?",
+    "answer": "Yes. EireID integrates with Revenue for PAYE records and with the Immigration Service for IRP status. Employers can verify your right to work through EireID's QR verification system, which confirms both your identity and your immigration status in real time, satisfying employment compliance requirements.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "QR code",
+      "tax",
+      "immigration",
+      "PAYE",
+      "employer"
+    ]
+  },
+  {
+    "id": 61,
+    "category": "Tax & Employment",
+    "question": "Is my EireID account linked to my PPS number?",
+    "answer": "Yes. EireID integrates with the Department of Social Protection (DSP) system, which issues PPS numbers. Your PPS number is central to your identity record across Irish government systems, and EireID's credential references are linked to this foundational identifier.",
+    "keywords": [
+      "identity verification",
+      "PPS number",
+      "government"
+    ]
+  },
+  {
+    "id": 62,
+    "category": "Tax & Employment",
+    "question": "Can I register for PAYE or employment through EireID?",
+    "answer": "Yes. Employment registration is listed as one of the tasks accessible through EireID. Revenue integration enables PAYE registration, and the one-time identity verification means you do not need to re-submit personal documents separately for employment setup.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "accessibility",
+      "onboarding",
+      "PAYE",
+      "employer"
+    ]
+  },
+  {
+    "id": 63,
+    "category": "General & Getting Started",
+    "question": "What happens if the EireID system goes down — can I still prove my identity?",
+    "answer": "EireID is built with redundancy and resilience in mind: servers are distributed across multiple EU data centres with automatic failover, encrypted off-site backups, and rapid disaster recovery protocols. Uptime is covered by SLA-backed guarantees for B2B clients. However, for critical situations where digital access fails, physical documents remain valid as a backup.",
+    "keywords": [
+      "identity verification",
+      "security",
+      "privacy",
+      "API",
+      "B2B",
+      "mobile app",
+      "accessibility",
+      "EU"
+    ]
+  },
+  {
+    "id": 64,
+    "category": "General & Getting Started",
+    "question": "Does EireID work across all Irish government departments?",
+    "answer": "EireID is designed for full national rollout across all government departments and public service platforms by Year 3. The initial rollout covers the four core agencies (Revenue, NDLS, Immigration/IRP, DSP/PSC), expanding to all public services in Phase 3 and to broader private-sector and EU integration in Phases 4 and 5.",
+    "keywords": [
+      "IRP",
+      "Public Services Card",
+      "driving licence",
+      "tax",
+      "immigration",
+      "EU",
+      "government",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 65,
+    "category": "General & Getting Started",
+    "question": "How does EireID handle residents who do not have a smartphone?",
+    "answer": "The business plan acknowledges accessibility concerns but focuses primarily on the smartphone-based experience, noting that 95% of Irish adults have smartphone access. Residents without smartphones would likely need to rely on traditional channels for government services during a transition period. EireID's phased rollout and guided support aim to minimise exclusion.",
+    "keywords": [
+      "B2B",
+      "mobile app",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 66,
+    "category": "General & Getting Started",
+    "question": "Can I manage multiple family members' identities on one EireID account?",
+    "answer": "EireID is designed as a personal identity platform — one account per individual resident. There is no mention of a family account or guardian account feature in the business plan. Children or dependants with their own identity documents would require their own accounts. This is a potential area for future development.",
+    "keywords": [
+      "identity verification",
+      "B2B"
+    ]
+  },
+  {
+    "id": 67,
+    "category": "General & Getting Started",
+    "question": "Can a parent or guardian manage a child's EireID on their behalf?",
+    "answer": "The business plan does not detail a guardian or proxy access feature. EireID currently targets residents aged 18 and above as primary users. Guardian access for minors or dependants is not specified in the current scope and would likely be addressed in future development phases.",
+    "keywords": [
+      "B2B",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 68,
+    "category": "Immigration & IRP",
+    "question": "What happens to my EireID account if my IRP status changes or lapses?",
+    "answer": "Because EireID is directly integrated with the Immigration Service in real time, any change in your IRP status — such as an expiry or renewal — is automatically reflected in your EireID app. If your IRP lapses, the relevant credential in EireID would reflect that status change immediately, ensuring your digital identity always represents your current legal position.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "immigration",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 69,
+    "category": "Immigration & IRP",
+    "question": "Can I track the progress of my IRP renewal through EireID?",
+    "answer": "Yes. Real-time status visibility and tracking for immigration documentation is a core feature of EireID. Push notifications will update you on the progress of your IRP renewal, removing the current frustration of having limited transparency or tracking during what can be a months-long process.",
+    "keywords": [
+      "IRP",
+      "immigration",
+      "push notifications"
+    ]
+  },
+  {
+    "id": 70,
+    "category": "Immigration & IRP",
+    "question": "Does EireID support all types of Irish Residence Permits (Stamps)?",
+    "answer": "The business plan indicates EireID integrates with the Immigration Service to support IRP documentation broadly. Specific Stamp categories (Stamp 1, 2, 4, etc.) are not enumerated, but the intent is to cover all IRP types used by residents in Ireland, including students (Stamp 2), workers (Stamp 1/1G), and long-term residents (Stamp 4).",
+    "keywords": [
+      "IRP",
+      "immigration",
+      "B2B",
+      "student"
+    ]
+  },
+  {
+    "id": 71,
+    "category": "Immigration & IRP",
+    "question": "Will EireID replace the need to queue at the immigration registration office (Burgh Quay)?",
+    "answer": "Yes, this is precisely the type of bottleneck EireID aims to eliminate. IRP-related processes, including renewals and status updates, are targeted to be completable digitally through EireID, removing the need to queue in person at immigration offices such as Burgh Quay in Dublin.",
+    "keywords": [
+      "IRP",
+      "immigration"
+    ]
+  },
+  {
+    "id": 72,
+    "category": "Tax & Employment",
+    "question": "As a worker on a Critical Skills Employment Permit, does EireID support my documentation?",
+    "answer": "EireID integrates with Revenue and Immigration Service systems, which are relevant to permit holders. The IRP associated with your permit can be stored in EireID. However, the specific employment permit documentation (issued by the Department of Enterprise) is not explicitly enumerated in the current integration scope and may be added in later phases.",
+    "keywords": [
+      "IRP",
+      "tax",
+      "immigration",
+      "B2B",
+      "elderly",
+      "employer"
+    ]
+  },
+  {
+    "id": 73,
+    "category": "Immigration & IRP",
+    "question": "Can I use EireID to apply for Irish citizenship?",
+    "answer": "EireID streamlines identity verification, which is a component of the naturalisation process. However, citizenship applications involve complex legal assessments by the Department of Justice that go beyond identity verification. EireID can support the identity-related components of such applications, but the full application process remains the responsibility of the relevant department.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "AML"
+    ]
+  },
+  {
+    "id": 74,
+    "category": "EU & Cross-Border",
+    "question": "What is the EU eIDAS regulation and why does it matter for EireID?",
+    "answer": "eIDAS (Electronic Identification, Authentication and Trust Services) is an EU regulation that ensures digital identities created in one EU member state are legally recognised in others. EireID is built to be eIDAS-compliant, meaning your Irish digital identity will eventually be recognised across the EU, and electronic signatures made through EireID will carry legal weight throughout Europe.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "EU"
+    ]
+  },
+  {
+    "id": 75,
+    "category": "Rollout & Strategy",
+    "question": "When will EireID be fully available to the public?",
+    "answer": "EireID follows a phased rollout: Year 1 is the government pilot (Immigration and Revenue); Year 2 adds banking and fintech integration; Year 3 is the national public service rollout; Years 4–5 expand to the full private sector and EU cross-border integration. Full public availability is therefore expected around Year 3 of operation.",
+    "keywords": [
+      "tax",
+      "immigration",
+      "EU",
+      "bank",
+      "government"
+    ]
+  },
+  {
+    "id": 76,
+    "category": "Rollout & Strategy",
+    "question": "Is EireID currently available to download, or is it still in development?",
+    "answer": "Based on the business plan, EireID is a proposed platform currently in its business planning stage. The plan describes a phased launch beginning with a government pilot. It is not yet publicly available. The poster references www.eireid.ie for more information, suggesting a pre-launch information phase.",
+    "keywords": [
+      "B2B",
+      "government"
+    ]
+  },
+  {
+    "id": 77,
+    "category": "Technical Architecture",
+    "question": "What cloud provider hosts EireID's infrastructure?",
+    "answer": "EireID is planned to be hosted on EU-sovereign cloud infrastructure, with AWS GovCloud or Azure Sovereign Cloud cited as candidate platforms. The requirement is that all identity data remains under EU jurisdiction, compliant with GDPR and EU eIDAS, regardless of which specific provider is selected.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "eIDAS",
+      "privacy",
+      "cloud",
+      "EU"
+    ]
+  },
+  {
+    "id": 78,
+    "category": "General & Getting Started",
+    "question": "Can I use EireID to prove my age for purchasing alcohol or entering licensed premises?",
+    "answer": "EireID stores legally valid identity documents including your passport and driving licence, both of which contain your date of birth. A venue or retailer that accepts EireID QR verification could use this to confirm your age. However, acceptance by individual venues depends on their policies and any legislative framework recognising digital ID for age verification in Ireland.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "passport",
+      "driving licence"
+    ]
+  },
+  {
+    "id": 79,
+    "category": "Privacy & GDPR",
+    "question": "Is there a risk that EireID could be used for surveillance of residents?",
+    "answer": "EireID uses a Consent Engine with selective disclosure and data minimisation — only the specific data needed for each interaction is shared. All access events are recorded in an immutable audit log, which itself provides accountability. The platform is GDPR-compliant, and residents have the right to access logs of who has viewed their data. The system is designed to be transparent, not surveillance-oriented.",
+    "keywords": [
+      "GDPR",
+      "privacy",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 80,
+    "category": "General & Getting Started",
+    "question": "Can I opt out of using EireID and continue using physical documents?",
+    "answer": "Yes. EireID is designed as a voluntary platform for residents. Adoption is encouraged through convenience rather than compulsion, with clear opt-in mechanisms. Residents who prefer physical documents can continue using them. EireID's goal is to make digital identity so convenient that residents choose it voluntarily.",
+    "keywords": [
+      "identity verification"
+    ]
+  },
+  {
+    "id": 81,
+    "category": "General & Getting Started",
+    "question": "Who built EireID and who is responsible for running it?",
+    "answer": "EireID was developed as a concept by a team of DCU students (Ivan Dereka, Trinabh Basu, Eric Breviglieri Dos Santos, Meadbh Ferguson, Recep Tayyip Kutlu, Fionn McAuley, and Aron Gargan) as part of an academic project. In production, EireID would be operated as national digital infrastructure, coordinated by a lean core team working alongside government agencies.",
+    "keywords": [
+      "student",
+      "cloud",
+      "government"
+    ]
+  },
+  {
+    "id": 82,
+    "category": "General & Getting Started",
+    "question": "How does EireID make money if it is free for residents?",
+    "answer": "EireID generates revenue through three streams: (1) Government digital transformation funding as the primary source; (2) a B2B Identity Verification API charging €0.07–€0.20 per verification to businesses; and (3) Enterprise Integration Licensing charged annually to large organisations (€4,800–€18,000/year). Government and public bodies use the platform for free.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "API",
+      "B2B",
+      "free",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 83,
+    "category": "Financials & Business Model",
+    "question": "What is the estimated Year 1 cost to build and operate EireID?",
+    "answer": "The estimated total Year 1 cost is approximately €434,000–€497,000. This includes development salaries (€96,960 for a 7-person team over 3–6 months including contingency), cloud hosting (€15,000–€25,000), security and compliance (€33,000–€52,000), government system integration (€135,000), and annual operations (€144,000–€168,000).",
+    "keywords": [
+      "security",
+      "mobile app",
+      "cloud",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 84,
+    "category": "Tax & Employment",
+    "question": "What revenue is EireID expected to generate in its first year?",
+    "answer": "EireID projects approximately €36,600 in Year 1 B2B API revenue. Months 1–6 generate no revenue (government pilot phase). Revenue begins in Month 7 at an estimated €800 and grows to €14,000 by Month 12 as the number of verifications increases. Enterprise licensing revenue begins layering in from Month 9.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "API",
+      "B2B",
+      "mobile app",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 85,
+    "category": "Financials & Business Model",
+    "question": "Where does the funding to build EireID come from?",
+    "answer": "EireID's primary funding is government digital transformation funding under Ireland's Digital Public Services Plan 2030, covering startup and Year 1 operations (approximately €280,000–€309,000). Secondary funding targets include EU grants (Digital Europe Programme, CEF Digital) for eIDAS certification. Early enterprise licensing from anchor banking or fintech partners can offset Year 1 operational costs.",
+    "keywords": [
+      "eIDAS",
+      "B2B",
+      "mobile app",
+      "EU",
+      "bank",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 86,
+    "category": "General & Getting Started",
+    "question": "Is EireID at risk of being cancelled if the government changes?",
+    "answer": "Political policy change is identified as a risk in the business plan. To mitigate this, EireID aims to secure cross-party political support and positions itself as long-term national digital infrastructure rather than a single administration initiative — similar to how broadband infrastructure transcends political cycles.",
+    "keywords": [
+      "B2B",
+      "cloud",
+      "government"
+    ]
+  },
+  {
+    "id": 87,
+    "category": "Comparison & Competitors",
+    "question": "Does EireID compete with Apple Wallet or Google Pay for digital identity?",
+    "answer": "EireID and Apple/Google Wallet serve different functions. Apple Wallet and Google Wallet are commercial platforms primarily for payments and loyalty cards. EireID is a state-backed legal identity platform with government-verified documents, legally binding signatures, and integration with Irish government systems. EireID's mitigation strategy is to position itself as the national identity layer that private wallets can build on top of, rather than competing directly with them.",
+    "keywords": [
+      "identity verification",
+      "digital wallet",
+      "mobile app",
+      "digital signature",
+      "government"
+    ]
+  },
+  {
+    "id": 88,
+    "category": "EU & Cross-Border",
+    "question": "What is the EU EUDI Wallet and how does EireID relate to it?",
+    "answer": "The EU Digital Identity (EUDI) Wallet is a European Commission initiative requiring all EU member states to provide citizens with a digital identity wallet by 2026. EireID is designed to align with this initiative — it is eIDAS-compliant and its roadmap includes EU cross-border interoperability. EireID can serve as Ireland's national implementation of the EUDI Wallet framework.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "digital wallet",
+      "EU"
+    ]
+  },
+  {
+    "id": 89,
+    "category": "General & Getting Started",
+    "question": "How does EireID handle documents that expire — will my app automatically update them?",
+    "answer": "Yes. Because EireID holds credential references that point to live government source data, when a document is renewed (for example, a new IRP is issued), the updated credential is automatically reflected in the app. Push notifications will alert you to renewals, and real-time validation ensures the document shown is always current.",
+    "keywords": [
+      "IRP",
+      "privacy",
+      "mobile app",
+      "push notifications",
+      "government"
+    ]
+  },
+  {
+    "id": 90,
+    "category": "Security & Technology",
+    "question": "Can someone forge or tamper with an EireID digital document?",
+    "answer": "Digital forgery is extremely difficult with EireID due to cryptographically signed credentials using HSM-backed keys and PKI trust chains. Each credential is signed by the government source system, and real-time QR verification checks the credential's authenticity against the live system. Any tampering would invalidate the cryptographic signature immediately.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "government",
+      "HSM"
+    ]
+  },
+  {
+    "id": 91,
+    "category": "Accessibility & Inclusion",
+    "question": "Does EireID support accessibility features for users with disabilities?",
+    "answer": "The business plan emphasises inclusive design as a core principle, particularly for elderly, digitally anxious, and mobility-impaired users. While specific accessibility features such as screen reader support, voice control, or high contrast modes are not individually enumerated, the mascot-led UX and intuitive interface are explicitly designed to reduce barriers. Formal accessibility compliance (e.g., WCAG) would be expected for a government-backed platform.",
+    "keywords": [
+      "B2B",
+      "elderly",
+      "accessibility",
+      "mascot",
+      "government"
+    ]
+  },
+  {
+    "id": 92,
+    "category": "Tax & Employment",
+    "question": "How is EireID different from what Revenue myAccount already offers?",
+    "answer": "Revenue myAccount is limited to tax and PAYE services for a single agency, requires a separate login, and is not accessible to all resident types. EireID incorporates Revenue services within a broader platform alongside immigration, welfare, licensing, and banking — all pre-verified with a single identity. Non-citizens and IRP holders who lack full myAccount access can also use EireID.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "tax",
+      "immigration",
+      "elderly",
+      "social welfare",
+      "accessibility",
+      "PAYE"
+    ]
+  },
+  {
+    "id": 93,
+    "category": "Financial Services & B2B",
+    "question": "Can a fintech company integrate EireID for customer onboarding?",
+    "answer": "Yes. Fintech companies are explicitly targeted as B2B clients for EireID's identity verification API and enterprise licensing. They can integrate EireID to handle KYC and AML compliance during customer onboarding at a cost far below commercial alternatives — €0.20 per verification compared to typical commercial KYC provider rates.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "onboarding",
+      "KYC",
+      "AML",
+      "cost"
+    ]
+  },
+  {
+    "id": 94,
+    "category": "Financial Services & B2B",
+    "question": "Will insurance companies accept EireID for policy applications?",
+    "answer": "Insurers are listed as target relying parties in EireID's B2B ecosystem. Once integrated, they can use EireID for instant identity verification during policy applications, claims processing, and compliance checks, removing the need for manual document submission by customers.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 95,
+    "category": "Social Services & Welfare",
+    "question": "Does EireID support people who are homeless or without a fixed address?",
+    "answer": "The business plan does not specifically address users without a fixed address. In principle, EireID's digital verification should not be dependent on a fixed address (unlike postal-based systems), which could be beneficial for people in unstable housing situations. This is a gap that would need to be addressed in implementation policy.",
+    "keywords": [
+      "identity verification",
+      "B2B"
+    ]
+  },
+  {
+    "id": 96,
+    "category": "Security & Technology",
+    "question": "Can EireID help me apply for social housing?",
+    "answer": "EireID can streamline the identity verification component of social housing applications by providing legally valid digital proof of identity and eligibility status. The actual social housing application process is managed by local authorities, but integrating EireID could remove manual verification delays from that process.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "AML"
+    ]
+  },
+  {
+    "id": 97,
+    "category": "Security & Technology",
+    "question": "What happens if my biometric face verification fails during EireID setup?",
+    "answer": "If biometric face verification fails, EireID would provide an alternative pathway — likely involving a support process or fallback verification method. The business plan emphasises that onboarding should be frictionless, so robust error handling and support for verification failures would be essential to avoid excluding users.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "B2B",
+      "mobile app",
+      "onboarding"
+    ]
+  },
+  {
+    "id": 98,
+    "category": "Immigration & IRP",
+    "question": "Can I use EireID to apply for a Garda National Immigration Bureau (GNIB) card?",
+    "answer": "The GNIB card (now IRP card) registration process is managed by the Immigration Service, which is directly integrated into EireID. EireID aims to streamline the IRP registration and renewal process, potentially including the appointment booking and document submission steps, though in-person biometric collection requirements set by immigration law may still apply.",
+    "keywords": [
+      "IRP",
+      "biometric",
+      "immigration",
+      "mobile app",
+      "AML"
+    ]
+  },
+  {
+    "id": 99,
+    "category": "Privacy & GDPR",
+    "question": "Does EireID track my location or movements?",
+    "answer": "EireID does not track your location or movements. The platform processes identity verification requests — when and where you share your credentials — but only records what is necessary for the audit log as required by GDPR compliance. Location tracking is not part of EireID's functionality as described in the business plan.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "B2B"
+    ]
+  },
+  {
+    "id": 100,
+    "category": "Accessibility & Inclusion",
+    "question": "Is EireID designed to be inclusive for people with limited English?",
+    "answer": "Yes. The business plan explicitly references multilingual public information campaigns and highlights language barriers as a challenge for immigrants and new residents. The mascot-led, intuitive UI is designed to reduce reliance on complex terminology. Multilingual app support is implied as a requirement for achieving the stated inclusivity goals.",
+    "keywords": [
+      "immigration",
+      "B2B",
+      "mobile app",
+      "mascot",
+      "multilingual"
+    ]
+  },
+  {
+    "id": 101,
+    "category": "Tax & Employment",
+    "question": "Can I use EireID to apply for the Jobseeker's Allowance?",
+    "answer": "Welfare applications, including Jobseeker's Allowance, are managed through DSP/MyWelfare.ie, which is one of the four core government systems integrated into EireID. Social support applications are explicitly listed as services accessible through EireID, so you would be able to apply through the app with your pre-verified identity.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "social welfare",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 102,
+    "category": "General & Getting Started",
+    "question": "Can EireID be used for e-voting in Irish elections?",
+    "answer": "E-voting is not mentioned in EireID's current scope. While EireID's identity verification infrastructure could theoretically support voter identity checks, implementing e-voting requires separate legislation and policy decisions that go beyond EireID's stated mandate as a digital identity and public services platform.",
+    "keywords": [
+      "identity verification",
+      "cloud"
+    ]
+  },
+  {
+    "id": 103,
+    "category": "Privacy & GDPR",
+    "question": "How does EireID handle a situation where government databases have incorrect information about me?",
+    "answer": "EireID draws data directly from government source systems (Revenue, NDLS, Immigration, DSP). If your information is incorrect in those systems, the error would need to be corrected at the source agency. EireID itself does not hold or modify the underlying data — it reflects what the government systems report. The app would need to provide a clear pathway to flag data discrepancies.",
+    "keywords": [
+      "driving licence",
+      "tax",
+      "immigration",
+      "privacy",
+      "mobile app",
+      "government",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 104,
+    "category": "Business & API Integration",
+    "question": "Can an employer ask me to verify my identity through EireID before hiring me?",
+    "answer": "Yes. EireID enables employers to verify your identity and right to work through QR-based or API-integrated verification. This is faster and more reliable than manual document checks. Employers must comply with data protection law when conducting such checks, and EireID's selective disclosure principle ensures only the necessary information is shared.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "privacy",
+      "API",
+      "employer"
+    ]
+  },
+  {
+    "id": 105,
+    "category": "General & Getting Started",
+    "question": "Will EireID be promoted through advertising or campaigns?",
+    "answer": "EireID's promotion will not use conventional commercial advertising (paid social, influencer marketing) as this would undermine public trust in a state-backed service. Instead, awareness will come through government websites, official press releases, national information campaigns via gov.ie, RTÉ, and An Post, and institutional co-marketing through onboarded banks and fintechs.",
+    "keywords": [
+      "bank",
+      "government"
+    ]
+  },
+  {
+    "id": 106,
+    "category": "General & Getting Started",
+    "question": "Will An Post or RTÉ be involved in promoting EireID?",
+    "answer": "Yes. RTÉ and An Post are specifically named as high-trust distribution channels for EireID's public information campaigns, chosen because Irish residents already associate these channels with official government communication. This approach builds public trust more effectively than commercial advertising.",
+    "keywords": [
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 107,
+    "category": "Financial Services & B2B",
+    "question": "Can a bank refuse to accept my EireID digital ID?",
+    "answer": "Initially, acceptance depends on whether a bank has integrated with EireID's verification API. The B2B rollout targets banks in Phase 2. Once banks are onboarded, EireID becomes a compliant KYC tool they are expected to accept. Regulatory frameworks and EireID's legal validity under eIDAS strengthen the case for mandatory acceptance over time.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "API",
+      "B2B",
+      "KYC",
+      "bank"
+    ]
+  },
+  {
+    "id": 108,
+    "category": "General & Getting Started",
+    "question": "What team roles are needed to run EireID on an ongoing basis?",
+    "answer": "EireID's core operational team includes a Programme Director, Policy and Compliance Lead, CTO, 2–3 DevOps and Infrastructure engineers, a Security Engineer/CISO, an API and Integration Lead, and a Developer Relations/Support role. This lean team of approximately 7–9 people manages the platform's day-to-day operations, security, and institutional onboarding.",
+    "keywords": [
+      "security",
+      "API",
+      "mobile app",
+      "cloud",
+      "onboarding"
+    ]
+  },
+  {
+    "id": 109,
+    "category": "Security & Technology",
+    "question": "What is the role of the Security Operations Centre in EireID?",
+    "answer": "The Security Operations Centre (SOC) provides 24/7 real-time threat detection and incident response for the EireID platform. The SOC monitors for cyberattacks, anomalous access patterns, data breaches, and system failures, ensuring rapid response to any security event. It is a core component of EireID's security architecture.",
+    "keywords": [
+      "security",
+      "privacy",
+      "API",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 110,
+    "category": "Security & Technology",
+    "question": "Does EireID have a bug bounty programme?",
+    "answer": "Yes. EireID includes a bug bounty programme as part of its security compliance framework. This invites external security researchers to identify and responsibly disclose vulnerabilities, complementing the annual cybersecurity audits and regular penetration testing that the platform conducts.",
+    "keywords": [
+      "security"
+    ]
+  },
+  {
+    "id": 111,
+    "category": "Security & Technology",
+    "question": "Is EireID certified against any international security standards?",
+    "answer": "Yes. EireID targets certification against ISO 27001 (information security management), GDPR, EU Digital Identity Wallet standards, NIS2 (Network and Information Security Directive), and eIDAS. Regular third-party security audits and penetration testing provide external validation of the platform's security posture.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "eIDAS",
+      "digital wallet",
+      "security",
+      "privacy",
+      "EU"
+    ]
+  },
+  {
+    "id": 112,
+    "category": "Privacy & GDPR",
+    "question": "How does EireID protect my data if a third party I verified with is hacked?",
+    "answer": "EireID's selective disclosure model means that when you verify your identity with a third party, only the specific required information is shared — not your entire identity record. The third party receives a verification result or credential reference, not raw data from EireID's servers. Any breach at the third party's end does not expose your full identity profile.",
+    "keywords": [
+      "identity verification",
+      "security",
+      "privacy"
+    ]
+  },
+  {
+    "id": 113,
+    "category": "General & Getting Started",
+    "question": "Will EireID store my verification history — can I see who has checked my identity?",
+    "answer": "Yes. EireID maintains an immutable audit log of all identity verification events, compliant with GDPR. As a resident, you have the right under GDPR to access logs showing who has verified your identity, when, and for what purpose. This provides transparency and accountability in how your identity data is used.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 114,
+    "category": "General & Getting Started",
+    "question": "Can I revoke access to my identity from a specific organisation after sharing it?",
+    "answer": "EireID's Consent Engine and selective disclosure model are designed to give you control over your data. The ability to revoke previously granted access is consistent with GDPR's right to withdraw consent and would be a feature of the consent management system, though the granular mechanics of revocation are not detailed in the business plan.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "B2B",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 115,
+    "category": "Rollout & Strategy",
+    "question": "How does EireID's phased rollout work — when will each phase happen?",
+    "answer": "Phase 1 (Year 1): Government pilot with Immigration and Revenue. Phase 2 (Year 2): Banking and fintech B2B API integration. Phase 3 (Year 3): National rollout across all public services with full IRP, PSC, and NDLS integration. Phase 4 (Years 4–5): Expansion to broader private sector (telecoms, employers, universities). Phase 5 (Years 4–5): EU eIDAS cross-border interoperability.",
+    "keywords": [
+      "IRP",
+      "eIDAS",
+      "Public Services Card",
+      "driving licence",
+      "tax",
+      "immigration",
+      "API",
+      "B2B"
+    ]
+  },
+  {
+    "id": 116,
+    "category": "General & Getting Started",
+    "question": "Will EireID be tested before it is rolled out nationally?",
+    "answer": "Yes. EireID begins with a government pilot programme involving selected departments (such as Immigration or Revenue) to validate the platform before scaling. This phased approach ensures reliability, builds public trust, and allows fine-tuning of the system before full public exposure.",
+    "keywords": [
+      "tax",
+      "immigration",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 117,
+    "category": "Rollout & Strategy",
+    "question": "Is EireID compatible with the Government of Ireland's existing Digital Public Services Plan 2030?",
+    "answer": "Yes. EireID is directly aligned with Ireland's Digital Public Services Plan 2030, which targets 80% of citizens using a digital ID by 2030. EireID is designed to be the platform that achieves this target, and government digital transformation funding under this plan is EireID's primary funding source.",
+    "keywords": [
+      "government"
+    ]
+  },
+  {
+    "id": 118,
+    "category": "Financials & Business Model",
+    "question": "What is the global market size for digital identity services that EireID operates in?",
+    "answer": "The European digital identity market is projected to grow from $3.53 billion in 2025 to $7.53 billion by 2030, at a compound annual growth rate of 16% (MarketsandMarkets). EireID positions itself as Ireland's national platform within this rapidly growing, policy-backed market.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "EU"
+    ]
+  },
+  {
+    "id": 119,
+    "category": "General & Getting Started",
+    "question": "What percentage of Irish adults have smartphones — is there enough demand for EireID?",
+    "answer": "According to Deloitte's Digital Consumer Trends report, 95% of Irish adults have smartphone access. Additionally, 32–34% have expressed interest in storing digital IDs on their devices. Combined with Ireland's target of 80% digital ID adoption by 2030, there is strong baseline demand for EireID.",
+    "keywords": [
+      "mobile app",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 120,
+    "category": "General & Getting Started",
+    "question": "What proportion of people currently struggle with Irish e-government services?",
+    "answer": "According to CSO data (Information Society Statistics – Households 2024), almost 30% of internet users who engaged with e-Government services reported encountering difficulties. This represents a structural design failure, not a lack of digital willingness, and is a core justification for EireID's simpler, unified approach.",
+    "keywords": [
+      "privacy",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 121,
+    "category": "Financial Services & B2B",
+    "question": "Can EireID be used to verify a person's identity for insurance claims?",
+    "answer": "Yes. Insurers are listed as target B2B clients for EireID's identity verification API. For insurance claims requiring identity verification, an insurer integrated with EireID can verify the claimant's identity digitally and in compliance with regulatory requirements, speeding up the claims process.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B"
+    ]
+  },
+  {
+    "id": 122,
+    "category": "Business & API Integration",
+    "question": "Will telecoms companies be able to use EireID for SIM registration or customer identity checks?",
+    "answer": "Yes. Telecoms companies are explicitly mentioned as private-sector targets in Phase 4 of EireID's rollout. They can use EireID for customer identity verification during SIM registration, contract sign-ups, and other regulatory compliance requirements.",
+    "keywords": [
+      "identity verification"
+    ]
+  },
+  {
+    "id": 123,
+    "category": "Security & Technology",
+    "question": "How does EireID handle cases where two people have very similar biometric profiles?",
+    "answer": "EireID's biometric verification is anchored to government records, not standalone biometric matching. The combination of biometric face verification with a specific government-issued document number and PPS number creates a unique composite identity check that is extremely robust against false matches between different individuals.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "PPS number",
+      "government"
+    ]
+  },
+  {
+    "id": 124,
+    "category": "General & Getting Started",
+    "question": "Can I use EireID to verify the identity of someone else — for example, as a notary?",
+    "answer": "EireID is primarily designed for individuals to verify their own identity to third parties, not for notaries or officials to verify others. However, the QR verification system means a notary could scan a person's EireID QR code to confirm their identity during document witnessing. Specific notarial use cases would depend on legal recognition of this process.",
+    "keywords": [
+      "identity verification",
+      "QR code"
+    ]
+  },
+  {
+    "id": 125,
+    "category": "Documents & Digital Signatures",
+    "question": "Does EireID support marriage certificates or other personal status documents?",
+    "answer": "Yes. The poster for EireID explicitly shows a Marriage Certificate listed in the documents section of the app. Personal status documents such as these can be stored digitally alongside identity documents, enabling residents to share them for housing, banking, or other administrative purposes.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "bank"
+    ]
+  },
+  {
+    "id": 126,
+    "category": "General & Getting Started",
+    "question": "Can EireID be used for online age verification on websites or platforms?",
+    "answer": "EireID's QR-based verification and API integration could technically support age verification for online platforms that are legally required to verify user age. As Irish and EU legislation around online age verification evolves (particularly under the Digital Services Act), EireID's infrastructure could serve as the verification backbone for such requirements.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "API",
+      "cloud",
+      "EU"
+    ]
+  },
+  {
+    "id": 127,
+    "category": "Privacy & GDPR",
+    "question": "What data does EireID share with the government about my usage of the app?",
+    "answer": "EireID maintains an immutable audit log for compliance purposes, but this is governed by GDPR data minimisation principles. The audit log records verification events — who verified whom and when — for accountability purposes. EireID does not share browsing behaviour, usage patterns, or app interaction data with government agencies outside of specific legally required audit contexts.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 128,
+    "category": "Immigration & IRP",
+    "question": "Can I use EireID if I am an asylum seeker or refugee?",
+    "answer": "The business plan does not explicitly address asylum seekers, who may not yet have an IRP. EireID's onboarding requires a supported document number or verified bank account. Asylum seekers without standard Irish identity documents may need alternative pathways, which would need to be developed as part of EireID's inclusive access policy in collaboration with the International Protection Office.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "B2B",
+      "accessibility",
+      "onboarding",
+      "bank"
+    ]
+  },
+  {
+    "id": 129,
+    "category": "General & Getting Started",
+    "question": "Will EireID help reduce the gender pay gap or other administrative inequalities?",
+    "answer": "EireID's primary goal is administrative efficiency and inclusion, not specifically addressing the gender pay gap. However, by streamlining access to employment registration, welfare services, and childcare or support applications, EireID could reduce systemic barriers that disproportionately affect certain groups, indirectly contributing to more equitable service access.",
+    "keywords": [
+      "mobile app",
+      "social welfare",
+      "accessibility",
+      "AML",
+      "employer"
+    ]
+  },
+  {
+    "id": 130,
+    "category": "Privacy & GDPR",
+    "question": "What is the legal basis under GDPR for EireID processing my personal data?",
+    "answer": "EireID processes personal data under the legal basis of public task (Article 6(1)(e) GDPR) as a government-backed national infrastructure service, and consent (Article 6(1)(a)) for optional data sharing with private-sector relying parties. Sensitive data (such as biometric data used for initial verification) would be processed under Article 9(2)(g) for substantial public interest.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "biometric",
+      "privacy",
+      "cloud",
+      "government"
+    ]
+  },
+  {
+    "id": 131,
+    "category": "Business & API Integration",
+    "question": "Can a landlord refuse to rent to me if I do not use EireID?",
+    "answer": "No. EireID is designed as a voluntary platform with clear opt-in mechanisms. A landlord cannot legally require EireID specifically as a condition of tenancy, particularly since physical documents remain legally valid. EireID is offered as a faster, more convenient alternative, not a mandatory requirement for residents.",
+    "keywords": [
+      "landlord"
+    ]
+  },
+  {
+    "id": 132,
+    "category": "EU & Cross-Border",
+    "question": "Does EireID work in Northern Ireland or only in the Republic of Ireland?",
+    "answer": "EireID is designed for residents of the Republic of Ireland and integrates with Irish government systems. Northern Ireland is part of the United Kingdom and operates under different identity infrastructure. EU cross-border interoperability (Phase 5) would cover EU member states, not the UK. Cross-border applicability in an all-Ireland context is not addressed in the business plan.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "mobile app",
+      "cloud",
+      "EU",
+      "government"
+    ]
+  },
+  {
+    "id": 133,
+    "category": "Security & Technology",
+    "question": "What device does EireID use to store my cryptographic keys?",
+    "answer": "EireID stores cryptographic keys in the phone's Secure Enclave — a dedicated hardware security chip built into modern smartphones (such as Apple's A-series chips or equivalent Android secure elements). This hardware-level protection means keys cannot be extracted even if the phone's software is compromised.",
+    "keywords": [
+      "security",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 134,
+    "category": "Privacy & GDPR",
+    "question": "Can a government department or Garda access my EireID data without my consent?",
+    "answer": "EireID is GDPR-compliant and uses selective disclosure, meaning data is only shared with your consent. Any government access to underlying identity data would go through the respective government agency's own systems (Revenue, DSP, etc.) under their existing legal frameworks, not through EireID directly. EireID's audit log would record any such access events.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "tax",
+      "privacy",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 135,
+    "category": "EU & Cross-Border",
+    "question": "Can I use EireID internationally — for example, to access services in another EU country?",
+    "answer": "EU cross-border eIDAS interoperability is planned for Phase 5 (Years 4–5). Once implemented, your EireID digital identity would be recognised across EU member states, enabling you to use it to access services, sign documents, and verify identity in other EU countries — for example, when working or studying abroad.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "accessibility",
+      "EU"
+    ]
+  },
+  {
+    "id": 136,
+    "category": "Comparison & Competitors",
+    "question": "What makes EireID different from a regular digital wallet like Apple Wallet?",
+    "answer": "Apple Wallet is a commercial platform designed primarily for payments and loyalty cards, not state-backed identity. EireID is a government-verified identity platform with legally valid documents, real-time government database integration, legally binding digital signatures, GDPR compliance, eIDAS certification, and integration with Irish public services — capabilities that commercial wallets cannot provide.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "eIDAS",
+      "digital wallet",
+      "privacy",
+      "mobile app",
+      "digital signature",
+      "government"
+    ]
+  },
+  {
+    "id": 137,
+    "category": "Business & API Integration",
+    "question": "Can small businesses afford to integrate EireID, or is it only for large organisations?",
+    "answer": "EireID is designed to be accessible to businesses of all sizes. The pay-per-use B2B API starts at €0.20 per verification with no fixed monthly fee for low volumes, making it affordable for small businesses that only occasionally need identity verification. The Standard Enterprise Licence at €4,800/year targets SMEs and universities.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "accessibility",
+      "cost"
+    ]
+  },
+  {
+    "id": 138,
+    "category": "Business & API Integration",
+    "question": "What support is available for businesses integrating EireID's API?",
+    "answer": "EireID provides a dedicated Developer Relations and Support team that assists organisations during integration. Businesses also have access to a no-cost sandbox environment for testing. Once a contract is signed, dedicated onboarding support aims for a go-live timeline of four to six weeks. SLA-backed uptime guarantees and regular API versioning protect existing integrations.",
+    "keywords": [
+      "API",
+      "B2B",
+      "accessibility",
+      "onboarding",
+      "cost"
+    ]
+  },
+  {
+    "id": 139,
+    "category": "General & Getting Started",
+    "question": "Can EireID be used for e-government services across all 32 counties of Ireland?",
+    "answer": "Yes. EireID is a national platform designed to serve all residents of the Republic of Ireland regardless of county. By removing the need for in-person attendance at specific locations, EireID is particularly impactful for residents in rural or remote counties who currently face travel-intensive processes.",
+    "keywords": [
+      "rural",
+      "government"
+    ]
+  },
+  {
+    "id": 140,
+    "category": "Accessibility & Inclusion",
+    "question": "Does EireID support Irish language (Gaeilge) users?",
+    "answer": "The Government of Ireland has obligations under the Official Languages Act to provide services in Irish. As a state-backed digital platform, EireID would be expected to provide a Gaeilge interface option. The business plan references the Government of Ireland Design System (which includes Irish language standards) in its design resources.",
+    "keywords": [
+      "B2B",
+      "government",
+      "multilingual"
+    ]
+  },
+  {
+    "id": 141,
+    "category": "Business & API Integration",
+    "question": "Can a hotel or accommodation provider use EireID to verify guest identity?",
+    "answer": "Yes. Hotels and accommodation providers could integrate EireID's verification API to handle the identity checks required for guest registration, replacing manual passport scans and improving efficiency. This would also reduce the risk of handling physical passports — a common concern for both guests and hotel operators.",
+    "keywords": [
+      "identity verification",
+      "passport",
+      "API"
+    ]
+  },
+  {
+    "id": 142,
+    "category": "Documents & Digital Signatures",
+    "question": "Can EireID be used for digital notarisation or e-signing of legal documents?",
+    "answer": "Yes. EireID includes a built-in legally binding digital signature feature compliant with eIDAS. This enables e-signing of contracts, statutory declarations, and other legal documents within the app. Legal recognition across EU member states is provided by the eIDAS framework, making EireID's digital signatures valid for cross-border legal processes.",
+    "keywords": [
+      "eIDAS",
+      "mobile app",
+      "digital signature",
+      "EU"
+    ]
+  },
+  {
+    "id": 143,
+    "category": "Privacy & GDPR",
+    "question": "Will my EireID data be shared with foreign governments or international bodies?",
+    "answer": "EireID's data is hosted on EU-sovereign cloud under GDPR, which strictly limits data transfers outside the EU/EEA. Data would only be shared with foreign governments or international bodies under specific legal frameworks (such as mutual legal assistance treaties), not as a routine feature of the platform. EU cross-border sharing under eIDAS is planned for Phase 5 but follows secure, regulated protocols.",
+    "keywords": [
+      "GDPR",
+      "eIDAS",
+      "privacy",
+      "cloud",
+      "EU",
+      "government"
+    ]
+  },
+  {
+    "id": 144,
+    "category": "General & Getting Started",
+    "question": "Can I see a list of all the organisations that have verified my identity using EireID?",
+    "answer": "Yes. GDPR's right of access entitles you to request information about who has processed your data. EireID's immutable audit log records all verification events, and this information would be accessible to you as the data subject. Viewing your verification history may be a feature within the EireID app itself.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "mobile app",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 145,
+    "category": "Rollout & Strategy",
+    "question": "Is the EireID app available in a web browser version, or only as a mobile app?",
+    "answer": "The business plan focuses on EireID as a mobile-first platform available through iOS and Android apps. A web browser version is not mentioned in the current scope. Given that the platform targets residents who may not all be comfortable with mobile-only access, a web version could be a future consideration, but is not part of the initial design.",
+    "keywords": [
+      "B2B",
+      "mobile app",
+      "accessibility",
+      "PPS number"
+    ]
+  },
+  {
+    "id": 146,
+    "category": "Privacy & GDPR",
+    "question": "What happens during a data breach — will I be notified?",
+    "answer": "GDPR requires that data breaches affecting individuals' rights must be reported to the Data Protection Commission within 72 hours, and affected individuals must be notified without undue delay. As a GDPR-compliant platform, EireID would be required to notify you in the event of a breach affecting your personal data.",
+    "keywords": [
+      "GDPR",
+      "security",
+      "privacy",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 147,
+    "category": "Financial Services & B2B",
+    "question": "Can EireID be used for credit checks or financial background verification?",
+    "answer": "EireID's B2B API can verify identity and legal status, which is a component of credit check processes. However, credit scoring (assessing financial history, loans, etc.) is managed by specialist credit bureaus like the Central Credit Register in Ireland. EireID verifies who you are, not your creditworthiness — though the two processes can be linked in a lender's workflow.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "onboarding"
+    ]
+  },
+  {
+    "id": 148,
+    "category": "Accessibility & Inclusion",
+    "question": "What is the mascot's role within the EireID app beyond visual branding?",
+    "answer": "The red squirrel mascot functions as an AI-powered interactive guide within the app. It provides contextual guidance — explaining what is being asked of the user at each step — offers simplified explanations of complex processes, and gives step-by-step assistance throughout interactions such as document submission, service applications, and identity sharing. It is designed to reduce anxiety around digital government processes.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "mascot",
+      "government"
+    ]
+  },
+  {
+    "id": 149,
+    "category": "General & Getting Started",
+    "question": "If I switch phones, will I lose my EireID account and documents?",
+    "answer": "Your EireID identity is not stored solely on your device — the credential references point back to government source systems. Switching phones would require re-authenticating your identity (document number and biometric verification) on the new device, after which your documents and credentials would be automatically re-populated. Your data is not lost when changing devices.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "privacy",
+      "government",
+      "lost phone"
+    ]
+  },
+  {
+    "id": 150,
+    "category": "Driving & Licensing",
+    "question": "Can EireID be used to apply for a learner driving permit?",
+    "answer": "Yes. NDLS (National Driver Licence Service) is one of the four core systems integrated into EireID. Applying for a learner driving permit, renewing a licence, or storing your driving licence digitally can all be managed through the EireID app, removing the need for in-person NDLS office visits.",
+    "keywords": [
+      "driving licence",
+      "mobile app",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 151,
+    "category": "Immigration & IRP",
+    "question": "Can an EireID digital document be accepted at airport passport control?",
+    "answer": "Airport passport control for international travel requires documents verified under the International Civil Aviation Organization (ICAO) standards, which typically require physical travel documents. EireID's digital documents are intended for domestic and EU digital service verification. Their acceptance at airport passport control depends on future agreements and legislative changes, which are not currently within EireID's scope.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "passport",
+      "EU"
+    ]
+  },
+  {
+    "id": 152,
+    "category": "Privacy & GDPR",
+    "question": "Does EireID track how often I use specific government services?",
+    "answer": "EireID records verification events in its audit log for GDPR compliance, but service usage analytics — such as which services you access and how frequently — are governed by data minimisation principles. Aggregate, anonymised analytics may be used to improve the platform, but individual usage patterns are not a product feature or sold to third parties.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 153,
+    "category": "General & Getting Started",
+    "question": "How quickly can I share my identity using the QR code feature?",
+    "answer": "QR-based identity sharing is designed to be near-instant. You open the app, navigate to the relevant document, and display the QR code. The receiving party scans it and receives a real-time verification response in seconds. The entire interaction is designed to be faster than physically presenting and manually checking a document.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 154,
+    "category": "Business & API Integration",
+    "question": "Can a charity or NGO use EireID's verification system?",
+    "answer": "The B2B API is open to any regulated organisation that requires identity verification. Charities and NGOs with legitimate identity verification needs (such as verifying eligibility for services) could integrate EireID's API, likely under the Standard Enterprise Licence tier. Specific terms for charitable organisations are not detailed in the business plan.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B"
+    ]
+  },
+  {
+    "id": 155,
+    "category": "Driving & Licensing",
+    "question": "Can EireID be used to complete Garda vetting requests?",
+    "answer": "Garda vetting involves a background check conducted by the National Vetting Bureau. EireID could streamline the identity verification component of vetting applications, but the actual vetting search (criminal record check) is conducted by the Garda Siochána and is not part of EireID's functionality. Integration with the vetting process is a potential future use case.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "AML"
+    ]
+  },
+  {
+    "id": 156,
+    "category": "General & Getting Started",
+    "question": "Will EireID work with older model smartphones that might not have Face ID or fingerprint sensors?",
+    "answer": "EireID's biometric authentication (FaceID/TouchID) requires a device with compatible biometric hardware. Older phones without these sensors may not fully support all EireID features. The platform would need to provide a PIN or alternative authentication fallback for users with older devices, though this is not specified in detail in the business plan.",
+    "keywords": [
+      "biometric",
+      "B2B",
+      "mobile app",
+      "elderly"
+    ]
+  },
+  {
+    "id": 157,
+    "category": "General & Getting Started",
+    "question": "Can the EireID app be used without internet access for basic document display?",
+    "answer": "Digitally signed credentials stored on the device may be viewable offline, as the cryptographic signature can be verified without a live connection in some implementations. However, real-time QR verification — which requires the receiving party to check the credential status against live government systems — requires an internet connection. Offline display capability is not explicitly specified.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "mobile app",
+      "accessibility",
+      "government",
+      "offline"
+    ]
+  },
+  {
+    "id": 158,
+    "category": "Travel & International Use",
+    "question": "Will EireID support residents who are currently abroad but need to interact with Irish services?",
+    "answer": "Yes. Because EireID is a digital platform, it can be used from anywhere with an internet connection. Irish residents temporarily abroad can still access government services, file tax returns, track IRP renewals, and share credentials with relevant parties — all without needing to be physically present in Ireland.",
+    "keywords": [
+      "IRP",
+      "tax",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 159,
+    "category": "General & Getting Started",
+    "question": "Is there a children's version or young person's version of EireID?",
+    "answer": "EireID currently targets adults aged 18 and above as primary users. There is no mention of a version designed for minors. A future youth-oriented version could be considered as part of EireID's long-term development, potentially linked to the National ID system for younger residents.",
+    "keywords": []
+  },
+  {
+    "id": 160,
+    "category": "Security & Technology",
+    "question": "Will EireID store my social welfare payment history or benefits record?",
+    "answer": "EireID integrates with the DSP (Department of Social Protection), which manages welfare payments and the PSC. Through this integration, your benefits record and entitlement status can be accessed within the app. However, EireID holds only credential references, not the full payment history — that remains with the DSP.",
+    "keywords": [
+      "Public Services Card",
+      "mobile app",
+      "social welfare",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 161,
+    "category": "General & Getting Started",
+    "question": "Can I choose which documents to include in my EireID wallet and which to leave out?",
+    "answer": "EireID uses a Consent Engine with selective disclosure, meaning you control what is shared during verifications. Whether you can selectively exclude certain documents from your wallet altogether (rather than just controlling who sees them) would depend on the specific user controls built into the app. GDPR's data minimisation principles support user control in this regard.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "digital wallet",
+      "privacy",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 162,
+    "category": "Social Services & Welfare",
+    "question": "Can EireID help me with the SUSI grant application process as a student?",
+    "answer": "SUSI (Student Universal Support Ireland) applications require identity verification and proof of residence. EireID's verified identity and document storage could streamline these requirements. SUSI integration with EireID would depend on SUSI's own system updates as part of the broader public service rollout planned for Phase 3.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "student",
+      "AML"
+    ]
+  },
+  {
+    "id": 163,
+    "category": "EU & Cross-Border",
+    "question": "Does EireID comply with the EU AI Act, given its use of AI features?",
+    "answer": "The EU AI Act, which began applying in stages from 2024–2026, classifies biometric identification and certain public service AI applications as high-risk. EireID's biometric verification and AI mascot features would likely require conformity assessments and transparency measures under the EU AI Act. As a government-backed platform, compliance with this regulation would be a design requirement.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "mobile app",
+      "EU",
+      "mascot",
+      "government"
+    ]
+  },
+  {
+    "id": 164,
+    "category": "Business & API Integration",
+    "question": "Can third parties access my EireID without a QR scan — for example, through the API directly?",
+    "answer": "No. Direct API access without user-initiated authorisation is not permitted. The Consent Engine requires your explicit consent for each verification. Third parties can only access your credentials through a user-initiated QR scan or an authenticated API call that you authorise. This prevents unauthorised background checks of your identity.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "privacy",
+      "API",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 165,
+    "category": "Financials & Business Model",
+    "question": "Can I use EireID to pay government fees or fines digitally?",
+    "answer": "Payment processing is not described as a core EireID feature in the business plan. EireID is focused on identity verification and service access rather than payments. However, within a service application (such as an IRP renewal that requires a fee), EireID could link to a payment gateway as part of the end-to-end digital process.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "B2B",
+      "mobile app",
+      "accessibility",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 166,
+    "category": "General & Getting Started",
+    "question": "Can my EireID account be frozen or suspended by the government?",
+    "answer": "As a government-backed platform, there would be provisions for suspending or deactivating accounts in cases of fraud, identity theft, or legal proceedings. The specific conditions and process for account suspension are not detailed in the business plan but would need to be governed by clear legal frameworks to protect users' rights.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "government"
+    ]
+  },
+  {
+    "id": 167,
+    "category": "Technical Architecture",
+    "question": "What is a Verifiable Credential and how does EireID use it?",
+    "answer": "A Verifiable Credential (VC) is a digital document containing claims about a person (such as their name, date of birth, or immigration status) that is cryptographically signed by an authoritative issuer (in this case, the Irish government). EireID issues VCs for your identity documents, which can be verified by third parties by checking the cryptographic signature — confirming authenticity without contacting the government directly each time.",
+    "keywords": [
+      "identity verification",
+      "immigration",
+      "government",
+      "Verifiable Credentials"
+    ]
+  },
+  {
+    "id": 168,
+    "category": "Technical Architecture",
+    "question": "Does EireID use blockchain or distributed ledger technology?",
+    "answer": "The business plan does not describe blockchain or distributed ledger technology as part of EireID's architecture. Instead, EireID uses a federated data model with cryptographic signing, PKI trust chains, and HSM-backed keys hosted on EU-sovereign cloud infrastructure. This is a more conventional but equally secure approach for government identity systems.",
+    "keywords": [
+      "identity verification",
+      "privacy",
+      "B2B",
+      "mobile app",
+      "cloud",
+      "government",
+      "HSM"
+    ]
+  },
+  {
+    "id": 169,
+    "category": "Security & Technology",
+    "question": "What does HSM-backed signing mean and why does it matter for security?",
+    "answer": "HSM stands for Hardware Security Module — a physical computing device that safeguards and manages cryptographic keys and performs encryption operations. HSM-backed signing means EireID's digital signatures are generated using keys stored in tamper-resistant hardware, making it virtually impossible for attackers to extract the signing keys even if they compromise EireID's software environment.",
+    "keywords": [
+      "security",
+      "digital signature",
+      "HSM",
+      "encryption"
+    ]
+  },
+  {
+    "id": 170,
+    "category": "General & Getting Started",
+    "question": "How does EireID handle system maintenance without disrupting access to services?",
+    "answer": "EireID's infrastructure uses a cloud-native microservices architecture with auto-scaling, load-balanced distributed authentication, and servers across multiple EU data centres with automatic failover. This design means individual components can be maintained or updated without taking the entire platform offline. Maintenance windows would be managed to minimise disruption, particularly for time-sensitive services like IRP verification.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "privacy",
+      "accessibility",
+      "cloud",
+      "EU",
+      "offline"
+    ]
+  },
+  {
+    "id": 171,
+    "category": "Business & API Integration",
+    "question": "What is the difference between the Standard, Professional, and Government enterprise licences?",
+    "answer": "Standard (€4,800/year) is designed for SMEs, universities, and employers needing moderate integration. Professional (€18,000/year) is for high-compliance organisations such as banks, fintechs, and insurers that require advanced verification features and higher volumes. Government and public bodies get the platform for free, with costs covered under digital transformation funding.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "employer",
+      "bank",
+      "free",
+      "government",
+      "cost"
+    ]
+  },
+  {
+    "id": 172,
+    "category": "Business & API Integration",
+    "question": "Can EireID be integrated into an existing government agency's own app or portal?",
+    "answer": "Yes. EireID's API and integration hub are designed to allow government agencies to embed EireID's identity verification into their own systems. The Integration Hub provides canonical adapters to all agencies, and the API gateway supports OAuth 2.0/OIDC for seamless integration with existing portals. Government bodies integrate for free under the transformation funding model.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "mobile app",
+      "AML",
+      "free",
+      "government"
+    ]
+  },
+  {
+    "id": 173,
+    "category": "EU & Cross-Border",
+    "question": "What happens to the EireID platform if Ireland leaves the EU (hypothetically)?",
+    "answer": "EireID is designed with GDPR and eIDAS compliance as core requirements. In a hypothetical EU exit scenario, the eIDAS cross-border recognition would be affected, but EireID's domestic functionality (Irish document storage, service access, and B2B verification) would remain operational. The regulatory and data sovereignty framework would need to be renegotiated, similar to the UK post-Brexit situation.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "eIDAS",
+      "privacy",
+      "B2B",
+      "mobile app",
+      "accessibility",
+      "EU"
+    ]
+  },
+  {
+    "id": 174,
+    "category": "Healthcare",
+    "question": "Can EireID be used for healthcare workers to verify their professional credentials?",
+    "answer": "Professional credentials (such as medical registration with CORU or the Medical Council) are held by professional regulatory bodies, not government identity databases currently integrated with EireID. However, EireID could serve as the identity verification layer in a future integration with these bodies' credential verification systems, enabling healthcare workers to share their professional status digitally.",
+    "keywords": [
+      "identity verification",
+      "privacy",
+      "government"
+    ]
+  },
+  {
+    "id": 175,
+    "category": "Privacy & GDPR",
+    "question": "Is there a way to report a problem or appeal a decision made using my EireID identity data?",
+    "answer": "GDPR provides the right to challenge automated decisions and to complain to the Data Protection Commission (DPC) if you believe your data has been misused. EireID as a GDPR-compliant platform must provide mechanisms to contest incorrect data, report problems, and escalate complaints. A dedicated support and appeals pathway would be required as part of the platform's user experience.",
+    "keywords": [
+      "identity verification",
+      "GDPR",
+      "privacy",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 176,
+    "category": "Accessibility & Inclusion",
+    "question": "Can EireID be used by a person with a visual impairment?",
+    "answer": "EireID is designed with inclusivity as a core value, and accessibility for users with disabilities is implied by this commitment. Modern mobile platforms (iOS and Android) provide extensive accessibility APIs (VoiceOver, TalkBack) that apps can leverage. As a government-backed platform, EireID would be expected to comply with accessibility standards such as WCAG 2.1 AA as required by EU Web Accessibility Directive.",
+    "keywords": [
+      "API",
+      "mobile app",
+      "accessibility",
+      "EU",
+      "PPS number",
+      "government"
+    ]
+  },
+  {
+    "id": 177,
+    "category": "Healthcare",
+    "question": "Can I use EireID to prove my vaccination status or health records?",
+    "answer": "EireID's current scope covers official government identity documents and public service access. Health records such as vaccination certificates (for example, for international travel) are managed by the HSE. EireID could serve as the identity verification backbone for accessing HSE health record systems, but direct storage of vaccination records in EireID is not described in the business plan.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 178,
+    "category": "Tax & Employment",
+    "question": "What is the conversion rate used in EireID's revenue projections?",
+    "answer": "EireID's revenue projections use a 0.02% conversion rate applied to estimated monthly verification volumes. This represents the proportion of verifications that generate a billable transaction at the B2B API rate. It is a conservative estimate reflecting early-stage adoption, with the rate expected to increase as more B2B clients onboard and verification volumes grow.",
+    "keywords": [
+      "identity verification",
+      "tax",
+      "API",
+      "B2B",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 179,
+    "category": "General & Getting Started",
+    "question": "How will EireID handle the onboarding of legacy government systems that may use outdated technology?",
+    "answer": "Legacy system integration is explicitly identified as a risk in the business plan. EireID uses API-based integration with canonical adapters in the Integration Hub, which can translate between modern and legacy data formats. A dedicated technical support team and phased onboarding approach are planned to manage the complexity of connecting to older government infrastructure.",
+    "keywords": [
+      "privacy",
+      "API",
+      "B2B",
+      "mobile app",
+      "elderly",
+      "cloud",
+      "onboarding",
+      "government"
+    ]
+  },
+  {
+    "id": 180,
+    "category": "Business & API Integration",
+    "question": "Can EireID be used to apply for a fishing or hunting licence?",
+    "answer": "Licences of this type are issued by state bodies such as Inland Fisheries Ireland. As EireID expands to cover all public services in Phase 3 and broader private/regulatory sectors in Phase 4, these licences could be accessible through the platform. The initial focus is on the four core government agencies (Revenue, NDLS, Immigration, DSP).",
+    "keywords": [
+      "driving licence",
+      "tax",
+      "immigration",
+      "mobile app",
+      "accessibility",
+      "government",
+      "NDLS"
+    ]
+  },
+  {
+    "id": 181,
+    "category": "Business & API Integration",
+    "question": "Can a property management company use EireID to vet tenants?",
+    "answer": "Yes. Property management companies can integrate EireID's API to verify tenant identities and confirm right-to-reside status. This replaces manual document collection and in-person checks, speeds up the tenancy application process, and ensures compliance with landlord obligations to verify tenants' legal right to rent.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "mobile app",
+      "landlord"
+    ]
+  },
+  {
+    "id": 182,
+    "category": "Business & API Integration",
+    "question": "Can EireID integrate with existing HR software used by employers?",
+    "answer": "Yes. Large employers using HR software platforms could integrate EireID's identity verification API to automate employee identity and right-to-work checks during onboarding. Standard API integration (OAuth 2.0/OIDC) is compatible with most modern HR platforms, and enterprise licences support deeper system integration.",
+    "keywords": [
+      "identity verification",
+      "API",
+      "B2B",
+      "onboarding",
+      "employer"
+    ]
+  },
+  {
+    "id": 183,
+    "category": "Privacy & GDPR",
+    "question": "Will using EireID affect my GDPR rights in any way — do I give up any protections?",
+    "answer": "No. Using EireID does not diminish your GDPR rights. You retain all rights under GDPR including the right to access, correct, and delete data; the right to data portability; the right to object; and the right not to be subject to solely automated decisions with legal effects. EireID's Consent Engine is designed to operationalise these rights.",
+    "keywords": [
+      "GDPR",
+      "privacy",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 184,
+    "category": "General & Getting Started",
+    "question": "What is the difference between identity verification and authentication in EireID?",
+    "answer": "Authentication is confirming that you are who you claim to be for the purpose of logging in (e.g., biometric unlock to open the app). Identity verification is confirming your legal identity to a third party (e.g., showing a QR code to a bank to prove you are the person named in your passport). EireID handles both: authentication for app access and verification for sharing credentials with relying parties.",
+    "keywords": [
+      "identity verification",
+      "biometric",
+      "QR code",
+      "passport",
+      "mobile app",
+      "accessibility",
+      "bank"
+    ]
+  },
+  {
+    "id": 185,
+    "category": "Financial Services & B2B",
+    "question": "Can EireID be used to verify identity for online gambling platforms?",
+    "answer": "Online gambling platforms in Ireland are required to verify customer ages and identities. EireID's identity verification API could serve this purpose for regulated gambling operators integrated with the platform. This would fall under the private-sector API ecosystem expansion planned for Phase 4.",
+    "keywords": [
+      "identity verification",
+      "API"
+    ]
+  },
+  {
+    "id": 186,
+    "category": "General & Getting Started",
+    "question": "How does EireID handle users who change their name — for example, after marriage?",
+    "answer": "Name changes are processed at the source government agencies (such as the Passport Office or DSP). Once your name change is reflected in the government database, EireID would automatically reflect the updated information in your credentials. The Marriage Certificate storage feature in EireID could also serve as supporting documentation for name change processes.",
+    "keywords": [
+      "passport",
+      "privacy",
+      "government"
+    ]
+  },
+  {
+    "id": 187,
+    "category": "Accessibility & Inclusion",
+    "question": "Can EireID be accessed by a person who is deaf or hard of hearing?",
+    "answer": "EireID is a primarily visual/text-based mobile app, which is inherently accessible for deaf and hard-of-hearing users who do not rely on audio. Accessibility features such as captions for any audio content and visual notifications for alerts would be expected as part of WCAG-compliant design. The text-based interface and visual QR code sharing are naturally accessible.",
+    "keywords": [
+      "QR code",
+      "mobile app",
+      "accessibility",
+      "push notifications"
+    ]
+  },
+  {
+    "id": 188,
+    "category": "Financial Services & B2B",
+    "question": "Is EireID planning to partner with any specific Irish banks for the initial rollout?",
+    "answer": "The business plan does not name specific banking partners for the Phase 2 banking integration rollout. It describes banks generally as key B2B clients and references the model established by MyGovID's banking partnerships. The B2B conversion journey targets banks through regulatory compliance alignment (AML/KYC requirements) rather than named partnerships.",
+    "keywords": [
+      "B2B",
+      "KYC",
+      "AML",
+      "bank",
+      "MyGovID"
+    ]
+  },
+  {
+    "id": 189,
+    "category": "Financials & Business Model",
+    "question": "What is the total addressable market (TAM) for EireID in Ireland?",
+    "answer": "Ireland's total addressable market for EireID is essentially every resident in the country — approximately 5.1 million people based on the 2022 Census. Additionally, the B2B market includes hundreds of banks, fintechs, insurers, landlords, employers, and universities in Ireland. The global European digital identity market context ($3.53 billion in 2025) provides the broader opportunity frame.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "mobile app",
+      "EU",
+      "landlord",
+      "employer",
+      "bank"
+    ]
+  },
+  {
+    "id": 190,
+    "category": "Business & API Integration",
+    "question": "How does EireID ensure that the verification result received by a business is authentic and not spoofed?",
+    "answer": "EireID's verification system uses cryptographically signed Verifiable Credentials with HSM-backed PKI trust chains. When a business receives a QR scan result, the response is signed by EireID's servers using keys that can only be verified against EireID's public key infrastructure. Any spoofed or tampered response would fail cryptographic verification, making fraud extremely difficult.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "B2B",
+      "cloud",
+      "HSM",
+      "Verifiable Credentials"
+    ]
+  },
+  {
+    "id": 191,
+    "category": "Immigration & IRP",
+    "question": "Can a foreign national who recently arrived in Ireland use EireID before getting their IRP?",
+    "answer": "EireID onboarding requires a supported document number or verified bank account. New arrivals who have a passport number may be able to initiate the process, but full functionality — particularly IRP-dependent services — would only be available after IRP issuance. The onboarding flow would need to accommodate different stages of the immigration registration process.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "passport",
+      "immigration",
+      "onboarding",
+      "bank"
+    ]
+  },
+  {
+    "id": 192,
+    "category": "General & Getting Started",
+    "question": "Can I give someone temporary access to my EireID for a specific transaction?",
+    "answer": "QR-based verification is inherently time-limited and single-use by design — each QR code is generated for a specific verification request and expires after a short window. This ensures that sharing your QR code for one transaction does not provide ongoing access to your identity. The Consent Engine also governs what data is disclosed in each interaction.",
+    "keywords": [
+      "identity verification",
+      "QR code",
+      "privacy",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 193,
+    "category": "Accessibility & Inclusion",
+    "question": "Does EireID support residents who use screen readers or other assistive technologies?",
+    "answer": "As a government-backed platform required to meet EU Web Accessibility Directive standards, EireID would be expected to support screen readers (such as VoiceOver on iOS and TalkBack on Android) and other assistive technologies. Accessible design is implied by the platform's explicit commitment to inclusivity for elderly and digitally anxious users.",
+    "keywords": [
+      "elderly",
+      "accessibility",
+      "EU",
+      "government"
+    ]
+  },
+  {
+    "id": 194,
+    "category": "Rollout & Strategy",
+    "question": "What is the Digital Public Services Plan 2030 and how does EireID fit into it?",
+    "answer": "The Digital Public Services Plan 2030 is the Irish government's framework for digitising public services, targeting 80% of citizens using digital ID by 2030. EireID is designed to be the platform that delivers this target. Government funding under this plan is EireID's primary financial source, and the plan provides the policy mandate and institutional backing for EireID's national rollout.",
+    "keywords": [
+      "government"
+    ]
+  },
+  {
+    "id": 195,
+    "category": "General & Getting Started",
+    "question": "Can EireID be adapted for use by other countries as a model?",
+    "answer": "EireID's architecture — federated data model, eIDAS compliance, microservices cloud infrastructure, B2B API revenue model — is designed to be scalable and replicable. While the business plan focuses on Ireland, the technical and business model could theoretically be adapted by other EU member states seeking to implement their own national digital identity platforms under the EUDI Wallet framework.",
+    "keywords": [
+      "identity verification",
+      "eIDAS",
+      "digital wallet",
+      "tax",
+      "privacy",
+      "API",
+      "B2B",
+      "cloud"
+    ]
+  },
+  {
+    "id": 196,
+    "category": "General & Getting Started",
+    "question": "How does EireID handle a situation where a resident's documents have been flagged by government systems?",
+    "answer": "If a credential is flagged — for example, if an IRP is declared invalid or a driving licence is suspended — EireID's real-time connection to government source systems would reflect this immediately. The credential status would update in the Core Registry, and any verification attempt would return the current status. The resident would be notified via the app.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "driving licence",
+      "mobile app",
+      "government"
+    ]
+  },
+  {
+    "id": 197,
+    "category": "Healthcare",
+    "question": "Can healthcare providers use EireID to verify patient identity before treatment?",
+    "answer": "Healthcare providers could integrate EireID for patient identity verification, particularly for GP surgeries, hospitals, and pharmacies that need to confirm a patient's identity and Medical Card status. This integration would fall within Phase 3 (national public services rollout) or Phase 4 (private sector expansion), depending on whether the healthcare provider is a public or private entity.",
+    "keywords": [
+      "identity verification",
+      "medical card"
+    ]
+  },
+  {
+    "id": 198,
+    "category": "Business & API Integration",
+    "question": "What is the role of the Developer Relations team at EireID?",
+    "answer": "The Developer Relations team is responsible for helping B2B organisations integrate with EireID's API. They provide technical onboarding support, manage developer documentation, assist with sandbox testing, support go-live processes, and act as the primary point of contact for technical queries from institutional partners. Their goal is to ensure smooth, fast integration that keeps institutions satisfied and reduces churn.",
+    "keywords": [
+      "API",
+      "B2B",
+      "onboarding"
+    ]
+  },
+  {
+    "id": 199,
+    "category": "Accessibility & Inclusion",
+    "question": "Can EireID be used to apply for a disability allowance or carer's payment?",
+    "answer": "Disability Allowance and Carer's Benefit/Allowance are administered by the DSP, which is one of EireID's four core integrated government systems. Social support applications are explicitly listed as services accessible through EireID, meaning eligible residents could apply for these payments through the app with their pre-verified identity.",
+    "keywords": [
+      "identity verification",
+      "mobile app",
+      "social welfare",
+      "accessibility",
+      "government"
+    ]
+  },
+  {
+    "id": 200,
+    "category": "Business & API Integration",
+    "question": "How does EireID's pricing compare to commercial identity verification services?",
+    "answer": "EireID's B2B verification pricing (€0.07–€0.20 per transaction) is designed to sit 85–90% below commercial KYC providers. Commercial providers typically charge €1–€5 or more per verification depending on the level of check required. This dramatic cost advantage is a core driver for institutional adoption and is sustainable because EireID's core infrastructure is publicly funded.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "cloud",
+      "KYC",
+      "cost"
+    ]
+  },
+  {
+    "id": 201,
+    "category": "General & Getting Started",
+    "question": "Can EireID share only part of my identity — for example, just my age without my full name?",
+    "answer": "Yes. EireID's Consent Engine supports selective disclosure and data minimisation. This means you can share only the specific attributes needed for a verification — for example, confirming you are over 18 without revealing your full name, address, or document number. This is a core privacy principle of the platform.",
+    "keywords": [
+      "identity verification",
+      "privacy"
+    ]
+  },
+  {
+    "id": 202,
+    "category": "Privacy & GDPR",
+    "question": "What is the difference between the Core Registry and the audit logs in EireID's architecture?",
+    "answer": "The Core Registry stores the current status of all credential references and device keys — it is the live database of active EireID credentials. Audit Logs are an immutable, append-only record of all actions and events that have occurred on the platform (verifications, logins, data sharing). The Registry tells you the current state; the Audit Logs tell you the history of everything that has happened.",
+    "keywords": [
+      "identity verification",
+      "privacy",
+      "mobile app"
+    ]
+  },
+  {
+    "id": 203,
+    "category": "Education & Students",
+    "question": "Can a college or university use EireID for student ID cards?",
+    "answer": "Universities are listed as target enterprise integration partners in EireID's Phase 4 rollout. A university could integrate EireID to issue and verify digital student IDs through the platform, enabling students to use EireID as their student identity credential for accessing campus services, libraries, exams, and other institution-specific functions.",
+    "keywords": [
+      "identity verification",
+      "B2B",
+      "student",
+      "accessibility"
+    ]
+  },
+  {
+    "id": 204,
+    "category": "Immigration & IRP",
+    "question": "How does EireID handle residents who have dual citizenship?",
+    "answer": "EireID is designed for residents of Ireland regardless of citizenship status. A dual citizen could register using their Irish documents (passport, PSC) or their IRP if they hold residence on the basis of non-EU citizenship. The platform focuses on Irish-issued documents and government records, so dual citizenship status in another country does not affect EireID functionality.",
+    "keywords": [
+      "IRP",
+      "Public Services Card",
+      "passport",
+      "onboarding",
+      "EU",
+      "government"
+    ]
+  },
+  {
+    "id": 205,
+    "category": "Social Services & Welfare",
+    "question": "Can EireID be used by someone who has never had a Public Services Card?",
+    "answer": "EireID allows onboarding via multiple document types — not only the PSC. A resident can use their passport number, IRP number, or a verified bank account to begin the onboarding process. This ensures that residents who do not yet have a PSC (such as recent arrivals) can still access EireID using other valid documents.",
+    "keywords": [
+      "identity verification",
+      "IRP",
+      "Public Services Card",
+      "passport",
+      "accessibility",
+      "onboarding",
+      "bank"
+    ]
+  }
+]

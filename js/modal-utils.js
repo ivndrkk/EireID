@@ -60,18 +60,38 @@ export function startFaceVerification(stateContainers, faceScanner, loadingSpinn
 }
 
 /**
+ * Opens a modal with a smooth reveal.
+ * @param {HTMLElement} modal 
+ */
+export function openModal(modal) {
+    if (!modal) return;
+    modal.style.display = 'block';
+    requestAnimationFrame(() => {
+        modal.classList.add('is-active');
+    });
+}
+
+/**
  * Closes the modal and triggers a reset.
  * @param {HTMLElement} modal
- * @param {Function} resetModalFn - Callback to reset the modal state.
+ * @param {Function} [resetModalFn] - Optional callback to reset the modal state.
  */
 export function closeModal(modal, resetModalFn) {
     if (!modal) return;
-    modal.classList.remove('is-open');
+    modal.classList.remove('is-active');
+    modal.classList.remove('is-open'); // Handle both class conventions
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    // Small delay to reset state after animation finishes
-    setTimeout(resetModalFn, 300);
+    
+    if (resetModalFn && typeof resetModalFn === 'function') {
+        setTimeout(resetModalFn, 300);
+    } else {
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 400);
+    }
 }
+
 
 /**
  * Sets up event listeners for standard modal controls.

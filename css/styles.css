@@ -6518,3 +6518,169 @@
     width: 100%;
 }
 
+/* --- Support & Help Styles --- */
+.search-bar-interactive:hover,
+.search-bar-interactive:focus-within {
+    transform: translateY(-4px) scale(1.01);
+    background: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.search-bar-interactive input:focus {
+    color: var(--color-text-heading);
+}
+
+.search-bar-interactive .iconify {
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.search-bar-interactive:focus-within .iconify {
+    opacity: 1 !important;
+    color: var(--color-bg-primary) !important;
+}
+
+/* Fix Hero content layout when no actions (CTA) are present */
+.hero:not(:has(.hero__actions)) .hero__content {
+    justify-content: center;
+    padding-bottom: var(--space-xl);
+}
+
+/* --- Search Suggestion Pills --- */
+.search-suggestion-pill {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.search-suggestion-pill:hover {
+    background: var(--color-bg-primary) !important;
+    color: var(--color-text-heading) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- Answer Modal (Quick Questions) --- */
+.q-modal {
+    position: absolute;
+    width: 90vw;
+    max-width: 650px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%) translateY(10px);
+}
+
+
+.q-modal.is-active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+}
+
+.q-modal__close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    z-index: 20;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--color-text-heading);
+}
+
+.q-modal__close:hover {
+    background: rgba(0,0,0,0.1);
+    transform: scale(1.1);
+}
+
+.q-modal__content {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(20px) !important;
+    display: flex;
+    padding: var(--space-xl);
+    gap: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: 
+        0 30px 60px -12px rgba(0,0,0,0.15), 
+        0 18px 36px -18px rgba(0,0,0,0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5) !important;
+    align-items: center;
+    border: none !important;
+}
+
+.q-modal__text {
+    flex: 1;
+    text-align: left;
+}
+
+.q-modal__question {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-heading);
+    letter-spacing: -0.02em;
+}
+
+.q-modal__answer {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text-body);
+    opacity: 0.8;
+}
+
+.q-modal__image {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+}
+
+.q-modal__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+@media (max-width: 768px) {
+    .q-modal__content {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: var(--space-xl) var(--space-lg);
+        gap: var(--space-md);
+        position: relative;
+    }
+
+    .q-modal__close {
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.08); /* slightly higher contrast for mobile tap */
+    }
+
+    .q-modal__text {
+        text-align: center;
+    }
+    .q-modal__question {
+        font-size: var(--font-size-lg);
+    }
+    .q-modal__image {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
