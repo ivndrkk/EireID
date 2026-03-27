@@ -157,6 +157,22 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollToTop(true);
 });
 
+/**
+ * escapeHTML
+ * Sanitizes a string to prevent XSS by escaping special HTML characters.
+ * @param {string} str - The string to sanitize.
+ * @returns {string} - The sanitized string.
+ */
+window.escapeHTML = function(str) {
+    if (!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+};
+
 // Added to prevent crashes if certain animations are missing or renamed in other files
 function initScrollReveal() {
     // Placeholder - handled by Locomotive Scroll's data-scroll-class directly
@@ -617,9 +633,9 @@ function initAIChat() {
         div.innerHTML = `
             <div class="ai-message__bubble">
                 <div class="ai-message__text-container">
-                    <p class="ai-message__text">${text}</p>
+                    <p class="ai-message__text">${escapeHTML(text)}</p>
                 </div>
-                <div class="ai-message__time">${timeStr}</div>
+                <div class="ai-message__time">${escapeHTML(timeStr)}</div>
             </div>`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
@@ -628,13 +644,14 @@ function initAIChat() {
     // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
         // Форматируем: переносы строк → <br>
-        const formatted = text.replace(/\n/g, '<br>');
+        // Security: Escape HTML first, then replace newlines with <br>
+        const formatted = escapeHTML(text).replace(/\n/g, '<br>');
 
         // Источники
         const sourcesHtml = sources.length > 0
             ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
-                 ${sources.map(s => `<a href="${s.url}" target="_blank" class="ai-message__source-link">${s.title}</a>`).join('')}
+                 ${sources.map(s => `<a href="${escapeHTML(s.url)}" target="_blank" class="ai-message__source-link">${escapeHTML(s.title)}</a>`).join('')}
                </div>`
             : '';
 
@@ -649,7 +666,7 @@ function initAIChat() {
                     <p class="ai-message__text">${formatted}</p>
                     ${sourcesHtml}
                 </div>
-                <div class="ai-message__time">${timeStr}</div>
+                <div class="ai-message__time">${escapeHTML(timeStr)}</div>
             </div>`;
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
@@ -872,7 +889,7 @@ function initGenesisModal() {
             const desc = layer.getAttribute('data-desc');
             if (vaultTooltip) {
                 gsap.to(vaultTooltip, { opacity: 0, duration: 0.2, onComplete: () => {
-                    vaultTooltip.innerHTML = `<strong>${title}:</strong> ${desc}`;
+                    vaultTooltip.innerHTML = `<strong>${escapeHTML(title)}:</strong> ${escapeHTML(desc)}`;
                     gsap.to(vaultTooltip, { opacity: 1, duration: 0.2 });
                 }});
             }
