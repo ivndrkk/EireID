@@ -451,23 +451,31 @@ document.addEventListener("DOMContentLoaded", () => {
         const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
         mTags.innerHTML = tagsHtml;
 
-        // Similar services logic
-        // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
+        // Similar services logic: Optimized single-pass greedy collection
         const currentTags = service._tagSet || new Set();
-        let similar = allServices.filter(s => {
-            if (s.id === service.id) return false;
+        const similar = [];
+        const others = [];
+
+        for (let i = 0; i < allServices.length; i++) {
+            const s = allServices[i];
+            if (s.id === service.id) continue;
+
             const matchesProvider = s.provider === service.provider;
             const matchesTags = (s.tags || []).some(t => currentTags.has(t));
-            return matchesProvider || matchesTags;
-        });
-        
+
+            if (matchesProvider || matchesTags) {
+                similar.push(s);
+            } else if (others.length < 3) {
+                others.push(s);
+            }
+        }
+
+        let results;
         if (similar.length < 3) {
-            const similarSet = new Set(similar);
-            const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
-            similar = [...similar, ...others].slice(0, 3);
+            results = [...similar, ...others].slice(0, 3);
         } else {
-            similar.sort(() => 0.5 - Math.random());
-            similar = similar.slice(0, 3);
+            // Shuffle and pick 3
+            results = similar.sort(() => 0.5 - Math.random()).slice(0, 3);
         }
 
         mSimilarGrid.innerHTML = '';
@@ -475,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
         const fragment = document.createDocumentFragment();
 
-        similar.forEach(s => {
+        results.forEach(s => {
             const scard = document.createElement('article');
             // Remove data-scroll which causes visibility issues inside a fixed modal
             scard.className = 'service-card logo-box--glass';
