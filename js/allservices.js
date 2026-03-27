@@ -401,6 +401,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function filterData() {
         const searchVal = searchInput.value.toLowerCase();
 
+        // Reset revealed states to allow re-animation after update
+        document.querySelectorAll('[data-scroll-class="is-revealed"]').forEach(el => {
+            el.classList.remove('is-revealed');
+        });
+
         filteredData = allServices.filter(service => {
             let matchProvider = true;
             let matchTag = true;
