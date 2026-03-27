@@ -1,3 +1,5 @@
+import { setupModalListeners, resetModal } from './modal-utils.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("services-grid");
     const searchInput = document.getElementById("search-input");
@@ -218,9 +220,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof irishGovServicesData !== 'undefined') {
         allServices = irishGovServicesData;
 
-        // Optimization: Pre-compute lowercase search strings
+        // Optimization: Pre-compute lowercase search strings and tag sets
         allServices.forEach(s => {
             s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+            s._tagSet = new Set(s.tags || []);
         });
 
         populateFilters(allServices);
@@ -411,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (currentTagFilter !== "all") {
-                matchTag = service.tags && service.tags.includes(currentTagFilter);
+                matchTag = service._tagSet && service._tagSet.has(currentTagFilter);
             }
 
             if (searchVal) {
@@ -431,46 +434,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function switchModalState(stateId) {
-        stateContainers.forEach(container => {
-            container.classList.remove('is-active');
-            if (container.id === stateId) {
-                container.classList.add('is-active');
-            }
-        });
-        
-        // Reset scroll position when switching states
-        const modalContent = document.querySelector('.service-modal__content');
-        if (modalContent) modalContent.scrollTop = 0;
-    }
-
-    function resetModal() {
-        switchModalState('sm-content-details');
-        if (faceScanner) faceScanner.style.display = 'flex';
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
-        if (step2Status) step2Status.textContent = 'Verifying identity...';
-    }
-
-    function startFaceVerification() {
-        switchModalState('sm-content-step2');
-        
-        // Phase 1: Scanning (3s)
-        setTimeout(() => {
-            faceScanner.style.display = 'none';
-            loadingSpinner.style.display = 'block';
-            step2Status.textContent = 'Processing application...';
-            
-            // Phase 2: Loading (5s)
-            setTimeout(() => {
-                switchModalState('sm-content-success');
-            }, 5000);
-            
-        }, 3000);
-    }
+    const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
 
     // Modal Logic
     function openModal(service) {
-        resetModal(); // Always start from details
+        resetModalLocal(); // Always start from details
         mProvider.textContent = service.provider;
         mTitle.textContent = service.name;
         mDesc.textContent = service.description;
@@ -480,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Similar services logic
         // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
-        const currentTags = new Set(service.tags || []);
+        const currentTags = service._tagSet || new Set();
         let similar = allServices.filter(s => {
             if (s.id === service.id) return false;
             const matchesProvider = s.provider === service.provider;
@@ -489,7 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         if (similar.length < 3) {
-            const others = allServices.filter(s => s.id !== service.id && !similar.includes(s));
+            const similarSet = new Set(similar);
+            const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
             similar = [...similar, ...others].slice(0, 3);
         } else {
             similar.sort(() => 0.5 - Math.random());
@@ -497,6 +466,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         mSimilarGrid.innerHTML = '';
+
+        // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+        const fragment = document.createDocumentFragment();
+
         similar.forEach(s => {
             const scard = document.createElement('article');
             // Remove data-scroll which causes visibility issues inside a fixed modal
@@ -518,38 +491,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 const mContent = document.querySelector('.service-modal__content');
                 if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
             });
-            mSimilarGrid.appendChild(scard);
+            fragment.appendChild(scard);
         });
+
+        mSimilarGrid.appendChild(fragment);
 
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
     }
 
-    function closeModal() {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        // Small delay to reset state after animation finishes
-        setTimeout(resetModal, 300);
-    }
-
-    // Set up application demo listeners
-    if (applyBtn) {
-        applyBtn.addEventListener('click', () => switchModalState('sm-content-step1'));
-    }
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => switchModalState('sm-content-cancelled'));
-    }
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', () => startFaceVerification());
-    }
-    if (closeCancelledBtn) {
-        closeCancelledBtn.addEventListener('click', closeModal);
-    }
-    if (closeSuccessBtn) {
-        closeSuccessBtn.addEventListener('click', closeModal);
-    }
+    // Set up standard modal controls using utility
+    setupModalListeners({
+        modal,
+        modalClose,
+        modalOverlay,
+        applyBtn,
+        cancelBtn,
+        confirmBtn,
+        closeCancelledBtn,
+        closeSuccessBtn,
+        stateContainers,
+        faceScanner,
+        loadingSpinner,
+        step2Status,
+        resetModalFn: resetModalLocal
+    });
 
     // Optimization: Debounce search input
     searchInput.addEventListener("input", debounce(filterData, 250));
@@ -557,15 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadMoreBtn.addEventListener('click', () => {
         currentPage++;
         renderPagination(true);
-    });
-
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-            closeModal();
-        }
     });
 
     let resizeTimer;

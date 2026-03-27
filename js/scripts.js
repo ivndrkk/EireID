@@ -174,6 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollToTop(true);
 });
 
+/**
+ * escapeHTML
+ * Sanitizes a string to prevent XSS by escaping special HTML characters.
+ * @param {string} str - The string to sanitize.
+ * @returns {string} - The sanitized string.
+ */
+window.escapeHTML = function(str) {
+    if (!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+};
+
 // Added to prevent crashes if certain animations are missing or renamed in other files
 function initScrollReveal() {
     // Placeholder - handled by Locomotive Scroll's data-scroll-class directly
@@ -644,7 +660,8 @@ function initAIChat() {
 
     // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
-        // Securely escape and format: escape first, then replace newlines with <br>
+        // Форматируем: переносы строк → <br>
+        // Security: Escape HTML first, then replace newlines with <br>
         const formatted = escapeHTML(text).replace(/\n/g, '<br>');
 
         // Источники
@@ -738,18 +755,22 @@ function initAIChat() {
 
 /* ─── FAQ Accordion ─────────────────── */
 function initFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq__item');
+    const faqItems = Array.from(document.querySelectorAll('.faq__item')).map(item => ({
+        element: item,
+        button: item.querySelector('.faq__question')
+    }));
     
-    faqItems.forEach(item => {
-        const questionBtn = item.querySelector('.faq__question');
+    faqItems.forEach(itemObj => {
+        const { element: item, button: questionBtn } = itemObj;
+        if (!questionBtn) return;
         
         questionBtn.addEventListener('click', () => {
             const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
             
             // Close all items first
-            faqItems.forEach(otherItem => {
-                otherItem.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
-                otherItem.classList.remove('is-active');
+            faqItems.forEach(otherItemObj => {
+                otherItemObj.button.setAttribute('aria-expanded', 'false');
+                otherItemObj.element.classList.remove('is-active');
             });
             
             // If the clicked item was not expanded, open it
