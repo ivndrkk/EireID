@@ -354,19 +354,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const targetOffset = currentIndex * cardWidth;
         
-        // Move container using smooth scrolling
-        carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
-        
-        // Removed buggy Locomotive vertical translation
-        
-        setTimeout(updateCarouselNav, 400);
+        // Move container using GSAP for a more controlled, synchronised animation
+        // and re-implement the vertical translation "lift" effect.
+        if (typeof gsap !== 'undefined') {
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    updateCarouselNav();
+                    if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                        window.locoScroll.update();
+                    }
+                }
+            });
 
-        // Recalculate locoScroll to register offsets for parallax components
-        setTimeout(() => {
-            if (window.locoScroll && typeof window.locoScroll.update === 'function') {
-                window.locoScroll.update();
-            }
-        }, 400);
+            // Smoothly animate the scrollLeft property
+            tl.to(carousel, {
+                scrollLeft: targetOffset,
+                duration: 0.8,
+                ease: "power2.inOut"
+            });
+
+            // Vertical "lift" translation effect to make the transition more dynamic
+            tl.to(cards, {
+                y: -12,
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0).to(cards, {
+                y: 0,
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.in"
+            }, 0.4);
+        } else {
+            // Fallback for native smooth scrolling if GSAP is unavailable
+            carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
+
+            setTimeout(updateCarouselNav, 400);
+            setTimeout(() => {
+                if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                    window.locoScroll.update();
+                }
+            }, 400);
+        }
     }
 
     if (prevBtn) prevBtn.addEventListener('click', () => shiftCarousel('prev'));
