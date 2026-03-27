@@ -1,3 +1,5 @@
+import { setupModalListeners, resetModal } from './modal-utils.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const carousel = document.getElementById("resident-services-carousel");
     const searchInput = document.getElementById("resident-search-input");
@@ -197,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         residentServices.forEach(s => {
             s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+            s._tagSet = new Set(s.tags || []);
         });
 
         // Pick 6 random services to show by default
@@ -233,17 +236,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let tagsHtml = '';
         if (service.tags && Array.isArray(service.tags)) {
-            tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+            tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
         }
         
         const contentHtml = `
             <div class="service-card__header">
-                <span class="service-card__provider">${service.provider}</span>
+                <span class="service-card__provider">${escapeHTML(service.provider)}</span>
                 <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-1"></span>
             </div>
             <div class="service-card__body">
-                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.2">${service.name}</h3>
-                <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${service.description}</p>
+                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.2">${escapeHTML(service.name)}</h3>
+                <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${escapeHTML(service.description)}</p>
             </div>
             <div class="service-card__footer">
                 <div class="service-card__tags">
@@ -354,19 +357,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const targetOffset = currentIndex * cardWidth;
         
-        // Move container using smooth scrolling
-        carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
-        
-        // Removed buggy Locomotive vertical translation
-        
-        setTimeout(updateCarouselNav, 400);
+        // Move container using GSAP for a more controlled, synchronised animation
+        // and re-implement the vertical translation "lift" effect.
+        if (typeof gsap !== 'undefined') {
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    updateCarouselNav();
+                    if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                        window.locoScroll.update();
+                    }
+                }
+            });
 
-        // Recalculate locoScroll to register offsets for parallax components
-        setTimeout(() => {
-            if (window.locoScroll && typeof window.locoScroll.update === 'function') {
-                window.locoScroll.update();
-            }
-        }, 400);
+            // Smoothly animate the scrollLeft property
+            tl.to(carousel, {
+                scrollLeft: targetOffset,
+                duration: 0.8,
+                ease: "power2.inOut"
+            });
+
+            // Vertical "lift" translation effect to make the transition more dynamic
+            tl.to(cards, {
+                y: -12,
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, 0).to(cards, {
+                y: 0,
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.in"
+            }, 0.4);
+        } else {
+            // Fallback for native smooth scrolling if GSAP is unavailable
+            carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
+
+            setTimeout(updateCarouselNav, 400);
+            setTimeout(() => {
+                if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                    window.locoScroll.update();
+                }
+            }, 400);
+        }
     }
 
     if (prevBtn) prevBtn.addEventListener('click', () => shiftCarousel('prev'));
@@ -406,54 +438,22 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener("input", debounce(filterData, 250));
     }
 
-    // Modal logic (copied from allservices.js to provide exactly the same functionality)
-    function switchModalState(stateId) {
-        stateContainers.forEach(container => {
-            container.classList.remove('is-active');
-            if (container.id === stateId) {
-                container.classList.add('is-active');
-            }
-        });
-        
-        const modalContent = document.querySelector('.service-modal__content');
-        if (modalContent) modalContent.scrollTop = 0;
-    }
-
-    function resetModal() {
-        switchModalState('sm-content-details');
-        if (faceScanner) faceScanner.style.display = 'flex';
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
-        if (step2Status) step2Status.textContent = 'Verifying identity...';
-    }
-
-    function startFaceVerification() {
-        switchModalState('sm-content-step2');
-        setTimeout(() => {
-            if (faceScanner) faceScanner.style.display = 'none';
-            if (loadingSpinner) loadingSpinner.style.display = 'block';
-            if (step2Status) step2Status.textContent = 'Processing application...';
-            
-            setTimeout(() => {
-                switchModalState('sm-content-success');
-            }, 5000);
-            
-        }, 3000);
-    }
+    const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
 
     function openModal(service) {
-        resetModal();
+        resetModalLocal();
         if (mProvider) mProvider.textContent = service.provider;
         if (mTitle) mTitle.textContent = service.name;
         if (mDesc) mDesc.textContent = service.description;
 
         if (mTags) {
-            const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+            const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
             mTags.innerHTML = tagsHtml;
         }
 
         if (mSimilarGrid) {
             // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
-            const currentTags = new Set(service.tags || []);
+            const currentTags = service._tagSet || new Set();
             let similar = residentServices.filter(s => {
                 if (s.id === service.id) return false;
                 const matchesProvider = s.provider === service.provider;
@@ -462,7 +462,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             
             if (similar.length < 3) {
-                const others = residentServices.filter(s => s.id !== service.id && !similar.includes(s));
+                const similarSet = new Set(similar);
+                const others = residentServices.filter(s => s.id !== service.id && !similarSet.has(s));
                 similar = [...similar, ...others].slice(0, 3);
             } else {
                 similar.sort(() => 0.5 - Math.random());
@@ -470,6 +471,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             mSimilarGrid.innerHTML = '';
+
+            // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+            const fragment = document.createDocumentFragment();
+
             similar.forEach(s => {
                 const scard = document.createElement('article');
                 scard.className = 'service-card logo-box--glass';
@@ -477,8 +482,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 scard.style.minHeight = '140px';
                 scard.innerHTML = `
                     <div class="service-card__body">
-                        <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${s.name}</h3>
-                        <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${s.description}</p>
+                        <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                        <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                     </div>
                 `;
                 scard.addEventListener('click', () => {
@@ -486,8 +491,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const mc = document.querySelector('.service-modal__content');
                     if (mc) mc.scrollTop = 0;
                 });
-                mSimilarGrid.appendChild(scard);
+                fragment.appendChild(scard);
             });
+
+            mSimilarGrid.appendChild(fragment);
         }
 
         if (modal) {
@@ -497,29 +504,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
-
-    function closeModal() {
-        if (modal) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            setTimeout(resetModal, 300);
-        }
-    }
-
-    if (applyBtn) applyBtn.addEventListener('click', () => switchModalState('sm-content-step1'));
-    if (cancelBtn) cancelBtn.addEventListener('click', () => switchModalState('sm-content-cancelled'));
-    if (confirmBtn) confirmBtn.addEventListener('click', () => startFaceVerification());
-    if (closeCancelledBtn) closeCancelledBtn.addEventListener('click', closeModal);
-    if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
-
-    if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
-            closeModal();
-        }
+    // Set up standard modal controls using utility
+    setupModalListeners({
+        modal,
+        modalClose,
+        modalOverlay,
+        applyBtn,
+        cancelBtn,
+        confirmBtn,
+        closeCancelledBtn,
+        closeSuccessBtn,
+        stateContainers,
+        faceScanner,
+        loadingSpinner,
+        step2Status,
+        resetModalFn: resetModalLocal
     });
 });
