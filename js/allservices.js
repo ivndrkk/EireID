@@ -305,17 +305,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let tagsHtml = '';
         if (service.tags && Array.isArray(service.tags)) {
-            tagsHtml = service.tags.map(tag => `<span class="service-card__tag" data-reveal>${tag}</span>`).join('');
+            tagsHtml = service.tags.map(tag => `<span class="service-card__tag" data-reveal>${escapeHTML(tag)}</span>`).join('');
         }
         
         const contentHtml = `
             <div class="service-card__header">
-                <span class="service-card__provider" data-reveal>${service.provider}</span>
+                <span class="service-card__provider" data-reveal>${escapeHTML(service.provider)}</span>
                 <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right"></span>
             </div>
             <div class="service-card__body">
-                <h3 class="service-card__title" data-reveal>${service.name}</h3>
-                <p class="service-card__desc" data-reveal>${service.description}</p>
+                <h3 class="service-card__title" data-reveal>${escapeHTML(service.name)}</h3>
+                <p class="service-card__desc" data-reveal>${escapeHTML(service.description)}</p>
             </div>
             <div class="service-card__footer">
                 <div class="service-card__tags">
@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mTitle.textContent = service.name;
         mDesc.textContent = service.description;
 
-        const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+        const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
         mTags.innerHTML = tagsHtml;
 
         // Similar services logic
@@ -490,7 +490,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         if (similar.length < 3) {
-            // Optimization: Convert similar array to a Set for O(1) lookup inside the filter loop
             const similarSet = new Set(similar);
             const others = allServices.filter(s => s.id !== service.id && !similarSet.has(s));
             similar = [...similar, ...others].slice(0, 3);
@@ -516,8 +515,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             scard.innerHTML = `
                 <div class="service-card__body">
-                    <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${s.name}</h3>
-                    <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${s.description}</p>
+                    <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                    <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                 </div>
             `;
             scard.addEventListener('click', () => {
