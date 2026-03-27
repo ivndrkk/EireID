@@ -59,27 +59,40 @@ document.addEventListener("DOMContentLoaded", () => {
         const label = dropdownEl.querySelector('.custom-dropdown__label');
         const list = dropdownEl.querySelector('.custom-dropdown__menu');
         
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
+        function toggleDropdown() {
             const isOpen = dropdownEl.classList.contains('is-open');
             // Close all others
             document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
-                el.classList.remove('is-open');
-                el.querySelector('.custom-dropdown__trigger').setAttribute('aria-expanded', 'false');
+                if (el !== dropdownEl) {
+                    el.classList.remove('is-open');
+                    el.querySelector('.custom-dropdown__trigger').setAttribute('aria-expanded', 'false');
+                }
             });
             
-            if (!isOpen) {
+            if (isOpen) {
+                dropdownEl.classList.remove('is-open');
+                trigger.setAttribute('aria-expanded', 'false');
+            } else {
                 dropdownEl.classList.add('is-open');
                 trigger.setAttribute('aria-expanded', 'true');
+                // Focus selected item
+                const selected = list.querySelector('.is-selected');
+                if (selected) selected.focus();
             }
+        }
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleDropdown();
         });
 
-        list.addEventListener('click', (e) => {
-            const item = e.target.closest('.custom-dropdown__item');
+        function selectItem(item) {
             if (!item) return;
-
             // Update selection state UI
-            list.querySelectorAll('.custom-dropdown__item').forEach(li => li.classList.remove('is-selected', 'aria-selected'));
+            list.querySelectorAll('.custom-dropdown__item').forEach(li => {
+                li.classList.remove('is-selected');
+                li.setAttribute('aria-selected', 'false');
+            });
             item.classList.add('is-selected');
             item.setAttribute('aria-selected', 'true');
             
@@ -89,9 +102,64 @@ document.addEventListener("DOMContentLoaded", () => {
             // Close dropdown
             dropdownEl.classList.remove('is-open');
             trigger.setAttribute('aria-expanded', 'false');
+            trigger.focus();
             
             const val = item.getAttribute('data-value');
             if (onSelectCallback) onSelectCallback(val);
+        }
+
+        list.addEventListener('click', (e) => {
+            const item = e.target.closest('.custom-dropdown__item');
+            selectItem(item);
+        });
+
+        dropdownEl.addEventListener('keydown', (e) => {
+            const isOpen = dropdownEl.classList.contains('is-open');
+            const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
+            const currentIndex = items.indexOf(document.activeElement);
+
+            switch (e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (!isOpen) {
+                        toggleDropdown();
+                    } else {
+                        const nextIndex = (currentIndex + 1) % items.length;
+                        items[nextIndex].focus();
+                    }
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (isOpen) {
+                        const prevIndex = (currentIndex - 1 + items.length) % items.length;
+                        items[prevIndex].focus();
+                    }
+                    break;
+                case 'Enter':
+                case ' ':
+                    e.preventDefault();
+                    if (!isOpen) {
+                        toggleDropdown();
+                    } else if (currentIndex !== -1) {
+                        selectItem(items[currentIndex]);
+                    }
+                    break;
+                case 'Escape':
+                    if (isOpen) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dropdownEl.classList.remove('is-open');
+                        trigger.setAttribute('aria-expanded', 'false');
+                        trigger.focus();
+                    }
+                    break;
+                case 'Tab':
+                    if (isOpen) {
+                        dropdownEl.classList.remove('is-open');
+                        trigger.setAttribute('aria-expanded', 'false');
+                    }
+                    break;
+            }
         });
     }
 
@@ -153,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = document.createElement("li");
             li.className = "custom-dropdown__item";
             li.setAttribute('role', 'option');
+            li.setAttribute('tabindex', '-1');
             li.setAttribute('data-value', provider);
             li.textContent = provider;
             providerList.appendChild(li);
@@ -163,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = document.createElement("li");
             li.className = "custom-dropdown__item";
             li.setAttribute('role', 'option');
+            li.setAttribute('tabindex', '-1');
             li.setAttribute('data-value', tag);
             li.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
             tagList.appendChild(li);

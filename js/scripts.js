@@ -170,6 +170,7 @@ function initMobileMenu() {
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.setAttribute('aria-label', !isExpanded ? 'Close menu' : 'Open menu');
             navList.classList.toggle('is-open');
         });
     }
@@ -228,6 +229,7 @@ function initExploreButton(locoScroll) {
             if (navList && navList.classList.contains('is-open')) {
                 navList.classList.remove('is-open');
                 menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Open menu');
             }
         });
     });

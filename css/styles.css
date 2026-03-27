@@ -242,7 +242,8 @@
 }
 
 .nav__item--dropdown:hover .nav__dropdown-icon,
-.nav__item--dropdown.is-active .nav__dropdown-icon {
+.nav__item--dropdown.is-active .nav__dropdown-icon,
+.nav__item--dropdown:focus-within .nav__dropdown-icon {
     transform: rotate(180deg);
 }
 
@@ -258,7 +259,8 @@
 }
 
 .nav__item--dropdown:hover .nav__dropdown,
-.nav__item--dropdown.is-active .nav__dropdown {
+.nav__item--dropdown.is-active .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown {
     display: block;
     animation: fadeIn 0.2s ease-out;
 }
@@ -1988,6 +1990,12 @@
     padding: 4px 4px 4px 16px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ai-chat-form:focus-within {
+    border-color: var(--color-bg-primary);
+    box-shadow: 0 0 0 3px rgba(164, 229, 183, 0.3);
 }
 
 .ai-chat-input {
@@ -2718,8 +2726,10 @@
 }
 
 .custom-dropdown__item:hover,
-.custom-dropdown__item.is-highlighted {
+.custom-dropdown__item.is-highlighted,
+.custom-dropdown__item:focus {
     background: rgba(164, 229, 183, 0.3);
+    outline: none;
 }
 
 .custom-dropdown__item.is-selected {
