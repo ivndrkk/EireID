@@ -233,17 +233,17 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let tagsHtml = '';
         if (service.tags && Array.isArray(service.tags)) {
-            tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+            tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
         }
         
         const contentHtml = `
             <div class="service-card__header">
-                <span class="service-card__provider">${service.provider}</span>
+                <span class="service-card__provider">${escapeHTML(service.provider)}</span>
                 <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-1"></span>
             </div>
             <div class="service-card__body">
-                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.2">${service.name}</h3>
-                <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${service.description}</p>
+                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.2">${escapeHTML(service.name)}</h3>
+                <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${escapeHTML(service.description)}</p>
             </div>
             <div class="service-card__footer">
                 <div class="service-card__tags">
@@ -471,7 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mDesc) mDesc.textContent = service.description;
 
         if (mTags) {
-            const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${tag}</span>`).join('');
+            const tagsHtml = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
             mTags.innerHTML = tagsHtml;
         }
 
@@ -502,8 +502,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 scard.style.minHeight = '140px';
                 scard.innerHTML = `
                     <div class="service-card__body">
-                        <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${s.name}</h3>
-                        <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${s.description}</p>
+                        <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                        <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                     </div>
                 `;
                 scard.addEventListener('click', () => {
