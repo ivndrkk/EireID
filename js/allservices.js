@@ -59,35 +59,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const label = dropdownEl.querySelector('.custom-dropdown__label');
         const list = dropdownEl.querySelector('.custom-dropdown__menu');
         
-        function toggleDropdown() {
-            const isOpen = dropdownEl.classList.contains('is-open');
-            // Close all others
-            document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
-                if (el !== dropdownEl) {
-                    el.classList.remove('is-open');
-                    el.querySelector('.custom-dropdown__trigger').setAttribute('aria-expanded', 'false');
-                }
-            });
+        let highlightedIndex = -1;
+
+        function updateHighlightedItem(index) {
+            const items = list.querySelectorAll('.custom-dropdown__item');
+            items.forEach(li => li.classList.remove('is-highlighted'));
             
-            if (isOpen) {
-                dropdownEl.classList.remove('is-open');
-                trigger.setAttribute('aria-expanded', 'false');
+            if (index >= 0 && index < items.length) {
+                const item = items[index];
+                item.classList.add('is-highlighted');
+                trigger.setAttribute('aria-activedescendant', item.id);
+                item.scrollIntoView({ block: 'nearest' });
+                highlightedIndex = index;
             } else {
-                dropdownEl.classList.add('is-open');
-                trigger.setAttribute('aria-expanded', 'true');
-                // Focus selected item
-                const selected = list.querySelector('.is-selected');
-                if (selected) selected.focus();
+                trigger.removeAttribute('aria-activedescendant');
+                highlightedIndex = -1;
             }
         }
 
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleDropdown();
-        });
-
         function selectItem(item) {
             if (!item) return;
+
             // Update selection state UI
             list.querySelectorAll('.custom-dropdown__item').forEach(li => {
                 li.classList.remove('is-selected');
@@ -100,65 +92,116 @@ document.addEventListener("DOMContentLoaded", () => {
             label.textContent = item.textContent;
             
             // Close dropdown
-            dropdownEl.classList.remove('is-open');
-            trigger.setAttribute('aria-expanded', 'false');
-            trigger.focus();
+            closeDropdown();
             
             const val = item.getAttribute('data-value');
             if (onSelectCallback) onSelectCallback(val);
         }
 
-        list.addEventListener('click', (e) => {
-            const item = e.target.closest('.custom-dropdown__item');
-            selectItem(item);
+        function openDropdown() {
+            // Close all others
+            document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
+                if (el !== dropdownEl) {
+                    el.classList.remove('is-open');
+                    el.querySelector('.custom-dropdown__trigger').setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            dropdownEl.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+
+            // Initial highlight: current selected item
+            const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
+            const selectedIndex = items.findIndex(li => li.classList.contains('is-selected'));
+            updateHighlightedItem(selectedIndex >= 0 ? selectedIndex : 0);
+        }
+
+        function closeDropdown() {
+            dropdownEl.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.removeAttribute('aria-activedescendant');
+            highlightedIndex = -1;
+        }
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdownEl.classList.contains('is-open');
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
         });
 
-        dropdownEl.addEventListener('keydown', (e) => {
+        trigger.addEventListener('keydown', (e) => {
             const isOpen = dropdownEl.classList.contains('is-open');
-            const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
-            const currentIndex = items.indexOf(document.activeElement);
+            const items = list.querySelectorAll('.custom-dropdown__item');
 
             switch (e.key) {
+                case 'Enter':
+                case ' ':
+                    e.preventDefault();
+                    if (isOpen) {
+                        if (highlightedIndex >= 0) {
+                            selectItem(items[highlightedIndex]);
+                        }
+                    } else {
+                        openDropdown();
+                    }
+                    break;
                 case 'ArrowDown':
                     e.preventDefault();
                     if (!isOpen) {
-                        toggleDropdown();
+                        openDropdown();
                     } else {
-                        const nextIndex = (currentIndex + 1) % items.length;
-                        items[nextIndex].focus();
+                        updateHighlightedItem(Math.min(highlightedIndex + 1, items.length - 1));
                     }
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
-                    if (isOpen) {
-                        const prevIndex = (currentIndex - 1 + items.length) % items.length;
-                        items[prevIndex].focus();
-                    }
-                    break;
-                case 'Enter':
-                case ' ':
-                    e.preventDefault();
                     if (!isOpen) {
-                        toggleDropdown();
-                    } else if (currentIndex !== -1) {
-                        selectItem(items[currentIndex]);
+                        openDropdown();
+                    } else {
+                        updateHighlightedItem(Math.max(highlightedIndex - 1, 0));
                     }
                     break;
                 case 'Escape':
                     if (isOpen) {
                         e.preventDefault();
                         e.stopPropagation();
-                        dropdownEl.classList.remove('is-open');
-                        trigger.setAttribute('aria-expanded', 'false');
-                        trigger.focus();
+                        closeDropdown();
                     }
                     break;
-                case 'Tab':
+                case 'Home':
                     if (isOpen) {
-                        dropdownEl.classList.remove('is-open');
-                        trigger.setAttribute('aria-expanded', 'false');
+                        e.preventDefault();
+                        updateHighlightedItem(0);
                     }
                     break;
+                case 'End':
+                    if (isOpen) {
+                        e.preventDefault();
+                        updateHighlightedItem(items.length - 1);
+                    }
+                    break;
+            }
+        });
+
+        list.addEventListener('mouseover', (e) => {
+            const item = e.target.closest('.custom-dropdown__item');
+            if (item) {
+                const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
+                const index = items.indexOf(item);
+                if (index !== -1) {
+                    updateHighlightedItem(index);
+                }
+            }
+        });
+
+        list.addEventListener('click', (e) => {
+            const item = e.target.closest('.custom-dropdown__item');
+            if (item) {
+                selectItem(item);
             }
         });
     }
@@ -216,27 +259,34 @@ document.addEventListener("DOMContentLoaded", () => {
         const providerList = document.getElementById('provider-list');
         const tagList = document.getElementById('tag-list');
 
+        // Optimization: Use DocumentFragment to batch DOM insertions
+        const providerFragment = document.createDocumentFragment();
+        const tagFragment = document.createDocumentFragment();
+
         // Add providers
-        Array.from(providers).sort().forEach(provider => {
+        Array.from(providers).sort().forEach((provider, index) => {
             const li = document.createElement("li");
+            li.id = `provider-option-${index}`;
             li.className = "custom-dropdown__item";
             li.setAttribute('role', 'option');
-            li.setAttribute('tabindex', '-1');
             li.setAttribute('data-value', provider);
             li.textContent = provider;
-            providerList.appendChild(li);
+            providerFragment.appendChild(li);
         });
 
         // Add tags
-        Array.from(tags).sort().forEach(tag => {
+        Array.from(tags).sort().forEach((tag, index) => {
             const li = document.createElement("li");
+            li.id = `tag-option-${index}`;
             li.className = "custom-dropdown__item";
             li.setAttribute('role', 'option');
-            li.setAttribute('tabindex', '-1');
             li.setAttribute('data-value', tag);
             li.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
-            tagList.appendChild(li);
+            tagFragment.appendChild(li);
         });
+
+        providerList.appendChild(providerFragment);
+        tagList.appendChild(tagFragment);
     }
 
     function createCardElement(service, isFeatured = false) {
@@ -374,6 +424,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         currentPage = 1;
         renderPagination();
+
+        // Always return to top when filtering/searching
+        if (typeof window.scrollToTop === 'function') {
+            window.scrollToTop(true);
+        }
     }
 
     function switchModalState(stateId) {
@@ -424,10 +479,12 @@ document.addEventListener("DOMContentLoaded", () => {
         mTags.innerHTML = tagsHtml;
 
         // Similar services logic
+        // Optimization: Convert tags to a Set for O(1) lookup inside the filter loop
+        const currentTags = new Set(service.tags || []);
         let similar = allServices.filter(s => {
             if (s.id === service.id) return false;
             const matchesProvider = s.provider === service.provider;
-            const matchesTags = (s.tags || []).some(t => (service.tags || []).includes(t));
+            const matchesTags = (s.tags || []).some(t => currentTags.has(t));
             return matchesProvider || matchesTags;
         });
         

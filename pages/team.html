@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EireID - Your Digital Identity">
-    <title>EireID</title>
+    <meta name="description" content="Meet the team behind EireID – building Ireland's secure digital identity future">
+    <title>Our Team – EireID</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,55 +15,637 @@
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
 
+    <!-- Locomotive Scroll -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
     <!-- CSS -->
-    <link rel="stylesheet" href="./../css/common.css">
-    <link rel="stylesheet" href="./../css/styles.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/team.css?v=2">
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <!-- Preloader Overlay -->
+    <div id="preloader" class="preloader">
+        <span class="loader"></span>
+    </div>
 
-    <div class="container">
+    <div class="container" data-scroll-container>
 
-        <!-- === HEADER NAVIGATION === -->
         <header class="header">
-
-            
-            <!-- Mobile Logo -->
-            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="../assets/logo/EireID_logo.png" alt="EireID Logo">
-            </a>
-            <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
 
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
-                    <li><a href="./../index.html#about" class="nav__link">About EireID</a></li>
+                    <li><a href="../index.html" class="nav__link">Home</a></li>
+                    <li><a href="../index.html#about" class="nav__link">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="./allservices.html" class="nav__link">Services <span
+                                class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
                                 <a href="./allservices.html" class="nav__dropdown-link">All services</a>
                                 <a href="./resident.html" class="nav__dropdown-link">For residents</a>
                                 <a href="./business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="./investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="./security.html" class="nav__link">Security</a></li>
+                    <li><a href="./investor.html" class="nav__link">Invest</a></li>
                     <li><a href="./support.html" class="nav__link">Support</a></li>
-                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
+                    <li><a href="#" class="nav__link active">Our Team</a></li>
                 </ul>
             </nav>
-
         </header>
+
+        <!-- Hero / Page Title -->
+        <main class="hero" id="main-content" tabindex="-1" style="min-height: 48svh; padding-block: var(--space-3xl) var(--space-2xl);">
+            <section class="hero__content" aria-labelledby="team-title">
+                <div class="hero__logos" data-scroll data-scroll-speed="-0.5">
+                    <button class="logo-box logo-box--glass" aria-label="Irish Harp">
+                        <img src="../assets/logo/harp_black.svg" alt="Irish Harp" class="logo-box__svg"
+                            style="width: 64px; height: 64px; opacity: 0.8;">
+                    </button>
+                    <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                        <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
+                            style="width: 72px; height: 72px;">
+                    </button>
+                </div>
+
+                <h1 id="team-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2">Meet the team</h1>
+                <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1">One team. One goal. Built for Ireland.</p>
+            </section>
+        </main>
+
+        <!-- Team Grid -->
+        <section class="team-section" aria-label="Team Members" data-reveal>
+            <div class="scattered-desk">
+
+                <!-- Card 1 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/team/placeholder-2.jpg');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">CEO & Full-stack Developer</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00081263</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Frontend</span>
+                                        <span class="team-tag">Backend</span>
+                                        <span class="team-tag">Content</span>
+                                        <span class="team-tag">UI/UX & Branding</span>
+                                        <span class="team-tag">Revenue & Financial Strategy</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Ivan<br>Dereka</div>
+                                        <a href="https://www.linkedin.com/in/ivndrkk/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">
+                                        <strong>Full-stack Architecture:</strong> Core site logic & infrastructure<br>
+                                        <strong>AI Integration:</strong> Implementation of EireID Assistant<br>
+                                        <strong>Backend Development:</strong> Waitlist & data management systems<br>
+                                        <strong>Design System:</strong> Unified UI/UX framework & branding<br>
+                                        <strong>Lead Dev:</strong> Team coordination & end-to-end delivery
+                                    </p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/img/Eric Student photo.jpg');">
+                                        </div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Head of Market Analysis</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00082456</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Frontend</span>
+                                        <span class="team-tag">Market Research</span>
+                                        <span class="team-tag">User Segmentation</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Eric<br>Breviglieri</div>
+                                        <a href="https://www.linkedin.com/in/eric-breviglieri-760807205/"
+                                            target="_blank" class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation()">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">
+                                        <strong>Team Interface:</strong> Development of "Our Team" module prototype<br>
+                                        <strong>Support:</strong> Contact form structure<br>
+                                        <strong>Layout Prototyping:</strong> Member showcase structure
+                                    </p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/img/sq1.png');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Chief Strategy Officer</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00025913</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Content</span>
+                                        <span class="team-tag">Business Model</span>
+                                        <span class="team-tag">Pricing Strategy</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Trinabh<br>Basu</div>
+                                        <a href="https://www.linkedin.com/in/trinabh-basu-94b0b72b7/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">
+                                        <strong>Information Architecture:</strong> Content research & curation<br>
+                                        <strong>Editorial Consistency:</strong> Web-copy optimization<br>
+                                        <strong>Data Validation:</strong> Sourcing official service information
+                                    </p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/img/sq4.png');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Creative Director</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00065086</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Mascot Design</span>
+                                        <span class="team-tag">Design</span>
+                                        <span class="team-tag">Content</span>
+                                        <span class="team-tag">Branding</span>
+                                        <span class="team-tag">Financial Plan</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Meadbh<br>Ferguson</div>
+                                        <a href="https://www.linkedin.com/in/meadbh-ferguson/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">
+                                        <strong>Visual Identity:</strong> EireID AI Assistant mascot design
+                                    </p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/team/placeholder-2.jpg');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Marketing & Communications Lead</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A23101069</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Frontend</span>
+                                        <span class="team-tag">Content</span>
+                                        <span class="team-tag">Growth</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Recep Tayyip<br>Kutlu</div>
+                                        <a href="https://www.linkedin.com/in/recep-tayyip-kutlu/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">
+                                        <strong>Investor Relations Page:</strong> Core HTML structure<br>
+                                        <strong>Content Management:</strong> Strategic data sourcing<br>
+                                    </p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/img/sq3.png');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Operations Manager</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00017852</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Logistics</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Fionn<br>McAuley</div>
+                                        <a href="https://www.linkedin.com/in/fionn-mcauley/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">Responsible for day-to-day operations and ensuring the
+                                        scalability of the EireID platform.</p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="scatter-card-wrapper">
+                    <div class="team-id-card"
+                        onclick="document.querySelectorAll('.team-id-card.is-flipped').forEach(el => {if(el !== this) el.classList.remove('is-flipped')}); this.classList.toggle('is-flipped')">
+                        <div class="card-front cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="cyber-id-info">
+                                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="cyber-card-logo">
+                                    <h3 class="cyber-card-context-title">
+                                        <span class="iconify" data-icon="lucide:id-card" style="color: #0c9b4e;"></span>
+                                        EireID Staff
+                                    </h3>
+                                    <div class="cyber-card-main-body">
+                                        <div class="cyber-photo-actual"
+                                            style="background-image: url('../assets/img/sq5.png');"></div>
+                                        <div class="cyber-card-details">
+                                            <div class="cyber-data-group">
+                                                <label>Role:</label>
+                                                <div class="cyber-pill-grey">Risk & Compliance Manager</div>
+                                            </div>
+                                            <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                <label>Student ID:</label>
+                                                <div class="cyber-expiry-date">ID: A00036209</div>
+                                                <div class="cyber-valid-status">
+                                                    <span class="iconify" data-icon="lucide:check-circle"></span> Active
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="team-tags" style="margin-top: 0.8rem;">
+                                        <span class="team-tag">Risk Analysis</span>
+                                    </div>
+                                    <div class="cyber-card-footer">
+                                        <div class="cyber-name-large">Aron<br>Gargan</div>
+                                        <a href="https://www.linkedin.com/in/aron-gargan-846335230/" target="_blank"
+                                            class="cyber-more-btn" aria-label="LinkedIn"
+                                            onclick="event.stopPropagation(); window.open(this.href, '_blank'); return false;">
+                                            <i class="iconify" data-icon="lucide:linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back cyber-card">
+                            <div class="cyber-card-content">
+                                <div class="card-back-magnetic"></div>
+                                <div class="card-back-body">
+                                    <h4 class="card-back-title">Contributions</h4>
+                                    <p class="card-back-text">Identifies and mitigates potential risks and challenges
+                                        for the EireID platform.</p>
+                                </div>
+                                <div class="card-back-barcode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- === FOOTER === -->
+        <footer class="footer-main" data-reveal>
+            <div class="footer-main__inner">
+
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-brand__logo">
+                        <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                        <span>EireID</span>
+                    </div>
+                    <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                        verified once, trusted everywhere.</p>
+                    <div class="footer-brand__socials">
+                        <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                        <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                        <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                        <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                    </div>
+                </div>
+
+                <!-- Product -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Product</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Supported Documents</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Security & Privacy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Services</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./allservices.html">All Services</a>
+                        </li>
+                        <li><a href="./resident.html">For Residents</a></li>
+                        <li><a href="./business.html">For Businesses</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Company</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="../index.html#about">About EireID</a></li>
+                        <li><a href="./team.html">Our Team</a></li>
+                        <li><a href="./support.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Invest -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Invest</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./investor.html">Investor Relations</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-main__bottom">
+                <span>© 2026 EireID. All rights reserved.</span>
+                <div class="footer-main__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Settings</a>
+                </div>
+            </div>
+        </footer>
 
     </div>
 
-    <!-- === SCRIPTS === -->
+    <!-- === FLOATING RUA AI ASSISTANT === -->
+    <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
+        <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
+    </button>
+
+    <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
+      <div class="ai-modal__header">
+        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ai-modal__body" id="ai-modal-body">
+        <div class="ai-message">
+             <div class="ai-message__avatar-container">
+                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
+             </div>
+             <div class="ai-message__bubble">
+                <div class="ai-message__text-container">
+                   <p class="ai-message__text">
+                     Hi! I'm Rua, your digital assistant. How can I help you today?
+                   </p>
+                </div>
+                <div class="ai-message__time" id="ai-initial-time"></div>
+             </div>
+          </div>
+      </div>
+      <div class="ai-modal__footer">
+        <form id="ai-chat-form" class="ai-chat-form">
+          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
+          <button type="submit" class="ai-chat-submit" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="../js/scripts.js" defer></script>
 </body>
 

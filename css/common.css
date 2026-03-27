@@ -481,8 +481,8 @@ body::before {
 
 /* ─── 8. Reveal Animations (Standardized) ─────────────────────────────────── */
 
-[data-reveal], 
-.timeline-step__text h4, 
+[data-reveal],
+.timeline-step__text h4,
 .timeline-step__text p {
   opacity: 0;
   transform: translateY(10px);
@@ -490,8 +490,8 @@ body::before {
   will-change: opacity, transform;
 }
 
-[data-reveal].is-revealed, 
-.is-active .timeline-step__text h4, 
+[data-reveal].is-revealed,
+.is-active .timeline-step__text h4,
 .is-active .timeline-step__text p {
   opacity: 1;
   transform: translateY(0);
@@ -521,7 +521,7 @@ body::before {
     radial-gradient(circle at 95% 15%, #9fdcae 0%, transparent 60%),
     radial-gradient(circle at 20% 90%, #d1f4da 0%, transparent 60%),
     #e3f7e8;
-  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), 
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
               visibility 1.2s cubic-bezier(0.22, 1, 0.36, 1),
               transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
               filter 0.8s ease;
@@ -545,7 +545,6 @@ body::before {
   box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset, 0 5px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .loader:before,
@@ -573,4 +572,26 @@ body::before {
   0% { transform: rotate(0); }
   100% { transform: rotate(360deg); }
 }
-
+
+/* ─── 10. Accessibility Utilities ────────────────────────────────────────── */
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--container-padding);
+  background: var(--color-bg-primary);
+  color: var(--color-text-heading);
+  padding: var(--space-sm) var(--space-md);
+  z-index: 100000;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  transition: top var(--transition-base);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--color-text-heading);
+  outline-offset: 2px;
+}

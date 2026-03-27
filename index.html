@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
@@ -21,9 +21,23 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Premium Grain Filter -->
+    <svg style="display:none;">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+            <feComponentTransfer>
+                <feFuncR type="linear" slope="0.1" />
+                <feFuncG type="linear" slope="0.1" />
+                <feFuncB type="linear" slope="0.1" />
+                <feFuncA type="linear" slope="0.1" />
+            </feComponentTransfer>
+        </filter>
+    </svg>
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <!-- Preloader Overlay -->
     <div id="preloader" class="preloader">
         <span class="loader"></span>
@@ -45,69 +59,71 @@
                 <ul id="nav-list" class="nav__list">
                     <li><a href="#" class="nav__link" id="nav-about-btn">About EireID</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="./pages/allservices.html" class="nav__link">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="./pages/allservices.html" class="nav__link">Services <span
+                                class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
                                 <a href="./pages/allservices.html" class="nav__dropdown-link">All services</a>
                                 <a href="./pages/resident.html" class="nav__dropdown-link">For residents</a>
                                 <a href="./pages/business.html" class="nav__dropdown-link">For businesses</a>
-                                <a href="./pages/investor.html" class="nav__dropdown-link">For investors</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="./pages/security.html" class="nav__link">Security</a></li>
+                    <li><a href="./pages/investor.html" class="nav__link">Invest</a></li>
                     <li><a href="./pages/support.html" class="nav__link">Support</a></li>
                     <li><a href="./pages/team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
         </header>
         <!-- === HERO SECTION === -->
-        <main class="hero">
-        
+        <main class="hero" id="main-content" tabindex="-1">
+
             <section id="hero" class="hero__content" aria-labelledby="hero-title">
-        
+
                 <div class="hero__logos">
-        
+
                     <!-- Irish Harp Logo -->
                     <button class="logo-box logo-box--glass" aria-label="Irish Harp">
                         <img src="assets/logo/harp_black.svg" alt="Irish Harp" class="logo-box__svg"
                             style="width: 52px; height: 52px; object-fit: contain; display: block; margin: 0 auto; opacity: 0.8;">
                     </button>
-        
+
                     <!-- EireID Logo -->
                     <button class="logo-box logo-box--glass" aria-label="EireID Logo">
                         <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
                             style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
                     </button>
-        
+
                 </div>
-        
-                <h1 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2">Your Ireland, now digital</h1>
-                <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1">One app. Every resident. Every service.</p>
-        
+
+                <h1 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2">Your Ireland, now
+                    digital</h1>
+                <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1">One app. Every resident. Every
+                    service.</p>
+
             </section>
-        
+
             <!-- CTA Buttons -->
             <div class="hero__actions">
-        
+
                 <div class="hero__pill-wrapper">
                     <button class="hero__action" aria-label="Join the waitlist">
                         <span>JOIN THE WAITLIST</span>
                     </button>
-            
+
                     <div class="hero__pill-divider"></div>
-            
+
                     <button class="hero__action" aria-label="Scroll down to explore" id="explore-btn">
                         <div class="scroll-icon" aria-hidden="true"></div>
                         <span>EXPLORE EIREID</span>
                     </button>
                 </div>
-        
+
             </div>
-        
+
         </main>
         <!-- /hero -->
-        
+
         <!-- === QUICK LINKS SECTION === -->
         <section class="quick-links" aria-label="Quick Links">
             <div class="quick-links__container">
@@ -132,25 +148,52 @@
         <!-- === ABOUT SECTION === -->
         <section id="about" class="about">
             <div class="about__grid">
-        
+
                 <!-- ── Tile 1: Digital Document Wallet (Tall) ── -->
-                <article class="about__tile about__tile--tall logo-box--glass" data-scroll data-scroll-class="is-revealed">
-        
+                <article class="about__tile about__tile--tall logo-box--glass" data-scroll
+                    data-scroll-class="is-revealed">
+
                     <div class="tile-header">
                         <h3 data-reveal>Digital Document Wallet</h3>
-                        <p data-reveal>EireID can store 11 different official documents securely on your device.</p>
+                        <p data-reveal>EireID can store 9 different official documents securely on your device.</p>
                     </div>
-        
+
                     <div class="phone-mockup">
                         <div class="phone-mockup__screen">
                             <div class="doc-carousel">
                                 <div class="doc-carousel__track" id="doc-carousel-track">
-                                    <img src="assets/img/ui/docs/Documents(HSE) 1.jpg" alt="Health Service Executive (HSE)">
-                                    <img src="assets/img/ui/docs/Documents(IRP) 1.jpg" alt="Irish Residence Permit (IRP)">
+                                    <img src="assets/img/ui/docs/Documents(HSE) 1.jpg"
+                                        alt="Health Service Executive (HSE) document used for accessing healthcare services and medical cards in Ireland."
+                                        loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(IRP) 1.jpg"
+                                        alt="Irish Residence Permit (IRP) card confirming a non-EU national's legal immigration status and permission to stay."
+                                        loading="lazy">
+
                                     <img src="assets/img/ui/docs/Documents(NDLS) 1.jpg"
-                                        alt="National Driver Licence Service (NDLS)">
-                                    <img src="assets/img/ui/docs/Documents(PSC) 1.jpg" alt="Public Services Card (PSC)">
-                                    <img src="assets/img/ui/docs/Documents(Passport) 1.jpg" alt="Irish Passport">
+                                        alt="Official Irish driving licence issued by the National Driver Licence Service (NDLS)." loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(PSC) 1.jpg"
+                                        alt="Public Services Card (PSC) used to verify identity for access to social welfare and public services."
+                                        loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(Passport) 1.jpg"
+                                        alt="Official Irish Passport, the primary international identity and travel document for Irish citizens."
+                                        loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(BirthCert) 1.jpg"
+                                        alt="State-issued Birth Certificate providing an official record of a child's birth."
+                                        loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(Decree Absolute) 1.jpg"
+                                        alt="Legal Decree Absolute document serving as the final order that officially ends a marriage." loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(MarriageCert) 1.jpg"
+                                        alt="Official Marriage Certificate certifying the legal union between two individuals." loading="lazy">
+
+                                    <img src="assets/img/ui/docs/Documents(NameChange) 1.jpg"
+                                        alt="Legal name change documentation, such as a Deed Poll, verifying a formal change of identity."
+                                        loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -158,90 +201,106 @@
                         <img src="assets/img/mockup/iphone-mockup.png" alt="iPhone Frame" class="phone-mockup__frame"
                             style="mix-blend-mode: multiply;">
                     </div>
-        
+
                     <div class="doc-caption" id="doc-caption" aria-live="polite">
                         Health Service Executive (HSE)
                     </div>
-        
+
                 </article>
-        
+
                 <!-- ── Tile 2: Service Hub (Wide) ── -->
-                <article class="about__tile about__tile--wide logo-box--glass" data-scroll data-scroll-class="is-revealed">
-        
+                <article class="about__tile about__tile--wide logo-box--glass" data-scroll
+                    data-scroll-class="is-revealed">
+
                     <div class="tile-header">
                         <h3 data-reveal>Seamless Integrations</h3>
-                        <p data-reveal>EireID serves as a central hub for all government departments and services. Zero-lift integrations
+                        <p data-reveal>EireID serves as a central hub for all government departments and services.
+                            Zero-lift integrations
                             natively within the app.</p>
                     </div>
-        
+
                     <div class="service-hub">
-        
+
                         <div class="orbit-center logo-box--glass pulse-animation">
-                            <img src="assets/logo/logo(color).png" alt="EireID Logo" style="width: 48px; border-radius: 8px;">
+                            <img src="assets/logo/logo(color).png" alt="EireID Logo"
+                                style="width: 48px; border-radius: 8px;">
                         </div>
-        
+
                         <div class="service-hub__orbit-container">
                             <div class="orbit-ring"></div>
                             <div class="orbit-ring orbit-ring--inner"></div>
-        
-                            <div class="orbit-item logo-box--glass" style="--angle: 0deg" data-scroll data-scroll-speed="-1">
-                                <img src="assets/services_logo/DOJHAM_logo.png" alt="DOJHAM">
+
+                            <div class="orbit-item logo-box--glass" style="--angle: 0deg" data-scroll
+                                data-scroll-speed="-1">
+                                <img src="assets/services_logo/DOJHAM_logo.png" alt="DOJHAM" loading="lazy">
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 72deg" data-scroll data-scroll-speed="-1">
-                                <img src="assets/services_logo/HSE_logo.jpg" alt="HSE">
+                            <div class="orbit-item logo-box--glass" style="--angle: 72deg" data-scroll
+                                data-scroll-speed="-1">
+                                <img src="assets/services_logo/HSE_logo.jpg" alt="HSE" loading="lazy">
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 144deg" data-scroll data-scroll-speed="-1">
-                                <img src="assets/services_logo/NDLS-logo.png" alt="NDLS">
+                            <div class="orbit-item logo-box--glass" style="--angle: 144deg" data-scroll
+                                data-scroll-speed="-1">
+                                <img src="assets/services_logo/NDLS-logo.png" alt="NDLS" loading="lazy">
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 216deg" data-scroll data-scroll-speed="-1">
-                                <img src="assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            <div class="orbit-item logo-box--glass" style="--angle: 216deg" data-scroll
+                                data-scroll-speed="-1">
+                                <img src="assets/services_logo/Revenue_logo.png" alt="Revenue" loading="lazy">
                             </div>
-                            <div class="orbit-item logo-box--glass" style="--angle: 288deg" data-scroll data-scroll-speed="-1">
-                                <img src="assets/services_logo/citizen-info_logo.png" alt="Citizen Info">
+                            <div class="orbit-item logo-box--glass" style="--angle: 288deg" data-scroll
+                                data-scroll-speed="-1">
+                                <img src="assets/services_logo/citizen-info_logo.png" alt="Citizen Info" loading="lazy">
                             </div>
                         </div>
-        
+
                     </div>
                 </article>
-        
+
                 <!-- ── Tile 3: All Services / Agent Assistance (Wide) ── -->
-                <article class="about__tile about__tile--wide logo-box--glass" data-scroll data-scroll-class="is-revealed">
-        
+                <article class="about__tile about__tile--wide logo-box--glass" data-scroll
+                    data-scroll-class="is-revealed">
+
                     <div class="tile-header">
                         <h3 data-reveal>All services in one place</h3>
-                        <p data-reveal>Quick access to all services with one click. Designed for ultimate convenience and accessibility for
+                        <p data-reveal>Quick access to all services with one click. Designed for ultimate convenience
+                            and accessibility for
                             all residents.</p>
                     </div>
-        
+
                     <div class="agent-ui">
                         <div class="agent-center logo-box--glass">
                             <div class="agent-avatar"></div>
                             <div class="agent-badge"></div>
                         </div>
-                        <div class="agent-action agent-action--1 logo-box--glass"><span>&#9889;</span> Sign a document</div>
+                        <div class="agent-action agent-action--1 logo-box--glass"><span>&#9889;</span> Sign a document
+                        </div>
                         <div class="agent-action agent-action--2 logo-box--glass"><span>&#9889;</span> Pay a bill</div>
-                        <div class="agent-action agent-action--3 logo-box--glass"><span>&#9889;</span> Renew a Permit</div>
+                        <div class="agent-action agent-action--3 logo-box--glass"><span>&#9889;</span> Renew a Permit
+                        </div>
                     </div>
-        
+
                 </article>
-        
+
                 <!-- ── Tile 4: Simple & Smart AI (Small) ── -->
-                <article class="about__tile about__tile--small logo-box--glass" data-scroll data-scroll-class="is-revealed">
-        
+                <article class="about__tile about__tile--small logo-box--glass" data-scroll
+                    data-scroll-class="is-revealed">
+
                     <div class="tile-header">
                         <h3 data-reveal>Simple &amp; Smart AI</h3>
                         <p data-reveal>Navigating government services is now as easy as sending a text.</p>
                     </div>
-        
+
                     <div class="ai-message">
                         <div class="ai-message__avatar-container">
-                            <img src="assets/img/mascot.png" alt="Assistant Mascot" class="ai-message__avatar">
+                            <img src="assets/img/mascot.png" alt="Assistant Mascot" class="ai-message__avatar"
+                                loading="lazy">
                         </div>
                         <div class="ai-message__bubble">
                             <div class="ai-message__text-container">
                                 <p class="ai-message__text" data-reveal>
-                                    To renew your Irish Residence Permit (IRP), you'll need your current permit, valid passport,
-                                    proof of address, and the €300 registration fee. Since all your documents are securely
+                                    To renew your Irish Residence Permit (IRP), you'll need your current permit, valid
+                                    passport,
+                                    proof of address, and the €300 registration fee. Since all your documents are
+                                    securely
                                     stored
                                     in EireID, I can start the application and auto-fill the details for you right now.
                                     Would you like to proceed?
@@ -250,7 +309,8 @@
                             </div>
                             <div class="ai-message__actions">
                                 <button class="ai-action-btn ai-action-btn--primary">
-                                    <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="ai-action-btn__icon">
+                                    <img src="assets/logo/logo(transparent).png" alt="EireID Logo"
+                                        class="ai-action-btn__icon" loading="lazy">
                                     <span>Renew IRP Permit</span>
                                 </button>
                                 <button class="ai-action-btn ai-action-btn--secondary">
@@ -259,14 +319,15 @@
                             </div>
                         </div>
                     </div>
-        
+
                 </article>
-        
+
                 <!-- ── Tile 5: Statistics Bar (Full-width) ── -->
-                <article class="about__tile about__tile--full logo-box--glass stat-bar" data-scroll data-scroll-class="is-revealed">
-        
+                <article class="about__tile about__tile--full logo-box--glass stat-bar" data-scroll
+                    data-scroll-class="is-revealed">
+
                     <div class="stat-bar__col">
-                        <div class="stat-bar__number">11</div>
+                        <div class="stat-bar__number">9</div>
                         <div class="stat-bar__label" data-reveal>Documents in one wallet</div>
                     </div>
                     <div class="stat-bar__divider"></div>
@@ -289,9 +350,9 @@
                         <div class="stat-bar__number">0</div>
                         <div class="stat-bar__label" data-reveal>Forms to fill on signup</div>
                     </div>
-        
+
                 </article>
-        
+
             </div>
         </section>
         <!-- /about -->
@@ -301,10 +362,12 @@
             <div class="how-it-works__grid">
 
                 <!-- Left Content -->
-                <div class="how-it-works__content" data-scroll data-scroll-sticky data-scroll-target="#how-it-works .how-it-works__grid">
+                <div class="how-it-works__content" data-scroll data-scroll-sticky
+                    data-scroll-target="#how-it-works .how-it-works__grid">
                     <h2 class="how-it-works__title" data-reveal>How it works</h2>
                     <p class="how-it-works__description" data-reveal>
-                        EireID changes how you manage your identity. We don't store your documents; instead, we hold secure,
+                        EireID changes how you manage your identity. We don't store your documents; instead, we hold
+                        secure,
                         verifiable credentials and encrypted access keys that only you can use.
                     </p>
                     <button class="hero__action how-it-works__cta" aria-label="Join the waitlist">
@@ -329,11 +392,12 @@
                                 </div>
                                 <div class="timeline-step__text">
                                     <h4 data-reveal>Create your EireID account</h4>
-                                    <p data-reveal>Download the app and sign up in minutes. No paperwork — just a secure account to hold your digital identity.
+                                    <p data-reveal>Download the app and sign up in minutes. No paperwork — just a secure
+                                        account to hold your digital identity.
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <!-- Step 2 -->
                             <div class="timeline-step" data-step="2">
                                 <div class="timeline-step__icon-box logo-box--glass">
@@ -341,11 +405,12 @@
                                 </div>
                                 <div class="timeline-step__text">
                                     <h4 data-reveal>Enter your PPS or document number</h4>
-                                    <p data-reveal>Type in your PPS number, passport, or any supported ID number — or connect your bank account for instant
+                                    <p data-reveal>Type in your PPS number, passport, or any supported ID number — or
+                                        connect your bank account for instant
                                         verification.</p>
                                 </div>
                             </div>
-                            
+
                             <!-- Step 3 -->
                             <div class="timeline-step" data-step="3">
                                 <div class="timeline-step__icon-box logo-box--glass">
@@ -353,10 +418,11 @@
                                 </div>
                                 <div class="timeline-step__text">
                                     <h4 data-reveal>Biometric face check</h4>
-                                    <p data-reveal>A quick one-time face scan confirms it's really you — no passwords, no ID photos to upload, just a glance.</p>
+                                    <p data-reveal>A quick one-time face scan confirms it's really you — no passwords,
+                                        no ID photos to upload, just a glance.</p>
                                 </div>
                             </div>
-                            
+
                             <!-- Step 4 -->
                             <div class="timeline-step" data-step="4">
                                 <div class="timeline-step__icon-box logo-box--glass">
@@ -364,11 +430,12 @@
                                 </div>
                                 <div class="timeline-step__text">
                                     <h4 data-reveal>Your credentials are fetched securely</h4>
-                                    <p data-reveal>EireID connects to official government servers and retrieves only your verified credentials — never your raw
+                                    <p data-reveal>EireID connects to official government servers and retrieves only
+                                        your verified credentials — never your raw
                                         documents or files.</p>
                                 </div>
                             </div>
-                            
+
                             <!-- Step 5 -->
                             <div class="timeline-step" data-step="5">
                                 <div class="timeline-step__icon-box logo-box--glass">
@@ -376,7 +443,8 @@
                                 </div>
                                 <div class="timeline-step__text">
                                     <h4 data-reveal>All your IDs, ready to share</h4>
-                                    <p data-reveal>Your documents appear instantly in your digital wallet. Share verified credentials with a tap — and revoke
+                                    <p data-reveal>Your documents appear instantly in your digital wallet. Share
+                                        verified credentials with a tap — and revoke
                                         access anytime.</p>
                                 </div>
                             </div>
@@ -394,19 +462,21 @@
                 <span class="comparison__badge" data-reveal>EireID Platform</span>
                 <h2 class="comparison__title" data-reveal>Why EireID Beats the Alternatives</h2>
                 <p class="comparison__subtitle" data-reveal>
-                    Unlike fragmented portals or physical cards, EireID unifies your entire identity. Compare us to the status
+                    Unlike fragmented portals or physical cards, EireID unifies your entire identity. Compare us to the
+                    status
                     quo.
                 </p>
             </div>
-        
+
             <div class="compare-table-wrapper">
                 <div class="compare-grid">
                     <div class="compare-cell compare-head label-col"></div>
-        
+
                     <div class="compare-cell compare-head eireid-col eireid-top">
-                        <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="eireid-head-logo">
+                        <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="eireid-head-logo"
+                            loading="lazy">
                     </div>
-        
+
                     <div class="compare-cell compare-head comp-col comp-1 is-active" data-reveal>
                         <strong>MyGovID</strong>
                     </div>
@@ -416,7 +486,7 @@
                     <div class="compare-cell compare-head comp-col comp-3" data-reveal>
                         <strong>Status Quo</strong><br><span class="text-sm">(Physical Cards)</span>
                     </div>
-        
+
                     <div class="compare-cell label-col" data-reveal>
                         <span class="iconify label-icon" data-icon="lucide:layout-grid"></span>
                         Platform Scope
@@ -425,16 +495,17 @@
                     <div class="compare-cell comp-col comp-1 is-active" data-reveal>Authentication gateway only</div>
                     <div class="compare-cell comp-col comp-2" data-reveal>Single-purpose access only</div>
                     <div class="compare-cell comp-col comp-3" data-reveal>None (Identity proof only)</div>
-        
+
                     <div class="compare-cell label-col" data-reveal>
                         <span class="iconify label-icon" data-icon="lucide:wallet"></span>
                         Document Storage
                     </div>
-                    <div class="compare-cell eireid-col" data-reveal>Full digital wallet (PSC, IRP, Passport, etc.)</div>
+                    <div class="compare-cell eireid-col" data-reveal>Full digital wallet (PSC, IRP, Passport, etc.)
+                    </div>
                     <div class="compare-cell comp-col comp-1 is-active" data-reveal>No documents or wallet</div>
                     <div class="compare-cell comp-col comp-2" data-reveal>None</div>
                     <div class="compare-cell comp-col comp-3" data-reveal>Separate physical cards</div>
-        
+
                     <div class="compare-cell label-col" data-reveal>
                         <span class="iconify label-icon" data-icon="lucide:zap"></span>
                         Verification Speed
@@ -443,24 +514,27 @@
                     <div class="compare-cell comp-col comp-1 is-active" data-reveal>No verification sharing</div>
                     <div class="compare-cell comp-col comp-2" data-reveal>Manual export / Print required</div>
                     <div class="compare-cell comp-col comp-3" data-reveal>Slow, in-person manual check</div>
-        
+
                     <div class="compare-cell label-col" data-reveal>
                         <span class="iconify label-icon" data-icon="lucide:user-check"></span>
                         Accessibility
                     </div>
                     <div class="compare-cell eireid-col" data-reveal>Every resident (Citizens & Non-citizens)</div>
-                    <div class="compare-cell comp-col comp-1 is-active" data-reveal>Requires PSC (Excludes many non-citizens)</div>
+                    <div class="compare-cell comp-col comp-1 is-active" data-reveal>Requires PSC (Excludes many
+                        non-citizens)</div>
                     <div class="compare-cell comp-col comp-2" data-reveal>Varies by department</div>
                     <div class="compare-cell comp-col comp-3" data-reveal>All, but vulnerable to loss</div>
-        
+
                     <div class="compare-cell label-col eireid-bottom-left" data-reveal>
                         <span class="iconify label-icon" data-icon="lucide:shield-check"></span>
                         Security & Format
                     </div>
-                    <div class="compare-cell eireid-col eireid-bottom" data-reveal>On-device encrypted keys, zero raw files</div>
+                    <div class="compare-cell eireid-col eireid-bottom" data-reveal>On-device encrypted keys, zero raw
+                        files</div>
                     <div class="compare-cell comp-col comp-1 is-active" data-reveal>Standard password & 2FA</div>
                     <div class="compare-cell comp-col comp-2" data-reveal>Standard cloud login</div>
-                    <div class="compare-cell comp-col comp-3 eireid-bottom-right" data-reveal>Vulnerable to theft and fraud</div>
+                    <div class="compare-cell comp-col comp-3 eireid-bottom-right" data-reveal>Vulnerable to theft and
+                        fraud</div>
                 </div>
             </div>
         </section>
@@ -470,7 +544,7 @@
         <section id="genesis-security" class="genesis-security">
             <div class="container">
                 <div class="about__tile--full logo-box--glass genesis-security__container">
-                    
+
                     <!-- Background Matrix Effect -->
                     <div class="genesis-matrix" aria-hidden="true">
                         <div class="genesis-matrix__overlay"></div>
@@ -488,13 +562,16 @@
                     <div class="genesis-security__grid">
                         <!-- Text Area -->
                         <div class="genesis-security__text-area">
-                            <h2 class="genesis-security__title" data-reveal>EireID Genesis Protocol: The Architecture of Trust</h2>
-                            <p class="genesis-security__desc" data-reveal>Unlike traditional databases, the Genesis Protocol ensures your identity data never leaves your device. We use
-                            end-to-end AES-256 hardware-level encryption to verify who you are — without ever accessing, storing, or transmitting
-                            your documents.</p>
-                            <a href="./pages/security.html" class="hero__action genesis-security__cta">
+                            <h2 class="genesis-security__title" data-reveal>EireID Genesis Protocol: The Architecture of
+                                Trust</h2>
+                            <p class="genesis-security__desc" data-reveal>Unlike traditional databases, the Genesis
+                                Protocol ensures your identity data never leaves your device. We use
+                                end-to-end AES-256 hardware-level encryption to verify who you are — without ever
+                                accessing, storing, or transmitting
+                                your documents.</p>
+                            <button id="genesis-cta" class="hero__action genesis-security__cta">
                                 <span>EXPLORE THE GENESIS PROTOCOL</span>
-                            </a>
+                            </button>
                         </div>
 
                         <!-- Visualization Area -->
@@ -555,68 +632,81 @@
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Yes — EireID is completely free for individuals. There are no subscriptions, no credit card required, and
-                                no hidden fees. Businesses that integrate EireID for verification have their own plans, but for everyday
+                            <p>Yes — EireID is completely free for individuals. There are no subscriptions, no credit
+                                card required, and
+                                no hidden fees. Businesses that integrate EireID for verification have their own plans,
+                                but for everyday
                                 users the app is always free.</p>
                         </div>
                     </div>
-                
+
                     <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Where is my personal data stored?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Your identity data never leaves your device. EireID stores your credentials in your phone's secure
-                                enclave — the same hardware-level chip used by Apple Pay and Google Pay. We don't hold copies of your
+                            <p>Your identity data never leaves your device. EireID stores your credentials in your
+                                phone's secure
+                                enclave — the same hardware-level chip used by Apple Pay and Google Pay. We don't hold
+                                copies of your
                                 documents on any central server.</p>
                         </div>
                     </div>
-                
+
                     <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
-                            <span class="faq__question-text">Does EireID replace my physical passport or driving licence?</span>
+                            <span class="faq__question-text">Does EireID replace my physical passport or driving
+                                licence?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Not yet — but that's the goal. EireID currently works alongside your physical documents, making
-                                day-to-day verification faster and easier. As Irish legislation catches up with digital identity
+                            <p>Not yet — but that's the goal. EireID currently works alongside your physical documents,
+                                making
+                                day-to-day verification faster and easier. As Irish legislation catches up with digital
+                                identity
                                 standards, full legal equivalence is on our roadmap.</p>
                         </div>
                     </div>
-                
+
                     <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">What exactly does the person I'm sharing with see?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Only what you choose to share. If a venue needs to confirm you're over 18, they get a yes or no — not
-                                your date of birth, name, or address. This is called selective disclosure, and every share requires your
+                            <p>Only what you choose to share. If a venue needs to confirm you're over 18, they get a yes
+                                or no — not
+                                your date of birth, name, or address. This is called selective disclosure, and every
+                                share requires your
                                 explicit confirmation in the app.</p>
                         </div>
                     </div>
-                
+
                     <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">Does EireID work without an internet connection?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Yes, for most everyday checks. Your credentials contain a cryptographic signature that can be verified
-                                offline via QR code — useful in areas with poor signal. High-security actions like signing legal
+                            <p>Yes, for most everyday checks. Your credentials contain a cryptographic signature that
+                                can be verified
+                                offline via QR code — useful in areas with poor signal. High-security actions like
+                                signing legal
                                 documents still require a connection.</p>
                         </div>
                     </div>
-                
+
                     <div class="faq__item logo-box--glass" data-scroll data-scroll-class="is-revealed">
                         <button class="faq__question" aria-expanded="false">
                             <span class="faq__question-text">I'm not an Irish citizen — can I still use EireID?</span>
                             <span class="faq__icon"><span class="iconify" data-icon="lucide:chevron-down"></span></span>
                         </button>
                         <div class="faq__answer">
-                            <p>Absolutely. EireID is built for everyone living in Ireland. EU/EEA citizens and non-EEA nationals with a
-                                valid Irish Residence Permit (IRP) can store and present their credentials through EireID — making it
+                            <p>Absolutely. EireID is built for everyone living in Ireland. EU/EEA citizens and non-EEA
+                                nationals with a
+                                valid Irish Residence Permit (IRP) can store and present their credentials through
+                                EireID — making it
                                 easier to prove identity, right to work, and residency status.</p>
                         </div>
                     </div>
@@ -624,121 +714,395 @@
             </div>
         </section>
         <!-- /faq -->
-         
-<!-- === CTA SECTION === -->
-<section class="cta">
-    <div class="cta__inner logo-box--glass">
-        <h2 class="cta__title">Ready to go digital?</h2>
-        <p class="cta__subtitle">Join residents across Ireland who are taking control of their digital identity — in
-            minutes.</p>
-        <button class="cta__btn" aria-label="Join the waitlist">JOIN THE WAITLIST</button>
+
+        <!-- === CTA SECTION === -->
+        <section class="cta">
+            <div class="cta__inner logo-box--glass">
+                <h2 class="cta__title">Ready to go digital?</h2>
+                <p class="cta__subtitle">Join residents across Ireland who are taking control of their digital identity
+                    — in
+                    minutes.</p>
+                <button class="cta__btn" aria-label="Join the waitlist">JOIN THE WAITLIST</button>
+            </div>
+        </section>
+
+        <!-- === FOOTER === -->
+        <footer class="footer-main">
+            <div class="footer-main__inner">
+
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-brand__logo">
+                        <img src="assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;"
+                            loading="lazy">
+                        <span>EireID</span>
+                    </div>
+                    <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital
+                        identity —
+                        verified once, trusted everywhere.</p>
+                    <div class="footer-brand__socials">
+                        <a href="#" aria-label="X / Twitter"><span class="iconify"
+                                data-icon="lucide:twitter"></span></a>
+                        <a href="#" aria-label="Instagram"><span class="iconify"
+                                data-icon="lucide:instagram"></span></a>
+                        <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                        <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                    </div>
+                </div>
+
+                <!-- Product -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Product</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Supported Documents</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Security & Privacy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Services</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./pages/allservices.html">All Services</a>
+                        </li>
+                        <li><a href="./pages/resident.html">For Residents</a></li>
+                        <li><a href="./pages/business.html">For Businesses</a></li>
+
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Company</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="#">About EireID</a></li>
+                        <li><a href="./pages/team.html">Our Team</a></li>
+                        <li><a href="./pages/support.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Invest -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Invest</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./pages/investor.html">Investor Relations</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-main__bottom">
+                <span>© 2026 EireID. All rights reserved.</span>
+                <div class="footer-main__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Settings</a>
+                </div>
+            </div>
+        </footer>
+
+
     </div>
-</section>
 
-<!-- === FOOTER === -->
-<footer class="footer-main">
-    <div class="footer-main__inner">
-
-        <!-- Brand -->
-        <div class="footer-brand">
-            <div class="footer-brand__logo">
-                <img src="assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;">
-                <span>EireID</span>
-            </div>
-            <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
-                verified once, trusted everywhere.</p>
-            <div class="footer-brand__socials">
-                <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
-                <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
-                <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
-                <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
-            </div>
+    <!-- === GENESIS MODAL === -->
+    <div id="genesis-modal" class="genesis-modal" aria-hidden="true">
+        <div class="genesis-modal__header">
+            <img src="assets/logo/logo(transparent).png" alt="EireID Logo" class="genesis-modal__logo">
+            <button id="genesis-modal-close" class="genesis-modal__close" aria-label="Close Genesis Exploration">
+                <span class="iconify" data-icon="lucide:x"></span>
+            </button>
         </div>
+        <div class="genesis-modal__content">
+            <!-- Sweep Laser -->
+            <div class="genesis-scan" aria-hidden="true"></div>
 
-        <!-- Product -->
-        <div class="footer-col">
-            <h4 class="footer-col__title">Product</h4>
-            <ul class="footer-col__list">
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Supported Documents</a></li>
-                <li><a href="#">Integrations</a></li>
-                <li><a href="#">Security & Privacy</a></li>
-            </ul>
-        </div>
+            <!-- Intro & Manifesto -->
+            <div class="genesis-manifesto">
+                <h2 class="genesis-manifesto__headline">The Genesis Protocol</h2>
+                <div class="genesis-manifesto__typing-container">
+                    <p class="genesis-manifesto__lead" id="genesis-manifesto-text">
+                        End-to-end encryption of your identity. Decentralized access without server-side data storage.
+                    </p>
+                </div>
+            </div>
 
-        <!-- Services -->
-        <div class="footer-col">
-            <h4 class="footer-col__title">Services</h4>
-            <ul class="footer-col__list">
-                <li><a href="./pages/allservices.html">All Services</a>
-                </li>
-                <li><a href="./pages/resident.html">For Residents</a></li>
-                <li><a href="./pages/business.html">For Businesses</a></li>
+            <div class="genesis-bento">
+                <!-- Module D: Large Scheme (Primary) -->
+                <div class="genesis-bento__card genesis-bento--main" id="vault-scheme" data-item data-vault-module>
+                    <div class="bento-header">
+                        <span class="bento-badge">Interactive Architecture</span>
+                        <h3 class="bento-title">The Digital Vault Layers</h3>
+                    </div>
+                    <div class="bento-svg-container">
+                        <svg class="vault-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                            <!-- Outer Static Ring -->
+                            <circle class="vault-ring ring-static" cx="200" cy="200" r="180" fill="none" stroke="rgba(164, 229, 183, 0.05)" stroke-width="0.5" />
+                            <!-- Interactive Rings -->
+                            <circle class="vault-ring ring-outer interactive-layer" cx="200" cy="200" r="150" fill="none" stroke="rgba(164, 229, 183, 0.15)" stroke-width="12" data-layer="Network Isolation" data-desc="Encrypted traffic tunnels using WireGuard & end-to-end TLS 1.3." />
+                            <circle class="vault-ring ring-mid interactive-layer" cx="200" cy="200" r="100" fill="none" stroke="rgba(164, 229, 183, 0.25)" stroke-width="12" data-layer="Zero-Knowledge Enclave" data-desc="zk-SNARK proofs confirm validity without disclosing raw data." />
+                            <circle class="vault-ring ring-inner interactive-layer" cx="200" cy="200" r="50" fill="none" stroke="rgba(164, 229, 183, 0.45)" stroke-width="12" data-layer="Silicon Root" data-desc="Hardware keys bound directly to the device's Secure Enclave." />
+                            <!-- Center Point -->
+                            <circle cx="200" cy="200" r="6" fill="#a4e5b7" class="vault-center-glow" />
+                        </svg>
+                    </div>
+                    <div class="vault-tooltip" id="vault-tooltip">Hover over a ring to explore security layers</div>
+                </div>
+
+                <!-- Module A: Tech Stack -->
+                <div class="genesis-bento__card genesis-bento--tech" data-item>
+                    <div class="bento-header">
+                        <span class="bento-badge">Compliance</span>
+                        <h3 class="bento-title">Tech Stack Standards</h3>
+                    </div>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item" data-tooltip="Advanced Encryption Standard with Galois/Counter Mode">
+                            <span class="iconify" data-icon="lucide:lock"></span>
+                            <span class="tech-label">AES-256-GCM</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Mathematical verification without data exposure">
+                            <span class="iconify" data-icon="lucide:user-check"></span>
+                            <span class="tech-label">ZKP Protocol</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="International standard for information security mgmt">
+                            <span class="iconify" data-icon="lucide:shield-check"></span>
+                            <span class="tech-label">ISO/IEC 27001</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Fully aligned with EU Data Protection laws">
+                            <span class="iconify" data-icon="lucide:file-check"></span>
+                            <span class="tech-label">GDPR Compliant</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module B: Interactive Data Path -->
+                <div class="genesis-bento__card genesis-bento--path" data-item>
+                    <div class="bento-header">
+                        <span class="bento-badge">Real-time Visualization</span>
+                        <h3 class="bento-title">Data Sovereignty Path</h3>
+                    </div>
+                    <div class="data-path-viz">
+                        <div class="path-node" id="node-device">
+                            <div class="node-icon-box"><span class="iconify" data-icon="lucide:smartphone"></span></div>
+                            <small>User Device</small>
+                        </div>
+                        <div class="path-connector">
+                            <div class="connector-line"></div>
+                            <div class="connector-pulse"></div>
+                        </div>
+                        <div class="path-node" id="node-core">
+                            <div class="node-icon-box"><span class="iconify" data-icon="lucide:cpu"></span></div>
+                            <small>Genesis Core</small>
+                        </div>
+                        <div class="path-connector">
+                            <div class="connector-line"></div>
+                            <div class="connector-pulse"></div>
+                        </div>
+                        <div class="path-node" id="node-service">
+                            <div class="node-icon-box"><span class="iconify" data-icon="lucide:building-2"></span></div>
+                            <small>Gov Service</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="genesis-bento__card genesis-bento--recovery" data-item>
+                    <div class="bento-header">
+                        <span class="bento-badge">Fault Tolerance</span>
+                        <h3 class="bento-title">Recovery Protocol</h3>
+                    </div>
+                    <p class="bento-desc">Hardware-based fail-safes using multi-factor Master Keys & Bio-recovery protocols to prevent data loss even if your device is compromised.</p>
+                    <div class="recovery-tags">
+                        <span class="recovery-tag"><span class="dot"></span> Master Key Enclave</span>
+                        <span class="recovery-tag"><span class="dot"></span> Multi-node Bio-link</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hub Detailed Sections -->
+            <div class="genesis-hub-sections">
                 
-            </ul>
-        </div>
+                <!-- 1. How We Protect Your Data -->
+                <section class="genesis-hub-section">
+                    <div class="bento-header section-header">
+                        <span class="bento-badge">Infrastructure</span>
+                        <h3 class="genesis-manifesto__headline mt-2 text-left accent-text">How We Protect Your Data</h3>
+                    </div>
+                    <p class="bento-desc section-lead">Your privacy is built by design. We use advanced encryption and strict data minimization to ensure your information is secure and only used for its intended purpose.</p>
 
-        <!-- Company -->
-        <div class="footer-col">
-            <h4 class="footer-col__title">Company</h4>
-            <ul class="footer-col__list">
-                <li><a href="#">About EireID</a></li>
-                <li><a href="#">Our Team</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="./pages/investor.html">For Investors</a></li>
-            </ul>
-        </div>
+                    <div class="genesis-bento">
+                        <div class="genesis-bento__card card-half" data-item>
+                            <h4 class="bento-title small-title">Encryption (Transit & Rest)</h4>
+                            <p class="bento-desc small-desc">All data is encrypted in transit using TLS 1.3 and at rest with AES-256-GCM. We use hardware-bound keys only accessible by your device.</p>
+                        </div>
+                        <div class="genesis-bento__card card-half" data-item>
+                            <h4 class="bento-title small-title">Data Minimization</h4>
+                            <p class="bento-desc small-desc">We collect only the absolute minimum data required to verify your identity. We never profile or track your interactions.</p>
+                        </div>
+                        <div class="genesis-bento__card card-half" data-item>
+                            <h4 class="bento-title small-title">EU Data Sovereignty</h4>
+                            <p class="bento-desc small-desc">All identity records are stored in high-security Irish data centers, adhering strictly to GDPR and national regulations.</p>
+                        </div>
+                        <div class="genesis-bento__card card-half" data-item>
+                            <h4 class="bento-title small-title">On-Device First</h4>
+                            <p class="bento-desc small-desc">Primary identity processing happens on your device's Secure Enclave, ensuring raw documents never leave your hands.</p>
+                        </div>
+                    </div>
 
+                    <div class="tech-details-expander__container">
+                        <button class="genesis-bento__card tech-details-trigger" id="genesis-tech-expander">
+                            <span class="bento-badge">+ VIEW TECHNICAL SPECIFICATIONS</span>
+                        </button>
+                        <div class="tech-details-panel" id="genesis-tech-panel">
+                            <div class="inner-panel">
+                                <div class="tech-spec-grid">
+                                    <div class="tech-spec-item">
+                                        <span class="label">Protocol:</span>
+                                        <span class="value">EireID Encrypted Vault v2.0</span>
+                                    </div>
+                                    <div class="tech-spec-item">
+                                        <span class="label">Enclave:</span>
+                                        <span class="value">Secure Core Ver: 4.1.2</span>
+                                    </div>
+                                    <div class="tech-spec-item">
+                                        <span class="label">Handshake:</span>
+                                        <span class="value">Dual-pass Zero-Knowledge Proof (D-ZKP)</span>
+                                    </div>
+                                    <div class="tech-spec-item">
+                                        <span class="label">Cipher:</span>
+                                        <span class="value">ChaCha20-Poly1305 / AES-256</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Identity & Authentication -->
+                <section class="genesis-hub-section">
+                    <div class="bento-header section-header">
+                        <span class="bento-badge">Access Control</span>
+                        <h3 class="genesis-manifesto__headline mt-2 text-left accent-text">Identity & Authentication</h3>
+                    </div>
+                    <p class="bento-desc section-lead">Accessing your identity is seamless but highly protected. We utilize multi-layered authentication tied to your physical hardware.</p>
+
+                    <div class="genesis-bento">
+                        <div class="genesis-bento__card card-full" data-item>
+                            <h4 class="bento-title small-title">Secure Authentication Layers</h4>
+                            <ul class="recovery-list mt-md">
+                                <li><span class="recovery-dot"></span> <strong>Biometric Verification:</strong> Local-only authentication via FaceID or TouchID sensors.</li>
+                                <li><span class="recovery-dot"></span> <strong>Hardware Multi-Factor:</strong> Cryptographic verification tied to secure physical tokens.</li>
+                                <li><span class="recovery-dot"></span> <strong>Root Key Binding:</strong> Your digital soul is cryptographically tied to the device's unique silicon fingerprint.</li>
+                            </ul>
+                        </div>
+                        <div class="genesis-bento__card card-full alert-card" data-item>
+                            <p class="bento-desc highlight"><strong>Privacy Note:</strong> Your biometric identifiers (face map or fingerprints) never leave your device's hardware chip. EireID servers never touch your biological data.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Transparency & User Control -->
+                <section class="genesis-hub-section">
+                    <div class="bento-header section-header">
+                        <span class="bento-badge">Control & Oversight</span>
+                        <h3 class="genesis-manifesto__headline mt-2 text-left accent-text">Transparency & User Control</h3>
+                    </div>
+                    <p class="bento-desc section-lead font-bold text-white">Digital sovereignty means complete ownership of your footprint. We give you the tools to manage every byte.</p>
+
+                    <div class="genesis-bento">
+                        <div class="genesis-bento__card card-third" data-item>
+                            <div class="node-icon-box mb-4"><span class="iconify" data-icon="lucide:eye"></span></div>
+                            <h4 class="bento-title small-title">Universal View</h4>
+                            <p class="bento-desc small-desc">Inspect every single attribute and record stored in your digital identity vault.</p>
+                        </div>
+                        <div class="genesis-bento__card card-third" data-item>
+                            <div class="node-icon-box mb-4"><span class="iconify" data-icon="lucide:activity"></span></div>
+                            <h4 class="bento-title small-title">Access Audit</h4>
+                            <h3 class="bento-desc small-desc">See exactly when and why each government department accessed your metadata.</h3>
+                        </div>
+                        <div class="genesis-bento__card card-third" data-item>
+                            <div class="node-icon-box mb-4"><span class="iconify" data-icon="lucide:trash-2"></span></div>
+                            <h4 class="bento-title small-title">Revoke & Purge</h4>
+                            <p class="bento-desc small-desc">Instantly disconnect permissions or permanently wipe your account and data.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Threat Protection -->
+                <section class="genesis-hub-section pb-32">
+                    <div class="bento-header section-header">
+                        <span class="bento-badge">Continuous Guard</span>
+                        <h3 class="genesis-manifesto__headline mt-2 text-left accent-text">Threat Protection</h3>
+                    </div>
+                    <p class="bento-desc section-lead">Our system is designed to proactively detect and neutralize real-world security risks.</p>
+
+                    <div class="genesis-bento">
+                        <div class="genesis-bento__card card-full" data-item>
+                            <div class="tech-stack-grid">
+                                <div class="tech-item item-accent">
+                                    <span class="iconify" data-icon="lucide:shield-alert"></span>
+                                    <span class="tech-label">Anti-Impersonation Layer</span>
+                                </div>
+                                <div class="tech-item item-accent">
+                                    <span class="iconify" data-icon="lucide:mouse-pointer-2"></span>
+                                    <span class="tech-label">Cryptographic Anti-Phishing</span>
+                                </div>
+                                <div class="tech-item item-accent">
+                                    <span class="iconify" data-icon="lucide:smartphone-nfc"></span>
+                                    <span class="tech-label">SIM Swap Hardware Shield</span>
+                                </div>
+                                <div class="tech-item item-accent">
+                                    <span class="iconify" data-icon="lucide:bell-ring"></span>
+                                    <span class="tech-label">24/7 Security Alerts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 
-    <div class="footer-main__bottom">
-        <span>© 2026 EireID. All rights reserved.</span>
-        <div class="footer-main__legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Settings</a>
-        </div>
-    </div>
-</footer>
-
-    </div>
     <!-- === FLOATING RUA AI ASSISTANT === -->
     <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
-      <img src="assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img">
+        <img src="assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
     </button>
 
     <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
-      <div class="ai-modal__header">
-        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
-        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="ai-modal__body" id="ai-modal-body">
-        <div class="ai-message">
-             <div class="ai-message__avatar-container">
-                <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;">
-             </div>
-             <div class="ai-message__bubble">
-                <div class="ai-message__text-container">
-                   <p class="ai-message__text">
-                     Hi! I'm Rua, your digital assistant. How can I help you today?
-                   </p>
+        <div class="ai-modal__header">
+            <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+            <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="ai-modal__body" id="ai-modal-body">
+            <div class="ai-message">
+                <div class="ai-message__avatar-container">
+                    <img src="assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar"
+                        style="mix-blend-mode: multiply;" loading="lazy">
                 </div>
-                <div class="ai-message__time" id="ai-initial-time"></div>
-             </div>
-          </div>
-      </div>
-      <div class="ai-modal__footer">
-        <form id="ai-chat-form" class="ai-chat-form">
-          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
-          <button type="submit" class="ai-chat-submit" aria-label="Send message">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </form>
-      </div>
+                <div class="ai-message__bubble">
+                    <div class="ai-message__text-container">
+                        <p class="ai-message__text">
+                            Hi! I'm Rua, your digital assistant. How can I help you today?
+                        </p>
+                    </div>
+                    <div class="ai-message__time" id="ai-initial-time"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ai-modal__footer">
+            <form id="ai-chat-form" class="ai-chat-form">
+                <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required
+                    autocomplete="off" aria-label="Type your message">
+                <button type="submit" class="ai-chat-submit" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- GSAP & ScrollTrigger -->

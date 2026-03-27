@@ -12,11 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let locoScroll = null;
     
     if (scroller) {
+        // Use a higher lerp (0.12) for mobile devices for better responsiveness
+        // while maintaining the default smooth 0.05 for desktop and tablet.
+        const isMobile = window.innerWidth < 768;
+
         locoScroll = new LocomotiveScroll({
             el: scroller,
             smooth: true,
-            lerp: 0.05,
-            smartphone: { smooth: true },
+            lerp: isMobile ? 0.12 : 0.05,
+            smartphone: {
+                smooth: true,
+                multiplier: 1.2 // Slightly faster on mobile
+            },
             tablet: { smooth: true }
         });
 
@@ -115,8 +122,39 @@ document.addEventListener("DOMContentLoaded", () => {
     // FAQ
     initFAQAccordion();
 
+    // Genesis Modal
+    initGenesisModal();
+
+    // Business Model Canvas Grid
+    if (typeof initBMCInteractiveGrid === 'function') {
+        initBMCInteractiveGrid();
+    }
+
+    // Growth Roadmap
+    if (typeof initGrowthRoadmap === 'function') {
+        initGrowthRoadmap();
+    }
+
     // Final Refresh
     ScrollTrigger.refresh();
+
+    // Global Scroll to Top Helper
+    window.scrollToTop = (smooth = true) => {
+        if (window.locoScroll) {
+            window.locoScroll.scrollTo(0, {
+                duration: smooth ? 600 : 0,
+                easing: [0.25, 0.0, 0.35, 1.0]
+            });
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: smooth ? 'smooth' : 'auto'
+            });
+        }
+    };
+
+    // Initial scroll to top on page load
+    window.scrollToTop(true);
 });
 
 // Added to prevent crashes if certain animations are missing or renamed in other files
@@ -125,24 +163,30 @@ function initScrollReveal() {
     console.log("initScrollReveal: Using native Locomotive Scroll revealing");
 }
 
+// Optimization: Use a singleton IntersectionObserver for text reveals to prevent memory leaks
+// and redundant observer instances when re-initializing (e.g., after pagination).
+let textRevealObserver;
+
 function initTextReveal() {
-    const revealElements = document.querySelectorAll('[data-reveal]');
+    const revealElements = document.querySelectorAll('[data-reveal]:not(.is-revealed)');
     
     if (!revealElements.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
-                observer.unobserve(entry.target);
-            }
+    if (!textRevealObserver) {
+        textRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    textRevealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    });
+    }
 
-    revealElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => textRevealObserver.observe(el));
 }
 
 // ─── Preloader Dismissal ────────────────────────────────────────────────
@@ -349,6 +393,12 @@ function initStatCounters() {
     const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
     const startTime = performance.now();
 
+    // Optimization: Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
+    // Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
+    const unitSpan = el.querySelector('.stat-bar__unit');
+    const firstNode = el.childNodes[0];
+    const isTextNode = firstNode && firstNode.nodeType === 3;
+
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
@@ -358,16 +408,16 @@ function initStatCounters() {
       const currentValue = Math.floor(easeProgress * targetValue);
 
       // Preserve unit/suffix if it exists in a span
-      const unitSpan = el.querySelector('.stat-bar__unit');
       if (unitSpan) {
-        if (el.childNodes[0] && el.childNodes[0].nodeType === 3) {
-          el.childNodes[0].textContent = currentValue;
+        if (isTextNode) {
+          firstNode.textContent = currentValue;
         } else {
-          // Fallback if structure is unexpected
+          // Fallback if structure is unexpected (only runs if childNodes[0] is not a text node)
           el.innerHTML = currentValue + unitSpan.outerHTML;
         }
       } else {
-        el.innerText = currentValue + suffix;
+        // Use textContent for better performance (no layout/reflow)
+        el.textContent = currentValue + suffix;
       }
 
       if (progress < 1) {
@@ -673,18 +723,22 @@ function initAIChat() {
 
 /* ─── FAQ Accordion ─────────────────── */
 function initFAQAccordion() {
-    const faqItems = document.querySelectorAll('.faq__item');
+    const faqItems = Array.from(document.querySelectorAll('.faq__item')).map(item => ({
+        element: item,
+        button: item.querySelector('.faq__question')
+    }));
     
-    faqItems.forEach(item => {
-        const questionBtn = item.querySelector('.faq__question');
+    faqItems.forEach(itemObj => {
+        const { element: item, button: questionBtn } = itemObj;
+        if (!questionBtn) return;
         
         questionBtn.addEventListener('click', () => {
             const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
             
             // Close all items first
-            faqItems.forEach(otherItem => {
-                otherItem.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
-                otherItem.classList.remove('is-active');
+            faqItems.forEach(otherItemObj => {
+                otherItemObj.button.setAttribute('aria-expanded', 'false');
+                otherItemObj.element.classList.remove('is-active');
             });
             
             // If the clicked item was not expanded, open it
@@ -762,4 +816,410 @@ function initFloatingPill() {
 
     window.addEventListener('resize', cacheHeaderOffset);
     cacheHeaderOffset();
+}
+
+/* ─── Genesis Modal Expansion ─────────────────── */
+function initGenesisModal() {
+    const cta = document.getElementById('genesis-cta');
+    const modal = document.getElementById('genesis-modal');
+    const closeBtn = document.getElementById('genesis-modal-close');
+    const container = document.querySelector('.genesis-security__container');
+
+    if (!cta || !modal || !container) return;
+
+    // Cache elements
+    const originalContent = container.querySelectorAll('.genesis-matrix, .genesis-security__grid');
+    const manifestoHeadline = modal.querySelector('.genesis-manifesto__headline');
+    const manifestoLead = document.getElementById('genesis-manifesto-text');
+    const bentoCards = modal.querySelectorAll('.genesis-bento__card');
+    const scanLine = modal.querySelector('.genesis-scan');
+    const interactiveLayers = modal.querySelectorAll('.interactive-layer');
+    const vaultTooltip = document.getElementById('vault-tooltip');
+
+    const leadText = manifestoLead ? manifestoLead.textContent.trim() : "";
+
+    // 1. 3D Tilt Logic
+    function handleTilt(e) {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const percentX = (x - centerX) / centerX;
+        const percentY = (y - centerY) / centerY;
+
+        gsap.to(card, {
+            rotateX: -percentY * 5,
+            rotateY: percentX * 5,
+            duration: 0.4,
+            ease: "power2.out"
+        });
+    }
+
+    function resetTilt(e) {
+        gsap.to(e.currentTarget, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.6,
+            ease: "power2.out"
+        });
+    }
+
+    bentoCards.forEach(card => {
+        card.addEventListener('mousemove', handleTilt);
+        card.addEventListener('mouseleave', resetTilt);
+    });
+
+    // 2. SVG Ring Interactivity
+    interactiveLayers.forEach(layer => {
+        layer.addEventListener('mouseenter', () => {
+            const title = layer.getAttribute('data-layer');
+            const desc = layer.getAttribute('data-desc');
+            if (vaultTooltip) {
+                gsap.to(vaultTooltip, { opacity: 0, duration: 0.2, onComplete: () => {
+                    vaultTooltip.innerHTML = `<strong>${title}:</strong> ${desc}`;
+                    gsap.to(vaultTooltip, { opacity: 1, duration: 0.2 });
+                }});
+            }
+        });
+    });
+
+    // 3. Tech Stack Interactivity (Path Pulses)
+    const techItems = modal.querySelectorAll('.tech-item');
+    const connectors = modal.querySelectorAll('.connector-pulse');
+
+    techItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            gsap.to(connectors, { scale: 2, filter: "blur(4px)", duration: 0.3, stagger: 0.1 });
+        });
+        item.addEventListener('mouseleave', () => {
+            gsap.to(connectors, { scale: 1, filter: "blur(2px)", duration: 0.3 });
+        });
+    });
+
+    cta.addEventListener('click', () => {
+        const rect = container.getBoundingClientRect();
+
+        if (window.locoScroll) window.locoScroll.stop();
+
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+
+        // Initial set
+        gsap.set(modal, {
+            visibility: 'visible',
+            opacity: 1,
+            clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`
+        });
+
+        if (manifestoLead) manifestoLead.textContent = "";
+
+        const tl = gsap.timeline();
+
+        // Section content fade
+        tl.to(originalContent, {
+            opacity: 0,
+            y: -20,
+            duration: 0.5,
+            ease: "power2.inOut"
+        });
+
+        // Window Expansion
+        tl.to(modal, {
+            clipPath: `inset(0px 0px 0px 0px round 0px)`,
+            duration: 1,
+            ease: "expo.inOut"
+        }, "-=0.3");
+
+        // Entrance Laser Scan (PRESERVED)
+        tl.fromTo(scanLine,
+            { top: "0%", opacity: 0 },
+            { top: "100%", opacity: 0.8, duration: 1.2, ease: "power1.inOut" },
+            "-=0.5"
+        );
+        tl.set(scanLine, { opacity: 0 });
+
+        // 4. Reveal Headline & Subtitle Container (Ensures visibility on subsequent opens)
+        tl.fromTo([manifestoHeadline, manifestoLead],
+            { opacity: 0, y: 40, filter: "blur(10px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.2, ease: "power4.out" },
+            "-=0.8"
+        );
+
+        // Typewriting lead
+        tl.add(() => {
+            if (manifestoLead) {
+                let i = 0;
+                const typing = setInterval(() => {
+                    manifestoLead.textContent += leadText[i];
+                    i++;
+                    if (i === leadText.length) {
+                        clearInterval(typing);
+                        gsap.to(manifestoLead, { borderRightColor: "transparent", duration: 0.5, delay: 1 });
+                    }
+                }, 20);
+            }
+        }, "-=0.4");
+
+        // 5. Special Reveal for Digital Vault (Blurred entrance like Title)
+        const vaultModule = modal.querySelector('[data-vault-module]');
+        if (vaultModule) {
+            tl.fromTo(vaultModule,
+                { opacity: 0, y: 50, filter: "blur(15px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4, ease: "power3.out" },
+                "-=0.6"
+            );
+        }
+
+        // 6. Staggered Content Entrance for all other cards & headers
+        const entranceItems = Array.from(modal.querySelectorAll('[data-item], .section-header, .section-lead'))
+                                   .filter(el => el !== vaultModule);
+
+        tl.fromTo(entranceItems,
+            { opacity: 0, y: 30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.08,
+                ease: "power2.out",
+                clearProps: "transform"
+            },
+            "-=0.8"
+        );
+    });
+
+    // 4. Tech Spec Expander Logic
+    const techTrigger = document.getElementById('genesis-tech-expander');
+    const techPanel = document.getElementById('genesis-tech-panel');
+
+    if (techTrigger && techPanel) {
+        techTrigger.addEventListener('click', () => {
+            techPanel.classList.toggle('is-active');
+            const isActive = techPanel.classList.contains('is-active');
+            techTrigger.querySelector('.bento-badge').textContent = isActive ? "- HIDE SPECIFICATIONS" : "+ VIEW TECHNICAL SPECIFICATIONS";
+
+            if (isActive) {
+                gsap.from(techPanel.querySelectorAll('.tech-spec-item'), {
+                    opacity: 0,
+                    x: -10,
+                    duration: 0.4,
+                    stagger: 0.05,
+                    ease: "power2.out"
+                });
+            }
+        });
+    }
+
+    closeBtn.addEventListener('click', () => {
+        const rect = container.getBoundingClientRect();
+        const tlClose = gsap.timeline();
+
+        // Target all content for fade out on close
+        const allContent = modal.querySelectorAll('.genesis-manifesto__headline, #genesis-manifesto-text, .genesis-bento__card, .genesis-hub-section');
+
+        tlClose.to(allContent, {
+            opacity: 0,
+            y: 20,
+            duration: 0.4,
+            ease: "power2.in",
+            stagger: 0.03
+        });
+
+        tlClose.to(modal, {
+            clipPath: `inset(${rect.top}px ${window.innerWidth - rect.right}px ${window.innerHeight - rect.bottom}px ${rect.left}px round 32px)`,
+            duration: 0.8,
+            ease: "expo.inOut",
+            onComplete: () => {
+                gsap.set(modal, { visibility: 'hidden', opacity: 0 });
+                modal.classList.remove('is-active');
+                modal.setAttribute('aria-hidden', 'true');
+
+                if (window.locoScroll) {
+                    window.locoScroll.start();
+                    window.locoScroll.update();
+                }
+
+                gsap.set(originalContent, { y: -20 });
+                gsap.to(originalContent, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            }
+        });
+    });
+}
+
+/* ─── BMC Interactive Grid ─────────────────── */
+function initBMCInteractiveGrid() {
+    const tiles = document.querySelectorAll('.bmc-tile');
+
+    if (!tiles.length) return;
+
+    tiles.forEach(tile => {
+        console.log("Adding click listener to BMC tile:", tile);
+        tile.addEventListener('click', (e) => {
+            console.log("BMC tile clicked:", tile);
+            const cell = tile.closest('.bmc-cell');
+            if (!cell) return;
+            const isExpanded = cell.classList.contains('is-expanded');
+            const expandDirectionRaw = tile.getAttribute('data-expand');
+            const isMobile = window.innerWidth < 1024;
+            // Force no expansion on mobile
+            const expandDirection = isMobile ? 'none' : expandDirectionRaw;
+
+            // Close all other expanded cells
+            document.querySelectorAll('.bmc-cell.is-expanded').forEach(otherCell => {
+                if (otherCell !== cell) {
+                    otherCell.classList.remove('is-expanded');
+                    const otherTile = otherCell.querySelector('.bmc-tile');
+                    const otherExpandRaw = otherTile.getAttribute('data-expand');
+
+                    if (otherExpandRaw !== 'none' && !isMobile) {
+                        gsap.to(otherTile, {
+                            width: "100%",
+                            left: 0,
+                            right: 0,
+                            duration: 0.5,
+                            ease: "expo.out",
+                            clearProps: "all"
+                        });
+                    } else if (isMobile) {
+                        gsap.set(otherTile, { clearProps: "width,left,right" });
+                    }
+
+                    const otherContent = otherTile.querySelector('.bmc-tile-content');
+                    if(otherContent) {
+                        gsap.killTweensOf(otherContent);
+                        gsap.to(otherContent, { opacity: 0, duration: 0.2, onComplete: () => {
+                            gsap.set(otherContent, { display: "none" });
+                        }});
+                    }
+                }
+            });
+
+            // Toggle this cell
+            if (!isExpanded) {
+                cell.classList.add('is-expanded');
+
+                if (expandDirection !== 'none') {
+                    // Get gap from CSS (1.5rem = 24px typically)
+                    const gap = 24;
+
+                    let animProps = {
+                        width: `calc(200% + ${gap}px)`,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.7)" // Smooth, modern, apple-styled spring effect
+                    };
+
+                    if (expandDirection === "left") {
+                        gsap.set(tile, { left: "auto", right: 0 });
+                        gsap.set(tile, { transformOrigin: "right center" });
+                    } else {
+                        gsap.set(tile, { left: 0, right: "auto" });
+                        gsap.set(tile, { transformOrigin: "left center" });
+                    }
+
+                    gsap.to(tile, animProps);
+                } else {
+                    gsap.fromTo(tile, { scale: 0.98 }, { scale: 1, duration: 0.4, ease: "back.out(1.5)" });
+                }
+
+                // Animate content appearance for ALL cases (including none)
+                const content = tile.querySelector('.bmc-tile-content');
+                if(content) {
+                    gsap.killTweensOf(content);
+                    gsap.set(content, { display: "flex", opacity: 0, y: 10 });
+                    gsap.to(content, { opacity: 1, y: 0, duration: 0.4, delay: expandDirection !== 'none' ? 0.2 : 0, ease: "power2.out" });
+                }
+
+            } else {
+                cell.classList.remove('is-expanded');
+
+                if (expandDirection !== 'none') {
+                    gsap.to(tile, {
+                        width: "100%",
+                        duration: 0.5,
+                        ease: "expo.out",
+                        clearProps: "all"
+                    });
+                }
+
+                const content = tile.querySelector('.bmc-tile-content');
+                if(content) {
+                    gsap.killTweensOf(content);
+                    gsap.to(content, { opacity: 0, duration: 0.2, onComplete: () => {
+                        gsap.set(content, { display: "none" });
+                    }});
+                }
+            }
+        });
+    });
+}
+
+/* ─── Growth Roadmap (Investor Page) ──────────────── */
+function initGrowthRoadmap() {
+    const trackFill = document.querySelector('.cyber-track-fill');
+    const particle = document.querySelector('.track-particle');
+    const nodes = document.querySelectorAll('.roadmap-node');
+    const containers = document.querySelectorAll('.roadmap-node-wrapper');
+
+    if (!trackFill) return;
+
+    // Check if desktop layout (matches the CSS media query)
+    const isDesktop = window.innerWidth >= 1024;
+
+    // Animate the neon track fill
+    gsap.to(trackFill, {
+        scrollTrigger: {
+            trigger: '.growth-roadmap-inner',
+            start: 'top 70%',
+            end: 'bottom 80%',
+            scrub: 1.5,
+            scroller: '[data-scroll-container]',
+        },
+        height: isDesktop ? '4px' : '100%',
+        width: isDesktop ? '100%' : '4px',
+        ease: "none"
+    });
+
+    // Animate the glowing particle along the track
+    if (particle) {
+        gsap.to(particle, {
+            scrollTrigger: {
+                trigger: '.growth-roadmap-inner',
+                start: 'top 70%',
+                end: 'bottom 80%',
+                scrub: 1,
+                scroller: '[data-scroll-container]',
+            },
+            left: isDesktop ? "100%" : "20px",
+            top: isDesktop ? "20px" : "100%",
+            opacity: [0, 1, 1, 1, 0],
+            ease: "none"
+        });
+    }
+
+    // Animate the roadmap nodes coming in one-by-one by using wrappers as trigger to avoid node conflicts
+    containers.forEach((wrapper, i) => {
+        const node = wrapper.querySelector('.roadmap-node');
+        if (!node) return;
+
+        gsap.from(node, {
+            scrollTrigger: {
+                trigger: wrapper,
+                start: 'top 90%',
+                toggleActions: "play none none reverse",
+                scroller: '[data-scroll-container]',
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: isDesktop ? (i * 0.1) : 0
+        });
+    });
 }
