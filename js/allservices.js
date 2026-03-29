@@ -1,8 +1,10 @@
 /**
  * js/allservices.js
  * Handles rendering and filtering for the Services Library.
- * VERSION: Offline-Compatible (no modules to avoid CORS on file://)
+ * VERSION: ES Module
  */
+
+import { setupModalListeners, resetModal } from './modal-utils.js';
 
 (function() {
     // --- HELPER: HTML ESCAPING ---
@@ -26,86 +28,6 @@
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
-    }
-
-    // --- MODAL HELPERS (re-implemented to avoid imports) ---
-    function resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status) {
-        if (stateContainers) {
-            stateContainers.forEach(container => {
-                container.classList.remove('is-active');
-                if (container.id === 'sm-content-details') {
-                    container.classList.add('is-active');
-                }
-            });
-        }
-        if (faceScanner) faceScanner.classList.remove('is-scanning', 'is-loading', 'is-success');
-        if (loadingSpinner) loadingSpinner.style.display = 'none';
-        if (step2Status) step2Status.textContent = 'Verifying identity...';
-    }
-
-    function setupModalListenersDirect(config) {
-        const { modal, modalClose, modalOverlay, applyBtn, cancelBtn, confirmBtn, 
-                closeCancelledBtn, closeSuccessBtn, stateContainers, 
-                faceScanner, loadingSpinner, step2Status, resetModalFn } = config;
-
-        const closeModal = () => {
-            if (!modal) return;
-            modal.classList.remove('is-active', 'is-open');
-            modal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            setTimeout(resetModalFn, 300);
-        };
-
-        const switchState = (targetId) => {
-            if (!stateContainers) return;
-            stateContainers.forEach(container => {
-                container.classList.remove('is-active');
-                if (container.id === targetId) {
-                    container.classList.add('is-active');
-                }
-            });
-        };
-
-        if (modalClose) modalClose.addEventListener('click', closeModal);
-        if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-
-        if (applyBtn) {
-            applyBtn.addEventListener('click', () => switchState('sm-content-step1'));
-        }
-
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => switchState('sm-content-details'));
-        }
-
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', () => {
-                switchState('sm-content-step2');
-                if (faceScanner) faceScanner.classList.add('is-scanning');
-                
-                setTimeout(() => {
-                    if (faceScanner) {
-                        faceScanner.classList.remove('is-scanning');
-                        faceScanner.classList.add('is-loading');
-                    }
-                    if (loadingSpinner) loadingSpinner.style.display = 'block';
-                    if (step2Status) step2Status.textContent = 'Analyzing biometrics...';
-
-                    setTimeout(() => {
-                        if (loadingSpinner) loadingSpinner.style.display = 'none';
-                        if (faceScanner) {
-                            faceScanner.classList.remove('is-loading');
-                            faceScanner.classList.add('is-success');
-                        }
-                        if (step2Status) step2Status.textContent = 'Identity Verified';
-
-                        setTimeout(() => switchState('sm-content-success'), 800);
-                    }, 2000);
-                }, 2500);
-            });
-        }
-
-        if (closeCancelledBtn) closeCancelledBtn.addEventListener('click', closeModal);
-        if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -139,6 +61,8 @@
         let currentPage = 1;
         let currentProviderFilter = 'all';
         let currentTagFilter = 'all';
+
+        const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
 
         /**
          * Custom Dropdown Logic
@@ -371,7 +295,7 @@
          * Opens the detailed service modal
          */
         function openModal(service) {
-            resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status);
+            resetModalLocal();
             if (mProvider) mProvider.textContent = service.provider;
             if (mTitle) mTitle.textContent = service.name;
             if (mDesc) mDesc.textContent = service.description;
@@ -462,7 +386,7 @@
             filterData();
         }
 
-        setupModalListenersDirect({
+        setupModalListeners({
             modal, 
             modalClose: document.getElementById('sm-close'), 
             modalOverlay: document.getElementById('sm-overlay'),
@@ -475,7 +399,7 @@
             faceScanner, 
             loadingSpinner, 
             step2Status,
-            resetModalFn: () => resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status)
+            resetModalFn: resetModalLocal
         });
 
         if (searchInput) {
