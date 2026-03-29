@@ -3840,6 +3840,28 @@
 }
 
 /* ─── Footer Main ─────────────────── */
+.footer-giant-brand {
+    font-size: clamp(4rem, 18vw, 15rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    text-align: center;
+    
+    /* Elegant subtle brand-aligned gradient */
+    background: linear-gradient(180deg, rgba(12, 155, 78, 0.07) 0%, rgba(12, 155, 78, 0.02) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    line-height: 0.85;
+    margin-bottom: -0.12em; /* Negative margin to sit closer to content */
+    pointer-events: none;
+    user-select: none;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
 .footer-main {
     padding: var(--space-3xl) var(--container-padding) var(--space-xl);
     border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -3984,6 +4006,52 @@
 
 .footer-main__legal a:hover {
     color: var(--color-text-heading);
+}
+
+/* ─── Contact Form ─────────────────── */
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus {
+    outline: none !important;
+    border-color: var(--color-bg-primary) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 0 0 4px rgba(164, 229, 183, 0.2);
+    transition: all 0.3s ease;
+}
+
+.button--glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md) var(--space-2xl);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--color-text-heading);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.button--glass:hover {
+    background: rgba(164, 229, 183, 0.3);
+    border-color: rgba(164, 229, 183, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(164, 229, 183, 0.2);
+}
+
+.button--glass:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+    .contact-form .form-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* ─── Resident Carousel Nav ─────────────────────────────────────────────── */
