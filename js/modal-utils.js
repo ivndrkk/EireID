@@ -30,7 +30,9 @@ export function switchModalState(stateId, stateContainers) {
  */
 export function resetModal(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-details', stateContainers);
-    if (faceScanner) faceScanner.style.display = 'flex';
+    if (faceScanner) {
+        faceScanner.classList.remove('is-scanning', 'is-loading', 'is-success');
+    }
     if (loadingSpinner) loadingSpinner.style.display = 'none';
     if (step2Status) step2Status.textContent = 'Verifying identity...';
 }
@@ -44,19 +46,33 @@ export function resetModal(stateContainers, faceScanner, loadingSpinner, step2St
  */
 export function startFaceVerification(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-step2', stateContainers);
+    if (faceScanner) faceScanner.classList.add('is-scanning');
 
-    // Phase 1: Scanning (3s)
+    // Phase 1: Scanning (2.5s)
     setTimeout(() => {
-        if (faceScanner) faceScanner.style.display = 'none';
+        if (faceScanner) {
+            faceScanner.classList.remove('is-scanning');
+            faceScanner.classList.add('is-loading');
+        }
         if (loadingSpinner) loadingSpinner.style.display = 'block';
-        if (step2Status) step2Status.textContent = 'Processing application...';
+        if (step2Status) step2Status.textContent = 'Analyzing biometrics...';
 
-        // Phase 2: Loading (5s)
+        // Phase 2: Analyzing (2s)
         setTimeout(() => {
-            switchModalState('sm-content-success', stateContainers);
-        }, 5000);
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            if (faceScanner) {
+                faceScanner.classList.remove('is-loading');
+                faceScanner.classList.add('is-success');
+            }
+            if (step2Status) step2Status.textContent = 'Identity Verified';
 
-    }, 3000);
+            // Phase 3: Transition to Success (0.8s)
+            setTimeout(() => {
+                switchModalState('sm-content-success', stateContainers);
+            }, 800);
+        }, 2000);
+
+    }, 2500);
 }
 
 /**
