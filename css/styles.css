@@ -4973,6 +4973,8 @@
 
 @media (max-width: 991px) {
 
+
+
     .how-it-works__content,
     .services-controls {
         position: relative !important;
@@ -6539,10 +6541,180 @@
     color: var(--color-bg-primary) !important;
 }
 
+/* --- Search Filter Styles --- */
+.search-filter-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 var(--space-sm);
+    flex-shrink: 0;
+}
+
+.search-filter-btn {
+    background: transparent;
+    border: none;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--color-text-heading);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 700;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-filter-btn:hover {
+    background: var(--color-bg-primary) !important;
+    color: #000 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(164, 229, 183, 0.4);
+}
+
+.search-filter-btn:active {
+    transform: translateY(1px);
+}
+
+.search-filter-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    display: none;
+    z-index: 2000;
+    text-align: left;
+    transform-origin: top right;
+    animation: filterDropdownIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    background: #ffffff !important;
+    backdrop-filter: none;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes filterDropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.search-filter-dropdown.is-open {
+    display: block;
+}
+
+.filter-dropdown__title {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.6;
+    margin-bottom: var(--space-lg);
+    font-weight: 900;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: var(--space-sm);
+    color: var(--color-text-heading);
+}
+
+.search-filter-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1500;
+    display: none;
+    animation: fadeIn var(--transition-base) forwards;
+}
+
+.search-filter-backdrop.is-active {
+    display: block;
+}
+
+.hero__search-container.has-open-filter {
+    z-index: 1600;
+    position: relative;
+}
+
+.filter-dropdown__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md) var(--space-xl);
+}
+
+@media (max-width: 850px) {
+    .filter-dropdown__list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .filter-dropdown__list {
+        grid-template-columns: 1fr;
+    }
+}
+
+.filter-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-text-heading);
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) 0;
+    transition: all 0.2s ease;
+}
+
+.filter-checkbox-item:hover {
+    transform: translateX(4px);
+}
+
+/* Custom Checkbox Styling */
+.filter-checkbox-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+}
+
+.filter-checkbox-item input[type="checkbox"]:checked {
+    background: var(--color-bg-primary);
+    border-color: var(--color-bg-primary);
+    transform: scale(1.1);
+}
+
+.filter-checkbox-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-text-heading);
+    font-size: 14px;
+    font-weight: 900;
+}
+
 /* Fix Hero content layout when no actions (CTA) are present */
 .hero:not(:has(.hero__actions)) .hero__content {
     justify-content: center;
     padding-bottom: var(--space-xl);
+    margin-top: calc((var(--space-3xl)) * 2);
 }
 
 /* --- Search Suggestion Pills --- */
@@ -6568,21 +6740,23 @@
 
 /* --- Answer Modal (Quick Questions) --- */
 .q-modal {
-    position: absolute;
+    position: fixed; /* Changed from absolute for better scroll handling */
+    top: 50%;
+    left: 50%;
     width: 90vw;
     max-width: 650px;
-    z-index: 1000;
+    z-index: 5000;
     pointer-events: none;
     opacity: 0;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translateX(-50%) translateY(10px);
+    transform: translate(-50%, -40%) scale(0.95);
 }
 
 
 .q-modal.is-active {
     opacity: 1;
     pointer-events: all;
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .q-modal__close {
@@ -6653,34 +6827,164 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    mix-blend-mode: multiply;
+    mix-blend-mode: multiply; /* Erase white background */
 }
 
 @media (max-width: 768px) {
+    .q-modal {
+        top: 15px !important;
+        left: 15px !important;
+        right: 15px !important;
+        bottom: 15px !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        transform: none !important;
+        border-radius: var(--radius-lg);
+        z-index: 9999;
+        overflow: hidden;
+    }
+
     .q-modal__content {
-        flex-direction: column-reverse;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: var(--radius-lg) !important;
+        flex-direction: column !important;
+        justify-content: center !important; /* Centered but with top offset for layout flow */
+        padding: var(--space-xl) !important;
         text-align: center;
-        padding: var(--space-xl) var(--space-lg);
-        gap: var(--space-md);
         position: relative;
+        overflow-y: auto;
     }
 
     .q-modal__close {
-        top: 10px;
-        right: 10px;
-        background: rgba(0,0,0,0.08); /* slightly higher contrast for mobile tap */
+        top: 15px !important;
+        right: 15px !important;
+        background: rgba(0,0,0,0.08); 
     }
 
     .q-modal__text {
         text-align: center;
+        width: 100%;
+        margin-top: 20px; /* Space between sticker and text */
     }
     .q-modal__question {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-md);
     }
     .q-modal__image {
-        width: 100px;
-        height: 100px;
+        display: none; /* Hide side mascot on mobile to focus on sticker */
+    }
+    .q-modal__sticker {
+        display: none !important;
     }
 }
 
 
+/* --- Support & Help Grid (Guidelines) --- */
+.kb-grid .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md); /* More compact gap */
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .kb-grid .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .kb-grid .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.guideline-card {
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-xl) !important; /* Increased inside padding */
+}
+
+.guideline-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    background: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.1), 0 0 30px rgba(164, 229, 183, 0.2);
+    border-color: rgba(164, 229, 183, 0.4);
+}
+
+.guideline-card .icon-circle {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    background: rgba(164, 229, 183, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.guideline-card:hover .icon-circle {
+    transform: scale(1.1) rotate(-5deg);
+    background: rgba(164, 229, 183, 0.25);
+}
+
+/* --- Guide Modal Adjustments --- */
+.q-modal__content {
+    display: flex; /* Ensure it is a flex container */
+    flex-direction: row; /* Default layout */
+}
+
+.q-modal__sticker {
+    display: none;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.q-modal__sticker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.2));
+    animation: stickerFloat 3s ease-in-out infinite alternate;
+    border-radius: 40%;
+}
+
+@keyframes stickerFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+
+.q-modal--guideline .q-modal__content {
+    flex-direction: column;
+    text-align: center;
+    padding-top: var(--space-3xl);
+    max-width: 550px;
+}
+
+.q-modal--guideline .q-modal__sticker {
+    display: block;
+}
+
+.q-modal--guideline .q-modal__image {
+    display: none;
+}
+
+.q-modal--guideline .q-modal__text {
+    text-align: center;
+}
+
+.q-modal--guideline .q-modal__answer {
+    line-height: 1.8;
+}
+
+.kb-grid .container--narrow {
+    max-width: 1200px;
+    margin: 0 auto;
+}

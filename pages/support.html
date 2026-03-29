@@ -30,7 +30,7 @@
     </div>
 
     <div id="scroll-wrapper" data-scroll-container>
-    <div class="container">
+    <div class="container--fullwidth">
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
@@ -93,170 +93,130 @@
 
                 <!-- Search Bar -->
                 <div class="hero__search-container" data-reveal data-scroll data-scroll-speed="1" style="width: 100%; max-width: 800px; margin-top: var(--space-xl); padding: 0 var(--container-padding);">
-                    <div class="logo-box--glass search-bar-interactive" style="display: flex; align-items: center; padding: var(--space-md) var(--space-lg); border-radius: var(--radius-lg); width: 100%; transition: all 0.3s ease;">
+                    <div class="logo-box--glass search-bar-interactive" style="display: flex; align-items: center; padding: var(--space-md); padding-left: var(--space-lg); border-radius: var(--radius-lg); width: 100%; transition: all 0.3s ease; position: relative;">
                         <span class="iconify" data-icon="lucide:search" style="font-size: 24px; margin-right: var(--space-md); opacity: 0.5; color: var(--color-text-heading);"></span>
                         <input type="text" id="support-search-input" placeholder="Search for PPSN verification, account recovery..." 
                             style="background: transparent; border: none; outline: none; width: 100%; color: var(--color-text-heading); font-size: var(--font-size-lg); font-family: inherit;">
-                    </div>
-                </div>
-
-                <!-- Quick Questions -->
-                <div class="hero__search-suggestions" data-reveal data-scroll data-scroll-speed="0.8" style="margin-top: var(--space-lg); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); position: relative;">
-                    <button class="search-suggestion-pill logo-box--glass" data-question="Is EireID free to use?" data-answer="Yes — EireID is completely free for individuals. There are no subscriptions, no credit card required, and no hidden fees. Businesses have separate plans, but for residents, the app is always free.">Is EireID free to use?</button>
-                    <button class="search-suggestion-pill logo-box--glass" data-question="Where is my personal data stored?" data-answer="Your identity data never leaves your device. EireID stores your credentials in your phone's secure enclave — the same hardware used by Apple/Google Pay. We don't hold copies of your files.">Where is my personal data stored?</button>
-                    <button class="search-suggestion-pill logo-box--glass" data-question="Does EireID replace my physical ID?" data-answer="Not yet — but that's the goal. EireID currently works alongside physical documents. As Irish legislation catches up with digital identity standards, full legal equivalence is on our roadmap.">Does EireID replace my physical ID?</button>
-                    <button class="search-suggestion-pill logo-box--glass" data-question="What does the other person see?" data-answer="Only what you choose to share. If a venue needs to confirm you're over 18, they get a 'Yes' or 'No' — NOT your date of birth, name, or address. You control every byte.">What does the other person see?</button>
-                    <button class="search-suggestion-pill logo-box--glass" data-question="Does it work without internet?" data-answer="Yes, for most checks. Your credentials contain a cryptographic signature that can be verified offline via QR code. High-security actions like signing documents still require a connection.">Does it work without internet?</button>
-                    <button class="search-suggestion-pill logo-box--glass" data-question="I'm not an Irish citizen — can I use it?" data-answer="Absolutely. EireID is built for everyone living in Ireland. EU/EEA and non-EEA nationals with a valid IRP (residence permit) can store and present their credentials with ease.">I'm not an Irish citizen — can I use it?</button>
-                </div>
-
-                <!-- Answer Modal -->
-                <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;">
-                    <div class="q-modal__content logo-box--glass">
-                        <button class="q-modal__close" aria-label="Close modal">
-                            <span class="iconify" data-icon="lucide:x"></span>
+                        
+                        <div class="search-filter-divider"></div>
+                        
+                        <button id="search-filter-btn" class="search-filter-btn" aria-label="Filter Search" aria-expanded="false">
+                            <span class="iconify" data-icon="lucide:filter" style="font-size: 18px;"></span>
+                            <span>Filter</span>
                         </button>
-                        <div class="q-modal__text">
-                            <h3 class="q-modal__question"></h3>
-                            <p class="q-modal__answer"></p>
-                        </div>
-                        <div class="q-modal__image">
-                            <img src="../assets/img/mascot_3.png" alt="Mascot">
+
+                        <div id="search-filter-dropdown" class="search-filter-dropdown logo-box--glass">
+                            <div class="filter-dropdown__content">
+                                <h4 class="filter-dropdown__title">Categories</h4>
+                                <div id="filter-categories-list" class="filter-dropdown__list">
+                                    <!-- Categories will be injected here -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Quick Questions (Dynamic Search Results) -->
+                <div class="hero__search-suggestions" data-reveal data-scroll data-scroll-speed="0.8" style="margin-top: var(--space-lg); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); position: relative;">
+                    <!-- Results injected by support-search.js -->
+                </div>
+
+
+            </section>
+
+            <!-- Knowledge Base Grid (Guidelines Section) -->
+            <section class="kb-grid section-padding" style="margin-top: var(--space-xl); width: 100%;">
+                <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                    <div class="grid-3">
+                        <!-- Card 1: Lost Phone -->
+                        <div class="guideline-card logo-box--glass rounded-3xl" 
+                             data-reveal data-scroll data-scroll-speed="0.2"
+                             data-guide="lost-phone"
+                             data-question="What if I lose my phone?" 
+                             data-answer="If you lose your phone, your EireID remains secure. Because your data is stored exclusively in the Secure Enclave of your hardware, it cannot be accessed without your biometric lock. To restore your ID on a new device, you will use the 'Recovery Vault' process. This requires either your 24-word recovery phrase (generated during setup) or a linked 'Trusted Device' (like an iPad or second phone) to authorize the migration. Never share your recovery phrase with anyone.">
+                            <div class="icon-circle mb-6" style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                                <span class="iconify text-3xl" data-icon="lucide:smartphone-nfc" style="color: var(--color-bg-primary);"></span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" style="text-align: center;">What if I lose my phone?</h3>
+                            <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">Guidelines for the 'Recovery Vault' and restoring your identity.</p>
+                        </div>
+
+                        <!-- Card 2: New Resident -->
+                        <div class="guideline-card logo-box--glass rounded-3xl" 
+                             data-reveal data-scroll data-scroll-speed="0.3"
+                             data-guide="new-resident"
+                             data-question="Just arrived in Ireland?" 
+                             data-answer="Welcome! To get verified on EireID as a newcomer, you'll need three key documents: your IRP Card (if you are a non-EU/EEA national), your Passport, and your PPSN letter from the Department of Social Protection. Once verified, EireID acts as a cryptographically signed proof of identity. You can use it to help verify your local address when opening bank accounts with AIB, BOI, or Permanent TSB, significantly speeding up your settlement process.">
+                            <div class="icon-circle mb-6" style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                                <span class="iconify text-3xl" data-icon="lucide:plane-landing" style="color: var(--color-bg-primary);"></span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" style="text-align: center;">Just arrived in Ireland?</h3>
+                            <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">A checklist and guide for new residents getting their digital PPSN.</p>
+                        </div>
+
+                        <!-- Card 3: Privacy -->
+                        <div class="guideline-card logo-box--glass rounded-3xl" 
+                             data-reveal data-scroll data-scroll-speed="0.4"
+                             data-guide="privacy"
+                             data-question="How Selective Disclosure works" 
+                             data-answer="Selective Disclosure is EireID's core privacy feature. Traditionally, showing an ID reveals your full Name, DOB, and Address just to prove one fact. With EireID, if a shop or venue asks for ID, the app only generates a cryptographically signed 'Over 18' token. The requester gets a simple proof of age without ever seeing your sensitive personal details. You share only the minimum byte of data required for the transaction.">
+                            <div class="icon-circle mb-6" style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                                <span class="iconify text-3xl" data-icon="lucide:eye-off" style="color: var(--color-bg-primary);"></span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" style="text-align: center;">How Selective Disclosure works</h3>
+                            <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">How we protect your data using Zero-Knowledge standards.</p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
         </main>
 
-            <!-- Knowledge Base Grid -->
-            <section class="kb-grid section-padding" style="display: none;">
-                <div class="grid-3 gap-8">
-                    <!-- Card 1 -->
-                    <a href="#" class="logo-box--glass p-8 rounded-3xl hover-trigger" data-reveal data-scroll data-scroll-speed="0.5">
-                        <div class="icon-circle mb-6">
-                            <span class="iconify text-3xl" data-icon="lucide:user-check"></span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Getting Verified</h3>
-                        <p class="opacity-50 text-sm">Step-by-step guide to scanning your Passport and Public Services Card.</p>
-                    </a>
-
-                    <!-- Card 2 -->
-                    <a href="#" class="logo-box--glass p-8 rounded-3xl hover-trigger" data-reveal data-scroll data-scroll-speed="0.8">
-                        <div class="icon-circle mb-6">
-                            <span class="iconify text-3xl" data-icon="lucide:shield-alert"></span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Security & Recovery</h3>
-                        <p class="opacity-50 text-sm">Lost your device? Learn how to securely recover your EireID vault.</p>
-                    </a>
-
-                    <!-- Card 3 -->
-                    <a href="#" class="logo-box--glass p-8 rounded-3xl hover-trigger" data-reveal data-scroll data-scroll-speed="0.3">
-                        <div class="icon-circle mb-6">
-                            <span class="iconify text-3xl" data-icon="lucide:building-2"></span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">For Businesses</h3>
-                        <p class="opacity-50 text-sm">Integration guides for API keys and customer onboarding workflows.</p>
-                    </a>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section class="contact-section section-padding" style="display: none;">
-                <div class="grid-2 items-center">
-                    <div class="contact-info" data-reveal>
-                        <h2 class="text-4xl font-bold mb-8">Direct Support</h2>
-                        <ul class="space-y-6">
-                            <li class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full glass flex items-center justify-center">
-                                    <span class="iconify" data-icon="lucide:mail"></span>
-                                </div>
-                                <div>
-                                    <span class="block opacity-40 text-xs uppercase">Email Us</span>
-                                    <a href="mailto:support@eireid.ie" class="text-xl font-bold">support@eireid.ie</a>
-                                </div>
-                            </li>
-                            <li class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full glass flex items-center justify-center">
-                                    <span class="iconify" data-icon="lucide:phone"></span>
-                                </div>
-                                <div>
-                                    <span class="block opacity-40 text-xs uppercase">Call Us (ROI)</span>
-                                    <a href="tel:+1800123456" class="text-xl font-bold">1800 123 456</a>
-                                </div>
-                            </li>
-                        </ul>
+        <!-- === FOOTER === -->
+        <footer class="footer-main" data-reveal>
+            <div class="footer-main__inner">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-brand__logo">
+                        <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                        <span>EireID</span>
                     </div>
-
-                    <div class="contact-form-container" data-reveal data-scroll data-scroll-speed="1">
-                        <form action="#" class="logo-box--glass p-12 rounded-3xl space-y-6">
-                            <div class="grid-2 gap-6">
-                                <div class="form-group">
-                                    <label class="block text-xs uppercase mb-2 opacity-40">First Name</label>
-                                    <input type="text" class="w-full glass p-4 rounded-xl outline-none focus:border-branded transition-colors" placeholder="Aoife">
-                                </div>
-                                <div class="form-group">
-                                    <label class="block text-xs uppercase mb-2 opacity-40">Email</label>
-                                    <input type="email" class="w-full glass p-4 rounded-xl outline-none focus:border-branded transition-colors" placeholder="aoife@example.ie">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="block text-xs uppercase mb-2 opacity-40">Message</label>
-                                <textarea rows="4" class="w-full glass p-4 rounded-xl outline-none focus:border-branded transition-colors" placeholder="How can we help?"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn--primary w-full py-4 text-lg">Send Inquiry</button>
-                        </form>
+                    <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                        verified once, trusted everywhere.</p>
+                    <div class="footer-brand__socials">
+                        <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                        <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                        <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                        <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
                     </div>
                 </div>
-            </section>
-    </div>
 
-    <!-- === FOOTER === -->
-    <footer class="footer-main" data-reveal>
-        <div class="footer-main__inner">
-            <!-- Brand -->
-            <div class="footer-brand">
-                <div class="footer-brand__logo">
-                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
-                    <span>EireID</span>
+                <!-- Product -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Product</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Supported Documents</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Security & Privacy</a></li>
+                    </ul>
                 </div>
-                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
-                    verified once, trusted everywhere.</p>
-                <div class="footer-brand__socials">
-                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
-                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
-                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
-                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+
+                <!-- Services -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Services</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./allservices.html">All Services</a></li>
+                        <li><a href="./resident.html">For Residents</a></li>
+                        <li><a href="./business.html">For Businesses</a></li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Product -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Product</h4>
-                <ul class="footer-col__list">
-                    <li><a href="#">How It Works</a></li>
-                    <li><a href="#">Supported Documents</a></li>
-                    <li><a href="#">Integrations</a></li>
-                    <li><a href="#">Security & Privacy</a></li>
-                </ul>
-            </div>
-
-            <!-- Services -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Services</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./allservices.html">All Services</a></li>
-                    <li><a href="./resident.html">For Residents</a></li>
-                    <li><a href="./business.html">For Businesses</a></li>
-                </ul>
-            </div>
-
-            <!-- Company -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Company</h4>
-                <ul class="footer-col__list">
-                    <li><a href="../index.html#about">About EireID</a></li>
+                <!-- Company -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Company</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="../index.html#about">About EireID</a></li>
                         <li><a href="./team.html">Our Team</a></li>
                         <li><a href="./support.html">Contact Us</a></li>
                     </ul>
@@ -269,17 +229,17 @@
                         <li><a href="./investor.html">Investor Relations</a></li>
                     </ul>
                 </div>
-        </div>
-
-        <div class="footer-main__bottom">
-            <span>© 2026 EireID. All rights reserved.</span>
-            <div class="footer-main__legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Settings</a>
             </div>
-        </div>
-    </footer>
+
+            <div class="footer-main__bottom">
+                <span>© 2026 EireID. All rights reserved.</span>
+                <div class="footer-main__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Settings</a>
+                </div>
+            </div>
+        </footer>
 
     </div>
     </div>
@@ -322,6 +282,29 @@
         </form>
       </div>
     </div>
+
+    <!-- Answer Modal -->
+    <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;">
+        <div class="q-modal__content logo-box--glass">
+            <button class="q-modal__close" aria-label="Close modal">
+                <span class="iconify" data-icon="lucide:x"></span>
+            </button>
+            <div class="q-modal__sticker">
+                <img src="../assets/img/faq_stickers/sq1.png" alt="Sticker" style="border-radius: 40%;">
+            </div>
+            <div class="q-modal__text">
+                <h3 class="q-modal__question"></h3>
+                <p class="q-modal__answer"></p>
+            </div>
+            <div class="q-modal__image">
+                <!-- Mascot image reserved for side-mascot layout if needed -->
+                <img src="../assets/img/mascot_3.png" alt="Mascot">
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Filter Backdrop -->
+    <div id="filter-backdrop" class="search-filter-backdrop"></div>
 
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
