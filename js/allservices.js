@@ -13,6 +13,21 @@
         return div.innerHTML;
     }
 
+    /**
+     * Debounces a function call.
+     */
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     // --- MODAL HELPERS (re-implemented to avoid imports) ---
     function resetModalDirect(stateContainers, faceScanner, loadingSpinner, step2Status) {
         if (stateContainers) {
@@ -223,7 +238,8 @@
             const tList = document.getElementById('tag-list');
             if (!pList || !tList) return;
 
-            // Sort and add Providers
+            // Optimization: Use DocumentFragment to batch multiple DOM insertions for filters
+            const pFrag = document.createDocumentFragment();
             Array.from(providers).sort().forEach((p, i) => {
                 const li = document.createElement("li");
                 li.className = "custom-dropdown__item";
@@ -231,10 +247,11 @@
                 li.setAttribute('role', 'option');
                 li.setAttribute('data-value', p);
                 li.textContent = p;
-                pList.appendChild(li);
+                pFrag.appendChild(li);
             });
+            pList.appendChild(pFrag);
 
-            // Sort and add Tags
+            const tFrag = document.createDocumentFragment();
             Array.from(tags).sort().forEach((t, i) => {
                 const li = document.createElement("li");
                 li.className = "custom-dropdown__item";
@@ -242,8 +259,9 @@
                 li.setAttribute('role', 'option');
                 li.setAttribute('data-value', t);
                 li.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-                tList.appendChild(li);
+                tFrag.appendChild(li);
             });
+            tList.appendChild(tFrag);
         }
 
         /**
@@ -336,32 +354,44 @@
                 mTags.innerHTML = (service.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('');
             }
             
-            // Similar services logic
-            const currentTags = new Set(service.tags || []);
-            let similar = allServices.filter(s => {
-                if (s.id === service.id) return false;
+            // Similar services logic: Optimized single-pass greedy collection
+            const currentTags = service._tagSet || new Set();
+            const similar = [];
+            const others = [];
+
+            for (let i = 0; i < allServices.length; i++) {
+                const s = allServices[i];
+                if (s.id === service.id) continue;
+
                 const matchesProvider = s.provider === service.provider;
                 const matchesTags = (s.tags || []).some(t => currentTags.has(t));
-                return matchesProvider || matchesTags;
-            });
-            
-            // Fill with randoms if not enough similar ones
+
+                if (matchesProvider || matchesTags) {
+                    similar.push(s);
+                } else if (others.length < 3) {
+                    others.push(s);
+                }
+            }
+
+            let results;
             if (similar.length < 3) {
-                const similarIds = new Set(similar.map(s => s.id));
-                const others = allServices.filter(s => s.id !== service.id && !similarIds.has(s.id));
-                similar = [...similar, ...others].slice(0, 3);
+                results = [...similar, ...others].slice(0, 3);
             } else {
-                similar.sort(() => 0.5 - Math.random());
-                similar = similar.slice(0, 3);
+                // Shuffle and pick 3
+                results = similar.sort(() => 0.5 - Math.random()).slice(0, 3);
             }
 
             if (mSimilarGrid) {
                 mSimilarGrid.innerHTML = '';
-                similar.forEach(s => {
+                // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
+                const fragment = document.createDocumentFragment();
+
+                results.forEach(s => {
                     const scard = document.createElement('article');
+                    // Optimization: Remove data-scroll from cards inside modal to prevent layout issues
                     scard.className = 'service-card logo-box--glass';
                     scard.style.cursor = 'pointer';
-                    scard.style.minHeight = '120px';
+                    scard.style.minHeight = '140px';
                     scard.innerHTML = `
                         <div class="service-card__body">
                             <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
@@ -373,8 +403,9 @@
                         const mContent = modal.querySelector('.service-modal__content');
                         if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
                     });
-                    mSimilarGrid.appendChild(scard);
+                    fragment.appendChild(scard);
                 });
+                mSimilarGrid.appendChild(fragment);
             }
 
             modal.classList.add('is-open');
@@ -385,8 +416,10 @@
         // Initialize Data and Listeners
         if (typeof irishGovServicesData !== 'undefined') {
             allServices = irishGovServicesData;
+            // Optimization: Pre-compute search strings and tag Sets for O(1) lookups
             allServices.forEach(s => {
                 s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+                s._tagSet = new Set(s.tags || []);
             });
             
             populateFilters(allServices);
@@ -421,10 +454,11 @@
         });
 
         if (searchInput) {
-            searchInput.addEventListener("input", () => {
+            // Optimization: Debounce search input to prevent redundant filtering and re-renders
+            searchInput.addEventListener("input", debounce(() => {
                 currentPage = 1;
                 filterData();
-            });
+            }, 250));
         }
         
         if (loadMoreBtn) {
