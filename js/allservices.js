@@ -135,16 +135,15 @@
             if (!trigger || !list) return;
 
             let highlightedIndex = -1;
+            const getItems = () => Array.from(list.querySelectorAll('.custom-dropdown__item'));
 
             function updateHighlightedItem(index) {
-                const items = list.querySelectorAll('.custom-dropdown__item');
+                const items = getItems();
                 items.forEach(li => li.classList.remove('is-highlighted'));
-                
                 if (index >= 0 && index < items.length) {
-                    const item = items[index];
-                    item.classList.add('is-highlighted');
-                    trigger.setAttribute('aria-activedescendant', item.id || `opt-${index}`);
-                    item.scrollIntoView({ block: 'nearest' });
+                    items[index].classList.add('is-highlighted');
+                    trigger.setAttribute('aria-activedescendant', items[index].id);
+                    items[index].scrollIntoView({ block: 'nearest' });
                     highlightedIndex = index;
                 } else {
                     trigger.removeAttribute('aria-activedescendant');
@@ -154,42 +153,51 @@
 
             function selectItem(item) {
                 if (!item) return;
-                list.querySelectorAll('.custom-dropdown__item').forEach(li => {
+                getItems().forEach(li => {
                     li.classList.remove('is-selected');
                     li.setAttribute('aria-selected', 'false');
                 });
                 item.classList.add('is-selected');
                 item.setAttribute('aria-selected', 'true');
-                
                 if (label) label.textContent = item.textContent;
                 dropdownEl.classList.remove('is-open');
                 trigger.setAttribute('aria-expanded', 'false');
-                
-                const val = item.getAttribute('data-value');
-                if (onSelectCallback) onSelectCallback(val);
+                if (onSelectCallback) onSelectCallback(item.getAttribute('data-value'));
             }
+
+            trigger.addEventListener('keydown', (e) => {
+                const isOpen = dropdownEl.classList.contains('is-open');
+                const items = getItems();
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (!isOpen) trigger.click();
+                    else updateHighlightedItem(Math.min(highlightedIndex + 1, items.length - 1));
+                } else if (e.key === 'ArrowUp' && isOpen) {
+                    e.preventDefault();
+                    updateHighlightedItem(Math.max(highlightedIndex - 1, 0));
+                } else if ((e.key === 'Enter' || e.key === ' ') && isOpen) {
+                    e.preventDefault();
+                    selectItem(items[highlightedIndex]);
+                } else if (e.key === 'Escape' && isOpen) {
+                    trigger.click();
+                }
+            });
 
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isOpen = dropdownEl.classList.contains('is-open');
-                
-                // Close all others
                 document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
                     if (el !== dropdownEl) {
                         el.classList.remove('is-open');
                         el.querySelector('.custom-dropdown__trigger')?.setAttribute('aria-expanded', 'false');
                     }
                 });
-
-                if (isOpen) {
-                    dropdownEl.classList.remove('is-open');
-                    trigger.setAttribute('aria-expanded', 'false');
-                } else {
-                    dropdownEl.classList.add('is-open');
-                    trigger.setAttribute('aria-expanded', 'true');
-                    const items = Array.from(list.querySelectorAll('.custom-dropdown__item'));
-                    const selectedIndex = items.findIndex(li => li.classList.contains('is-selected'));
-                    updateHighlightedItem(selectedIndex >= 0 ? selectedIndex : 0);
+                dropdownEl.classList.toggle('is-open');
+                trigger.setAttribute('aria-expanded', !isOpen);
+                if (!isOpen) {
+                    const items = getItems();
+                    const idx = items.findIndex(li => li.classList.contains('is-selected'));
+                    updateHighlightedItem(idx >= 0 ? idx : 0);
                 }
             });
 
@@ -252,6 +260,9 @@
         function createCardElement(service, isFeatured = false) {
             const card = document.createElement("article");
             card.className = "service-card logo-box--glass";
+            card.setAttribute("role", "button");
+            card.setAttribute("tabindex", "0");
+            card.setAttribute("aria-label", service.name);
             if (isFeatured) card.classList.add("service-card--featured");
             
             card.innerHTML = `
@@ -270,7 +281,21 @@
                 </div>
             `;
             
-            card.addEventListener("click", () => openModal(service));
+            const triggerAction = () => {
+                card.style.transform = "scale(0.98)";
+                setTimeout(() => {
+                    card.style.transform = "";
+                    openModal(service);
+                }, 150);
+            };
+
+            card.addEventListener("click", triggerAction);
+            card.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    triggerAction();
+                }
+            });
             return card;
         }
 
