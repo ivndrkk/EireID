@@ -16,3 +16,10 @@
 1. Audit all HTML files for the presence of the `<main>` landmark.
 2. Ensure every page has exactly one `<main>` element wrapping the primary content (excluding header/footer).
 3. Add `tabindex="-1"` to the skip link target to ensure focus is correctly moved in all browsers.
+
+## 2025-05-17 - Essential Keyboard Navigation for Custom Dropdowns
+**Learning:** Custom dropdown (combobox) implementations often miss "Home" and "End" key navigation, which are expected behaviors for accessible components. Users rely on these shortcuts to quickly navigate long lists without multiple arrow key presses. Implementing these requires a centralized selection logic that can be easily triggered by both sequential (Up/Down) and jump (Home/End) inputs.
+
+**Action:** When building custom selection components:
+1. Always implement `Home` (index 0) and `End` (last index) key listeners in addition to `ArrowUp` and `ArrowDown`.
+2. Ensure that the logic for updating the highlighted state (`aria-activedescendant`) and scrolling the active element into view is shared across all navigation keys to maintain consistency.
