@@ -258,7 +258,9 @@ function initMobileMenu() {
     if (menuToggle && navList) {
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            const newState = !isExpanded;
+            menuToggle.setAttribute('aria-expanded', newState);
+            menuToggle.setAttribute('aria-label', newState ? 'Close menu' : 'Open menu');
             navList.classList.toggle('is-open');
         });
     }
