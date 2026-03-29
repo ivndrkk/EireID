@@ -8,11 +8,15 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
 
 (function() {
     // --- HELPER: HTML ESCAPING ---
+    // Optimization: High-performance regex-based escaping to avoid DOM-based element creation overhead.
     function escapeHTML(str) {
         if (!str) return '';
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
     /**
@@ -243,29 +247,37 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
 
         /**
          * Renders the services grid with pagination
+         * Optimization: Added isAppend flag to support incremental rendering.
+         * This prevents clearing and re-rendering the entire grid when loading more items.
          */
-        function renderPagination() {
+        function renderPagination(isAppend = false) {
             if (!grid) return;
-            grid.innerHTML = "";
-            const itemsPerPage = window.innerWidth >= 1024 ? 9 : 6;
-            const limit = currentPage * itemsPerPage;
-            const dataToShow = filteredData.slice(0, limit);
 
-            if (dataToShow.length === 0) {
-                noResults.style.display = "block";
-                paginationContainer.style.display = "none";
-                return;
+            const itemsPerPage = window.innerWidth >= 1024 ? 9 : 6;
+            const start = isAppend ? (currentPage - 1) * itemsPerPage : 0;
+            const end = currentPage * itemsPerPage;
+            const dataToShow = filteredData.slice(start, end);
+
+            if (!isAppend) {
+                grid.innerHTML = "";
+                if (filteredData.length === 0) {
+                    noResults.style.display = "block";
+                    paginationContainer.style.display = "none";
+                    return;
+                }
+                noResults.style.display = "none";
             }
-            noResults.style.display = "none";
 
             const fragment = document.createDocumentFragment();
             dataToShow.forEach((s, idx) => {
-                const card = createCardElement(s, idx === 0 && currentPage === 1);
+                // Featured card only for the very first item on the first page
+                const isFeatured = !isAppend && idx === 0 && currentPage === 1;
+                const card = createCardElement(s, isFeatured);
                 fragment.appendChild(card);
             });
             grid.appendChild(fragment);
 
-            paginationContainer.style.display = (limit >= filteredData.length) ? 'none' : 'flex';
+            paginationContainer.style.display = (end >= filteredData.length) ? 'none' : 'flex';
             
             // Re-sync scroll height for Locomotive
             setTimeout(() => {
@@ -282,13 +294,14 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
             
             filteredData = allServices.filter(s => {
                 const matchProv = currentProviderFilter === 'all' || s.provider === currentProviderFilter;
-                const matchTag = currentTagFilter === 'all' || (s.tags && s.tags.includes(currentTagFilter));
+                // Optimization: Use pre-computed _tagSet for O(1) membership check
+                const matchTag = currentTagFilter === 'all' || (s._tagSet && s._tagSet.has(currentTagFilter));
                 const matchSearch = !query || s._searchStr.includes(query);
                 return matchProv && matchTag && matchSearch;
             });
 
             currentPage = 1;
-            renderPagination();
+            renderPagination(false);
         }
 
         /**
@@ -413,7 +426,8 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
                 currentPage++;
-                renderPagination();
+                // Optimization: Pass true to append new items instead of full re-render
+                renderPagination(true);
             });
         }
     });
