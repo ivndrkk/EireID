@@ -114,6 +114,12 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
                 } else if (e.key === 'ArrowUp' && isOpen) {
                     e.preventDefault();
                     updateHighlightedItem(Math.max(highlightedIndex - 1, 0));
+                } else if (e.key === 'Home' && isOpen) {
+                    e.preventDefault();
+                    updateHighlightedItem(0);
+                } else if (e.key === 'End' && isOpen) {
+                    e.preventDefault();
+                    updateHighlightedItem(items.length - 1);
                 } else if ((e.key === 'Enter' || e.key === ' ') && isOpen) {
                     e.preventDefault();
                     selectItem(items[highlightedIndex]);
@@ -337,8 +343,11 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
 
                 results.forEach(s => {
                     const scard = document.createElement('article');
-                    // Optimization: Remove data-scroll from cards inside modal to prevent layout issues
+                    // Accessibility: Add role and tabindex for keyboard navigation
                     scard.className = 'service-card logo-box--glass';
+                    scard.setAttribute('role', 'button');
+                    scard.setAttribute('tabindex', '0');
+                    scard.setAttribute('aria-label', `View details for ${s.name}`);
                     scard.style.cursor = 'pointer';
                     scard.style.minHeight = '140px';
                     scard.innerHTML = `
@@ -347,10 +356,19 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
                             <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                         </div>
                     `;
-                    scard.addEventListener('click', () => {
+
+                    const triggerAction = () => {
                         openModal(s);
                         const mContent = modal.querySelector('.service-modal__content');
                         if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+
+                    scard.addEventListener('click', triggerAction);
+                    scard.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            triggerAction();
+                        }
                     });
                     fragment.appendChild(scard);
                 });
