@@ -1850,6 +1850,8 @@
     visibility: hidden;
     transform: translateY(20px) scale(0.9);
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Optimization: Hint the browser to promote this to its own compositor layer */
+    will-change: transform, opacity;
 }
 
 .ai-fab.is-visible {
@@ -3363,6 +3365,7 @@
     pointer-events: none;
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
     border-radius: var(--radius-full);
+    /* Optimization: Hint the browser to promote this to its own compositor layer */
     will-change: transform, opacity;
 }
 
