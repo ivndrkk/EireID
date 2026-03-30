@@ -4,24 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EireID - Your Digital Identity">
-    <title>EireID</title>
+    <meta name="description" content="EireID - For Businesses">
+    <title>EireID | For Businesses</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
     <link rel="icon" type="image/x-icon" href="../assets/logo/logo(color).png">
 
-    <!-- Locomotive Scroll CSS -->
+    <!-- Locomotive Scroll -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/business.css">
 </head>
 
 <body>
@@ -35,21 +36,20 @@
 
         <!-- === HEADER NAVIGATION === -->
         <header class="header">
-        
+
             <!-- Mobile toggler -->
             <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-        
-        
-        
+
             <nav class="nav" aria-label="Main Navigation">
                 <ul id="nav-list" class="nav__list">
                     <li><a href="../index.html" class="nav__link">Home</a></li>
                     <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link active">Services <span class="nav__dropdown-icon">▼</span></a>
+                        <a href="./allservices.html" class="nav__link active">Services <span
+                                class="nav__dropdown-icon">▼</span></a>
                         <div class="nav__dropdown">
                             <div class="nav__dropdown-inner logo-box--glass">
                                 <a href="./allservices.html" class="nav__dropdown-link">All services</a>
@@ -63,96 +63,582 @@
                     <li><a href="./team.html" class="nav__link">Our Team</a></li>
                 </ul>
             </nav>
-            <!-- Mobile Logo -->
-            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
-            </a>
         </header>
 
+        <!-- === MAIN CONTENT === -->
         <main id="main-content" tabindex="-1">
             
-            <!-- Hero Section -->
-            <section class="business-hero section-padding">
-                <div class="business-hero__content">
-                    <h1 class="hero__title" data-reveal>Scale Securely.</h1>
-                    <p class="hero__subtitle" data-reveal>Integrate Ireland's most trusted digital identity into your business workflow in 30 seconds.</p>
+            <!-- SECTION 1: HERO -->
+            <section class="resident-hero" style="min-height: 80vh;">
+                <div class="hero__content" aria-labelledby="hero-title" style="flex-direction: row; gap: var(--space-2xl); justify-content: space-between; align-items: center; width: 100%;">
+                    
+                    <div class="hero-leftcol" style="flex: 1; max-width: 600px;">
+                        <div class="hero__logos" data-scroll data-scroll-speed="-0.5">
+                            <button class="logo-box logo-box--glass" aria-label="Business Profile">
+                                <span class="iconify logo-box__svg" data-icon="lucide:building-2" style="width: 52px; height: 52px; display: block; margin: 0 auto; opacity: 0.8; color: var(--color-text-heading);"></span>
+                            </button>
+                            <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                                <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg" style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
+                            </button>
+                        </div>
+                        
+                        <h1 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2.5" style="font-size: var(--font-size-hero);">For Businesses</h1>
+                        <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1.5">Instant, legally valid identity verification &mdash; built for every business in Ireland.</p>
+                        
+                        <div class="hero__actions" data-scroll data-scroll-class="is-revealed" style="margin-top: var(--space-xl);">
+                            <div class="hero__pill-wrapper">
+                                <a href="#partner" class="hero__action" aria-label="Partner with us">
+                                    <span>PARTNER WITH US</span>
+                                </a>
+                                <div class="hero__pill-divider"></div>
+                                <a href="#api" class="hero__action" aria-label="Explore the API" style="background: transparent; color: var(--color-text-heading);">
+                                    <span>EXPLORE THE API</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rightcol" style="flex: 1; min-height: 500px;" data-scroll data-scroll-speed="1">
+                        <div class="business-hero-graph logo-box--glass">
+                            <div class="business-hero-graph__header">
+                                <h3 class="business-hero-graph__title">Verifications Processed</h3>
+                                <div class="business-hero-graph__value" id="hero-graph-value">0.0M+</div>
+                            </div>
+                            <canvas id="hero-graph-canvas" class="business-hero-graph__canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <div class="scroll-icon resident-scroll-icon" aria-hidden="true" style="margin: 0 auto; margin-bottom: var(--space-2xl);"></div>
+
+            <!-- SECTION 2: THE PROBLEM WE SOLVE -->
+            <section class="section-padding">
+                <span class="comparison__badge" data-reveal style="margin: 0 auto;">THE PROBLEM WE SOLVE</span>
+                <div class="problems-grid">
+                    
+                    <article class="problem-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <div class="problem-card__icon"><span class="iconify" data-icon="lucide:file-text"></span></div>
+                        <h3 class="problem-card__title">Manual KYC</h3>
+                        <p class="problem-card__body">Hours of paper-based identity checks that slow onboarding and frustrate customers.</p>
+                    </article>
+                    
+                    <article class="problem-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <div class="problem-card__icon"><span class="iconify" data-icon="lucide:shield-alert"></span></div>
+                        <h3 class="problem-card__title">Document Fraud</h3>
+                        <p class="problem-card__body">No reliable way to verify resident status or document authenticity at scale.</p>
+                    </article>
+                    
+                    <article class="problem-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <div class="problem-card__icon"><span class="iconify" data-icon="lucide:scale"></span></div>
+                        <h3 class="problem-card__title">Compliance Overhead</h3>
+                        <p class="problem-card__body">Juggling GDPR, AML directives, and sector-specific rules with no unified tool.</p>
+                    </article>
+                    
                 </div>
             </section>
 
-            <!-- B2B Solutions Grid -->
-            <section class="business-solutions section-padding">
-                <h2 class="section-title" data-reveal>Scale Your Enterprise</h2>
-                <div class="logo-box--glass p-12 rounded-3xl max-w-4xl mx-auto text-center" data-reveal>
-                    <div class="icon-circle mb-8 mx-auto">
-                        <span class="iconify text-4xl" data-icon="lucide:zap"></span>
+            <!-- SECTION 3: CORE CAPABILITIES (Sticky Scroll) -->
+            <section class="btabs-section section-padding" id="business-tabs" style="padding-top: var(--space-3xl);">
+                <div class="btabs-height">
+                    <div class="btabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#business-tabs">
+                        <div class="btabs-component">
+            
+                            <!-- LEFT PANEL -->
+                            <div class="btabs-left logo-box--glass">
+                                <div class="btabs-slides">
+            
+                                    <!-- Slide 1 -->
+                                    <div class="btabs-slide is-active" data-slide="1">
+                                        <div class="btabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">What EireID gives your business</span>
+                                            <span class="btabs-tag">01</span>
+                                            <h2 class="btabs-heading" data-reveal>
+                                                Instant Identity <span class="btabs-accent">Verification</span>
+                                            </h2>
+                                            <div class="btabs-line"></div>
+                                            <p class="btabs-body" data-reveal>
+                                                One tap, QR scan, or API call. Get a cryptographically signed yes/no — or selective disclosure of name, age, right-to-work status — without ever seeing or storing raw documents.
+                                            </p>
+                                        </div>
+                                    </div>
+            
+                                    <!-- Slide 2 -->
+                                    <div class="btabs-slide" data-slide="2">
+                                        <div class="btabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">What EireID gives your business</span>
+                                            <span class="btabs-tag">02</span>
+                                            <h2 class="btabs-heading" data-reveal>
+                                                Right to Work & <span class="btabs-accent">Residency Checks</span>
+                                            </h2>
+                                            <div class="btabs-line"></div>
+                                            <p class="btabs-body" data-reveal>
+                                                Legal compliance for employers in seconds. EireID verifies IRP status, PPS validity, and residency automatically — no paper trail, no manual cross-checking.
+                                            </p>
+                                        </div>
+                                    </div>
+            
+                                    <!-- Slide 3 -->
+                                    <div class="btabs-slide" data-slide="3">
+                                        <div class="btabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">What EireID gives your business</span>
+                                            <span class="btabs-tag" id="api">03</span>
+                                            <h2 class="btabs-heading" data-reveal>
+                                                API & SDK <span class="btabs-accent">Integration</span>
+                                            </h2>
+                                            <div class="btabs-line"></div>
+                                            <p class="btabs-body" data-reveal>
+                                                A drop-in SDK for web and mobile. One integration covers every use case — from age checks at point-of-sale to full KYC onboarding. Sandbox available from day one.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Slide 4 -->
+                                    <div class="btabs-slide" data-slide="4">
+                                        <div class="btabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">What EireID gives your business</span>
+                                            <span class="btabs-tag">04</span>
+                                            <h2 class="btabs-heading" data-reveal>
+                                                Audit Logs & <span class="btabs-accent">Compliance Reports</span>
+                                            </h2>
+                                            <div class="btabs-line"></div>
+                                            <p class="btabs-body" data-reveal>
+                                                Every verification is timestamped, cryptographically logged, and exportable. Ready for GDPR audits, AML compliance reviews, and Revenue inspections — at any time.
+                                            </p>
+                                        </div>
+                                    </div>
+            
+                                </div><!-- .btabs-slides -->
+            
+                                <!-- Progress dots -->
+                                <div class="btabs-dots" aria-label="Slide navigation">
+                                    <button class="btabs-dot is-active" data-target="1" aria-label="Go to slide 1"></button>
+                                    <button class="btabs-dot" data-target="2" aria-label="Go to slide 2"></button>
+                                    <button class="btabs-dot" data-target="3" aria-label="Go to slide 3"></button>
+                                    <button class="btabs-dot" data-target="4" aria-label="Go to slide 4"></button>
+                                </div>
+                            </div><!-- .btabs-left -->
+            
+                            <!-- RIGHT PANEL -->
+                            <div class="btabs-right logo-box--glass">
+            
+                                <div class="btabs-visual is-active" data-video="1">
+                                    <!-- VIDEO: verification QR scan -->
+                                    <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+            
+                                <div class="btabs-visual" data-video="2">
+                                    <!-- VIDEO: right to work check -->
+                                    <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+            
+                                <div class="btabs-visual" data-video="3">
+                                    <div class="btabs-terminal">
+                                        <div class="btabs-terminal__header">
+                                            <div class="btabs-terminal__dot"></div>
+                                            <div class="btabs-terminal__dot"></div>
+                                            <div class="btabs-terminal__dot"></div>
+                                        </div>
+                                        <div class="btabs-terminal__body">
+                                            <div class="typewriter-line"><span class="code-comment">// Authenticate with EireID Network</span></div>
+                                            <div class="typewriter-line"><span class="code-keyword">const</span> <span class="code-function">client</span> = <span class="code-keyword">new</span> <span class="code-function">EireID</span>({ apiKey: <span class="code-string">'env.SECRET'</span> });</div>
+                                            <div class="typewriter-line"><br></div>
+                                            <div class="typewriter-line"><span class="code-comment">// Request Verified Right-To-Work</span></div>
+                                            <div class="typewriter-line"><span class="code-keyword">const</span> request = <span class="code-keyword">await</span> client.verify({</div>
+                                            <div class="typewriter-line">  proofs: [<span class="code-string">'RightToWork'</span>, <span class="code-string">'Over18'</span>],</div>
+                                            <div class="typewriter-line">  callback: <span class="code-string">'https://app.co/webhook'</span></div>
+                                            <div class="typewriter-line">});</div>
+                                            <div class="typewriter-line"><br></div>
+                                            <div class="typewriter-line"><span class="code-highlight">console.log(request.status); // "VERIFIED"</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btabs-visual" data-video="4">
+                                    <!-- VIDEO: audit log dashboard -->
+                                    <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
+                                        <source src="" type="video/mp4">
+                                    </video>
+                                </div>
+            
+                            </div><!-- .btabs-right -->
+            
+                        </div><!-- .btabs-component -->
+                    </div><!-- .btabs-sticky -->
+                </div><!-- .btabs-height -->
+            </section>
+
+            <!-- SECTION 4: WHO USES EIREID -->
+            <section class="section-padding">
+                <h2 class="section-title text-center" data-reveal>Who Uses EireID</h2>
+                <div class="industry-grid">
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Financial Services</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">KYC and AML-compliant account opening. Verify identity, PPS, and residency in under three seconds — fully audit-logged.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Hospitality & Retail</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">Age verification at point of sale via QR scan. No manual document checks, no liability exposure.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Property & Letting</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">Instant tenant identity and right-to-reside checks. Reduce fraud and protect deposits with verified digital credentials.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Healthcare</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">Patient identity and insurance verification on arrival. Eliminate paper forms and manual cross-referencing.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Legal & Professional</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">Client onboarding and due diligence in minutes. Cryptographically signed verification records accepted as legally valid proof.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Transport & Mobility</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">Driver identity and licence validation in real time. Verified once, trusted everywhere on the EireID network.</p>
+                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- SECTION 5: HOW IT WORKS -->
+            <section class="how-it-works section-padding">
+                <div class="how-it-works__grid">
+    
+                    <!-- Left Content -->
+                    <div class="how-it-works__content" data-scroll data-scroll-sticky data-scroll-target=".how-it-works__grid">
+                        <h2 class="how-it-works__title" data-reveal>Up and running in weeks, not months</h2>
+                        <p class="how-it-works__description" data-reveal>
+                            EireID offers a streamlined onboarding process for business partners, escaping legacy government tech constraints.
+                        </p>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Instant KYC Onboarding</h3>
-                    <p class="opacity-70 leading-relaxed mb-8">EireID provides the infrastructure for instant, government-verified identity checks. Reduce customer drop-off and eliminate manual processing with our secure, tap-to-verify protocol.</p>
-                    <a href="./support.html" class="btn btn--primary">Inquire About Business Access</a>
+    
+                    <!-- Right Timeline -->
+                    <div class="how-it-works__timeline-wrapper">
+                        <div class="how-it-works__timeline">
+                            <div class="timeline-line">
+                                <div class="timeline-line__progress" id="timeline-progress"></div>
+                                <div class="timeline-line__dot" id="timeline-dot"></div>
+                            </div>
+    
+                            <div class="timeline-steps">
+                                <!-- Step 1 -->
+                                <div class="timeline-step" data-step="1">
+                                    <div class="timeline-step__icon-box logo-box--glass">
+                                        <span class="iconify" data-icon="lucide:building"></span>
+                                    </div>
+                                    <div class="timeline-step__text">
+                                        <h4 data-reveal>Register your organisation</h4>
+                                        <p data-reveal>Apply for API access and verify your business through EireID's partner onboarding portal. No government procurement process required.</p>
+                                    </div>
+                                </div>
+    
+                                <!-- Step 2 -->
+                                <div class="timeline-step" data-step="2">
+                                    <div class="timeline-step__icon-box logo-box--glass">
+                                        <span class="iconify" data-icon="lucide:code-2"></span>
+                                    </div>
+                                    <div class="timeline-step__text">
+                                        <h4 data-reveal>Integrate in minutes</h4>
+                                        <p data-reveal>Drop in the SDK or call the REST API directly. Full documentation, versioned endpoints, and a no-cost sandbox environment are available from day one.</p>
+                                    </div>
+                                </div>
+    
+                                <!-- Step 3 -->
+                                <div class="timeline-step" data-step="3">
+                                    <div class="timeline-step__icon-box logo-box--glass">
+                                        <span class="iconify" data-icon="lucide:send"></span>
+                                    </div>
+                                    <div class="timeline-step__text">
+                                        <h4 data-reveal>Request a verification</h4>
+                                        <p data-reveal>Trigger a check via QR code, deep link, or silent API call. The user consents on their own device — you never touch their raw documents.</p>
+                                    </div>
+                                </div>
+    
+                                <!-- Step 4 -->
+                                <div class="timeline-step" data-step="4">
+                                    <div class="timeline-step__icon-box logo-box--glass">
+                                        <span class="iconify" data-icon="lucide:check-circle-2"></span>
+                                    </div>
+                                    <div class="timeline-step__text">
+                                        <h4 data-reveal>Receive the result</h4>
+                                        <p data-reveal>Get a cryptographically signed verification response within seconds. Store the audit record. That's it.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </section>
+
+            <!-- SECTION 6: PRICING -->
+            <section class="section-padding">
+                <h2 class="section-title text-center" data-reveal>Pricing Plans</h2>
+                <div class="pricing-grid">
+
+                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h4 class="pricing-card__label">B2B Identity Verification API</h4>
+                        <table class="pricing-table">
+                            <tbody>
+                                <tr>
+                                    <td>Up to 10,000 verifications / month</td>
+                                    <td>€0.20 per</td>
+                                </tr>
+                                <tr>
+                                    <td>10,001 – 100,000 / month</td>
+                                    <td>€0.12 per</td>
+                                </tr>
+                                <tr>
+                                    <td>100,000+ / month</td>
+                                    <td>€0.07 per</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="pricing-card__note">Rates are 85–90% below commercial KYC providers.</p>
+                        <div class="pricing-card__cta">
+                            <a href="#api" class="btn btn--primary">GET API ACCESS</a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card pricing-card--highlight logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h4 class="pricing-card__label">Enterprise Integration Licensing</h4>
+                        <table class="pricing-table">
+                            <tbody>
+                                <tr>
+                                    <td>Standard — SMEs, universities</td>
+                                    <td>€4,800 / year</td>
+                                </tr>
+                                <tr>
+                                    <td>Professional — banks, insurers</td>
+                                    <td>€18,000 / year</td>
+                                </tr>
+                                <tr>
+                                    <td>Government & public bodies</td>
+                                    <td>€0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="pricing-card__note">Includes priority support, dedicated account manager, and SLA guarantees.</p>
+                        <div class="pricing-card__cta">
+                            <a href="support.html" class="btn btn--primary">CONTACT SALES</a>
+                        </div>
+                    </article>
+
+                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h4 class="pricing-card__label">Government & Public Bodies</h4>
+                        <p class="pricing-card__body">
+                            EireID is funded as national digital infrastructure under Ireland's Digital Public Services Plan 2030. Government departments integrate at zero cost — covered by Digital Transformation Funding.
+                        </p>
+                        <div class="pricing-card__cta" style="margin-top: auto;">
+                            <a href="#about" class="btn btn--primary">LEARN MORE</a>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- SECTION 7: TRUST & COMPLIANCE -->
+            <section class="trust-banner" id="partner">
+                <div class="container">
+                    <h2 class="trust-banner__title" data-reveal>Every verification is legally defensible and audit-ready.</h2>
+                    <p class="trust-banner__subtitle" data-reveal>EireID handles compliance so you don't have to.</p>
+                    
+                    <div class="trust-badges" data-reveal>
+                        <div class="trust-badge">
+                            <span class="iconify trust-badge__icon" data-icon="lucide:lock"></span>
+                            <span>GDPR Compliant by design</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="iconify trust-badge__icon" data-icon="lucide:clipboard-check"></span>
+                            <span>AML Directive ready</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="iconify trust-badge__icon" data-icon="lucide:flag"></span>
+                            <span>Irish Data Sovereignty</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="iconify trust-badge__icon" data-icon="lucide:check-circle"></span>
+                            <span>ISO/IEC 27001 aligned</span>
+                        </div>
+                    </div>
+                    
+                    <a href="security.html" class="btn btn--primary">EXPLORE SECURITY</a>
+                </div>
+            </section>
+
+            <!-- SECTION 8: FAQ -->
+            <section class="faq resident-faq section-padding">
+                <div class="faq__container resident-faq__container">
+            
+                    <div class="faq__header resident-faq__header">
+                        <h2 class="faq__title">Common Questions</h2>
+                    </div>
+            
+                    <div class="faq__accordion">
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">How do businesses integrate EireID?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>Businesses can integrate EireID using our REST API or drop-in SDKs for iOS, Android, and Web. A completely free developer sandbox is provided upon partner registration.</p>
+                            </div>
+                        </div>
+            
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">Is an EireID verification legally valid for Right to Work checks in Ireland?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>Yes. EireID verifications carry cryptographic proof originating from state department records (e.g., DSP, INIS), satisfying Right to Work and KYC legal requirements.</p>
+                            </div>
+                        </div>
+            
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">What data does our system actually receive from a verification request?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>Selective disclosure ensures you only receive what you requested and what the user consented to share (e.g., just an 'over 18' boolean instead of a full date of birth).</p>
+                            </div>
+                        </div>
+            
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">How does GDPR apply when a business requests a resident's credentials?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>Because you never store raw document scans, your data compliance footprint is drastically reduced. The cryptographically signed responses act as your audit trail.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">Can EireID be white-labelled or embedded in our own app?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>Yes, enterprise partners can use our SDK to embed the EireID verification flow directly into their native applications, maintaining their own brand experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq__item">
+                            <button class="faq__question" aria-expanded="false">
+                                <span class="faq__question-text">What uptime SLA does the verification API offer?</span>
+                                <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                            </button>
+                            <div class="faq__answer">
+                                <p>The Enterprise API offers a financially backed 99.99% uptime SLA, hosted on redundant cloud architecture geographically locked within Ireland.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 9: FOOTER CTA -->
+            <section class="cta section-padding" style="margin-bottom: var(--space-3xl);">
+                <div class="cta__inner logo-box--glass">
+                    <h2 class="cta__title">Ready to verify smarter?</h2>
+                    <p class="cta__subtitle">Join the businesses integrating EireID — and leave manual identity checks behind.</p>
+                    <button class="cta__btn" aria-label="Partner with us">PARTNER WITH US</button>
                 </div>
             </section>
 
         </main>
-    <footer class="footer-main" data-reveal>
-        <div class="footer-giant-brand">EireID</div>
-        <div class="footer-main__inner">
-            <!-- Brand -->
-            <div class="footer-brand">
-                <div class="footer-brand__logo">
-                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
-                    <span>EireID</span>
+        
+        <!-- === FOOTER === -->
+        <footer class="footer-main" data-reveal>
+            <div class="footer-giant-brand">EireID</div>
+            <div class="footer-main__inner">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-brand__logo">
+                        <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
+                        <span>EireID</span>
+                    </div>
+                    <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
+                        verified once, trusted everywhere.</p>
+                    <div class="footer-brand__socials">
+                        <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
+                        <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
+                        <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
+                        <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                    </div>
                 </div>
-                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
-                    verified once, trusted everywhere.</p>
-                <div class="footer-brand__socials">
-                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
-                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
-                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
-                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+
+                <!-- Product -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Product</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="../index.html#about">About EireID</a></li>
+                        <li><a href="../index.html#how-it-works">How It Works</a></li>
+                        <li><a href="../index.html#comparison">Why EireID</a></li>
+                        <li><a href="../index.html#genesis-security">Security</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Services</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./allservices.html">All Services</a></li>
+                        <li><a href="./resident.html">For Residents</a></li>
+                        <li><a href="./business.html">For Businesses</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="footer-col">
+                    <h4 class="footer-col__title">Company</h4>
+                    <ul class="footer-col__list">
+                        <li><a href="./investor.html">Invest</a></li>
+                        <li><a href="./team.html">Our Team</a></li>
+                        <li><a href="./support.html">Contact Us</a></li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Product -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Product</h4>
-                <ul class="footer-col__list">
-                    <li><a href="../index.html#about">About EireID</a></li>
-                    <li><a href="../index.html#how-it-works">How It Works</a></li>
-                    <li><a href="../index.html#comparison">Why EireID</a></li>
-                    <li><a href="../index.html#genesis-security">Security</a></li>
-                </ul>
+            <div class="footer-main__bottom">
+                <span>© 2026 EireID. All rights reserved.</span>
+                <div class="footer-main__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Settings</a>
+                </div>
             </div>
-
-            <!-- Services -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Services</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./allservices.html">All Services</a></li>
-                    <li><a href="./resident.html">For Residents</a></li>
-                    <li><a href="./business.html">For Businesses</a></li>
-                </ul>
-            </div>
-
-            <!-- Company -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Company</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./investor.html">Invest</a></li>
-                    <li><a href="./team.html">Our Team</a></li>
-                    <li><a href="./support.html">Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-main__bottom">
-            <span>© 2026 EireID. All rights reserved.</span>
-            <div class="footer-main__legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Settings</a>
-            </div>
-        </div>
-    </footer>
+        </footer>
 
     </div>
     </div>
@@ -196,13 +682,17 @@
       </div>
     </div>
 
+    <!-- === SCRIPTS === -->
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    
     <!-- Locomotive Scroll -->
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    
+    <!-- Project Scripts -->
     <script src="../js/scripts.js" defer></script>
+    <script src="../js/business.js" defer></script>
 </body>
 
 </html>
