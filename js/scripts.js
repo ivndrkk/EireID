@@ -36,14 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
         locoScroll = new LocomotiveScroll({
             el: scroller,
             smooth: true,
-            lerp: isMobile ? 0.15 : 0.05,
+            lerp: isMobile ? 0.15 : 0.08,
             smartphone: {
                 smooth: true,
-                multiplier: 2.5 // Significantly faster and smoother on mobile
+                multiplier: 4.0 // Significantly faster and smoother on mobile
             },
             tablet: {
                 smooth: true,
-                multiplier: 1.5
+                multiplier: 3.0
             }
         });
 
@@ -944,6 +944,8 @@ function initGenesisModal() {
         });
     });
 
+    let genesisLocoScroll = null;
+
     cta.addEventListener('click', () => {
         const rect = container.getBoundingClientRect();
         
@@ -951,6 +953,19 @@ function initGenesisModal() {
 
         modal.classList.add('is-active');
         modal.setAttribute('aria-hidden', 'false');
+
+        // Initialize Locomotive Scroll for the modal
+        const modalScroller = document.getElementById('genesis-scroller');
+        if (modalScroller) {
+            genesisLocoScroll = new LocomotiveScroll({
+                el: modalScroller,
+                smooth: true,
+                lerp: 0.08,
+                smartphone: { smooth: true, multiplier: 4.0 },
+                tablet: { smooth: true, multiplier: 3.0 }
+            });
+            window.genesisLocoScroll = genesisLocoScroll;
+        }
 
         // Initial set
         gsap.set(modal, { 
@@ -1078,6 +1093,12 @@ function initGenesisModal() {
             duration: 0.8,
             ease: "expo.inOut",
             onComplete: () => {
+                if (genesisLocoScroll) {
+                    genesisLocoScroll.destroy();
+                    genesisLocoScroll = null;
+                    window.genesisLocoScroll = null;
+                }
+
                 gsap.set(modal, { visibility: 'hidden', opacity: 0 });
                 modal.classList.remove('is-active');
                 modal.setAttribute('aria-hidden', 'true');
