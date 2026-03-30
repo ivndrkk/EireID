@@ -260,10 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const contentHtml = `
             <div class="service-card__header">
                 <span class="service-card__provider">${escapeHTML(service.provider)}</span>
-                <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-1"></span>
+                <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right" data-scroll data-scroll-direction="horizontal" data-scroll-speed="-0.3"></span>
             </div>
             <div class="service-card__body">
-                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.2">${escapeHTML(service.name)}</h3>
+                <h3 class="service-card__title" data-scroll data-scroll-direction="vertical" data-scroll-speed="0.1">${escapeHTML(service.name)}</h3>
                 <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${escapeHTML(service.description)}</p>
             </div>
             <div class="service-card__footer">
