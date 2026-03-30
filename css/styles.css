@@ -207,9 +207,15 @@
 }
 
 .nav__link:hover::before,
-.nav__link:focus-visible::before {
+.nav__link:focus-visible::before,
+.nav__link.active::before {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+}
+
+.nav__link.active {
+    color: var(--color-text-heading);
+    font-weight: 700;
 }
 
 .nav__link:active::before {
@@ -300,10 +306,15 @@
 }
 
 .nav__dropdown-link:hover,
-.nav__dropdown-link:focus-visible {
+.nav__dropdown-link:focus-visible,
+.nav__dropdown-link.active {
     background: var(--color-bg-primary);
     color: var(--color-text-heading);
     transform: translateX(4px);
+}
+
+.nav__dropdown-link.active {
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {
@@ -6986,11 +6997,14 @@
     padding: var(--space-xl) !important; /* Increased inside padding */
 }
 
-.guideline-card:hover {
+.guideline-card:hover,
+.guideline-card:focus-visible {
     transform: translateY(-10px) scale(1.02);
     background: rgba(255, 255, 255, 0.45) !important;
     box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.1), 0 0 30px rgba(164, 229, 183, 0.2);
     border-color: rgba(164, 229, 183, 0.4);
+    outline: 3px solid var(--color-bg-primary);
+    outline-offset: 4px;
 }
 
 .guideline-card .icon-circle {
