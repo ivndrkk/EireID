@@ -5,3 +5,7 @@
 ## 2024-05-23 - [Single-Pass Greedy Similarity Filter]
 **Learning:** For recommendation systems or "similar item" logic in smaller datasets, replacing multiple `.filter()` passes with a single `for` loop to collect both matches and fallback items (greedy collection) reduces CPU overhead by half or more. Using pre-computed tag `Set`s for constant-time membership checks inside these loops eliminates the O(N) overhead of repeated array inclusions.
 **Action:** Use a single loop to partition or collect data when multiple selection criteria (e.g., primary matches vs fallbacks) are required from the same source array.
+
+## 2024-05-24 - [Incremental List Rendering]
+**Learning:** In vanilla JS applications with large datasets, clearing the entire parent container for pagination ("Load More") causes significant DOM churn and layout thrashing. Utilizing an `isAppend` flag combined with `DocumentFragment` allows for O(1) DOM insertions that preserve existing nodes, resulting in smoother transitions and better memory efficiency.
+**Action:** Always implement incremental rendering (appending) for "Load More" patterns instead of full-grid re-renders. Use `DocumentFragment` to batch the new items before a single insertion into the live DOM.

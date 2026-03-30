@@ -500,8 +500,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             results.forEach(s => {
                 const scard = document.createElement('article');
-                // Remove data-scroll which causes visibility issues inside a fixed modal
+                // Accessibility: Add role and tabindex for keyboard navigation
                 scard.className = 'service-card logo-box--glass';
+                scard.setAttribute('role', 'button');
+                scard.setAttribute('tabindex', '0');
+                scard.setAttribute('aria-label', `View details for ${s.name}`);
                 scard.style.cursor = 'pointer';
                 scard.style.minHeight = '140px';
                 scard.innerHTML = `
@@ -510,10 +513,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                     </div>
                 `;
-                scard.addEventListener('click', () => {
+
+                const triggerAction = () => {
                     openModal(s);
                     const mc = document.querySelector('.service-modal__content');
                     if (mc) mc.scrollTop = 0;
+                };
+
+                scard.addEventListener('click', triggerAction);
+                scard.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        triggerAction();
+                    }
                 });
                 fragment.appendChild(scard);
             });

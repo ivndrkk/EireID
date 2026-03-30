@@ -1,10 +1,14 @@
 (function() {
     // --- HELPER: HTML ESCAPING ---
+    // Optimization: High-performance regex-based escaping to avoid DOM-based element creation overhead.
     function escapeHTML(str) {
         if (!str) return '';
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
     /**
@@ -106,6 +110,12 @@
                 } else if (e.key === 'ArrowUp' && isOpen) {
                     e.preventDefault();
                     updateHighlightedItem(Math.max(highlightedIndex - 1, 0));
+                } else if (e.key === 'Home' && isOpen) {
+                    e.preventDefault();
+                    updateHighlightedItem(0);
+                } else if (e.key === 'End' && isOpen) {
+                    e.preventDefault();
+                    updateHighlightedItem(items.length - 1);
                 } else if ((e.key === 'Enter' || e.key === ' ') && isOpen) {
                     e.preventDefault();
                     selectItem(items[highlightedIndex]);
@@ -235,29 +245,37 @@
 
         /**
          * Renders the services grid with pagination
+         * Optimization: Added isAppend flag to support incremental rendering.
+         * This prevents clearing and re-rendering the entire grid when loading more items.
          */
-        function renderPagination() {
+        function renderPagination(isAppend = false) {
             if (!grid) return;
-            grid.innerHTML = "";
-            const itemsPerPage = window.innerWidth >= 1024 ? 9 : 6;
-            const limit = currentPage * itemsPerPage;
-            const dataToShow = filteredData.slice(0, limit);
 
-            if (dataToShow.length === 0) {
-                noResults.style.display = "block";
-                paginationContainer.style.display = "none";
-                return;
+            const itemsPerPage = window.innerWidth >= 1024 ? 9 : 6;
+            const start = isAppend ? (currentPage - 1) * itemsPerPage : 0;
+            const end = currentPage * itemsPerPage;
+            const dataToShow = filteredData.slice(start, end);
+
+            if (!isAppend) {
+                grid.innerHTML = "";
+                if (filteredData.length === 0) {
+                    noResults.style.display = "block";
+                    paginationContainer.style.display = "none";
+                    return;
+                }
+                noResults.style.display = "none";
             }
-            noResults.style.display = "none";
 
             const fragment = document.createDocumentFragment();
             dataToShow.forEach((s, idx) => {
-                const card = createCardElement(s, idx === 0 && currentPage === 1);
+                // Featured card only for the very first item on the first page
+                const isFeatured = !isAppend && idx === 0 && currentPage === 1;
+                const card = createCardElement(s, isFeatured);
                 fragment.appendChild(card);
             });
             grid.appendChild(fragment);
 
-            paginationContainer.style.display = (limit >= filteredData.length) ? 'none' : 'flex';
+            paginationContainer.style.display = (end >= filteredData.length) ? 'none' : 'flex';
             
             // Re-sync scroll height for Locomotive
             setTimeout(() => {
@@ -274,13 +292,14 @@
             
             filteredData = allServices.filter(s => {
                 const matchProv = currentProviderFilter === 'all' || s.provider === currentProviderFilter;
-                const matchTag = currentTagFilter === 'all' || (s.tags && s.tags.includes(currentTagFilter));
+                // Optimization: Use pre-computed _tagSet for O(1) membership check
+                const matchTag = currentTagFilter === 'all' || (s._tagSet && s._tagSet.has(currentTagFilter));
                 const matchSearch = !query || s._searchStr.includes(query);
                 return matchProv && matchTag && matchSearch;
             });
 
             currentPage = 1;
-            renderPagination();
+            renderPagination(false);
         }
 
         /**
@@ -329,8 +348,11 @@
 
                 results.forEach(s => {
                     const scard = document.createElement('article');
-                    // Optimization: Remove data-scroll from cards inside modal to prevent layout issues
+                    // Accessibility: Add role and tabindex for keyboard navigation
                     scard.className = 'service-card logo-box--glass';
+                    scard.setAttribute('role', 'button');
+                    scard.setAttribute('tabindex', '0');
+                    scard.setAttribute('aria-label', `View details for ${s.name}`);
                     scard.style.cursor = 'pointer';
                     scard.style.minHeight = '140px';
                     scard.innerHTML = `
@@ -339,10 +361,19 @@
                             <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
                         </div>
                     `;
-                    scard.addEventListener('click', () => {
+
+                    const triggerAction = () => {
                         openModal(s);
                         const mContent = modal.querySelector('.service-modal__content');
                         if (mContent) mContent.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+
+                    scard.addEventListener('click', triggerAction);
+                    scard.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            triggerAction();
+                        }
                     });
                     fragment.appendChild(scard);
                 });
@@ -405,7 +436,8 @@
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
                 currentPage++;
-                renderPagination();
+                // Optimization: Pass true to append new items instead of full re-render
+                renderPagination(true);
             });
         }
 
