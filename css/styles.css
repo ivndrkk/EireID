@@ -5535,10 +5535,16 @@
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
-    overflow-y: auto;
-    padding: clamp(2rem, 8vw, 6rem) var(--container-padding);
+    overflow: hidden; /* Locomotive Scroll handles overflow */
+    padding: 0; /* Padding moved to content or scroller if needed */
     pointer-events: none;
     transition: visibility 0s 0.8s;
+}
+
+#genesis-scroller {
+    width: 100%;
+    height: 100%;
+    padding: clamp(2rem, 8vw, 6rem) var(--container-padding);
 }
 
 /* Texture Overlay */
