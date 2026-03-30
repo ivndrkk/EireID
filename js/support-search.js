@@ -287,8 +287,17 @@
         // Listeners for guideline cards
         const guidelineCards = document.querySelectorAll('.guideline-card');
         guidelineCards.forEach(card => {
-            card.addEventListener('click', () => {
+            const triggerAction = () => {
                 handleOpenGuideModal(card);
+            };
+
+            card.addEventListener('click', triggerAction);
+
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerAction();
+                }
             });
         });
 
