@@ -28,184 +28,200 @@
     <a href="#main-content" class="skip-link">Skip to content</a>
 
     <div id="scroll-wrapper" data-scroll-container>
-    <div class="container">
+        <div class="container">
 
-        <!-- === HEADER NAVIGATION === -->
-        <header class="header">
+            <!-- === HEADER NAVIGATION === -->
+            <header class="header">
 
-            <!-- Mobile toggler -->
-            <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button> 
-            <nav class="nav" aria-label="Main Navigation">
-                <ul id="nav-list" class="nav__list">
-                    <li><a href="../index.html" class="nav__link">Home</a></li>
-                    <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link active" aria-current="page">Services <span class="nav__dropdown-icon">▼</span></a>
-                        <div class="nav__dropdown">
-                            <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
-                                <a href="./resident.html" class="nav__dropdown-link">For residents</a>
-                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
+                <!-- Mobile toggler -->
+                <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav" aria-label="Main Navigation">
+                    <ul id="nav-list" class="nav__list">
+                        <li><a href="../index.html" class="nav__link">Home</a></li>
+                        <li class="nav__item nav__item--dropdown">
+                            <a href="./allservices.html" class="nav__link active" aria-current="page">Services <span
+                                    class="nav__dropdown-icon">▼</span></a>
+                            <div class="nav__dropdown">
+                                <div class="nav__dropdown-inner logo-box--glass">
+                                    <a href="./allservices.html" class="nav__dropdown-link">All services</a>
+                                    <a href="./resident.html" class="nav__dropdown-link">For residents</a>
+                                    <a href="./business.html" class="nav__dropdown-link">For businesses</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="./investor.html" class="nav__link">Invest</a></li>
+                        <li><a href="./support.html" class="nav__link">Support</a></li>
+                        <li><a href="./team.html" class="nav__link">Our Team</a></li>
+                    </ul>
+                </nav>
+                <!-- Mobile Logo -->
+                <a href="../index.html" class="header__mobile-logo" aria-label="Home">
+                    <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
+                </a>
+            </header>
+
+            <!-- === ALL SERVICES === -->
+            <main class="services-library" id="main-content" tabindex="-1">
+                <!-- Hero / Title Area -->
+                <section class="services-hero">
+                    <h1 class="services-hero__title" data-reveal data-scroll data-scroll-speed="1.3">All Services</h1>
+                    <p class="services-hero__subtitle" data-reveal data-scroll data-scroll-speed="1.2">Find and access
+                        every Irish government service in one place.</p>
+                </section>
+
+                <!-- Main Content Wrapper -->
+                <div id="services-content-wrapper" class="services-content-wrapper">
+
+                    <!-- Filters Area (Sidebar on Desktop) -->
+                    <aside class="services-controls logo-box--glass" data-scroll data-scroll-sticky
+                        data-scroll-target="#services-content-wrapper" data-scroll-offset="-130, 0">
+                        <div class="filter-group">
+                            <label class="filter-label" id="provider-label">Provider</label>
+                            <div class="custom-dropdown" id="provider-dropdown">
+                                <button class="custom-dropdown__trigger" role="combobox" aria-controls="provider-list"
+                                    aria-haspopup="listbox" aria-expanded="false"
+                                    aria-labelledby="provider-label provider-trigger">
+                                    <span class="custom-dropdown__label" id="provider-trigger">All Providers</span>
+                                    <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
+                                </button>
+                                <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="provider-list">
+                                    <li id="provider-option-all" class="custom-dropdown__item is-selected" role="option"
+                                        aria-selected="true" data-value="all">All Providers</li>
+                                    <!-- Populated by JS -->
+                                </ul>
                             </div>
                         </div>
-                    </li>
-                    <li><a href="./investor.html" class="nav__link">Invest</a></li>
-                    <li><a href="./support.html" class="nav__link">Support</a></li>
-                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
-                </ul>
-            </nav>
-            <!-- Mobile Logo -->
-            <a href="../index.html" class="header__mobile-logo" aria-label="Home">
-                <img src="./../assets/logo/logo(transparent).png" alt="EireID Logo">
-            </a>
-        </header>
 
-        <!-- === ALL SERVICES === -->
-        <main class="services-library" id="main-content" tabindex="-1">
-            <!-- Hero / Title Area -->
-            <section class="services-hero">
-                <h1 class="services-hero__title" data-reveal data-scroll data-scroll-speed="1.3">All Services</h1>
-                <p class="services-hero__subtitle" data-reveal data-scroll data-scroll-speed="1.2">Find and access every Irish government service in one place.</p>
-            </section>
+                        <div class="filter-group">
+                            <label class="filter-label" id="tag-label">Tags</label>
+                            <div class="custom-dropdown" id="tag-dropdown">
+                                <button class="custom-dropdown__trigger" role="combobox" aria-controls="tag-list"
+                                    aria-haspopup="listbox" aria-expanded="false"
+                                    aria-labelledby="tag-label tag-trigger">
+                                    <span class="custom-dropdown__label" id="tag-trigger">All Tags</span>
+                                    <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
+                                </button>
+                                <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="tag-list">
+                                    <li id="tag-option-all" class="custom-dropdown__item is-selected" role="option"
+                                        aria-selected="true" data-value="all">All Tags</li>
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </div>
+                        </div>
 
-            <!-- Main Content Wrapper -->
-            <div id="services-content-wrapper" class="services-content-wrapper">
-                
-                <!-- Filters Area (Sidebar on Desktop) -->
-                <aside class="services-controls logo-box--glass" data-scroll data-scroll-sticky data-scroll-target="#services-content-wrapper" data-scroll-offset="-130, 0">
-                <div class="filter-group">
-                    <label class="filter-label" id="provider-label">Provider</label>
-                    <div class="custom-dropdown" id="provider-dropdown">
-                        <button class="custom-dropdown__trigger" role="combobox" aria-controls="provider-list" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="provider-label provider-trigger">
-                            <span class="custom-dropdown__label" id="provider-trigger">All Providers</span>
-                            <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
-                        </button>
-                        <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="provider-list">
-                            <li id="provider-option-all" class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Providers</li>
-                            <!-- Populated by JS -->
+                        <div class="filter-group filter-group--search">
+                            <label for="search-input" class="filter-label">Search</label>
+                            <div class="search-wrapper">
+                                <span class="iconify search-icon" data-icon="lucide:search"></span>
+                                <input type="text" id="search-input" class="filter-input"
+                                    placeholder="Search services...">
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Grid Area -->
+                    <div class="services-grid-area">
+                        <!-- Grid -->
+                        <div class="services-grid" id="services-grid">
+                            <!-- Cards will be populated here by JS -->
+                        </div>
+
+                        <div id="no-results" class="no-results" style="display: none;">
+                            <p data-reveal>No services found matching your criteria.</p>
+                        </div>
+
+                        <!-- Pagination Control -->
+                        <div class="services-pagination" id="services-pagination">
+                            <button id="load-more-btn" class="btn--branded">Load More</button>
+                        </div>
+                    </div> <!-- End Grid Area -->
+
+                </div> <!-- End Content Wrapper -->
+            </main>
+
+            <!-- === FOOTER === -->
+            <footer class="footer-main" data-reveal>
+                <div class="footer-giant-brand">EireID</div>
+                <div class="footer-main__inner">
+                    <!-- Brand -->
+                    <div class="footer-brand">
+                        <div class="footer-brand__logo">
+                            <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;"
+                                loading="lazy">
+                            <span>EireID</span>
+                        </div>
+                        <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital
+                            identity —
+                            verified once, trusted everywhere.</p>
+                        <div class="footer-brand__socials">
+                            <a href="#" aria-label="X / Twitter"><span class="iconify"
+                                    data-icon="lucide:twitter"></span></a>
+                            <a href="#" aria-label="Instagram"><span class="iconify"
+                                    data-icon="lucide:instagram"></span></a>
+                            <a href="#" aria-label="LinkedIn"><span class="iconify"
+                                    data-icon="lucide:linkedin"></span></a>
+                            <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                        </div>
+                    </div>
+
+                    <!-- Product -->
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Product</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="../index.html#about">About EireID</a></li>
+                            <li><a href="../index.html#how-it-works">How It Works</a></li>
+                            <li><a href="../index.html#comparison">Why EireID</a></li>
+                            <li><a href="../index.html#genesis-security">Security</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Services -->
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Services</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="./allservices.html">All Services</a></li>
+                            <li><a href="./resident.html">For Residents</a></li>
+                            <li><a href="./business.html">For Businesses</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Company -->
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Company</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="./investor.html">Invest</a></li>
+                            <li><a href="./team.html">Our Team</a></li>
+                            <li><a href="./support.html">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label" id="tag-label">Tags</label>
-                    <div class="custom-dropdown" id="tag-dropdown">
-                        <button class="custom-dropdown__trigger" role="combobox" aria-controls="tag-list" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="tag-label tag-trigger">
-                            <span class="custom-dropdown__label" id="tag-trigger">All Tags</span>
-                            <span class="iconify custom-dropdown__icon" data-icon="lucide:chevron-down"></span>
-                        </button>
-                        <ul class="custom-dropdown__menu logo-box--glass" role="listbox" id="tag-list">
-                            <li id="tag-option-all" class="custom-dropdown__item is-selected" role="option" aria-selected="true" data-value="all">All Tags</li>
-                            <!-- Populated by JS -->
-                        </ul>
+
+                <div class="footer-main__bottom">
+                    <span>© 2026 EireID. All rights reserved.</span>
+                    <div class="footer-main__legal">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Settings</a>
                     </div>
                 </div>
+            </footer>
 
-                <div class="filter-group filter-group--search">
-                    <label for="search-input" class="filter-label">Search</label>
-                    <div class="search-wrapper">
-                        <span class="iconify search-icon" data-icon="lucide:search"></span>
-                        <input type="text" id="search-input" class="filter-input" placeholder="Search services...">
-                    </div>
-                </div>
-                </aside>
-
-                <!-- Grid Area -->
-                <div class="services-grid-area">
-                    <!-- Grid -->
-                    <div class="services-grid" id="services-grid">
-                <!-- Cards will be populated here by JS -->
-            </div>
-            
-            <div id="no-results" class="no-results" style="display: none;">
-                <p data-reveal>No services found matching your criteria.</p>
-            </div>
-
-            <!-- Pagination Control -->
-            <div class="services-pagination" id="services-pagination">
-                <button id="load-more-btn" class="btn--branded">Load More</button>
-            </div>
-                </div> <!-- End Grid Area -->
-
-            </div> <!-- End Content Wrapper -->
-        </main>
-
-    <!-- === FOOTER === -->
-    <footer class="footer-main" data-reveal>
-        <div class="footer-giant-brand">EireID</div>
-        <div class="footer-main__inner">
-            <!-- Brand -->
-            <div class="footer-brand">
-                <div class="footer-brand__logo">
-                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
-                    <span>EireID</span>
-                </div>
-                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
-                    verified once, trusted everywhere.</p>
-                <div class="footer-brand__socials">
-                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
-                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
-                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
-                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
-                </div>
-            </div>
-
-            <!-- Product -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Product</h4>
-                <ul class="footer-col__list">
-                    <li><a href="../index.html#about">About EireID</a></li>
-                    <li><a href="../index.html#how-it-works">How It Works</a></li>
-                    <li><a href="../index.html#comparison">Why EireID</a></li>
-                    <li><a href="../index.html#genesis-security">Security</a></li>
-                </ul>
-            </div>
-
-            <!-- Services -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Services</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./allservices.html">All Services</a></li>
-                    <li><a href="./resident.html">For Residents</a></li>
-                    <li><a href="./business.html">For Businesses</a></li>
-                </ul>
-            </div>
-
-            <!-- Company -->
-            <div class="footer-col">
-                <h4 class="footer-col__title">Company</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./investor.html">Invest</a></li>
-                    <li><a href="./team.html">Our Team</a></li>
-                    <li><a href="./support.html">Contact Us</a></li>
-                </ul>
-            </div>
         </div>
-
-        <div class="footer-main__bottom">
-            <span>© 2026 EireID. All rights reserved.</span>
-            <div class="footer-main__legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Settings</a>
-            </div>
-        </div>
-    </footer>
-
-    </div>
     </div>
 
     <!-- === SERVICE MODAL === -->
-    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="sm-title">
         <div class="service-modal__overlay" id="sm-overlay"></div>
         <div class="service-modal__content logo-box--glass">
             <button id="sm-close" class="service-modal__close" aria-label="Close modal">
                 <span class="iconify" data-icon="lucide:x"></span>
             </button>
-            
+
             <div id="sm-content-details" class="sm-state-container is-active">
                 <div class="service-modal__header">
                     <span id="sm-provider" class="service-modal__provider" data-reveal>Provider</span>
@@ -214,14 +230,15 @@
                         <!-- Tags will go here -->
                     </div>
                 </div>
-                
+
                 <div class="service-modal__body">
-                    <p id="sm-desc" class="service-modal__desc" data-reveal>Detailed service description will go here.</p>
+                    <p id="sm-desc" class="service-modal__desc" data-reveal>Detailed service description will go here.
+                    </p>
                     <div class="service-modal__actions">
                         <button class="btn btn--primary" id="sm-apply-btn">Apply Now</button>
                     </div>
                 </div>
-                
+
                 <div class="service-modal__footer">
                     <h3 class="service-modal__similar-title" data-reveal>Similar Services</h3>
                     <div id="sm-similar-grid" class="service-modal__similar-grid">
@@ -236,7 +253,8 @@
                     <h2 class="service-modal__title">Application (1/2) - DEMO</h2>
                 </div>
                 <div class="service-modal__body">
-                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo application.</p>
+                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo
+                        application.</p>
                     <div class="demo-form logo-box--glass">
                         <div class="demo-form__row">
                             <span class="demo-form__label">Full Name</span>
@@ -274,7 +292,8 @@
             <div id="sm-content-step2" class="sm-state-container sm-state--center">
                 <div class="service-modal__header">
                     <h2 class="service-modal__title">Face Verification (2/2) - DEMO</h2>
-                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No recording is made)</p>
+                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No
+                        recording is made)</p>
                 </div>
                 <div class="service-modal__body">
                     <div class="face-scanner" id="sm-face-scanner">
@@ -283,7 +302,8 @@
                         <span class="iconify face-scanner__icon" data-icon="lucide:user"></span>
                     </div>
                     <div class="loading-spinner" id="sm-loading-spinner" style="display: none;"></div>
-                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...</p>
+                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...
+                    </p>
                 </div>
             </div>
 
@@ -303,41 +323,44 @@
 
     <!-- === FLOATING RUA AI ASSISTANT === -->
     <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
-      <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
+        <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
     </button>
 
     <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
-      <div class="ai-modal__header">
-        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
-        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="ai-modal__body" id="ai-modal-body">
-        <div class="ai-message">
-             <div class="ai-message__avatar-container">
-                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
-             </div>
-             <div class="ai-message__bubble">
-                <div class="ai-message__text-container">
-                   <p class="ai-message__text">
-                     Hi! I'm Rua, your digital assistant. How can I help you today?
-                   </p>
+        <div class="ai-modal__header">
+            <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+            <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="ai-modal__body" id="ai-modal-body">
+            <div class="ai-message">
+                <div class="ai-message__avatar-container">
+                    <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar"
+                        style="mix-blend-mode: multiply;" loading="lazy">
                 </div>
-                <div class="ai-message__time" id="ai-initial-time"></div>
-             </div>
-          </div>
-      </div>
-      <div class="ai-modal__footer">
-        <form id="ai-chat-form" class="ai-chat-form">
-          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
-          <button type="submit" class="ai-chat-submit" aria-label="Send message">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </form>
-      </div>
+                <div class="ai-message__bubble">
+                    <div class="ai-message__text-container">
+                        <p class="ai-message__text">
+                            Hi! I'm Rua, your digital assistant. How can I help you today?
+                        </p>
+                    </div>
+                    <div class="ai-message__time" id="ai-initial-time"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ai-modal__footer">
+            <form id="ai-chat-form" class="ai-chat-form">
+                <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required
+                    autocomplete="off" aria-label="Type your message">
+                <button type="submit" class="ai-chat-submit" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- GSAP & ScrollTrigger -->
@@ -349,8 +372,9 @@
 
     <!-- Scripts -->
     <script src="../data/irish_gov_services.js" defer></script>
+    <script src="../js/modal-utils.js" defer></script>
+    <script src="../js/allservices.js" defer></script>
     <script src="../js/scripts.js" defer></script>
-    <script src="../js/allservices.js" type="module" defer></script>
 
 </body>
 

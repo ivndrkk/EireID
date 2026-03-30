@@ -6691,20 +6691,27 @@
 
 .search-filter-backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: -100vh;
+    left: -100vw;
+    width: 300vw;
+    height: 300vh;
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 1500;
+    z-index: -1;
     display: none;
+    pointer-events: auto;
     animation: fadeIn var(--transition-base) forwards;
 }
 
 .search-filter-backdrop.is-active {
     display: block;
+}
+
+.carousel-nav__btn.is-disabled {
+    opacity: 0.3 !important;
+    cursor: default !important;
+    pointer-events: none;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .hero__search-container.has-open-filter {

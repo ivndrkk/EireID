@@ -31,6 +31,7 @@
     </div>
 
     <div id="scroll-wrapper" data-scroll-container>
+    <div id="scroll-wrapper" data-scroll-container>
 
         <!-- === HEADER NAVIGATION === -->
         <div class="container">
@@ -105,6 +106,9 @@
                                 <span class="iconify" data-icon="lucide:filter" style="font-size: 18px;"></span>
                                 <span>Filter</span>
                             </button>
+
+                            <!-- Backdrop moved here for reliable stacking context -->
+                            <div id="filter-backdrop" class="search-filter-backdrop"></div>
 
                             <div id="search-filter-dropdown" class="search-filter-dropdown logo-box--glass">
                                 <div class="filter-dropdown__content">
@@ -347,8 +351,6 @@
         </div>
     </div>
 
-    <!-- Search Filter Backdrop -->
-    <div id="filter-backdrop" class="search-filter-backdrop"></div>
 
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

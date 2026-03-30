@@ -1,4 +1,22 @@
-import { setupModalListeners, resetModal } from './modal-utils.js';
+// js/resident.js - converted to non-module to support direct file exploration (CORS compatibility)
+
+/**
+ * Escapes special HTML characters in a string to prevent XSS.
+ * @param {string} str - The string to be escaped.
+ * @returns {string} The escaped string.
+ */
+function escapeHTML(str) {
+    if (typeof str !== 'string') return str || '';
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const carousel = document.getElementById("resident-services-carousel");
@@ -309,22 +327,28 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCarouselNav() {
         if (!prevBtn || !nextBtn) return;
         const currentScroll = carousel.scrollLeft;
+        // Total possible scroll distance
         const maxScroll = carousel.scrollWidth - carousel.clientWidth;
         
-        if (currentScroll <= 0) {
-            prevBtn.style.opacity = '0.5';
+        // Use a small threshold (2px) to account for floating point rounding in scrollLeft
+        if (currentScroll <= 2) {
+            prevBtn.style.opacity = '0.4';
             prevBtn.style.pointerEvents = 'none';
+            prevBtn.classList.add('is-disabled');
         } else {
             prevBtn.style.opacity = '1';
             prevBtn.style.pointerEvents = 'auto';
+            prevBtn.classList.remove('is-disabled');
         }
         
-        if (currentScroll >= maxScroll - 1 || maxScroll <= 0) {
-            nextBtn.style.opacity = '0.5';
+        if (currentScroll >= maxScroll - 2 || maxScroll <= 0) {
+            nextBtn.style.opacity = '0.4';
             nextBtn.style.pointerEvents = 'none';
+            nextBtn.classList.add('is-disabled');
         } else {
             nextBtn.style.opacity = '1';
             nextBtn.style.pointerEvents = 'auto';
+            nextBtn.classList.remove('is-disabled');
         }
     }
 
@@ -335,23 +359,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const cards = carousel.querySelectorAll('.service-card');
         if (cards.length === 0) return;
         
-        // Include gap in width calculation (approx 16px)
+        // Exact width of one item including its gap (1rem = 16px)
         const cardWidth = cards[0].offsetWidth + 16; 
-        const isMobile = window.innerWidth < 768;
-        const visibleItems = isMobile ? 1 : 3;
         
         // Find current nearest index using scrollLeft
         const currentScroll = carousel.scrollLeft;
         let currentIndex = Math.round(currentScroll / cardWidth);
-        const totalItems = filteredData.length;
+        const totalItems = cards.length;
         
         if (direction === 'next') {
-            currentIndex += visibleItems;
-            if (currentIndex > totalItems - visibleItems) {
-                currentIndex = totalItems - visibleItems;
-            }
+            currentIndex += 1; // Scroll by 1 item
+            if (currentIndex >= totalItems) currentIndex = totalItems - 1;
         } else {
-            currentIndex -= visibleItems;
+            currentIndex -= 1; // Scroll by 1 item
             if (currentIndex < 0) currentIndex = 0;
         }
 
@@ -372,32 +392,26 @@ document.addEventListener("DOMContentLoaded", () => {
             // Smoothly animate the scrollLeft property
             tl.to(carousel, {
                 scrollLeft: targetOffset,
-                duration: 0.8,
+                duration: 0.6, // Slightly faster for single item scroll
                 ease: "power2.inOut"
             });
 
-            // Vertical "lift" translation effect to make the transition more dynamic
+            // Subtle vertical "lift" translation effect
             tl.to(cards, {
-                y: -12,
-                duration: 0.4,
-                stagger: 0.05,
+                y: -8,
+                duration: 0.3,
+                stagger: 0.03,
                 ease: "power2.out"
             }, 0).to(cards, {
                 y: 0,
-                duration: 0.4,
-                stagger: 0.05,
+                duration: 0.3,
+                stagger: 0.03,
                 ease: "power2.in"
-            }, 0.4);
+            }, 0.3);
         } else {
             // Fallback for native smooth scrolling if GSAP is unavailable
             carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
-
             setTimeout(updateCarouselNav, 400);
-            setTimeout(() => {
-                if (window.locoScroll && typeof window.locoScroll.update === 'function') {
-                    window.locoScroll.update();
-                }
-            }, 400);
         }
     }
 

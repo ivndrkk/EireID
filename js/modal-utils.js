@@ -8,7 +8,7 @@
  * @param {string} stateId - The ID of the container to activate.
  * @param {NodeList} stateContainers - The list of modal state containers.
  */
-export function switchModalState(stateId, stateContainers) {
+function switchModalState(stateId, stateContainers) {
     stateContainers.forEach(container => {
         container.classList.remove('is-active');
         if (container.id === stateId) {
@@ -28,7 +28,7 @@ export function switchModalState(stateId, stateContainers) {
  * @param {HTMLElement} loadingSpinner
  * @param {HTMLElement} step2Status
  */
-export function resetModal(stateContainers, faceScanner, loadingSpinner, step2Status) {
+function resetModal(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-details', stateContainers);
     if (faceScanner) {
         faceScanner.classList.remove('is-scanning', 'is-loading', 'is-success');
@@ -44,7 +44,7 @@ export function resetModal(stateContainers, faceScanner, loadingSpinner, step2St
  * @param {HTMLElement} loadingSpinner
  * @param {HTMLElement} step2Status
  */
-export function startFaceVerification(stateContainers, faceScanner, loadingSpinner, step2Status) {
+function startFaceVerification(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-step2', stateContainers);
     if (faceScanner) faceScanner.classList.add('is-scanning');
 
@@ -79,7 +79,7 @@ export function startFaceVerification(stateContainers, faceScanner, loadingSpinn
  * Opens a modal with a smooth reveal.
  * @param {HTMLElement} modal 
  */
-export function openModal(modal) {
+function openModal(modal) {
     if (!modal) return;
     modal.style.display = 'block';
     requestAnimationFrame(() => {
@@ -92,7 +92,7 @@ export function openModal(modal) {
  * @param {HTMLElement} modal
  * @param {Function} [resetModalFn] - Optional callback to reset the modal state.
  */
-export function closeModal(modal, resetModalFn) {
+function closeModal(modal, resetModalFn) {
     if (!modal) return;
     modal.classList.remove('is-active');
     modal.classList.remove('is-open'); // Handle both class conventions
@@ -112,7 +112,7 @@ export function closeModal(modal, resetModalFn) {
 /**
  * Sets up event listeners for standard modal controls.
  */
-export function setupModalListeners({
+function setupModalListeners({
     modal,
     modalClose,
     modalOverlay,

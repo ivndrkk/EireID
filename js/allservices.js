@@ -1,11 +1,3 @@
-/**
- * js/allservices.js
- * Handles rendering and filtering for the Services Library.
- * VERSION: ES Module
- */
-
-import { setupModalListeners, resetModal } from './modal-utils.js';
-
 (function() {
     // --- HELPER: HTML ESCAPING ---
     function escapeHTML(str) {
@@ -416,5 +408,6 @@ import { setupModalListeners, resetModal } from './modal-utils.js';
                 renderPagination();
             });
         }
+
     });
 })();
