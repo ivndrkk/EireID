@@ -21,9 +21,16 @@ function escapeHTML(str) {
     return str.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
+function initScrollReveal() {
+    // This function is currently a placeholder to prevent crashes
+    // from potential calls in other files.
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // 0. Initialize Locomotive Scroll & GSAP ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+    }
 
     const scroller = document.querySelector('[data-scroll-container]');
     let locoScroll = null;
@@ -202,12 +209,6 @@ window.escapeHTML = function(str) {
         .replace(/'/g, "&#039;");
 };
 
-// Added to prevent crashes if certain animations are missing or renamed in other files
-function initScrollReveal() {
-    // Placeholder - handled by Locomotive Scroll's data-scroll-class directly
-    console.log("initScrollReveal: Using native Locomotive Scroll revealing");
-}
-
 // Optimization: Use a singleton IntersectionObserver for text reveals to prevent memory leaks
 // and redundant observer instances when re-initializing (e.g., after pagination).
 let textRevealObserver;
@@ -359,22 +360,46 @@ function initDocCarousel() {
     if (images.length === 0) return;
 
     let currentIndex = 0;
+    let carouselInterval = null;
+    let slideWidth = images[0].offsetWidth;
 
-    const carouselInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-
-        // Exact pixel offset based on the rendered image width
-        const slideWidth = images[0].offsetWidth;
+    // Update cached width on resize
+    window.addEventListener('resize', () => {
+        slideWidth = images[0].offsetWidth;
         track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    });
 
-        // Fade caption out → update text → fade back in
-        caption.style.opacity = '0';
-        setTimeout(() => {
-            caption.textContent = images[currentIndex].alt;
-            caption.style.opacity = '1';
-        }, 300);
+    // Optimization: Use IntersectionObserver to pause the carousel when it's out of view
+    // and cache offsetWidth to minimize layout thrashing.
+    function startCarousel() {
+        if (carouselInterval) return;
+        carouselInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
-    }, 10000); // Advance every 10 seconds
+            caption.style.opacity = '0';
+            setTimeout(() => {
+                caption.textContent = images[currentIndex].alt;
+                caption.style.opacity = '1';
+            }, 300);
+        }, 10000);
+    }
+
+    function stopCarousel() {
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+            carouselInterval = null;
+        }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) startCarousel();
+            else stopCarousel();
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(track);
 }
 
 function initAboutFadeIn() {
@@ -438,11 +463,23 @@ function initStatCounters() {
     const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
     const startTime = performance.now();
 
-    // Optimization: Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
-    // Pre-cache elements and text nodes outside the animation loop to prevent layout thrashing
+    // Optimization: Pre-determine the DOM update strategy outside the loop to eliminate branching
+    // and minimize layout thrashing in the high-frequency animation path.
     const unitSpan = el.querySelector('.stat-bar__unit');
     const firstNode = el.childNodes[0];
     const isTextNode = firstNode && firstNode.nodeType === 3;
+
+    let renderFn;
+    if (unitSpan) {
+        if (isTextNode) {
+            renderFn = (val) => { firstNode.textContent = val; };
+        } else {
+            const unitHtml = unitSpan.outerHTML;
+            renderFn = (val) => { el.innerHTML = val + unitHtml; };
+        }
+    } else {
+        renderFn = (val) => { el.textContent = val + suffix; };
+    }
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
@@ -452,18 +489,7 @@ function initStatCounters() {
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
-      // Preserve unit/suffix if it exists in a span
-      if (unitSpan) {
-        if (isTextNode) {
-          firstNode.textContent = currentValue;
-        } else {
-          // Fallback if structure is unexpected (only runs if childNodes[0] is not a text node)
-          el.innerHTML = currentValue + unitSpan.outerHTML;
-        }
-      } else {
-        // Use textContent for better performance (no layout/reflow)
-        el.textContent = currentValue + suffix;
-      }
+      renderFn(currentValue);
 
       if (progress < 1) {
         el._animationFrame = requestAnimationFrame(update);
@@ -587,41 +613,24 @@ function initFloatingAssistant() {
     const modal = document.getElementById('ai-modal');
     const closeBtn = document.getElementById('ai-modal-close');
 
-    if (!fab || !modal) return;
+    if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
 
-    let ticking = false;
-    let windowHeight = window.innerHeight;
-
-    function updateFloatingAssistant(scrollY) {
-        if (scrollY > windowHeight / 2) {
-            fab.classList.add('is-visible');
-        } else {
-            fab.classList.remove('is-visible');
-            if (modal.classList.contains('is-open')) {
-                modal.classList.remove('is-open');
-                modal.setAttribute('aria-hidden', 'true');
+    // Refactored to use ScrollTrigger for better performance and centralized scroll management
+    ScrollTrigger.create({
+        trigger: 'body',
+        scroller: '[data-scroll-container]',
+        start: 'top -50%',
+        onToggle: self => {
+            if (self.isActive) {
+                fab.classList.add('is-visible');
+            } else {
+                fab.classList.remove('is-visible');
+                if (modal.classList.contains('is-open')) {
+                    modal.classList.remove('is-open');
+                    modal.setAttribute('aria-hidden', 'true');
+                }
             }
         }
-        ticking = false;
-    }
-
-    if (window.locoScroll) {
-        window.locoScroll.on('scroll', (args) => {
-            updateFloatingAssistant(args.scroll.y);
-        });
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                updateFloatingAssistant(window.scrollY);
-            });
-            ticking = true;
-        }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-        windowHeight = window.innerHeight;
     });
 
     fab.addEventListener('click', () => {
@@ -829,39 +838,23 @@ function initFloatingPill() {
     
     document.body.appendChild(pill);
     
-    let ticking = false;
-    let triggerPoint = 0;
+    if (typeof ScrollTrigger === 'undefined') return;
 
-    function cacheHeaderOffset() {
-        triggerPoint = header.offsetTop + header.offsetHeight + 50;
-    }
-    
-    function togglePill(scrollY) {
-        if (scrollY > triggerPoint) {
-            pill.classList.add('is-visible');
-        } else {
-            pill.classList.remove('is-visible');
-        }
-    }
-
-    if (window.locoScroll) {
-        window.locoScroll.on('scroll', (args) => {
-            togglePill(args.scroll.y);
-        });
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                togglePill(window.scrollY);
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
-
-    window.addEventListener('resize', cacheHeaderOffset);
-    cacheHeaderOffset();
+    // Refactored to use ScrollTrigger for efficient scroll tracking
+    ScrollTrigger.create({
+        trigger: 'body',
+        scroller: '[data-scroll-container]',
+        // Use a dynamic trigger point based on header height to ensure accuracy across devices
+        start: () => `top -${header.offsetHeight}px`,
+        onToggle: self => {
+            if (self.isActive) {
+                pill.classList.add('is-visible');
+            } else {
+                pill.classList.remove('is-visible');
+            }
+        },
+        invalidateOnRefresh: true
+    });
 }
 
 /* ─── Genesis Modal Expansion ─────────────────── */
@@ -1127,9 +1120,7 @@ function initBMCInteractiveGrid() {
     if (!tiles.length) return;
 
     tiles.forEach(tile => {
-        console.log("Adding click listener to BMC tile:", tile);
         tile.addEventListener('click', (e) => {
-            console.log("BMC tile clicked:", tile);
             const cell = tile.closest('.bmc-cell');
             if (!cell) return;
             const isExpanded = cell.classList.contains('is-expanded');
