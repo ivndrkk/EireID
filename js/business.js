@@ -134,36 +134,6 @@
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 2. Expanding Industry Grid (Section 4)
-    // ─────────────────────────────────────────────────────────────
-    function initIndustryGrid() {
-        const tiles = document.querySelectorAll('.industry-tile');
-        if (tiles.length === 0) return;
-
-        tiles.forEach(tile => {
-            tile.addEventListener('click', function () {
-                const wasExpanded = this.classList.contains('is-expanded');
-
-                // Collapse all
-                tiles.forEach(t => t.classList.remove('is-expanded'));
-
-                // If the clicked one wasn't expanded, expand it
-                if (!wasExpanded) {
-                    this.classList.add('is-expanded');
-                    
-                    // Optional: Scroll tile into view if necessary
-                    setTimeout(() => {
-                        const top = this.getBoundingClientRect().top;
-                        if (top < 100 && window.locoScroll) {
-                            window.locoScroll.scrollTo(this, { offset: -100, duration: 600 });
-                        }
-                    }, 400); // Wait for CSS transition
-                }
-            });
-        });
-    }
-
-    // ─────────────────────────────────────────────────────────────
     // 3. Business Sticky Tabs (Section 3) - Standalone Rewrite
     // ─────────────────────────────────────────────────────────────
     function initBusinessTabs() {
@@ -281,10 +251,343 @@
         }, {passive: true});
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // 4. Business Services Carousel (mirroring resident.js)
+    // ─────────────────────────────────────────────────────────────
+    function escapeHTML(str) {
+        if (typeof str !== 'string') return str || '';
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => { clearTimeout(timeout); func(...args); };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function initBusinessServices() {
+        const carousel = document.getElementById('business-services-carousel');
+        const searchInput = document.getElementById('business-search-input');
+        const prevBtn = document.getElementById('business-carousel-prev');
+        const nextBtn = document.getElementById('business-carousel-next');
+
+        // Modal elements
+        const modal = document.getElementById('service-modal');
+        const modalClose = document.getElementById('sm-close');
+        const modalOverlay = document.getElementById('sm-overlay');
+        const mProvider = document.getElementById('sm-provider');
+        const mTitle = document.getElementById('sm-title');
+        const mDesc = document.getElementById('sm-desc');
+        const mTags = document.getElementById('sm-tags');
+        const mSimilarGrid = document.getElementById('sm-similar-grid');
+
+        const stateContainers = document.querySelectorAll('.sm-state-container');
+        const applyBtn = document.getElementById('sm-apply-btn');
+        const cancelBtn = document.getElementById('sm-cancel-btn');
+        const confirmBtn = document.getElementById('sm-confirm-btn');
+        const closeCancelledBtn = document.getElementById('sm-close-cancelled-btn');
+        const closeSuccessBtn = document.getElementById('sm-close-success-btn');
+        const faceScanner = document.getElementById('sm-face-scanner');
+        const loadingSpinner = document.getElementById('sm-loading-spinner');
+        const step2Status = document.getElementById('sm-step2-status');
+
+        if (!carousel) return;
+
+        let businessServices = [];
+        let filteredData = [];
+        let randomDefaultServices = [];
+
+        if (typeof irishGovServicesData !== 'undefined') {
+            // Filter ONLY services that are for businesses
+            businessServices = irishGovServicesData.filter(s => s.for && s.for.includes('Businesses'));
+
+            businessServices.forEach(s => {
+                s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
+                s._tagSet = new Set(s.tags || []);
+            });
+
+            pickRandomDefaults();
+            filterData();
+        }
+
+        function pickRandomDefaults() {
+            let shuffled = [...businessServices].sort(() => 0.5 - Math.random());
+            randomDefaultServices = shuffled.slice(0, 6);
+        }
+
+        function createCardElement(service) {
+            const card = document.createElement('article');
+            card.className = 'service-card resident-card logo-box--glass is-revealed';
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', service.name);
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+            card.style.visibility = 'visible';
+            card.style.flex = '0 0 280px';
+            card.style.width = '280px';
+            card.style.minWidth = '280px';
+            card.style.scrollSnapAlign = 'start';
+
+            let tagsHtml = '';
+            if (service.tags && Array.isArray(service.tags)) {
+                tagsHtml = service.tags.map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
+            }
+
+            card.innerHTML = `
+                <div class="service-card__header">
+                    <span class="service-card__provider">${escapeHTML(service.provider)}</span>
+                    <span class="iconify service-card__action-icon" data-icon="lucide:arrow-up-right"></span>
+                </div>
+                <div class="service-card__body">
+                    <h3 class="service-card__title">${escapeHTML(service.name)}</h3>
+                    <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2;">${escapeHTML(service.description)}</p>
+                </div>
+                <div class="service-card__footer">
+                    <div class="service-card__tags">
+                        ${tagsHtml}
+                    </div>
+                </div>
+            `;
+
+            const triggerAction = () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                    openBusinessModal(service);
+                }, 150);
+            };
+
+            card.addEventListener('click', triggerAction);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerAction();
+                }
+            });
+
+            return card;
+        }
+
+        function renderCarousel() {
+            carousel.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                const noResults = document.createElement('p');
+                noResults.textContent = 'No services found matching your search.';
+                noResults.style.padding = '1rem';
+                carousel.appendChild(noResults);
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            filteredData.forEach(service => {
+                fragment.appendChild(createCardElement(service));
+            });
+            carousel.appendChild(fragment);
+            updateCarouselNav();
+
+            setTimeout(() => {
+                if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                    window.locoScroll.update();
+                }
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }, 150);
+        }
+
+        function updateCarouselNav() {
+            if (!prevBtn || !nextBtn) return;
+            const currentScroll = carousel.scrollLeft;
+            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+            if (currentScroll <= 2) {
+                prevBtn.style.opacity = '0.4';
+                prevBtn.style.pointerEvents = 'none';
+                prevBtn.classList.add('is-disabled');
+            } else {
+                prevBtn.style.opacity = '1';
+                prevBtn.style.pointerEvents = 'auto';
+                prevBtn.classList.remove('is-disabled');
+            }
+
+            if (currentScroll >= maxScroll - 2 || maxScroll <= 0) {
+                nextBtn.style.opacity = '0.4';
+                nextBtn.style.pointerEvents = 'none';
+                nextBtn.classList.add('is-disabled');
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+                nextBtn.classList.remove('is-disabled');
+            }
+        }
+
+        carousel.addEventListener('scroll', debounce(updateCarouselNav, 50));
+
+        function shiftCarousel(direction) {
+            const cards = carousel.querySelectorAll('.service-card');
+            if (cards.length === 0) return;
+            const cardWidth = cards[0].offsetWidth + 16;
+            const currentScroll = carousel.scrollLeft;
+            let currentIndex = Math.round(currentScroll / cardWidth);
+            const totalItems = cards.length;
+
+            if (direction === 'next') {
+                currentIndex += 1;
+                if (currentIndex >= totalItems) currentIndex = totalItems - 1;
+            } else {
+                currentIndex -= 1;
+                if (currentIndex < 0) currentIndex = 0;
+            }
+
+            const targetOffset = currentIndex * cardWidth;
+
+            if (typeof gsap !== 'undefined') {
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        updateCarouselNav();
+                        if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+                            window.locoScroll.update();
+                        }
+                    }
+                });
+
+                tl.to(carousel, { scrollLeft: targetOffset, duration: 0.6, ease: 'power2.inOut' });
+                tl.to(cards, { y: -8, duration: 0.3, stagger: 0.03, ease: 'power2.out' }, 0)
+                  .to(cards, { y: 0, duration: 0.3, stagger: 0.03, ease: 'power2.in' }, 0.3);
+            } else {
+                carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
+                setTimeout(updateCarouselNav, 400);
+            }
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => shiftCarousel('prev'));
+        if (nextBtn) nextBtn.addEventListener('click', () => shiftCarousel('next'));
+
+        function filterData() {
+            const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            if (!searchVal) {
+                pickRandomDefaults();
+                filteredData = randomDefaultServices;
+            } else {
+                filteredData = businessServices.filter(service => service._searchStr.includes(searchVal));
+            }
+            renderCarousel();
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce(filterData, 250));
+        }
+
+        // ── Modal Logic ──
+        const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
+
+        function openBusinessModal(service) {
+            resetModalLocal();
+            if (mProvider) mProvider.textContent = service.provider;
+            if (mTitle) mTitle.textContent = service.name;
+            if (mDesc) mDesc.textContent = service.description;
+
+            if (mTags) {
+                mTags.innerHTML = (service.tags || []).map(tag => `<span class="service-card__tag">${escapeHTML(tag)}</span>`).join('');
+            }
+
+            if (mSimilarGrid) {
+                const currentTags = service._tagSet || new Set();
+                const similar = [];
+                const others = [];
+
+                for (let i = 0; i < businessServices.length; i++) {
+                    const s = businessServices[i];
+                    if (s.id === service.id) continue;
+                    const matchesProvider = s.provider === service.provider;
+                    const matchesTags = (s.tags || []).some(t => currentTags.has(t));
+
+                    if (matchesProvider || matchesTags) {
+                        similar.push(s);
+                    } else if (others.length < 3) {
+                        others.push(s);
+                    }
+                }
+
+                let results;
+                if (similar.length < 3) {
+                    results = [...similar, ...others].slice(0, 3);
+                } else {
+                    results = similar.sort(() => 0.5 - Math.random()).slice(0, 3);
+                }
+
+                mSimilarGrid.innerHTML = '';
+                const fragment = document.createDocumentFragment();
+
+                results.forEach(s => {
+                    const scard = document.createElement('article');
+                    scard.className = 'service-card logo-box--glass';
+                    scard.setAttribute('role', 'button');
+                    scard.setAttribute('tabindex', '0');
+                    scard.setAttribute('aria-label', `View details for ${s.name}`);
+                    scard.style.cursor = 'pointer';
+                    scard.style.minHeight = '140px';
+                    scard.innerHTML = `
+                        <div class="service-card__body">
+                            <h3 class="service-card__title" style="font-size: 1.1rem; margin-bottom: 8px;">${escapeHTML(s.name)}</h3>
+                            <p class="service-card__desc" style="-webkit-line-clamp: 2; line-clamp: 2; font-size: 0.9rem;">${escapeHTML(s.description)}</p>
+                        </div>
+                    `;
+
+                    const triggerAction = () => {
+                        openBusinessModal(s);
+                        const mc = document.querySelector('.service-modal__content');
+                        if (mc) mc.scrollTop = 0;
+                    };
+
+                    scard.addEventListener('click', triggerAction);
+                    scard.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerAction(); }
+                    });
+                    fragment.appendChild(scard);
+                });
+
+                mSimilarGrid.appendChild(fragment);
+            }
+
+            if (modal) {
+                modal.classList.add('is-open');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Set up standard modal controls
+        if (typeof setupModalListeners === 'function') {
+            setupModalListeners({
+                modal,
+                modalClose,
+                modalOverlay,
+                applyBtn,
+                cancelBtn,
+                confirmBtn,
+                closeCancelledBtn,
+                closeSuccessBtn,
+                stateContainers,
+                faceScanner,
+                loadingSpinner,
+                step2Status,
+                resetModalFn: resetModalLocal
+            });
+        }
+    }
+
     // Initialize all logic
     window.addEventListener('DOMContentLoaded', () => {
         initHeroGraph();
-        initIndustryGrid();
+        initBusinessServices();
         
         // Timeout ensures Locomotive scroll is attached properly by scripts.js
         setTimeout(initBusinessTabs, 200); 

@@ -85,15 +85,27 @@
                         <h1 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2.5" style="font-size: var(--font-size-hero);">For Businesses</h1>
                         <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1.5">Instant, legally valid identity verification &mdash; built for every business in Ireland.</p>
                         
-                        <div class="hero__actions" data-scroll data-scroll-class="is-revealed" style="margin-top: var(--space-xl);">
-                            <div class="hero__pill-wrapper">
-                                <a href="#partner" class="hero__action" aria-label="Partner with us">
-                                    <span>PARTNER WITH US</span>
-                                </a>
-                                <div class="hero__pill-divider"></div>
-                                <a href="#api" class="hero__action" aria-label="Explore the API" style="background: transparent; color: var(--color-text-heading);">
-                                    <span>EXPLORE THE API</span>
-                                </a>
+                        <div class="resident-services-container" style="margin-top: 2rem; width: 100%; display: flex; flex-direction: column; gap: 1rem;" data-scroll data-scroll-class="is-revealed">
+                            <div class="resident-services-header">
+                                <div class="filter-group filter-group--search" style="margin: 0; width: 100%; max-width: 400px;">
+                                    <div class="search-wrapper" style="width: 100%;">
+                                        <span class="iconify search-icon" data-icon="lucide:search"></span>
+                                        <input type="text" id="business-search-input" class="filter-input" placeholder="Search business services..." style="width: 100%;">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-nav">
+                                    <button id="business-carousel-prev" class="carousel-nav__btn logo-box--glass" aria-label="Previous">
+                                        <span class="iconify" data-icon="lucide:chevron-left"></span>
+                                    </button>
+                                    <button id="business-carousel-next" class="carousel-nav__btn logo-box--glass" aria-label="Next">
+                                        <span class="iconify" data-icon="lucide:chevron-right"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="resident-services-carousel" id="business-services-carousel">
+                                <!-- JS injects cards here -->
                             </div>
                         </div>
                     </div>
@@ -109,9 +121,19 @@
                     </div>
                     
                 </div>
+
+                <div class="hero__actions" data-scroll data-scroll-class="is-revealed" style="margin-top: var(--space-xl); display: flex; justify-content: center; width: 100%;">
+                    <div class="hero__pill-wrapper">
+                        <a href="#partner" class="hero__action" aria-label="Partner with us">
+                            <span>PARTNER WITH US</span>
+                        </a>
+                        <div class="hero__pill-divider"></div>
+                        <a href="#api" class="hero__action" aria-label="Explore the API" style="background: transparent; color: var(--color-text-heading);">
+                            <span>EXPLORE THE API</span>
+                        </a>
+                    </div>
+                </div>
             </section>
-            
-            <div class="scroll-icon resident-scroll-icon" aria-hidden="true" style="margin: 0 auto; margin-bottom: var(--space-2xl);"></div>
 
             <!-- SECTION 2: THE PROBLEM WE SOLVE -->
             <section class="section-padding">
@@ -226,14 +248,14 @@
                                 <div class="btabs-visual is-active" data-video="1">
                                     <!-- VIDEO: verification QR scan -->
                                     <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
-                                        <source src="" type="video/mp4">
+                                        <source src="../assets/video/qr_scan.mp4" type="video/mp4">
                                     </video>
                                 </div>
             
                                 <div class="btabs-visual" data-video="2">
                                     <!-- VIDEO: right to work check -->
                                     <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
-                                        <source src="" type="video/mp4">
+                                        <source src="../assets/video/res_checks.mp4" type="video/mp4">
                                     </video>
                                 </div>
             
@@ -262,7 +284,7 @@
                                 <div class="btabs-visual" data-video="4">
                                     <!-- VIDEO: audit log dashboard -->
                                     <video autoplay loop muted playsinline style="background: #e3f7e8; object-fit: contain;">
-                                        <source src="" type="video/mp4">
+                                        <source src="../assets/video/dashboard.mp4" type="video/mp4">
                                     </video>
                                 </div>
             
@@ -274,55 +296,67 @@
             </section>
 
             <!-- SECTION 4: WHO USES EIREID -->
-            <section class="section-padding">
+            <section class="section-padding industry-section" style="padding-top: var(--space-3xl); margin-top: var(--space-2xl);">
                 <h2 class="section-title text-center" data-reveal>Who Uses EireID</h2>
                 <div class="industry-grid">
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Financial Services</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">KYC and AML-compliant account opening. Verify identity, PPS, and residency in under three seconds — fully audit-logged.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.1" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:landmark"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Financial Services</h3>
+                            <p class="industry-card__body">KYC and AML-compliant account opening. Verify identity, PPS, and residency in under three seconds — fully audit-logged.</p>
                         </div>
                     </article>
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Hospitality & Retail</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">Age verification at point of sale via QR scan. No manual document checks, no liability exposure.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.15" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:shopping-bag"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Hospitality & Retail</h3>
+                            <p class="industry-card__body">Age verification at point of sale via QR scan. No manual document checks, no liability exposure.</p>
                         </div>
                     </article>
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Property & Letting</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">Instant tenant identity and right-to-reside checks. Reduce fraud and protect deposits with verified digital credentials.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.1" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:home"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Property & Letting</h3>
+                            <p class="industry-card__body">Instant tenant identity and right-to-reside checks. Reduce fraud and protect deposits with verified digital credentials.</p>
                         </div>
                     </article>
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Healthcare</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">Patient identity and insurance verification on arrival. Eliminate paper forms and manual cross-referencing.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.15" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:stethoscope"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Healthcare</h3>
+                            <p class="industry-card__body">Patient identity and insurance verification on arrival. Eliminate paper forms and manual cross-referencing.</p>
                         </div>
                     </article>
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Legal & Professional</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">Client onboarding and due diligence in minutes. Cryptographically signed verification records accepted as legally valid proof.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.1" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:scale"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Legal & Professional</h3>
+                            <p class="industry-card__body">Client onboarding and due diligence in minutes. Cryptographically signed verification records accepted as legally valid proof.</p>
                         </div>
                     </article>
 
-                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h3 class="industry-tile__title">Transport & Mobility</h3>
-                        <div class="industry-tile__content">
-                            <p class="industry-tile__body">Driver identity and licence validation in real time. Verified once, trusted everywhere on the EireID network.</p>
-                            <a href="#partner" class="industry-tile__cta">Learn more &rarr;</a>
+                    <article class="industry-card logo-box--glass" data-scroll data-scroll-speed="0.15" data-reveal>
+                        <div class="industry-card__icon">
+                            <span class="iconify" data-icon="lucide:car"></span>
+                        </div>
+                        <div class="industry-card__info">
+                            <h3 class="industry-card__title">Transport & Mobility</h3>
+                            <p class="industry-card__body">Driver identity and licence validation in real time. Verified once, trusted everywhere on the EireID network.</p>
                         </div>
                     </article>
 
@@ -401,97 +435,128 @@
             </section>
 
             <!-- SECTION 6: PRICING -->
-            <section class="section-padding">
+            <section class="section-padding pricing-section" style="padding: var(--space-3xl) 0; margin: var(--space-3xl) 0;">
                 <h2 class="section-title text-center" data-reveal>Pricing Plans</h2>
                 <div class="pricing-grid">
 
-                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h4 class="pricing-card__label">B2B Identity Verification API</h4>
+                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-speed="0.1" data-reveal>
+                        <h4 class="pricing-card__label">Verification API</h4>
+                        <div class="pricing-card__price">
+                            <span class="currency">€</span><span class="amount">0.07</span><span class="period">/per</span>
+                        </div>
                         <table class="pricing-table">
                             <tbody>
                                 <tr>
-                                    <td>Up to 10,000 verifications / month</td>
-                                    <td>€0.20 per</td>
+                                    <td>Up to 10k checks</td>
+                                    <td>€0.20</td>
                                 </tr>
                                 <tr>
-                                    <td>10,001 – 100,000 / month</td>
-                                    <td>€0.12 per</td>
+                                    <td>10k – 100k</td>
+                                    <td>€0.12</td>
                                 </tr>
                                 <tr>
-                                    <td>100,000+ / month</td>
-                                    <td>€0.07 per</td>
+                                    <td>100k+</td>
+                                    <td>€0.07</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="pricing-card__note">Rates are 85–90% below commercial KYC providers.</p>
+                        <p class="pricing-card__note">Scale-based pricing for high volume.</p>
                         <div class="pricing-card__cta">
                             <a href="#api" class="btn btn--primary">GET API ACCESS</a>
                         </div>
                     </article>
 
-                    <article class="pricing-card pricing-card--highlight logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h4 class="pricing-card__label">Enterprise Integration Licensing</h4>
+                    <article class="pricing-card pricing-card--highlight logo-box--glass" data-scroll data-scroll-speed="0.2" data-reveal>
+                        <div class="pricing-card__badge">MOST POPULAR</div>
+                        <h4 class="pricing-card__label">Enterprise License</h4>
+                        <div class="pricing-card__price">
+                            <span class="currency">€</span><span class="amount">18k</span><span class="period">/year</span>
+                        </div>
                         <table class="pricing-table">
                             <tbody>
                                 <tr>
-                                    <td>Standard — SMEs, universities</td>
-                                    <td>€4,800 / year</td>
+                                    <td>SME / Standard</td>
+                                    <td>€4.8k</td>
                                 </tr>
                                 <tr>
-                                    <td>Professional — banks, insurers</td>
-                                    <td>€18,000 / year</td>
+                                    <td>Professional / Banks</td>
+                                    <td>€18k</td>
                                 </tr>
                                 <tr>
-                                    <td>Government & public bodies</td>
-                                    <td>€0</td>
+                                    <td>SLA & Support</td>
+                                    <td>Incl.</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="pricing-card__note">Includes priority support, dedicated account manager, and SLA guarantees.</p>
+                        <p class="pricing-card__note">Dedicated support & account management.</p>
                         <div class="pricing-card__cta">
                             <a href="support.html" class="btn btn--primary">CONTACT SALES</a>
                         </div>
                     </article>
 
-                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
-                        <h4 class="pricing-card__label">Government & Public Bodies</h4>
+                    <article class="pricing-card logo-box--glass" data-scroll data-scroll-speed="0.1" data-reveal>
+                        <h4 class="pricing-card__label">Public Infrastructure</h4>
+                        <div class="pricing-card__price">
+                            <span class="amount">FREE</span>
+                        </div>
                         <p class="pricing-card__body">
-                            EireID is funded as national digital infrastructure under Ireland's Digital Public Services Plan 2030. Government departments integrate at zero cost — covered by Digital Transformation Funding.
+                            EireID is funded as national digital infrastructure. Government departments and NGOs integrate at zero cost under the 2030 Digital Plan.
                         </p>
                         <div class="pricing-card__cta" style="margin-top: auto;">
-                            <a href="#about" class="btn btn--primary">LEARN MORE</a>
+                            <a href="#about" class="btn btn--primary">PARTNER AS NGO</a>
                         </div>
                     </article>
 
                 </div>
             </section>
 
-            <!-- SECTION 7: TRUST & COMPLIANCE -->
-            <section class="trust-banner" id="partner">
-                <div class="container">
-                    <h2 class="trust-banner__title" data-reveal>Every verification is legally defensible and audit-ready.</h2>
-                    <p class="trust-banner__subtitle" data-reveal>EireID handles compliance so you don't have to.</p>
-                    
-                    <div class="trust-badges" data-reveal>
-                        <div class="trust-badge">
-                            <span class="iconify trust-badge__icon" data-icon="lucide:lock"></span>
-                            <span>GDPR Compliant by design</span>
-                        </div>
-                        <div class="trust-badge">
-                            <span class="iconify trust-badge__icon" data-icon="lucide:clipboard-check"></span>
-                            <span>AML Directive ready</span>
-                        </div>
-                        <div class="trust-badge">
-                            <span class="iconify trust-badge__icon" data-icon="lucide:flag"></span>
-                            <span>Irish Data Sovereignty</span>
-                        </div>
-                        <div class="trust-badge">
-                            <span class="iconify trust-badge__icon" data-icon="lucide:check-circle"></span>
-                            <span>ISO/IEC 27001 aligned</span>
+            <!-- SECTION 7: TRUST / CERTIFICATIONS -->
+            <section class="trust-section" style="max-width: 100%; margin-top: var(--space-3xl); overflow: visible;" id="partner">
+                <div class="trust-banner__content text-center">
+                    <h2 class="trust-banner__title" data-reveal style="margin-bottom: var(--space-xl);">Enterprise-Grade Trust</h2>
+                </div>
+
+                <div class="trust-visual" data-scroll data-scroll-speed="0.05" style="margin: 0 auto var(--space-3xl) auto;">
+                    <div class="trust-center">
+                        <div class="trust-glow"></div>
+                        <div class="trust-shield logo-box--glass">
+                            <span class="iconify" data-icon="lucide:shield-check"></span>
                         </div>
                     </div>
-                    
-                    <a href="security.html" class="btn btn--primary">EXPLORE SECURITY</a>
+            
+                    <div class="trust-pill trust-pill--1 logo-box--glass">
+                        <span class="iconify" data-icon="lucide:file-check-2"></span>
+                        <span>AML Directive Ready</span>
+                    </div>
+            
+                    <div class="trust-pill trust-pill--2 logo-box--glass">
+                        <span class="iconify" data-icon="lucide:award"></span>
+                        <span>eIDAS Certified</span>
+                    </div>
+            
+                    <div class="trust-pill trust-pill--3 logo-box--glass">
+                        <span class="iconify" data-icon="lucide:zap"></span>
+                        <span>Enterprise SLA Hub</span>
+                    </div>
+            
+                    <div class="trust-pill trust-pill--4 logo-box--glass">
+                        <span class="iconify" data-icon="lucide:lock"></span>
+                        <span>GDPR COMPLIANT</span>
+                    </div>
+                </div>
+            
+                <div class="trust-banner__content text-center" style="z-index: 20; position: relative;">
+                    <p class="trust-banner__subtitle" data-reveal style="max-width: 600px; margin: 0 auto var(--space-2xl) auto;">
+                        Scale your business with confidence. Our verifiable digital identity network is built on the same foundations of security and privacy that protect national infrastructure.
+                    </p>
+                    <div class="trust-banner__cta" data-reveal>
+                        <a href="../index.html#genesis-security" class="btn btn--primary">EXPLORE GENESIS PROTOCOL</a>
+                    </div>
+                </div>
+
+                <div class="trust-footer" style="margin-top: var(--space-3xl); width: fit-content; margin-left: auto; margin-right: auto;">
+                    <span class="iconify" data-icon="lucide:landmark"></span>
+                    <p>Verified according to the highest European digital standards for cross-border operations.</p>
                 </div>
             </section>
 
@@ -643,6 +708,107 @@
     </div>
     </div>
 
+    <!-- === SERVICE MODAL === -->
+    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+        <div class="service-modal__overlay" id="sm-overlay"></div>
+        <div class="service-modal__content logo-box--glass">
+            <button id="sm-close" class="service-modal__close" aria-label="Close modal">
+                <span class="iconify" data-icon="lucide:x"></span>
+            </button>
+            
+            <div id="sm-content-details" class="sm-state-container is-active">
+                <div class="service-modal__header">
+                    <span id="sm-provider" class="service-modal__provider" data-reveal>Provider</span>
+                    <h2 id="sm-title" class="service-modal__title" data-reveal>Service Title</h2>
+                    <div id="sm-tags" class="service-card__tags service-modal__tags-container">
+                    </div>
+                </div>
+                
+                <div class="service-modal__body">
+                    <p id="sm-desc" class="service-modal__desc" data-reveal></p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-apply-btn">Apply Now</button>
+                    </div>
+                </div>
+                
+                <div class="service-modal__footer">
+                    <h3 class="service-modal__similar-title" data-reveal>Similar Services</h3>
+                    <div id="sm-similar-grid" class="service-modal__similar-grid">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Step 1: Confirmation Form -->
+            <div id="sm-content-step1" class="sm-state-container">
+                <div class="service-modal__header">
+                    <h2 class="service-modal__title">Application (1/2) - DEMO</h2>
+                </div>
+                <div class="service-modal__body">
+                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo application.</p>
+                    <div class="demo-form logo-box--glass">
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">Company Name</span>
+                            <span class="demo-form__value">Acme Ltd.</span>
+                        </div>
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">CRO Number</span>
+                            <span class="demo-form__value">IE123456</span>
+                        </div>
+                        <div class="demo-form__row">
+                            <span class="demo-form__label">Tax Ref</span>
+                            <span class="demo-form__value">1234567T</span>
+                        </div>
+                    </div>
+                    <div class="service-modal__actions sm-actions--split">
+                        <button class="btn btn--branded" id="sm-cancel-btn">Cancel</button>
+                        <button class="btn btn--primary" id="sm-confirm-btn">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancellation State -->
+            <div id="sm-content-cancelled" class="sm-state-container sm-state--center">
+                <div class="service-modal__body">
+                    <span class="iconify sm-status-icon sm-status-icon--error" data-icon="lucide:x-circle"></span>
+                    <h2 class="service-modal__title">Application Cancelled</h2>
+                    <p class="service-modal__desc">The application has been aborted. No data was saved.</p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-close-cancelled-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Step 2: Face scanning & Loading -->
+            <div id="sm-content-step2" class="sm-state-container sm-state--center">
+                <div class="service-modal__header">
+                    <h2 class="service-modal__title">Face Verification (2/2) - DEMO</h2>
+                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No recording is made)</p>
+                </div>
+                <div class="service-modal__body">
+                    <div class="face-scanner" id="sm-face-scanner">
+                        <div class="face-scanner__frame"></div>
+                        <div class="face-scanner__line"></div>
+                        <span class="iconify face-scanner__icon" data-icon="lucide:user"></span>
+                    </div>
+                    <div class="loading-spinner" id="sm-loading-spinner" style="display: none;"></div>
+                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...</p>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="sm-content-success" class="sm-state-container sm-state--center">
+                <div class="service-modal__body">
+                    <span class="iconify sm-status-icon sm-status-icon--success" data-icon="lucide:check-circle"></span>
+                    <h2 class="service-modal__title">Application Successful</h2>
+                    <p class="service-modal__desc">Your application has been processed successfully.</p>
+                    <div class="service-modal__actions">
+                        <button class="btn btn--primary" id="sm-close-success-btn">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- === FLOATING RUA AI ASSISTANT === -->
     <button id="ai-fab" class="ai-fab logo-box--glass" aria-label="Open Rua AI">
         <img src="../assets/img/mascot_2.png" alt="Rua AI Agent" class="ai-fab__img" loading="lazy">
@@ -691,7 +857,9 @@
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     
     <!-- Project Scripts -->
+    <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>
+    <script src="../js/modal-utils.js" defer></script>
     <script src="../js/business.js" defer></script>
 </body>
 
