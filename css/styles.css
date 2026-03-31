@@ -7233,3 +7233,13 @@
         padding: 1.25rem;
     }
 }
+
+/* === WAITLIST MODAL VISIBILITY FIX === */
+
+.waitlist-modal {
+    display: none;
+}
+
+.waitlist-modal.is-open {
+    display: flex;
+}
