@@ -15,7 +15,7 @@
 
     // --- STATE ---
     let filteredData = [];
-    let selectedCategories = [];
+    let selectedCategories = new Set();
 
     // --- DOM ELEMENTS ---
     const searchInput = document.getElementById('support-search-input');
@@ -175,27 +175,16 @@
 
     /**
      * Filter the FAQ data.
+     * Optimization: Uses pre-computed search strings and Set-based category lookups.
      */
     function performSearch() {
         const data = window.SUPPORT_FAQ_DATA || [];
         const query = searchInput?.value.toLowerCase().trim();
+        const hasFilters = selectedCategories.size > 0;
         
         filteredData = data.filter(item => {
-            // Text Match
-            let matchesText = true;
-            if (query) {
-                const inQuestion = item.question.toLowerCase().includes(query);
-                const inAnswer = item.answer.toLowerCase().includes(query);
-                const inKeywords = (item.keywords || []).some(kw => kw.toLowerCase().includes(query));
-                matchesText = inQuestion || inAnswer || inKeywords;
-            }
-
-            // Category Match
-            let matchesCategory = true;
-            if (selectedCategories.length > 0) {
-                matchesCategory = selectedCategories.includes(item.category);
-            }
-
+            const matchesText = !query || item._searchStr.includes(query);
+            const matchesCategory = !hasFilters || selectedCategories.has(item.category);
             return matchesText && matchesCategory;
         });
         
@@ -224,9 +213,9 @@
             
             checkbox.addEventListener('change', () => {
                 if (checkbox.checked) {
-                    selectedCategories.push(cat);
+                    selectedCategories.add(cat);
                 } else {
-                    selectedCategories = selectedCategories.filter(c => c !== cat);
+                    selectedCategories.delete(cat);
                 }
                 performSearch();
             });
@@ -273,6 +262,12 @@
      * Initialize Support Search.
      */
     function initSupportSearch() {
+        // Data Normalization: Pre-compute search-ready strings for O(1) text matching
+        const data = window.SUPPORT_FAQ_DATA || [];
+        data.forEach(item => {
+            item._searchStr = `${item.question} ${item.answer} ${(item.keywords || []).join(' ')}`.toLowerCase();
+        });
+
         // Init Filters first
         initFilters();
 
