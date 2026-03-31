@@ -27,7 +27,14 @@ function initScrollReveal() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 0. Initialize Locomotive Scroll & GSAP ScrollTrigger
+    // 0. Instant scroll-to-top BEFORE any scroll libraries init to prevent
+    //    elements staying invisible when arriving at a non-zero scroll position
+    window.scrollTo(0, 0);
+    if (document.querySelector('[data-scroll-container]')) {
+        document.querySelector('[data-scroll-container]').scrollTop = 0;
+    }
+
+    // 0.1 Initialize GSAP ScrollTrigger
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
@@ -180,17 +187,64 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Initial scroll to top on page load
-    window.scrollToTop(true);
+    // Initial scroll to top on page load — INSTANT, not smooth.
+    // Smooth scroll caused a race condition where IntersectionObservers
+    // checked elements before the scroll completed, leaving them invisible.
+    window.scrollToTop(false);
 });
 
-// Ensure Locomotive Scroll updates after all images are loaded
+/**
+ * activateElementsAbove
+ * Safety net: force-reveal any [data-reveal] or [data-scroll-class="is-revealed"]
+ * elements that are currently within or above the viewport. This handles edge cases
+ * where the user arrives at a non-zero scroll position (footer links, back/forward,
+ * anchor navigation) and scroll-triggered reveals never fire.
+ */
+function activateElementsAbove() {
+    const viewportBottom = window.innerHeight;
+
+    // data-reveal elements that haven't been revealed yet
+    document.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // If the element is above or within the viewport, reveal it
+        if (rect.top < viewportBottom) {
+            el.classList.add('is-revealed');
+        }
+    });
+
+    // Locomotive Scroll data-scroll-class elements that haven't been revealed
+    document.querySelectorAll('[data-scroll-class="is-revealed"]:not(.is-revealed)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < viewportBottom) {
+            el.classList.add('is-revealed');
+        }
+    });
+}
+
+// Ensure Locomotive Scroll updates after all images are loaded,
+// then run safety reveal for any elements that might have been missed.
 window.addEventListener('load', () => {
     if (window.locoScroll) {
         window.locoScroll.update();
         if (typeof ScrollTrigger !== 'undefined') {
             ScrollTrigger.refresh();
         }
+    }
+    // Safety: reveal any elements already in/above the viewport
+    activateElementsAbove();
+});
+
+// Handle browser back/forward navigation and same-page hash changes.
+// On these events, scroll to top instantly and then activate reveals.
+window.addEventListener('pageshow', (event) => {
+    // bfcache (back-forward cache) restores the page at its old scroll position
+    if (event.persisted) {
+        window.scrollTo(0, 0);
+        if (window.locoScroll) {
+            window.locoScroll.scrollTo(0, { duration: 0 });
+            window.locoScroll.update();
+        }
+        setTimeout(activateElementsAbove, 100);
     }
 });
 /**
@@ -937,8 +991,6 @@ function initGenesisModal() {
         });
     });
 
-    let genesisLocoScroll = null;
-
     cta.addEventListener('click', () => {
         const rect = container.getBoundingClientRect();
         
@@ -947,18 +999,9 @@ function initGenesisModal() {
         modal.classList.add('is-active');
         modal.setAttribute('aria-hidden', 'false');
 
-        // Initialize Locomotive Scroll for the modal
+        // Scroll modal content to top before opening
         const modalScroller = document.getElementById('genesis-scroller');
-        if (modalScroller) {
-            genesisLocoScroll = new LocomotiveScroll({
-                el: modalScroller,
-                smooth: true,
-                lerp: 0.08,
-                smartphone: { smooth: true, multiplier: 4.0 },
-                tablet: { smooth: true, multiplier: 3.0 }
-            });
-            window.genesisLocoScroll = genesisLocoScroll;
-        }
+        if (modalScroller) modalScroller.scrollTop = 0;
 
         // Initial set
         gsap.set(modal, { 
@@ -1086,11 +1129,6 @@ function initGenesisModal() {
             duration: 0.8,
             ease: "expo.inOut",
             onComplete: () => {
-                if (genesisLocoScroll) {
-                    genesisLocoScroll.destroy();
-                    genesisLocoScroll = null;
-                    window.genesisLocoScroll = null;
-                }
 
                 gsap.set(modal, { visibility: 'hidden', opacity: 0 });
                 modal.classList.remove('is-active');

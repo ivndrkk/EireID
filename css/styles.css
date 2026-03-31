@@ -5547,6 +5547,10 @@
 #genesis-scroller {
     width: 100%;
     height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
     padding: clamp(2rem, 8vw, 6rem) var(--container-padding);
 }
 
@@ -5631,19 +5635,15 @@
 }
 
 /* --- Scrollbar Customization --- */
-.genesis-modal {
-    overflow-x: hidden !important;
-}
-
-.genesis-modal::-webkit-scrollbar {
+#genesis-scroller::-webkit-scrollbar {
     width: 4px;
 }
 
-.genesis-modal::-webkit-scrollbar-track {
+#genesis-scroller::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.genesis-modal::-webkit-scrollbar-thumb {
+#genesis-scroller::-webkit-scrollbar-thumb {
     background: #a4e5b7;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(164, 229, 183, 0.4);
