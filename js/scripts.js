@@ -190,7 +190,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial scroll to top on page load — INSTANT, not smooth.
     // Smooth scroll caused a race condition where IntersectionObservers
     // checked elements before the scroll completed, leaving them invisible.
-    window.scrollToTop(false);
+   window.scrollToTop(false);
+
+// === WAITLIST MODAL ===
+const waitlistModal = document.getElementById('waitlist-modal');
+const waitlistTriggers = document.querySelectorAll('.waitlist-trigger');
+const waitlistCloseBtn = document.getElementById('waitlist-modal-close');
+const waitlistBackdrop = waitlistModal?.querySelector('[data-waitlist-close]');
+const waitlistForm = document.getElementById('waitlist-form');
+const waitlistSuccess = document.getElementById('waitlist-success');
+const waitlistEmail = document.getElementById('waitlist-email');
+const waitlistEmailError = document.getElementById('waitlist-email-error');
+
+function openWaitlistModal(e) {
+    if (e) e.preventDefault();
+    waitlistModal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeWaitlistModal() {
+    waitlistModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+}
+
+waitlistTriggers.forEach(btn => {
+    btn.addEventListener('click', openWaitlistModal);
+});
+
+if (waitlistCloseBtn) {
+    waitlistCloseBtn.addEventListener('click', closeWaitlistModal);
+}
+
+if (waitlistBackdrop) {
+    waitlistBackdrop.addEventListener('click', closeWaitlistModal);
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeWaitlistModal();
+});
+
+if (waitlistForm) {
+    waitlistForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const valid = waitlistEmail.checkValidity();
+        waitlistEmailError.style.display = valid ? 'none' : 'block';
+
+        if (!valid) return;
+
+        console.log({
+            name: document.getElementById('waitlist-name').value,
+            email: waitlistEmail.value,
+            message: document.getElementById('waitlist-message').value
+        });
+
+        waitlistSuccess.hidden = false;
+        waitlistForm.reset();
+    });
+}
+
 });
 
 /**
