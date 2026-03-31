@@ -23,3 +23,10 @@
 **Action:** When building custom selection components:
 1. Always implement `Home` (index 0) and `End` (last index) key listeners in addition to `ArrowUp` and `ArrowDown`.
 2. Ensure that the logic for updating the highlighted state (`aria-activedescendant`) and scrolling the active element into view is shared across all navigation keys to maintain consistency.
+
+## 2025-05-18 - Keyboard Accessibility for Hover Dropdowns
+**Learning:** Purely hover-based navigation dropdowns are a major accessibility barrier for keyboard users. By applying the `:focus-within` pseudo-class to the parent container, the dropdown's visibility and associated animations (like icon rotation) can be triggered automatically when any child element (e.g., the trigger link or sub-menu items) receives focus.
+
+**Action:** When implementing hover-activated UI elements:
+1. Ensure the container also reacts to `:focus-within`.
+2. Apply the same visibility and transform rules to the focus state as the hover state to maintain a consistent experience across input methods.
