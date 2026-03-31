@@ -1377,6 +1377,32 @@ function initGrowthRoadmap() {
         });
     });
 }
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("WAITLIST FORCE INIT");
+
+    const modal = document.getElementById('waitlist-modal');
+    const triggers = document.querySelectorAll('.waitlist-trigger');
+    const closeBtn = document.getElementById('waitlist-modal-close');
+
+    if (!modal) {
+        console.log("Modal not found");
+        return;
+    }
+
+    triggers.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('is-open');
+            document.body.style.overflow = '';
+        });
+    }
+});
 
 
 
