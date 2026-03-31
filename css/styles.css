@@ -249,6 +249,7 @@
 }
 
 .nav__item--dropdown:hover .nav__dropdown-icon,
+.nav__item--dropdown:focus-within .nav__dropdown-icon,
 .nav__item--dropdown.is-active .nav__dropdown-icon {
     transform: rotate(180deg);
 }
@@ -265,6 +266,7 @@
 }
 
 .nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown,
 .nav__item--dropdown.is-active .nav__dropdown {
     display: block;
     animation: fadeIn 0.2s ease-out;
