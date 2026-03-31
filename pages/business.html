@@ -16,9 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3/dist/iconify.min.js"></script>
     <link rel="icon" type="image/x-icon" href="../assets/logo/logo(color).png">
 
-    <!-- Locomotive Scroll -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
-
+    
     <!-- CSS -->
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -31,7 +29,7 @@
         <span class="loader"></span>
     </div>
 
-    <div id="scroll-wrapper" data-scroll-container>
+    <div id="scroll-wrapper">
     <div class="container">
 
         <!-- === HEADER NAVIGATION === -->
@@ -54,7 +52,7 @@
                             <div class="nav__dropdown-inner logo-box--glass">
                                 <a href="./allservices.html" class="nav__dropdown-link">All services</a>
                                 <a href="./resident.html" class="nav__dropdown-link">For residents</a>
-                                    <a href="./business.html" class="nav__dropdown-link active" aria-current="page">For businesses</a>
+                                <a href="./business.html" class="nav__dropdown-link" aria-current="page">For businesses</a>
                             </div>
                         </div>
                     </li>
@@ -73,7 +71,7 @@
                 <div class="hero__content" aria-labelledby="hero-title" style="flex-direction: row; gap: var(--space-2xl); justify-content: space-between; align-items: center; width: 100%;">
                     
                     <div class="hero-leftcol" style="flex: 1; max-width: 600px;">
-                        <div class="hero__logos" data-scroll data-scroll-speed="-0.2">
+                        <div class="hero__logos" data-scroll data-scroll-speed="-0.5">
                             <button class="logo-box logo-box--glass" aria-label="Business Profile">
                                 <span class="iconify logo-box__svg" data-icon="lucide:building-2" style="width: 52px; height: 52px; display: block; margin: 0 auto; opacity: 0.8; color: var(--color-text-heading);"></span>
                             </button>
@@ -98,7 +96,7 @@
                         </div>
                     </div>
                     
-                    <div class="rightcol" style="flex: 1; min-height: 500px;" data-scroll data-scroll-speed="0.4">
+                    <div class="rightcol" style="flex: 1; min-height: 500px;" data-scroll data-scroll-speed="1">
                         <div class="business-hero-graph logo-box--glass">
                             <div class="business-hero-graph__header">
                                 <h3 class="business-hero-graph__title">Verifications Processed</h3>
@@ -142,7 +140,7 @@
             <!-- SECTION 3: CORE CAPABILITIES (Sticky Scroll) -->
             <section class="btabs-section section-padding" id="business-tabs" style="padding-top: var(--space-3xl);">
                 <div class="btabs-height">
-                    <div class="btabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#business-tabs">
+                    <div class="btabs-sticky" 
                         <div class="btabs-component">
             
                             <!-- LEFT PANEL -->
@@ -402,7 +400,10 @@
 
             <!-- SECTION 6: PRICING -->
             <section class="section-padding">
-                <h2 class="section-title text-center" data-reveal>Pricing Plans</h2>
+                <h2 class="section-title text-center" data-reveal>Business & Financial Highlights</h2>
+<p class="section-subtitle text-center" data-reveal style="max-width: 800px; margin: 0 auto var(--space-2xl);">
+    EireID combines recurring API revenue, enterprise licensing, and public-sector adoption to create a scalable digital identity platform.
+</p>
                 <div class="pricing-grid">
 
                     <article class="pricing-card logo-box--glass" data-scroll data-scroll-class="is-revealed">
@@ -460,6 +461,40 @@
                         </p>
                         <div class="pricing-card__cta" style="margin-top: auto;">
                             <a href="#about" class="btn btn--primary">LEARN MORE</a>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+ <section class="section-padding" style="padding-top: 40px;">
+                <h2 class="section-title text-center" data-reveal>Growth & Operational Strategy</h2>
+                <div class="industry-grid">
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Revenue Model</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">
+                                EireID generates recurring revenue through API verification pricing, enterprise licensing, and premium support for large organisations. This creates a stable model that scales as adoption increases.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Growth Potential</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">
+                                EireID can launch in high-demand sectors such as finance, retail, and property, before expanding into healthcare, transport, education, and wider public services across Ireland.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="industry-tile logo-box--glass" data-scroll data-scroll-class="is-revealed">
+                        <h3 class="industry-tile__title">Operations</h3>
+                        <div class="industry-tile__content">
+                            <p class="industry-tile__body">
+                                The platform would run through secure cloud infrastructure, partner onboarding tools, API documentation, and ongoing compliance monitoring, allowing the service to scale efficiently without major physical overheads.
+                            </p>
                         </div>
                     </article>
 
@@ -686,9 +721,6 @@
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Locomotive Scroll -->
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     
     <!-- Project Scripts -->
     <script src="../js/scripts.js" defer></script>
