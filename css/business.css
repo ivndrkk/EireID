@@ -1,5 +1,6 @@
 /* ============================================================
    business.css — EireID Business Page Styles
+   Relies on design tokens from common.css — link that first.
    ============================================================ */
 
 /* ── Hero Graph (Section 1) ── */
@@ -592,81 +593,4 @@
     .industry-grid { grid-template-columns: 1fr; }
     .industry-tile.is-expanded { grid-column: span 1; grid-row: span 1; }
     .trust-badges { flex-direction: column; align-items: center; }
-}
-
-/* FIX hidden sections */
-.section-padding {
-    min-height: auto !important;
-    overflow: visible !important;
-}
-
-.pricing-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.industry-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-/* Make cards visible */
-.pricing-card,
-.industry-tile {
-    opacity: 1 !important;
-    transform: none !important;
-}
-
-/* Remove scroll clipping */
-[data-scroll] {
-    transform: none !important;
-}
-
-/* Show business strategy card text without needing expand JS */
-.industry-tile {
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    min-height: 220px;
-}
-
-.industry-tile__title {
-    margin-bottom: 14px;
-}
-
-.industry-tile__content {
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    position: relative !important;
-    visibility: visible !important;
-}
-
-.industry-tile__body {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* Fix the cut-off timeline text */
-.how-it-works__grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 40px !important;
-    align-items: start !important;
-}
-
-.how-it-works__timeline-wrapper,
-.how-it-works__timeline,
-.timeline-steps,
-.timeline-step,
-.timeline-step__text {
-    overflow: visible !important;
-    max-width: 100% !important;
-}
-
-.timeline-step__text {
-    padding-right: 20px;
-    box-sizing: border-box;
 }
