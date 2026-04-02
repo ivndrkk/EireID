@@ -1,10 +1,3 @@
-/**
- * business.js
- * Contains logic for:
- * 1. Hero Graph Animation (Canvas)
- * 2. Expanding Industry Grid (Section 4)
- * 3. Business Sticky Tabs (Section 3) - standalone rewrite of resident-tabs logic
- */
 
 (function () {
     'use strict';
@@ -23,10 +16,9 @@
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
-            drawGraph(1); // Redraw at 100% on resize
+            drawGraph(1);
         });
 
-        // Mock data points curving upwards
         const points = [
             { x: 0, y: 0.1 },
             { x: 0.2, y: 0.15 },
@@ -42,9 +34,8 @@
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            // Create gradient for fill
             const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)'); // brand green
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
             gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
 
             ctx.beginPath();
@@ -60,7 +51,6 @@
                 y: height - (p.y * height)
             }));
 
-            // Draw smooth curve using bezier curves
             for (let i = 0; i < drawnPoints.length; i++) {
                 const pt = drawnPoints[i];
                 const cp1x = lastX + (pt.x - lastX) / 2;
@@ -74,13 +64,11 @@
                 lastY = pt.y;
             }
 
-            // Fill area
             ctx.lineTo(lastX, height);
             ctx.lineTo(0, height);
             ctx.fillStyle = gradient;
             ctx.fill();
 
-            // Draw line
             ctx.beginPath();
             lastX = 0;
             lastY = height - (points[0].y * height);
@@ -100,13 +88,12 @@
             }
 
             ctx.lineWidth = 4;
-            ctx.strokeStyle = '#a4e5b7'; // brand green
+            ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            // Animate value text
             const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
-                const maxVal = 24.5; // M
+                const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
                 valueSpan.innerText = `${currentVal}M+`;
             }
@@ -122,7 +109,6 @@
             }
         }
 
-        // Trigger animation when canvas comes into view
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 if (animationProgress === 0) {
@@ -153,7 +139,6 @@
                 const idx = parseInt(el.dataset.slide || el.dataset.video || el.dataset.target);
                 if (idx === targetIndex) {
                     el.classList.add('is-active');
-                    // If visual is a video, ensure it plays
                     const vid = el.querySelector('video');
                     if (vid) vid.play().catch(()=>{});
                 } else {
@@ -177,7 +162,7 @@
             const sectionHeight = section.offsetHeight;
             const viewportH = window.innerHeight;
 
-            const scrolledPast = -rect.top + (viewportH * 0.05); // 5vh offset to match sticky top
+            const scrolledPast = -rect.top + (viewportH * 0.05);
             const maxScrollable = sectionHeight - viewportH;
 
             if (maxScrollable <= 0) return;
@@ -199,7 +184,6 @@
                     if (isMobile) {
                         jumpToSlide(tar);
                     } else {
-                        // Scroll to position
                         const height = section.offsetHeight;
                         const vh = window.innerHeight;
                         const scrollDist = height - vh;
@@ -224,7 +208,6 @@
             isMobile = window.innerWidth <= 900;
         }, { passive: true });
 
-        // Connect scroll events smoothly depending on Locomotive availability
         if (window.locoScroll) {
             window.locoScroll.on('scroll', handleScroll);
             if (window.ScrollTrigger) {
@@ -235,9 +218,8 @@
         }
 
         dotClickHandler();
-        handleScroll(); // Init Check
+        handleScroll();
 
-        // Mobile swipe logic
         let startX = 0;
         section.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, {passive: true});
         section.addEventListener('touchend', e => {
@@ -275,7 +257,6 @@
         const prevBtn = document.getElementById('business-carousel-prev');
         const nextBtn = document.getElementById('business-carousel-next');
 
-        // Modal elements
         const modal = document.getElementById('service-modal');
         const modalClose = document.getElementById('sm-close');
         const modalOverlay = document.getElementById('sm-overlay');
@@ -302,7 +283,6 @@
         let randomDefaultServices = [];
 
         if (typeof irishGovServicesData !== 'undefined') {
-            // Filter ONLY services that are for businesses
             businessServices = irishGovServicesData.filter(s => s.for && s.for.includes('Businesses'));
 
             businessServices.forEach(s => {
@@ -564,7 +544,6 @@
             }
         }
 
-        // Set up standard modal controls
         if (typeof setupModalListeners === 'function') {
             setupModalListeners({
                 modal,
@@ -584,12 +563,10 @@
         }
     }
 
-    // Initialize all logic
     window.addEventListener('DOMContentLoaded', () => {
         initHeroGraph();
         initBusinessServices();
         
-        // Timeout ensures Locomotive scroll is attached properly by scripts.js
         setTimeout(initBusinessTabs, 200); 
     });
 

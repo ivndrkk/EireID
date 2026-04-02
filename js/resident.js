@@ -1,10 +1,4 @@
-// js/resident.js - converted to non-module to support direct file exploration (CORS compatibility)
 
-/**
- * Escapes special HTML characters in a string to prevent XSS.
- * @param {string} str - The string to be escaped.
- * @returns {string} The escaped string.
- */
 function escapeHTML(str) {
     if (typeof str !== 'string') return str || '';
     const map = {
@@ -17,14 +11,12 @@ function escapeHTML(str) {
     return str.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const carousel = document.getElementById("resident-services-carousel");
     const searchInput = document.getElementById("resident-search-input");
     const prevBtn = document.getElementById("resident-carousel-prev");
     const nextBtn = document.getElementById("resident-carousel-next");
     
-    // Modal Elements
     const modal = document.getElementById('service-modal');
     const modalClose = document.getElementById('sm-close');
     const modalOverlay = document.getElementById('sm-overlay');
@@ -44,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadingSpinner = document.getElementById('sm-loading-spinner');
     const step2Status = document.getElementById('sm-step2-status');
 
-    // Cyber Card auto-updating date
     const timeDisplay = document.getElementById("cyber-updated-time");
     if (timeDisplay) {
         function formatCyberDate(date) {
@@ -87,12 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const trackSection = document.getElementById("how-it-works-track");
 
     if (howItWorksSection && flowSteps.length === 3 && trackSection && typeof ScrollTrigger !== 'undefined') {
-        // Устанавливаем изначальные тусклые состояния
         gsap.set(flowSteps, { opacity: 0.3, scale: 0.95 });
 
         const mm = gsap.matchMedia();
 
-        // Desktop: Нативный Locomotive-трек + GSAP scrub
         mm.add("(min-width: 992px)", () => {
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -149,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, "+=0.3");
         });
 
-        // Mobile: Обычный скролл сверху вниз, активация по одному
         mm.add("(max-width: 991px)", () => {
             flowSteps.forEach((step) => {
                 const iconWrap = step.querySelector(".flow-icon");
@@ -187,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Обновляем GSAP после того как всё отрендерилось, чтобы он понял высоты
         setTimeout(() => {
             ScrollTrigger.refresh();
         }, 500);
@@ -212,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (typeof irishGovServicesData !== 'undefined') {
-        // Filter ONLY services that are for residents
         residentServices = irishGovServicesData.filter(s => s.for && s.for.includes("Residents"));
 
         residentServices.forEach(s => {
@@ -220,7 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
             s._tagSet = new Set(s.tags || []);
         });
 
-        // Pick 6 random services to show by default
         pickRandomDefaults();
         
         filterData();
@@ -229,24 +214,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function pickRandomDefaults() {
-        // Shuffle and pick 6
         let shuffled = [...residentServices].sort(() => 0.5 - Math.random());
         randomDefaultServices = shuffled.slice(0, 6);
     }
 
     function createCardElement(service) {
         const card = document.createElement("article");
-        // MUST have data-scroll and data-scroll-class="is-revealed" so CSS opacity reveals it
         card.className = "service-card resident-card logo-box--glass is-revealed";
         card.setAttribute("role", "button");
         card.setAttribute("tabindex", "0");
         card.setAttribute("aria-label", service.name);
-        // ensure card appears without relying on scroll trigger if user is at top
         card.style.opacity = "1";
         card.style.transform = "none";
         card.style.visibility = "visible";
         
-        // Use static sizing to prevent parent containers from infinitely stretching
         card.style.flex = "0 0 280px";
         card.style.width = "280px";
         card.style.minWidth = "280px";
@@ -313,7 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
         carousel.appendChild(fragment);
         updateCarouselNav();
 
-        // Update scroll stuff if available
         setTimeout(() => {
             if (window.locoScroll && typeof window.locoScroll.update === 'function') {
                 window.locoScroll.update();
@@ -327,10 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCarouselNav() {
         if (!prevBtn || !nextBtn) return;
         const currentScroll = carousel.scrollLeft;
-        // Total possible scroll distance
         const maxScroll = carousel.scrollWidth - carousel.clientWidth;
         
-        // Use a small threshold (2px) to account for floating point rounding in scrollLeft
         if (currentScroll <= 2) {
             prevBtn.style.opacity = '0.4';
             prevBtn.style.pointerEvents = 'none';
@@ -352,33 +330,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Attach scroll event to dynamically handle fade of prev/next buttons
     carousel.addEventListener('scroll', debounce(updateCarouselNav, 50));
 
     function shiftCarousel(direction) {
         const cards = carousel.querySelectorAll('.service-card');
         if (cards.length === 0) return;
         
-        // Exact width of one item including its gap (1rem = 16px)
         const cardWidth = cards[0].offsetWidth + 16; 
         
-        // Find current nearest index using scrollLeft
         const currentScroll = carousel.scrollLeft;
         let currentIndex = Math.round(currentScroll / cardWidth);
         const totalItems = cards.length;
         
         if (direction === 'next') {
-            currentIndex += 1; // Scroll by 1 item
+            currentIndex += 1;
             if (currentIndex >= totalItems) currentIndex = totalItems - 1;
         } else {
-            currentIndex -= 1; // Scroll by 1 item
+            currentIndex -= 1;
             if (currentIndex < 0) currentIndex = 0;
         }
 
         const targetOffset = currentIndex * cardWidth;
         
-        // Move container using GSAP for a more controlled, synchronised animation
-        // and re-implement the vertical translation "lift" effect.
         if (typeof gsap !== 'undefined') {
             const tl = gsap.timeline({
                 onComplete: () => {
@@ -389,14 +362,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // Smoothly animate the scrollLeft property
             tl.to(carousel, {
                 scrollLeft: targetOffset,
-                duration: 0.6, // Slightly faster for single item scroll
+                duration: 0.6,
                 ease: "power2.inOut"
             });
 
-            // Subtle vertical "lift" translation effect
             tl.to(cards, {
                 y: -8,
                 duration: 0.3,
@@ -409,7 +380,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: "power2.in"
             }, 0.3);
         } else {
-            // Fallback for native smooth scrolling if GSAP is unavailable
             carousel.scrollTo({ left: targetOffset, behavior: 'smooth' });
             setTimeout(updateCarouselNav, 400);
         }
@@ -421,7 +391,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function filterData() {
         if (!searchInput) return;
 
-        // Reset revealed states to allow re-animation after update
         document.querySelectorAll('[data-scroll-class="is-revealed"]').forEach(el => {
             el.classList.remove('is-revealed');
         });
@@ -429,12 +398,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const searchVal = searchInput.value.toLowerCase().trim();
 
         if (!searchVal) {
-            // Pick 6 random default cards if nothing is typed
-            // (The user said: pick random services from json each time)
             pickRandomDefaults();
             filteredData = randomDefaultServices;
         } else {
-            // Filter
             filteredData = residentServices.filter(service => {
                 return service._searchStr.includes(searchVal);
             });
@@ -442,7 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         renderCarousel();
 
-        // Always return to top (of the results/section) when searching
         if (typeof window.scrollToTop === 'function') {
             window.scrollToTop(true);
         }
@@ -466,7 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (mSimilarGrid) {
-            // Similar services logic: Optimized single-pass greedy collection
             const currentTags = service._tagSet || new Set();
             const similar = [];
             const others = [];
@@ -489,18 +453,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (similar.length < 3) {
                 results = [...similar, ...others].slice(0, 3);
             } else {
-                // Shuffle and pick 3
                 results = similar.sort(() => 0.5 - Math.random()).slice(0, 3);
             }
 
             mSimilarGrid.innerHTML = '';
 
-            // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
             const fragment = document.createDocumentFragment();
 
             results.forEach(s => {
                 const scard = document.createElement('article');
-                // Accessibility: Add role and tabindex for keyboard navigation
                 scard.className = 'service-card logo-box--glass';
                 scard.setAttribute('role', 'button');
                 scard.setAttribute('tabindex', '0');
@@ -540,7 +501,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Set up standard modal controls using utility
     setupModalListeners({
         modal,
         modalClose,

@@ -2,10 +2,7 @@
    Depends on: common.css (variables, reset, .logo-box--glass)
    ============================================================================= */
 
-
 /* ─── Header Shell ────────────────────────────────────────────────────────── */
-
-
 
 .header {
     padding: var(--space-sm) 0;
@@ -39,7 +36,6 @@
     transform: translateY(0);
 }
 
-/* Base stagger for main tiles */
 .about__tile:nth-child(2) {
     transition-delay: 0.1s;
 }
@@ -79,7 +75,6 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Animated X state when menu is open */
 .menu-toggle[aria-expanded="true"] span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -98,10 +93,8 @@
     }
 }
 
-
 /* ─── Nav List ────────────────────────────────────────────────────────────── */
 
-/* Mobile: hidden off-screen panel, revealed by .is-open */
 .nav__list {
     list-style: none;
     display: flex;
@@ -109,7 +102,6 @@
     align-items: center;
     gap: var(--space-md);
 
-    /* Absolutely positioned below header on mobile */
     position: absolute;
     top: 100%;
     left: 0;
@@ -121,7 +113,6 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
 
-    /* Hidden state */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px) scale(0.95);
@@ -134,7 +125,6 @@
     transform: translateY(0);
 }
 
-/* Desktop: inline row, no panel */
 @media (min-width: 768px) {
     .nav__list {
         position: static;
@@ -152,7 +142,6 @@
     }
 }
 
-
 /* ─── Nav Item ────────────────────────────────────────────────────────────── */
 
 .nav__item {
@@ -166,7 +155,6 @@
         width: auto;
     }
 }
-
 
 /* ─── Nav Link ────────────────────────────────────────────────────────────── */
 
@@ -185,7 +173,6 @@
     width: 100%;
 }
 
-/* Glassmorphism pill that appears on hover/focus */
 .nav__link::before {
     content: '';
     position: absolute;
@@ -237,7 +224,6 @@
     }
 }
 
-
 /* ─── Dropdown ────────────────────────────────────────────────────────────── */
 
 .nav__dropdown-icon {
@@ -272,7 +258,6 @@
     animation: fadeIn 0.2s ease-out;
 }
 
-/* On mobile, dropdown stretches full width */
 @media (max-width: 767px) {
     .nav__dropdown {
         position: absolute;
@@ -325,13 +310,10 @@
     }
 }
 
-
-
 /* ─── Hero Wrapper ────────────────────────────────────────────────────────── */
 
 .hero {
     min-height: calc(100svh - 120px);
-    /* Full viewport minus approximate header height */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -339,12 +321,10 @@
     animation: translateYFadeIn 0.8s ease-out 0.2s both;
 }
 
-
 /* ─── Hero Content (logos + heading + subtitle) ───────────────────────────── */
 
 .hero__content {
     flex: 1;
-    /* Pushes .hero__actions to the bottom */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -352,14 +332,12 @@
     width: 100%;
 }
 
-
 /* ─── Logo Pair ───────────────────────────────────────────────────────────── */
 
 .hero__logos {
     display: flex;
     gap: 1.25rem;
     margin-bottom: var(--space-lg);
-    /* Mobile default */
 }
 
 @media (min-width: 769px) {
@@ -367,7 +345,6 @@
         margin-bottom: var(--space-xl);
     }
 }
-
 
 /* ─── Logo Box sizes (hero context) ──────────────────────────────────────── */
 /*
@@ -377,7 +354,6 @@
 
 .logo-box {
     width: 80px;
-    /* Mobile */
     height: 80px;
     border-radius: 16px;
 }
@@ -398,14 +374,11 @@
     }
 }
 
-
 /* ─── Heading & Subtitle ──────────────────────────────────────────────────── */
 
 .hero__title {
     font-size: 2.25rem;
-    /* Mobile */
     font-weight: 400;
-    /* Light weight — EireID brand */
     color: var(--color-text-heading);
     letter-spacing: -0.01em;
     margin-top: 1rem;
@@ -414,7 +387,6 @@
 
 .hero__subtitle {
     font-size: var(--font-size-base);
-    /* Mobile */
     color: var(--color-text-muted);
     margin-top: var(--space-md);
     font-weight: 400;
@@ -440,7 +412,6 @@
     }
 }
 
-
 /* ─── CTA Buttons Row ─────────────────────────────────────────────────────── */
 
 .hero__actions {
@@ -462,12 +433,10 @@
     }
 }
 
-
 /* ─── Hero Pill Wrapper (for joining buttons) ─────────────────────────────── */
 .hero__pill-wrapper {
     display: flex;
     align-items: stretch;
-    /* Change from center to stretch to equalize bottom lines */
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(4px);
@@ -483,14 +452,11 @@
 .hero__pill-divider {
     width: 1px;
     height: 100%;
-    /* divider fills height too */
     background: rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
     margin: 8px 0;
-    /* but let's make it look centered by using margins if needed? No, let's keep it clean */
 }
 
-/* Let's actually center the divider content by adjusting it */
 .hero__pill-divider {
     width: 1px;
     background: rgba(0, 0, 0, 0.1);
@@ -515,10 +481,8 @@
 
 .hero__pill-wrapper .hero__action::before {
     display: none;
-    /* remove individual pill backgrounds */
 }
 
-/* Specific hover backdrops for sides */
 .hero__pill-wrapper .hero__action {
     transition: background 0.3s ease;
 }
@@ -554,7 +518,6 @@
     width: 200px;
 }
 
-/* Animated Underline Effect */
 .hero__action::after {
     content: '';
     position: absolute;
@@ -564,7 +527,6 @@
     height: 1px;
     background-color: var(--color-text-heading);
     transform: scaleX(0) translateZ(0);
-    /* Hardware accelerated to prevent thickening */
     transform-origin: center;
     z-index: 5;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s;
@@ -576,7 +538,6 @@
     transform: scaleX(1) translateZ(0);
 }
 
-/* Glassmorphism pill that is constant and enhances on hover/focus */
 .hero__action::before {
     content: '';
     position: absolute;
@@ -614,7 +575,6 @@
     outline-offset: 4px;
 }
 
-
 /* ─── Scroll Indicator Icon (inside "Explore EireID" button) ─────────────── */
 
 .scroll-icon {
@@ -637,7 +597,6 @@
     border-radius: 2px;
     animation: scrollWheel 2s infinite ease-in-out;
 }
-
 
 /* =============================================================================
    quick-links.css — Quick Links Section
@@ -748,13 +707,11 @@
     }
 }
 
-
 /* =============================================================================
    about.css — EireID About / Bento Grid Section
    All styles scoped to the #about section and its five tiles.
    Depends on: common.css (variables, reset, .logo-box--glass, .pulse-animation)
    ============================================================================= */
-
 
 /* ─── Section Shell ───────────────────────────────────────────────────────── */
 
@@ -780,17 +737,14 @@
     }
 }
 
-
 /* ─── Bento Grid ──────────────────────────────────────────────────────────── */
 
 .about__grid {
     display: grid;
     grid-template-columns: 1fr;
-    /* Mobile: single column stack */
     gap: var(--space-lg);
 }
 
-/* Tablet: 2-column layout */
 @media (min-width: 768px) {
     .about__grid {
         grid-template-columns: repeat(2, 1fr);
@@ -798,14 +752,12 @@
     }
 }
 
-/* Desktop: 3-column bento (3fr 4fr 3fr) */
 @media (min-width: 1024px) {
     .about__grid {
         grid-template-columns: 3fr 4fr 3fr;
         grid-template-rows: minmax(300px, auto) minmax(300px, auto);
     }
 }
-
 
 /* ─── Tile Base ───────────────────────────────────────────────────────────── */
 
@@ -816,7 +768,6 @@
     gap: var(--space-md);
     overflow: hidden;
     position: relative;
-    /* Overrides .logo-box--glass default opacity — tiles sit on a frosted surface */
     background: rgba(255, 255, 255, 0.7);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
 }
@@ -825,7 +776,6 @@
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
 }
 
-/* Staggered Delays */
 .about__tile:nth-child(1) {
     --tile-delay: 0ms;
 }
@@ -846,10 +796,8 @@
     --tile-delay: 400ms;
 }
 
-
 /* ─── Tile Size Modifiers ─────────────────────────────────────────────────── */
 
-/* Tablet */
 @media (min-width: 768px) {
     .about__tile--tall {
         grid-row: span 2;
@@ -864,7 +812,6 @@
     }
 }
 
-/* Desktop — explicit grid placement */
 @media (min-width: 1024px) {
     .about__tile--tall {
         grid-column: 1 / 2;
@@ -876,13 +823,11 @@
         grid-row: 1 / 2;
     }
 
-    /* Service Hub */
     .about__tile:nth-child(3) {
         grid-column: 2 / 3;
         grid-row: 2 / 3;
     }
 
-    /* Agent Assistance */
     .about__tile--small {
         grid-column: 3 / 4;
         grid-row: 2 / 3;
@@ -893,7 +838,6 @@
         grid-row: 3 / 4;
     }
 }
-
 
 /* ─── Tile Header (shared across all tiles) ───────────────────────────────── */
 
@@ -909,7 +853,6 @@
     color: var(--color-text-muted);
     line-height: 1.4;
 }
-
 
 /* ─── Tile 1: Phone Mockup & Document Carousel ────────────────────────────── */
 
@@ -978,7 +921,6 @@
     min-height: 20px;
     transition: opacity 0.3s ease;
 }
-
 
 /* ─── Tile 2: Service Hub / Orbit System ─────────────────────────────────── */
 
@@ -1079,8 +1021,6 @@
     pointer-events: none;
 }
 
-
-
 /* ─── Tile 3: Agent Assistance ────────────────────────────────────────────── */
 
 .agent-ui {
@@ -1168,8 +1108,6 @@
     animation: float 3s ease-in-out infinite 1.5s;
 }
 
-
-
 /* ─── Tile 4: AI Message Preview ──────────────────────────────────────────── */
 
 .ai-message {
@@ -1247,7 +1185,6 @@
 
 .ai-message__fade {
     display: none;
-    /* No longer needed */
 }
 
 .ai-message__sources {
@@ -1334,13 +1271,11 @@
     border-radius: 4px;
 }
 
-
 /* ─── Tile 5: Statistics Bar (Full-width) ─────────────────────────────────── */
 
 .stat-bar {
     display: flex;
     flex-direction: column;
-    /* Mobile: stacked */
     justify-content: center;
     align-items: center;
     gap: var(--space-md);
@@ -1380,7 +1315,6 @@
     font-weight: 700;
     margin-left: 2px;
     -webkit-text-fill-color: #333;
-    /* Restore solid colour for unit suffix */
 }
 
 .stat-bar__label {
@@ -1421,7 +1355,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-xl);
-    /* Нормальный отступ для мобилок */
     align-items: start;
 }
 
@@ -1454,7 +1387,6 @@
 .how-it-works__timeline-wrapper {
     position: relative;
     padding-left: 32px;
-    /* Чуть компактнее для телефонов */
 }
 
 .how-it-works__timeline {
@@ -1483,7 +1415,6 @@
     box-shadow: 0 0 15px var(--color-bg-primary);
     transform: scaleY(0);
     transform-origin: top;
-    /* transition: transform 0.1s ease-out; — GSAP handles this now */
     border-radius: 2px;
     will-change: transform;
 }
@@ -1501,7 +1432,6 @@
     z-index: 2;
     opacity: 0;
     transform: translate(-50%, -50%);
-    /* transition: transform 0.1s ease-out, opacity 0.3s ease; — GSAP handles this now */
     will-change: transform, opacity;
 }
 
@@ -1510,7 +1440,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2xl);
-    /* Адекватное расстояние между шагами на телефоне */
     padding-top: var(--space-md);
     padding-bottom: var(--space-xl);
 }
@@ -1521,7 +1450,6 @@
     gap: var(--space-md);
     z-index: 2;
 
-    /* Состояние "по умолчанию" (тусклое) */
     opacity: 0.3;
     transform: translateX(10px);
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1536,7 +1464,6 @@
 .timeline-step__icon-box {
     flex-shrink: 0;
     width: 48px;
-    /* Чуть меньше на мобилках */
     height: 48px;
     border-radius: 12px;
     display: flex;
@@ -1576,7 +1503,6 @@
     color: var(--color-text-muted);
     line-height: 1.5;
 }
-
 
 @media (min-width: 1024px) {
     .how-it-works__grid {
@@ -1676,7 +1602,6 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     overflow: visible;
-    /* Needed for EireID pop-out */
 }
 
 .compare-grid {
@@ -1701,7 +1626,6 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     align-items: flex-end;
     justify-content: center;
-    /* Center text in top row */
     text-align: center;
     padding-bottom: var(--space-lg);
     height: 120px;
@@ -1725,16 +1649,13 @@
     padding-left: var(--space-xl);
     position: relative;
     overflow: hidden;
-    /* Keep large background icons contained */
 }
 
 .label-icon {
     position: absolute;
     font-size: 64px;
-    /* ~3.5x original 18px */
     color: var(--color-bg-primary);
     opacity: 0.25;
-    /* Subtle background feel */
     left: -10px;
     top: 50%;
     transform: translateY(-50%);
@@ -1799,7 +1720,6 @@
 @media (max-width: 1023px) {
     .compare-grid {
         grid-template-columns: 1fr 1fr;
-        /* EireID vs Chosen Competitor */
     }
 
     .label-col {
@@ -1844,7 +1764,6 @@
     }
 }
 
-
 /* ─── Floating Rua AI Assistant ─────────────────── */
 .ai-fab {
     position: fixed;
@@ -1863,7 +1782,6 @@
     visibility: hidden;
     transform: translateY(20px) scale(0.9);
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    /* Optimization: Hint the browser to promote this to its own compositor layer */
     will-change: transform, opacity;
 }
 
@@ -1885,7 +1803,6 @@
     object-fit: contain;
 }
 
-
 .ai-modal {
     position: fixed;
     bottom: 100px;
@@ -1899,14 +1816,12 @@
     flex-direction: column;
     overflow: hidden;
 
-    /* Hidden state */
     opacity: 0;
     visibility: hidden;
     transform: scale(0.9) translateY(20px);
     transform-origin: bottom right;
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Mobile default sizing (almost full screen) */
     width: calc(100vw - 40px);
     height: calc(100vh - 140px);
     max-height: 500px;
@@ -2054,7 +1969,6 @@
     .ai-modal {
         bottom: 130px;
         right: 40px;
-        /* Desktop default sizing (1/4 screen style popup) */
         width: 380px;
         height: 550px;
     }
@@ -2130,8 +2044,6 @@
     }
 }
 
-
-
 /* ─── Quick Links Section ─────────────────────────────────────────────────── */
 ─────── */
 /* ─── Hero Section ────────────────────────────────────────────────────────── */
@@ -2142,7 +2054,6 @@
     padding: var(--space-2xl) 0 var(--space-xl);
 }
 
-/* Beautiful glow effect behind the title to mimic the reference screenshot */
 .services-hero::before {
     content: '';
     position: absolute;
@@ -2194,7 +2105,6 @@
     gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     background: rgba(255, 255, 255, 0.495);
-    /* Override glass to be a bit more solid */
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -2251,12 +2161,10 @@
     outline: none;
     transition: all var(--transition-fast);
     appearance: none;
-    /* Hide default arrow */
 }
 
 .filter-input {
     padding-left: 2.5rem;
-    /* space for search icon */
 }
 
 .filter-select:hover,
@@ -2269,7 +2177,6 @@
     background: rgba(255, 255, 255, 1);
     border-color: var(--color-bg-primary);
     box-shadow: 0 0 0 3px rgba(164, 229, 183, 0.3);
-    /* Brand green focus ring */
 }
 
 .select-icon {
@@ -2316,11 +2223,9 @@
     padding: var(--space-lg);
     gap: var(--space-md);
     background: rgba(255, 255, 255, 0.5);
-    /* slightly more opaque glass */
     cursor: pointer;
     text-align: left;
     height: 100%;
-    /* force equal heights in grid */
     transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
     animation: fadeIn 0.4s ease-out backwards;
 }
@@ -2334,17 +2239,14 @@
     outline-offset: 4px;
 }
 
-/* Emphasize the highlight card (mimicking "Hierarchy" in screenshot) */
 .service-card--featured {
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
-    /* slightly stronger shadow */
     position: relative;
     overflow: hidden;
 }
 
-/* Add a subtle noise/specular texture to the featured card to match the screenshot */
 .service-card--featured::after {
     content: '';
     position: absolute;
@@ -2403,7 +2305,6 @@
 
 .service-card__body {
     flex: 1;
-    /* Pushes footer to bottom */
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
@@ -2422,7 +2323,6 @@
     font-size: var(--font-size-sm);
     color: var(--color-text-body);
     line-height: 1.5;
-    /* Limit to 3 lines */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -2495,7 +2395,6 @@
 .service-modal__content {
     position: relative;
     background: rgba(255, 255, 255, 0.85) !important;
-    /* more solid glass for readability */
     width: 100%;
     height: 100%;
     margin: var(--space-sm);
@@ -2551,7 +2450,6 @@
 .service-modal__header {
     margin-bottom: var(--space-md);
     padding-right: 40px;
-    /* space for close btn */
 }
 
 .service-modal__provider {
@@ -2630,7 +2528,6 @@
     }
 }
 
-/* Adjustments for similar cards */
 .service-modal__similar-grid .service-card {
     padding: var(--space-md);
     background: rgba(255, 255, 255, 0.6);
@@ -2779,7 +2676,6 @@
     text-align: center;
 }
 
-/* Demo Form */
 .demo-form {
     margin: var(--space-md) 0;
     padding: var(--space-md);
@@ -2814,7 +2710,6 @@
     text-align: right;
 }
 
-/* Split Actions */
 .sm-actions--split {
     display: flex;
     gap: var(--space-sm);
@@ -2823,10 +2718,8 @@
 .sm-actions--split .btn {
     flex: 1;
     min-width: 0;
-    /* Override minimum width */
 }
 
-/* Status Icons */
 .sm-status-icon {
     font-size: 64px;
     margin: 0 auto;
@@ -2835,15 +2728,12 @@
 
 .sm-status-icon--error {
     color: #ef4444;
-    /* red */
 }
 
 .sm-status-icon--success {
     color: #10b981;
-    /* green */
 }
 
-/* Face Scanner Animation */
 .face-scanner {
     position: relative;
     width: 200px;
@@ -2887,7 +2777,6 @@
     }
 }
 
-/* Loading Spinner */
 .loading-spinner {
     width: 48px;
     height: 48px;
@@ -2908,7 +2797,6 @@
     }
 }
 
-/* Mobile Logo Header */
 .header__mobile-logo {
     display: block;
 }
@@ -2967,7 +2855,6 @@
     font-size: 14px;
     line-height: 2;
     color: var(--color-bg-primary);
-    /* green */
     opacity: 0.15;
     white-space: pre;
     z-index: 0;
@@ -3065,7 +2952,6 @@
     }
 }
 
-/* Node Shared Styles */
 .genesis-node {
     display: flex;
     flex-direction: column;
@@ -3102,7 +2988,6 @@
     font-size: 36px;
     border-color: var(--color-bg-primary);
     box-shadow: 0 0 30px rgba(164, 229, 183, 0.2);
-    /* green glow */
 }
 
 .genesis-node__label {
@@ -3114,7 +2999,6 @@
     text-align: center;
 }
 
-/* Connectors */
 .genesis-connector {
     flex: 1;
     position: relative;
@@ -3139,7 +3023,6 @@
 
     .genesis-connector__particles {
         display: none !important;
-        /* simplify for mobile */
     }
 }
 
@@ -3187,7 +3070,6 @@
     }
 }
 
-/* Interactions */
 .genesis-security__visual-area:hover .genesis-matrix__code {
     animation-duration: 5s;
     opacity: 0.3;
@@ -3252,7 +3134,6 @@
     overflow: hidden;
     transition: all var(--transition-base);
     background: rgba(255, 255, 255, 0.6);
-    /* Slightly more opaque for readability */
 }
 
 .faq__item.is-active {
@@ -3333,7 +3214,6 @@
 
 .faq__item.is-active .faq__answer {
     max-height: 500px;
-    /* Large enough for content */
     padding-bottom: var(--space-lg);
     opacity: 1;
 }
@@ -3359,8 +3239,6 @@
     }
 }
 
-
-
 /* =============================================================================
    floating-pill.css — Sticky Top Menu Pill
    ============================================================================= */
@@ -3378,7 +3256,6 @@
     pointer-events: none;
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
     border-radius: var(--radius-full);
-    /* Optimization: Hint the browser to promote this to its own compositor layer */
     will-change: transform, opacity;
 }
 
@@ -3427,7 +3304,6 @@
 
 @media (max-width: 768px) {
 
-    /* Swap mobile logo and menu toggle order so burger is always top-right */
     .header__mobile-logo {
         order: 1;
     }
@@ -3440,7 +3316,6 @@
         order: 3;
         position: relative;
         z-index: 5001;
-        /* Stay above any overlays */
     }
 
     .floating-pill {
@@ -3449,7 +3324,6 @@
         justify-content: center;
         padding: 4px;
         top: 24px;
-        /* Matches container padding roughly */
         right: var(--container-padding);
         left: auto;
         transform: translateY(-150%);
@@ -3474,13 +3348,11 @@
         display: block;
     }
 
-    /* Ensure the mobile burger in the floating pill matches size and scale of original */
     .floating-pill__mobile .menu-toggle {
         display: flex;
         padding: 6px;
     }
 
-    /* Compact Mobile Card Nav */
     .nav__list.is-open {
         position: fixed;
         top: 70px;
@@ -3490,7 +3362,6 @@
 
         height: auto;
         min-height: 35vh;
-        /* slightly shorter card */
         z-index: 4500;
 
         display: flex;
@@ -3498,13 +3369,11 @@
         justify-content: center;
         align-items: center;
         gap: var(--space-md);
-        /* tighter gap */
 
         background: rgba(255, 255, 255, 0.9);
         border-radius: 24px;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
         padding: var(--space-xl) var(--space-md);
-        /* reduced vertical padding */
 
         visibility: visible;
         opacity: 1;
@@ -3565,7 +3434,6 @@
 .footer__cta-title {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 400;
-    /* Match EireID headings */
     margin-bottom: var(--space-md);
     position: relative;
     z-index: 1;
@@ -3809,7 +3677,6 @@
     height: 1px;
     background-color: var(--color-text-heading);
     transform: scaleX(0) translateZ(0);
-    /* Hardware accelerated */
     transform-origin: center;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     pointer-events: none;
@@ -3830,13 +3697,11 @@
     height: 48px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.05);
-    /* Constant slightly transparent */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     opacity: 1;
-    /* Always visible */
     transform: translate(-50%, -50%) scale(1);
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: -1;
@@ -3863,14 +3728,13 @@
     letter-spacing: -0.04em;
     text-align: center;
     
-    /* Elegant subtle brand-aligned gradient */
     background: linear-gradient(180deg, rgba(12, 155, 78, 0.07) 0%, rgba(12, 155, 78, 0.02) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
     line-height: 0.85;
-    margin-bottom: -0.12em; /* Negative margin to sit closer to content */
+    margin-bottom: -0.12em;
     pointer-events: none;
     user-select: none;
     width: 100%;
@@ -3912,7 +3776,6 @@
     }
 }
 
-/* Brand column */
 .footer-brand__logo {
     display: flex;
     align-items: center;
@@ -3959,7 +3822,6 @@
     transform: translateY(-2px);
 }
 
-/* Link columns */
 .footer-col__title {
     font-size: var(--font-size-xs);
     font-weight: 700;
@@ -3987,7 +3849,6 @@
     color: var(--color-text-heading);
 }
 
-/* Bottom bar */
 .footer-main__bottom {
     display: flex;
     flex-direction: column;
@@ -4079,7 +3940,6 @@
     margin-bottom: var(--space-sm);
 }
 
-
 .carousel-nav {
     display: flex;
     gap: var(--space-sm);
@@ -4108,11 +3968,6 @@
     transform: scale(0.95);
 }
 
-
-
-
-
-/* Remove box shadow from cards on resident.html only */
 .resident-card {
     box-shadow: none !important;
 }
@@ -4124,17 +3979,12 @@
     align-items: stretch;
     scroll-behavior: smooth;
     width: 100%;
-    /* Default to exactly 2 items */
     max-width: calc(280px * 2 + 2rem);
-    /* Set up for finger scrolling */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
 
-    /* Hide scrollbar since navigation arrows are primary */
     -ms-overflow-style: none;
-    /* IE and Edge */
     scrollbar-width: none;
-    /* Firefox */
 }
 
 .resident-services-carousel::-webkit-scrollbar {
@@ -4153,7 +4003,6 @@
     }
 
     .resident-services-carousel {
-        /* Mobile: Only 1 item visible */
         max-width: 280px;
     }
 }
@@ -4439,7 +4288,6 @@
     transition: opacity 0.3s ease;
 }
 
-/* Hover effects */
 .cyber-tracker:hover~.tilt-target .cyber-id-info {
     opacity: 0;
     filter: blur(5px);
@@ -4474,7 +4322,6 @@
     }
 }
 
-/* Particle positions */
 .cyber-card-particles span:nth-child(1) {
     --x: 1;
     --y: -1;
@@ -4948,7 +4795,6 @@
     }
 }
 
-/* Modification */
 #cyber-card:hover .cyber-card-glare {
     opacity: 1;
 }
@@ -4961,7 +4807,6 @@
     border-color: rgba(0, 202, 114, 0.8);
     box-shadow: 0 0 10px rgba(0, 202, 114, 0.5);
 }
-
 
 @media (max-width: 1024px) {
     .resident-scroll-icon {
@@ -5057,8 +4902,6 @@
 
 @media (max-width: 991px) {
 
-
-
     .how-it-works__content,
     .services-controls {
         position: relative !important;
@@ -5073,7 +4916,6 @@
 
 /* === Glass Marquee Section === */
 .partners-glass-section {
-    /* Принудительно вырываемся из любого контейнера на всю ширину экрана */
     width: 100vw;
     position: relative;
     left: 50%;
@@ -5081,11 +4923,9 @@
     margin-left: -50vw;
     margin-right: -50vw;
 
-    /* Увеличенный отступ перед секцией */
     margin-top: 120px;
     margin-bottom: 80px;
 
-    /* Отступ между двумя полосами */
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -5094,22 +4934,16 @@
     z-index: 10;
 }
 
-/* Настройка стеклянных треков (каждая полоса - отдельное стекло) */
 .marquee-track {
     display: flex;
-    /* Делаем полосу чуть шире экрана (110%), чтобы края гарантированно прятались за экраном */
     width: 110vw;
     margin-left: -5vw;
 
-    /* Реалистичное очень прозрачное стекло */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
     backdrop-filter: blur(4px);
-    /* Почти не матовое */
     -webkit-backdrop-filter: blur(4px);
     border-top: 1px solid rgba(255, 255, 255, 0.25);
-    /* Тонкий блик сверху */
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    /* Чуть темнее снизу */
     box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.05);
 
     padding: 22px 0;
@@ -5117,7 +4951,6 @@
     overflow: hidden;
 }
 
-/* Внутренний контейнер, который двигается */
 .marquee-content {
     display: flex;
     width: max-content;
@@ -5128,10 +4961,8 @@
     align-items: center;
     justify-content: space-around;
     min-width: 110vw;
-    /* Должно совпадать с шириной трека */
 }
 
-/* Анимации */
 .track-right .marquee-content {
     animation: scroll-right 40s linear infinite;
 }
@@ -5160,12 +4991,10 @@
     }
 }
 
-/* Торможение при наведении на ЛЮБУЮ часть секции */
 .partners-glass-section:hover .marquee-content {
     animation-play-state: paused;
 }
 
-/* Стилизация логотипов */
 .logo-item {
     padding: 0 45px;
     display: flex;
@@ -5177,12 +5006,10 @@
     height: 38px;
     width: auto;
     object-fit: contain;
-    /* Монохромные, светло-серые/прозрачные */
     filter: grayscale(100%) opacity(0.4) contrast(1.2);
     transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-/* Текстовые логотипы (если нет картинки) */
 .logo-item span {
     font-family: inherit;
     font-size: 1.3rem;
@@ -5193,7 +5020,6 @@
     transition: color 0.5s ease;
 }
 
-/* При наведении: делаем логотипы чуть ярче */
 .partners-glass-section:hover .logo-item img {
     filter: grayscale(100%) opacity(0.7) contrast(1.2);
 }
@@ -5202,7 +5028,6 @@
     color: rgba(0, 0, 0, 0.6);
 }
 
-/* Легкое увеличение конкретного логотипа, на который навели мышь */
 .logo-item:hover img {
     transform: scale(1.05);
     filter: grayscale(100%) opacity(0.9) contrast(1.2) !important;
@@ -5234,7 +5059,6 @@
     margin: 0 auto;
 }
 
-/* Контейнер для визуальной части (щит + бейджи) */
 .trust-visual {
     position: relative;
     width: 280px;
@@ -5246,7 +5070,6 @@
     z-index: 10;
 }
 
-/* Центральный сияющий фон */
 .trust-glow {
     position: absolute;
     top: 50%;
@@ -5260,7 +5083,6 @@
     animation: pulseLogo 4s infinite ease-in-out;
 }
 
-/* Большой центральный стеклянный щит */
 .trust-shield {
     position: relative;
     width: 140px;
@@ -5282,11 +5104,9 @@
 .trust-shield .iconify {
     font-size: 64px;
     color: var(--color-bg-primary);
-    /* Фирменный зеленый */
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
-/* Плавающие бейджи (Pills) */
 .trust-pill {
     position: absolute;
     display: flex;
@@ -5295,7 +5115,6 @@
     padding: 10px 18px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.85) !important;
-    /* Делаем чуть плотнее, чем обычное стекло */
     border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     color: var(--color-text-heading);
@@ -5311,7 +5130,6 @@
     color: var(--color-text-muted);
 }
 
-/* Позиционирование и индивидуальные анимации для бейджей */
 .trust-pill--1 {
     top: -5%;
     left: -25%;
@@ -5336,7 +5154,6 @@
     animation: sway-4 7.5s ease-in-out infinite 1.5s;
 }
 
-/* Текст снизу */
 .trust-footer {
     display: flex;
     align-items: center;
@@ -5429,7 +5246,6 @@
         margin-bottom: var(--space-xl);
     }
 
-    /* Сжимаем разлет бейджей на мобилках, чтобы не вылезали за экран */
     .trust-pill--1 {
         left: -10%;
     }
@@ -5453,7 +5269,6 @@
 
 .resident-faq {
     flex: 1.2;
-    /* Занимает чуть больше места, чем Trust секция */
     padding: var(--space-2xl) var(--space-md);
     max-width: 650px;
     margin: 0 auto;
@@ -5461,7 +5276,6 @@
 
 .resident-faq__container {
     text-align: left;
-    /* В узкой колонке текст лучше выравнивать по левому краю */
     max-width: 100%;
 }
 
@@ -5473,7 +5287,6 @@
 
 .resident-faq .faq__title {
     font-size: clamp(2rem, 3vw, 2.5rem);
-    /* Чуть меньше, чем на главной */
     margin-bottom: var(--space-xs);
 }
 
@@ -5482,7 +5295,6 @@
     margin-bottom: 0;
 }
 
-/* Делаем сами плашки вопросов чуть компактнее для сайдбара */
 .resident-faq .faq__question {
     padding: var(--space-md) var(--space-lg);
     font-size: var(--font-size-base);
@@ -5493,7 +5305,6 @@
     font-size: var(--font-size-sm);
 }
 
-/* Стилизация кнопки */
 .resident-faq__action {
     margin-top: var(--space-xl);
     display: flex;
@@ -5505,21 +5316,16 @@
     min-width: 220px;
 }
 
-/* Адаптивность для мобильных */
 @media (max-width: 991px) {
     .resident-faq {
         padding-top: 0;
-        /* Убираем лишний отступ сверху, так как идет сразу после Trust */
         width: 100%;
     }
 
     .resident-faq__action {
         justify-content: center;
-        /* Центрируем кнопку на мобилках */
     }
 }
-
-
 
 /* =============================================================================
    Genesis Modal Styles — "EireGenesis" Cyber-Organic Dark Theme
@@ -5540,8 +5346,8 @@
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
-    overflow: hidden; /* Locomotive Scroll handles overflow */
-    padding: 0; /* Padding moved to content or scroller if needed */
+    overflow: hidden;
+    padding: 0;
     pointer-events: none;
     transition: visibility 0s 0.8s;
 }
@@ -5552,17 +5358,15 @@
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch;
     padding: clamp(2rem, 8vw, 6rem) var(--container-padding);
 }
 
-/* Texture Overlay */
 .genesis-modal::before {
     content: "";
     position: absolute;
     inset: 0;
     background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png");
-    /* subtle grain */
     opacity: 0.05;
     pointer-events: none;
     z-index: -1;
@@ -5691,17 +5495,14 @@
     margin-bottom: 5rem;
 }
 
-/* Base "Deep Tinted" Card */
 .genesis-bento__card {
     background: rgba(5, 12, 10, 0.85);
-    /* Deep Anthracite/Emerald */
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border-radius: 24px;
     padding: 2rem;
     position: relative;
     overflow: hidden;
-    /* Specular highlight at the top edge */
     border: 1px solid rgba(164, 229, 183, 0.1);
     border-top: 1px solid rgba(164, 229, 183, 0.3);
     display: flex;
@@ -5711,7 +5512,6 @@
     transform-style: preserve-3d;
 }
 
-/* Apply SVG Grain Filter */
 .genesis-bento__card::before {
     content: "";
     position: absolute;
@@ -5752,7 +5552,6 @@
     font-weight: 700;
 }
 
-/* Module D: Main Scheme */
 .genesis-bento--main {
     grid-column: span 12;
     min-height: 500px;
@@ -5803,7 +5602,6 @@
     z-index: 2;
 }
 
-/* Module A: Tech Stack */
 .genesis-bento--tech {
     grid-column: span 7;
 }
@@ -5846,7 +5644,6 @@
     letter-spacing: 0.5px;
 }
 
-/* Module B: Data Path */
 .genesis-bento--path {
     grid-column: span 5;
 }
@@ -5935,7 +5732,6 @@
     }
 }
 
-/* Module C: Recovery */
 .genesis-bento--recovery {
     grid-column: span 12;
 }
@@ -5977,7 +5773,6 @@
     box-shadow: 0 0 5px #a4e5b7;
 }
 
-/* Responsiveness */
 @media (max-width: 1024px) {
     .genesis-bento--tech {
         grid-column: span 12;
@@ -6020,7 +5815,7 @@
 .genesis-hub-sections {
     display: flex;
     flex-direction: column;
-    gap: 8rem; /* Premium breathable spacing */
+    gap: 8rem;
     padding-top: 4rem;
 }
 
@@ -6029,7 +5824,6 @@
     position: relative;
 }
 
-/* Typography & Colors */
 .accent-text {
     color: #a4e5b7 !important;
     text-shadow: 0 0 15px rgba(164, 229, 183, 0.2);
@@ -6041,7 +5835,7 @@
 
 .section-lead {
     font-size: 1.15rem;
-    color: #ffffff !important; /* Removed grey */
+    color: #ffffff !important;
     line-height: 1.6;
     max-width: 800px;
     margin-bottom: 3.5rem;
@@ -6056,7 +5850,7 @@
 
 .small-desc {
     font-size: 0.95rem !important;
-    color: rgba(255, 255, 255, 0.95) !important; /* High contrast */
+    color: rgba(255, 255, 255, 0.95) !important;
     line-height: 1.6;
 }
 
@@ -6069,7 +5863,6 @@
     padding-left: 1rem;
 }
 
-/* Card Helpers */
 .card-half { grid-column: span 6; }
 .card-full { grid-column: span 12; }
 .card-third { grid-column: span 4; }
@@ -6088,7 +5881,6 @@
     box-shadow: 0 0 20px rgba(164, 229, 183, 0.1);
 }
 
-/* Tech Expander */
 .tech-details-expander__container {
     margin-top: 2rem;
 }
@@ -6153,12 +5945,10 @@
     font-weight: 500;
 }
 
-/* Utilities */
 .mt-md { margin-top: 1.5rem; }
 .pb-32 { padding-bottom: 8rem; }
 .text-left { text-align: left; }
 
-/* Recovery List Styling */
 .recovery-list {
     list-style: none;
     padding: 0;
@@ -6309,10 +6099,10 @@
 }
 
 .bmc-tile-content {
-    display: none; /* Handled by GSAP */
+    display: none;
     flex-wrap: wrap;
     gap: 0.5rem;
-    opacity: 0; /* Animated by GSAP */
+    opacity: 0;
 }
 
 .bmc-cell.is-expanded .bmc-tile.bmc-tile-glass {
@@ -6368,7 +6158,7 @@
     bottom: 0;
     left: 20px;
     width: 4px;
-    background: rgba(164, 229, 183, 0.1); /* Subtle dark track */
+    background: rgba(164, 229, 183, 0.1);
     border-radius: 4px;
     overflow: hidden;
     z-index: 0;
@@ -6395,7 +6185,7 @@
     background: #fff;
     box-shadow: 0 0 10px #fff, 0 0 20px var(--color-bg-primary);
     border-radius: 10px;
-    opacity: 0; /* JS will animate */
+    opacity: 0;
 }
 
 /* ─── Roadmap Nodes ─── */
@@ -6405,7 +6195,6 @@
     z-index: 10;
 }
 
-/* Connection line to track */
 .roadmap-node-wrapper::before {
     content: '';
     position: absolute;
@@ -6420,16 +6209,16 @@
 .roadmap-node {
     position: relative;
     padding: var(--space-xl);
-    padding-left: var(--space-2xl); /* Some breathing room */
+    padding-left: var(--space-2xl);
     border-radius: 20px;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: auto;
-    background: rgba(255, 255, 255, 0.03); /* Base glass */
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .roadmap-node:hover {
     transform: scale(1.02) translateY(-5px);
-    background: rgba(255, 255, 255, 0.08); /* Increase glass opacity on hover */
+    background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 40px rgba(164, 229, 183, 0.15), inset 0 0 20px rgba(164, 229, 183, 0.1);
 }
 
@@ -6465,7 +6254,7 @@
 .node-pulse {
     position: absolute;
     top: 50%;
-    left: -48px; /* On the track connection */
+    left: -48px;
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
@@ -6530,7 +6319,7 @@
     .growth-roadmap-inner {
         flex-direction: row;
         padding-left: 0;
-        padding-top: 80px; /* Space for horizontal track */
+        padding-top: 80px;
         align-items: flex-start;
     }
 
@@ -6574,7 +6363,7 @@
     }
     
     .node-pulse {
-        top: -68px; /* On the track connection */
+        top: -68px;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -6775,7 +6564,6 @@
     transform: translateX(4px);
 }
 
-/* Custom Checkbox Styling */
 .filter-checkbox-item input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -6807,7 +6595,6 @@
     font-weight: 900;
 }
 
-/* Fix Hero content layout when no actions (CTA) are present */
 .hero:not(:has(.hero__actions)) .hero__content {
     justify-content: center;
     padding-bottom: var(--space-xl);
@@ -6837,7 +6624,7 @@
 
 /* --- Answer Modal (Quick Questions) --- */
 .q-modal {
-    position: fixed; /* Changed from absolute for better scroll handling */
+    position: fixed;
     top: 50%;
     left: 50%;
     width: 90vw;
@@ -6848,7 +6635,6 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     transform: translate(-50%, -40%) scale(0.95);
 }
-
 
 .q-modal.is-active {
     opacity: 1;
@@ -6924,7 +6710,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    mix-blend-mode: multiply; /* Erase white background */
+    mix-blend-mode: multiply;
 }
 
 @media (max-width: 768px) {
@@ -6948,7 +6734,7 @@
         height: 100% !important;
         border-radius: var(--radius-lg) !important;
         flex-direction: column !important;
-        justify-content: center !important; /* Centered but with top offset for layout flow */
+        justify-content: center !important;
         padding: var(--space-xl) !important;
         text-align: center;
         position: relative;
@@ -6964,26 +6750,25 @@
     .q-modal__text {
         text-align: center;
         width: 100%;
-        margin-top: 20px; /* Space between sticker and text */
+        margin-top: 20px;
     }
     .q-modal__question {
         font-size: var(--font-size-xl);
         margin-bottom: var(--space-md);
     }
     .q-modal__image {
-        display: none; /* Hide side mascot on mobile to focus on sticker */
+        display: none;
     }
     .q-modal__sticker {
         display: none !important;
     }
 }
 
-
 /* --- Support & Help Grid (Guidelines) --- */
 .kb-grid .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md); /* More compact gap */
+    gap: var(--space-md);
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -7005,7 +6790,7 @@
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: var(--space-xl) !important; /* Increased inside padding */
+    padding: var(--space-xl) !important;
 }
 
 .guideline-card:hover,
@@ -7031,8 +6816,8 @@
 
 /* --- Guide Modal Adjustments --- */
 .q-modal__content {
-    display: flex; /* Ensure it is a flex container */
-    flex-direction: row; /* Default layout */
+    display: flex;
+    flex-direction: row;
 }
 
 .q-modal__sticker {
@@ -7120,7 +6905,7 @@
     box-shadow: 0 0 50px rgba(164, 229, 183, 0.1), inset 0 0 0 1px rgba(164, 229, 183, 0.2);
     border: 1px solid rgba(164, 229, 183, 0.1);
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.85); /* Ensure backdrop filter works over it */
+    background: rgba(255, 255, 255, 0.85);
 }
 
 .waitlist-modal__close {
@@ -7326,11 +7111,10 @@
         width: 100%;
         min-height: 100svh;
         margin: 0;
-        padding: 3rem 1.5rem 5rem; /* More bottom padding for button coverage */
+        padding: 3rem 1.5rem 5rem;
         border-radius: 0;
     }
 }
-
 
 /* === GDPR CONSENT CHECKBOX === */
 .form-consent-group {

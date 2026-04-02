@@ -4,11 +4,6 @@
    and Floating Rua AI Assistant.
    ============================================================================= */
 
-/**
- * Escapes special HTML characters in a string to prevent XSS.
- * @param {string} str - The string to be escaped.
- * @returns {string} The escaped string.
- */
 function escapeHTML(str) {
     if (typeof str !== 'string') return str;
     const map = {
@@ -22,19 +17,14 @@ function escapeHTML(str) {
 }
 
 function initScrollReveal() {
-    // This function is currently a placeholder to prevent crashes
-    // from potential calls in other files.
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 0. Instant scroll-to-top BEFORE any scroll libraries init to prevent
-    //    elements staying invisible when arriving at a non-zero scroll position
     window.scrollTo(0, 0);
     if (document.querySelector('[data-scroll-container]')) {
         document.querySelector('[data-scroll-container]').scrollTop = 0;
     }
 
-    // 0.1 Initialize GSAP ScrollTrigger
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
@@ -43,8 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let locoScroll = null;
     
     if (scroller) {
-        // Use a higher lerp (0.12) for mobile devices for better responsiveness
-        // while maintaining the default smooth 0.05 for desktop and tablet.
         const isMobile = window.innerWidth < 768;
 
         locoScroll = new LocomotiveScroll({
@@ -53,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             lerp: isMobile ? 0.15 : 0.08,
             smartphone: {
                 smooth: true,
-                multiplier: 4.0 // Significantly faster and smoother on mobile
+                multiplier: 4.0
             },
             tablet: {
                 smooth: true,
@@ -61,10 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Each time Locomotive Scroll updates, tell ScrollTrigger to update too
         locoScroll.on("scroll", ScrollTrigger.update);
 
-        // Tell ScrollTrigger to use these proxy methods for the ".data-scroll-container" element
         ScrollTrigger.scrollerProxy(scroller, {
             scrollTop(value) {
                 return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
@@ -85,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const comps2 = grid.querySelectorAll('.comp-2');
   const comps3 = grid.querySelectorAll('.comp-3');
 
-  // Начальные скрытые состояния
   gsap.set(labels, { x: -50, opacity: 0 });
   gsap.set(eireID, {
     scale: 0.88, opacity: 0,
@@ -97,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTrigger: {
       trigger: '.comparison',
       start: 'top 70%',
-      scroller: '[data-scroll-container]', // Locomotive proxy
+      scroller: '[data-scroll-container]',
       once: true,
     }
   })
@@ -109,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .to(eireID, {
     scale: 1, opacity: 1,
     duration: 0.7,
-    ease: 'back.out(1.7)', // фирменный bounce как у logo-box
+    ease: 'back.out(1.7)',
   }, '<0.1')
   .to(comps1, {
     x: 0, opacity: 1,
@@ -125,23 +110,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }, '<0.1');
         })();
         
-        // Each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
         ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
     }
 
-    window.locoScroll = locoScroll; // Make globally accessible if needed
+    window.locoScroll = locoScroll;
 
-    // Navigation & Menus
     initTeamCards();
     initFloatingPill();
     initMobileMenu();
     initDropdowns();
     
-    // UI Interactions
     initExploreButton(locoScroll);
     initHeroInteractions();
     
-    // Section Specific
     initDocCarousel();
     initAboutFadeIn();
     initScrollReveal();
@@ -150,30 +131,23 @@ document.addEventListener("DOMContentLoaded", () => {
     initHowItWorksAnimation();
     initComparisonTable();
     
-    // Rua AI Assistant
     initFloatingAssistant();
     initAIChat();
     
-    // FAQ
     initFAQAccordion();
 
-    // Genesis Modal
     initGenesisModal();
 
-    // Business Model Canvas Grid
     if (typeof initBMCInteractiveGrid === 'function') {
         initBMCInteractiveGrid();
     }
 
-    // Growth Roadmap
     if (typeof initGrowthRoadmap === 'function') {
         initGrowthRoadmap();
     }
 
-    // Final Refresh
     ScrollTrigger.refresh();
 
-    // Global Scroll to Top Helper
     window.scrollToTop = (smooth = true) => {
         if (window.locoScroll) {
             window.locoScroll.scrollTo(0, {
@@ -188,9 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Initial scroll to top on page load — INSTANT, not smooth.
-    // Smooth scroll caused a race condition where IntersectionObservers
-    // checked elements before the scroll completed, leaving them invisible.
    window.scrollToTop(false);
 
 // === WAITLIST MODAL ===
@@ -212,7 +183,6 @@ function openWaitlistModal(e) {
     waitlistModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Accessibility: Auto-focus the first field
     if (waitlistName) {
         setTimeout(() => waitlistName.focus(), 100);
     }
@@ -237,7 +207,6 @@ if (waitlistBackdrop) {
     waitlistBackdrop.addEventListener('click', closeWaitlistModal);
 }
 
-// Focus Trap Logic
 if (waitlistModal) {
     waitlistModal.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
@@ -265,7 +234,6 @@ if (waitlistForm) {
     waitlistForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Validation logic
         let hasError = false;
 
         if (waitlistName) {
@@ -330,26 +298,16 @@ if (waitlistForm) {
 
 });
 
-/**
- * activateElementsAbove
- * Safety net: force-reveal any [data-reveal] or [data-scroll-class="is-revealed"]
- * elements that are currently within or above the viewport. This handles edge cases
- * where the user arrives at a non-zero scroll position (footer links, back/forward,
- * anchor navigation) and scroll-triggered reveals never fire.
- */
 function activateElementsAbove() {
     const viewportBottom = window.innerHeight;
 
-    // data-reveal elements that haven't been revealed yet
     document.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach(el => {
         const rect = el.getBoundingClientRect();
-        // If the element is above or within the viewport, reveal it
         if (rect.top < viewportBottom) {
             el.classList.add('is-revealed');
         }
     });
 
-    // Locomotive Scroll data-scroll-class elements that haven't been revealed
     document.querySelectorAll('[data-scroll-class="is-revealed"]:not(.is-revealed)').forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < viewportBottom) {
@@ -358,8 +316,6 @@ function activateElementsAbove() {
     });
 }
 
-// Ensure Locomotive Scroll updates after all images are loaded,
-// then run safety reveal for any elements that might have been missed.
 window.addEventListener('load', () => {
     if (window.locoScroll) {
         window.locoScroll.update();
@@ -367,14 +323,10 @@ window.addEventListener('load', () => {
             ScrollTrigger.refresh();
         }
     }
-    // Safety: reveal any elements already in/above the viewport
     activateElementsAbove();
 });
 
-// Handle browser back/forward navigation and same-page hash changes.
-// On these events, scroll to top instantly and then activate reveals.
 window.addEventListener('pageshow', (event) => {
-    // bfcache (back-forward cache) restores the page at its old scroll position
     if (event.persisted) {
         window.scrollTo(0, 0);
         if (window.locoScroll) {
@@ -384,12 +336,6 @@ window.addEventListener('pageshow', (event) => {
         setTimeout(activateElementsAbove, 100);
     }
 });
-/**
- * escapeHTML
- * Sanitizes a string to prevent XSS by escaping special HTML characters.
- * @param {string} str - The string to sanitize.
- * @returns {string} - The sanitized string.
- */
 window.escapeHTML = function(str) {
     if (!str) return "";
     return String(str)
@@ -400,8 +346,6 @@ window.escapeHTML = function(str) {
         .replace(/'/g, "&#039;");
 };
 
-// Optimization: Use a singleton IntersectionObserver for text reveals to prevent memory leaks
-// and redundant observer instances when re-initializing (e.g., after pagination).
 let textRevealObserver;
 
 function initTextReveal() {
@@ -430,10 +374,8 @@ function initTextReveal() {
 window.addEventListener("load", () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Allow a small delay for branding visibility
         setTimeout(() => {
             preloader.classList.add('fade-out');
-            // Remove from DOM after fade animation
             setTimeout(() => {
                 preloader.remove();
             }, 800);
@@ -449,7 +391,7 @@ function initTeamCards() {
 
     cards.forEach(card => {
         const toggleFlip = (e) => {
-            if (e.target.closest('a')) return; // Ignore link clicks
+            if (e.target.closest('a')) return;
             const isFlipped = card.classList.toggle('is-flipped');
             card.setAttribute('aria-expanded', isFlipped);
             cards.forEach(other => {
@@ -491,7 +433,6 @@ function initDropdowns() {
         
         if (link) {
             link.addEventListener('click', (e) => {
-                // If on mobile/tablet where it might be a click to open
                 if (window.innerWidth < 768) {
                     e.preventDefault();
                     item.classList.toggle('is-active');
@@ -500,7 +441,6 @@ function initDropdowns() {
         }
     });
 
-    // Close all dropdowns if clicking outside
     document.addEventListener('click', (e) => {
         dropdownItems.forEach(item => {
             if (!item.contains(e.target)) {
@@ -579,14 +519,11 @@ function initDocCarousel() {
     let carouselInterval = null;
     let slideWidth = images[0].offsetWidth;
 
-    // Update cached width on resize
     window.addEventListener('resize', () => {
         slideWidth = images[0].offsetWidth;
         track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     });
 
-    // Optimization: Use IntersectionObserver to pause the carousel when it's out of view
-    // and cache offsetWidth to minimize layout thrashing.
     function startCarousel() {
         if (carouselInterval) return;
         carouselInterval = setInterval(() => {
@@ -628,7 +565,7 @@ function initAboutFadeIn() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('appear');
-                    obs.unobserve(entry.target); // Trigger once only
+                    obs.unobserve(entry.target);
                 }
             });
         },
@@ -646,42 +583,26 @@ function initAboutFadeIn() {
     });
 }
 
-
-/**
- * initStatCounters
- * Handles the count-up animation for statistics in the About section.
- * Replays when scrolled back into view and resets when out of view.
- */
 function initStatCounters() {
   const stats = document.querySelectorAll('.stat-bar__number');
 
   if (!stats.length) return;
 
-  // Pre-capture target values to prevent loss during initial IntersectionObserver callback
-  // Optimization: use textContent instead of innerText to avoid forced reflow.
   stats.forEach(el => {
     if (!el.getAttribute('data-target')) {
       el.setAttribute('data-target', el.textContent.trim());
     }
   });
 
-  /**
-   * animateCount
-   * Smoothly increments a number from 0 to its target value.
-   * @param {HTMLElement} el - The element containing the number.
-   * @param {number} index - The index of the stat for variable duration.
-   */
   function animateCount(el, index) {
     const targetText = el.getAttribute('data-target');
     const targetValue = parseFloat(targetText.replace(/[^0-9.]/g, '')) || 0;
     const suffix = targetText.replace(/[0-9.]/g, '');
 
-    if (targetValue === 0) return; // Nothing to animate
-    const duration = 1000 + (index * 500); // 1s, 1.5s, 2s, 2.5s, 3s
+    if (targetValue === 0) return;
+    const duration = 1000 + (index * 500);
     const startTime = performance.now();
 
-    // Optimization: Pre-determine the DOM update strategy outside the loop to eliminate branching
-    // and minimize layout thrashing in the high-frequency animation path.
     const unitSpan = el.querySelector('.stat-bar__unit');
     const firstNode = el.childNodes[0];
     const isTextNode = firstNode && firstNode.nodeType === 3;
@@ -702,7 +623,6 @@ function initStatCounters() {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Ease out expo
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
@@ -727,7 +647,6 @@ function initStatCounters() {
             const statIndex = allStats.indexOf(el);
             animateCount(el, statIndex);
             el.setAttribute('data-counted', 'true');
-            // Ensure animation happens only once
             observer.unobserve(el);
           }
         }
@@ -739,9 +658,7 @@ function initStatCounters() {
   stats.forEach(stat => observer.observe(stat));
 }
 
-
 /* ─── Init ────────────────────────────────────────────────────────────────── */
-
 
 /* =============================================================================
    how-it-works.js — EireID How It Works Section
@@ -757,7 +674,6 @@ function initHowItWorksAnimation() {
 
     if (!section || !timelineWrapper || !progressLine || !steps.length) return;
 
-    // 1. Step Activation using ScrollTrigger (Fixes Locomotive Translation offset issues)
     steps.forEach((step, index) => {
         ScrollTrigger.create({
             trigger: step,
@@ -766,32 +682,27 @@ function initHowItWorksAnimation() {
             onEnter: () => {
                 setTimeout(() => {
                     step.classList.add('is-active');
-                }, 150 * (index % 3)); // Stylish stagger
+                }, 150 * (index % 3));
             },
             once: true
         });
     });
 
-    // 2. pure GSAP Timeline Progress Line Refactor
     let maxProgress = 0;
     
-    // Create paused timeline mapping progressing from 0 to 1
     let tl = gsap.timeline({ paused: true });
     tl.to(progressLine, { scaleY: 1, duration: 1, ease: "none" }, 0);
     tl.to(progressDot, { top: "100%", duration: 1, ease: "none" }, 0);
-    // Keep dot visible initially
     tl.to(progressDot, { opacity: 1, duration: 0.01 }, 0);
     
-    // Ensure translation for the dot is kept centered over the line
     gsap.set(progressDot, { xPercent: -50, yPercent: -50 });
 
     ScrollTrigger.create({
         trigger: timelineWrapper,
         scroller: "[data-scroll-container]",
-        start: "top 50%",      // Start when wrapper hits screen center
-        end: "bottom 50%",   // End when wrapper bottom hits screen center
+        start: "top 50%",
+        end: "bottom 50%",
         onUpdate: self => {
-            // Ensure the progress only grows (no scrub backward over completed active items)
             maxProgress = Math.max(maxProgress, self.progress);
             tl.progress(maxProgress);
         }
@@ -800,7 +711,7 @@ function initHowItWorksAnimation() {
 
 /* ─── Comparison Table Mobile Logic ─────────────────── */
 function initComparisonTable() {
-    if (window.innerWidth >= 1024) return; // Only run on mobile/tablet
+    if (window.innerWidth >= 1024) return;
 
     const comp1 = document.querySelectorAll('.comp-1');
     const comp2 = document.querySelectorAll('.comp-2');
@@ -810,18 +721,13 @@ function initComparisonTable() {
     let currentIndex = 0;
 
     const comparisonInterval = setInterval(() => {
-        // Hide current competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.remove('is-active'));
         
-        // Move to next competitor
         currentIndex = (currentIndex + 1) % competitors.length;
         
-        // Show new competitor columns
         competitors[currentIndex].forEach(cell => cell.classList.add('is-active'));
-    }, 10000); // 10 seconds
+    }, 10000);
 }
-
-
 
 /* ─── Rua AI Assistant Logic ─────────────────── */
 
@@ -832,7 +738,6 @@ function initFloatingAssistant() {
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
 
-    // Refactored to use ScrollTrigger for better performance and centralized scroll management
     ScrollTrigger.create({
         trigger: 'body',
         scroller: '[data-scroll-container]',
@@ -883,7 +788,6 @@ function initAIChat() {
         initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    // Рендер сообщения пользователя
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
         div.className = 'ai-message ai-message--user';
@@ -898,13 +802,9 @@ function initAIChat() {
         body.scrollTop = body.scrollHeight;
     }
 
-    // Рендер ответа ассистента (с аватаром)
     function renderBotMessage(text, timeStr, sources = []) {
-        // Форматируем: переносы строк → <br>
-        // Security: Escape HTML first, then replace newlines with <br>
         const formatted = escapeHTML(text).replace(/\n/g, '<br>');
 
-        // Источники
         const sourcesHtml = sources.length > 0
             ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
@@ -929,7 +829,6 @@ function initAIChat() {
         body.scrollTop = body.scrollHeight;
     }
 
-    // Индикатор загрузки ("печатает...")
     function showTyping() {
         const div = document.createElement('div');
         div.className = 'ai-message';
@@ -951,7 +850,6 @@ function initAIChat() {
         document.getElementById('ai-typing')?.remove();
     }
 
-    // Отправка
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -964,7 +862,6 @@ function initAIChat() {
         input.value = '';
         showTyping();
 
-        // Блокируем input пока ждём ответ
         input.disabled = true;
         form.querySelector('button').disabled = true;
 
@@ -995,7 +892,6 @@ function initAIChat() {
 
 /* ─── FAQ Accordion ─────────────────── */
 function initFAQAccordion() {
-    // Tracking active item for O(1) closing logic instead of O(N) loop on every click.
     let activeItemObj = null;
 
     const faqItems = Array.from(document.querySelectorAll('.faq__item')).map(item => ({
@@ -1007,7 +903,6 @@ function initFAQAccordion() {
         const { element: item, button: questionBtn } = itemObj;
         if (!questionBtn) return;
         
-        // Ensure initial tracking of already open items (if any exist via static HTML)
         if (questionBtn.getAttribute('aria-expanded') === 'true') {
             activeItemObj = itemObj;
         }
@@ -1015,13 +910,11 @@ function initFAQAccordion() {
         questionBtn.addEventListener('click', () => {
             const isExpanding = questionBtn.getAttribute('aria-expanded') !== 'true';
             
-            // Close previously active item if it's not the current one (O(1) complexity)
             if (activeItemObj && activeItemObj !== itemObj) {
                 activeItemObj.button.setAttribute('aria-expanded', 'false');
                 activeItemObj.element.classList.remove('is-active');
             }
             
-            // Toggle current item
             if (isExpanding) {
                 questionBtn.setAttribute('aria-expanded', 'true');
                 item.classList.add('is-active');
@@ -1042,39 +935,32 @@ function initFloatingPill() {
     
     if (!header || !originalNavList) return;
     
-    // Create the pill overlay
     const pill = document.createElement('nav');
     pill.id = 'floating-pill';
     pill.className = 'floating-pill logo-box--glass';
     pill.setAttribute('aria-label', 'Quick Navigation');
     
-    // Desktop layout wrapper
     const pd = document.createElement('div');
     pd.className = 'floating-pill__desktop';
     
-    // Clone original nav list
     const clonedList = originalNavList.cloneNode(true);
     clonedList.id = 'floating-nav-list';
 
-    // Remove IDs from cloned elements to avoid duplicates
     clonedList.querySelectorAll('[id]').forEach(el => {
         el.removeAttribute('id');
     });
 
     pd.appendChild(clonedList);
     
-    // Desktop layout wrapper ONLY. The floating burger is fully removed for mobile devices.
     pill.appendChild(pd);
     
     document.body.appendChild(pill);
     
     if (typeof ScrollTrigger === 'undefined') return;
 
-    // Refactored to use ScrollTrigger for efficient scroll tracking
     ScrollTrigger.create({
         trigger: 'body',
         scroller: '[data-scroll-container]',
-        // Use a dynamic trigger point based on header height to ensure accuracy across devices
         start: () => `top -${header.offsetHeight}px`,
         onToggle: self => {
             if (self.isActive) {
@@ -1096,7 +982,6 @@ function initGenesisModal() {
 
     if (!cta || !modal || !container) return;
 
-    // Cache elements
     const originalContent = container.querySelectorAll('.genesis-matrix, .genesis-security__grid');
     const manifestoHeadline = modal.querySelector('.genesis-manifesto__headline');
     const manifestoLead = document.getElementById('genesis-manifesto-text');
@@ -1107,9 +992,6 @@ function initGenesisModal() {
 
     const leadText = manifestoLead ? manifestoLead.textContent.trim() : "";
 
-    // 1. 3D Tilt Logic
-    // Optimization: Use gsap.quickTo for high-frequency updates and cache getBoundingClientRect
-    // to eliminate layout thrashing during the mousemove loop.
     function handleTilt(e) {
         const card = e.currentTarget;
         if (!card._rect) card._rect = card.getBoundingClientRect();
@@ -1135,7 +1017,6 @@ function initGenesisModal() {
     const modalScroller = document.getElementById('genesis-scroller');
 
     bentoCards.forEach(card => {
-        // Pre-create quickTo setters for performance
         card._tiltX = gsap.quickTo(card, "rotateX", { duration: 0.4, ease: "power2.out" });
         card._tiltY = gsap.quickTo(card, "rotateY", { duration: 0.4, ease: "power2.out" });
 
@@ -1147,7 +1028,6 @@ function initGenesisModal() {
         card.addEventListener('mouseleave', resetTilt);
     });
 
-    // Invalidate cached rects on scroll or resize to ensure tilt accuracy
     if (modalScroller) {
         const invalidateCache = () => {
             bentoCards.forEach(card => { card._rect = null; });
@@ -1156,7 +1036,6 @@ function initGenesisModal() {
         window.addEventListener('resize', invalidateCache, { passive: true });
     }
 
-    // 2. SVG Ring Interactivity
     interactiveLayers.forEach(layer => {
         layer.addEventListener('mouseenter', () => {
             const title = layer.getAttribute('data-layer');
@@ -1170,7 +1049,6 @@ function initGenesisModal() {
         });
     });
 
-    // 3. Tech Stack Interactivity (Path Pulses)
     const techItems = modal.querySelectorAll('.tech-item');
     const connectors = modal.querySelectorAll('.connector-pulse');
     
@@ -1191,11 +1069,9 @@ function initGenesisModal() {
         modal.classList.add('is-active');
         modal.setAttribute('aria-hidden', 'false');
 
-        // Scroll modal content to top before opening
         const modalScroller = document.getElementById('genesis-scroller');
         if (modalScroller) modalScroller.scrollTop = 0;
 
-        // Initial set
         gsap.set(modal, { 
             visibility: 'visible',
             opacity: 1,
@@ -1206,7 +1082,6 @@ function initGenesisModal() {
 
         const tl = gsap.timeline();
 
-        // Section content fade
         tl.to(originalContent, {
             opacity: 0,
             y: -20,
@@ -1214,14 +1089,12 @@ function initGenesisModal() {
             ease: "power2.inOut"
         });
 
-        // Window Expansion
         tl.to(modal, {
             clipPath: `inset(0px 0px 0px 0px round 0px)`,
             duration: 1,
             ease: "expo.inOut"
         }, "-=0.3");
 
-        // Entrance Laser Scan (PRESERVED)
         tl.fromTo(scanLine, 
             { top: "0%", opacity: 0 },
             { top: "100%", opacity: 0.8, duration: 1.2, ease: "power1.inOut" },
@@ -1229,14 +1102,12 @@ function initGenesisModal() {
         );
         tl.set(scanLine, { opacity: 0 });
 
-        // 4. Reveal Headline & Subtitle Container (Ensures visibility on subsequent opens)
         tl.fromTo([manifestoHeadline, manifestoLead], 
             { opacity: 0, y: 40, filter: "blur(10px)" },
             { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.2, ease: "power4.out" },
             "-=0.8"
         );
 
-        // Typewriting lead
         tl.add(() => {
             if (manifestoLead) {
                 let i = 0;
@@ -1251,7 +1122,6 @@ function initGenesisModal() {
             }
         }, "-=0.4");
 
-        // 5. Special Reveal for Digital Vault (Blurred entrance like Title)
         const vaultModule = modal.querySelector('[data-vault-module]');
         if (vaultModule) {
             tl.fromTo(vaultModule,
@@ -1261,7 +1131,6 @@ function initGenesisModal() {
             );
         }
 
-        // 6. Staggered Content Entrance for all other cards & headers
         const entranceItems = Array.from(modal.querySelectorAll('[data-item], .section-header, .section-lead'))
                                    .filter(el => el !== vaultModule);
         
@@ -1279,7 +1148,6 @@ function initGenesisModal() {
         );
     });
 
-    // 4. Tech Spec Expander Logic
     const techTrigger = document.getElementById('genesis-tech-expander');
     const techPanel = document.getElementById('genesis-tech-panel');
     
@@ -1305,7 +1173,6 @@ function initGenesisModal() {
         const rect = container.getBoundingClientRect();
         const tlClose = gsap.timeline();
 
-        // Target all content for fade out on close
         const allContent = modal.querySelectorAll('.genesis-manifesto__headline, #genesis-manifesto-text, .genesis-bento__card, .genesis-hub-section');
 
         tlClose.to(allContent, {
@@ -1356,10 +1223,8 @@ function initBMCInteractiveGrid() {
             const isExpanded = cell.classList.contains('is-expanded');
             const expandDirectionRaw = tile.getAttribute('data-expand');
             const isMobile = window.innerWidth < 1024;
-            // Force no expansion on mobile
             const expandDirection = isMobile ? 'none' : expandDirectionRaw;
             
-            // Close all other expanded cells
             document.querySelectorAll('.bmc-cell.is-expanded').forEach(otherCell => {
                 if (otherCell !== cell) {
                     otherCell.classList.remove('is-expanded');
@@ -1389,19 +1254,16 @@ function initBMCInteractiveGrid() {
                 }
             });
 
-            // Toggle this cell
             if (!isExpanded) {
                 cell.classList.add('is-expanded');
                 
                 if (expandDirection !== 'none') {
-                    // Get gap from CSS (1.5rem = 24px typically)
                     const gap = 24; 
                     
                     let animProps = {
                         width: `calc(200% + ${gap}px)`,
                         duration: 0.8,
-                        ease: "elastic.out(1, 0.7)" // Smooth, modern, apple-styled spring effect
-                    };
+                        ease: "elastic.out(1, 0.7)"                    };
                     
                     if (expandDirection === "left") {
                         gsap.set(tile, { left: "auto", right: 0 });
@@ -1416,7 +1278,6 @@ function initBMCInteractiveGrid() {
                     gsap.fromTo(tile, { scale: 0.98 }, { scale: 1, duration: 0.4, ease: "back.out(1.5)" });
                 }
                 
-                // Animate content appearance for ALL cases (including none)
                 const content = tile.querySelector('.bmc-tile-content');
                 if(content) {
                     gsap.killTweensOf(content);
@@ -1457,10 +1318,8 @@ function initGrowthRoadmap() {
     
     if (!trackFill) return;
 
-    // Check if desktop layout (matches the CSS media query)
     const isDesktop = window.innerWidth >= 1024;
     
-    // Animate the neon track fill
     gsap.to(trackFill, {
         scrollTrigger: {
             trigger: '.growth-roadmap-inner',
@@ -1474,7 +1333,6 @@ function initGrowthRoadmap() {
         ease: "none"
     });
 
-    // Animate the glowing particle along the track
     if (particle) {
         gsap.to(particle, {
             scrollTrigger: {
@@ -1491,7 +1349,6 @@ function initGrowthRoadmap() {
         });
     }
 
-    // Animate the roadmap nodes coming in one-by-one by using wrappers as trigger to avoid node conflicts
     containers.forEach((wrapper, i) => {
         const node = wrapper.querySelector('.roadmap-node');
         if (!node) return;
@@ -1512,9 +1369,6 @@ function initGrowthRoadmap() {
     });
 }
 
-/**
- * Handle Email Verification success parameter (?verified=true)
- */
 function checkVerificationStatus() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('verified') === 'true') {
@@ -1529,15 +1383,12 @@ function checkVerificationStatus() {
         `;
         document.body.appendChild(popup);
 
-        // Remove the ?verified=true from URL
         const currentUrl = new URL(window.location.href);
         currentUrl.searchParams.delete('verified');
         window.history.replaceState({}, document.title, currentUrl.pathname + currentUrl.search);
 
-        // Fade in
         setTimeout(() => popup.classList.add('is-visible'), 100);
 
-        // Auto remove after 5 seconds
         setTimeout(() => {
             popup.classList.remove('is-visible');
             setTimeout(() => popup.remove(), 500);
@@ -1546,7 +1397,4 @@ function checkVerificationStatus() {
 }
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
-
-
-
 

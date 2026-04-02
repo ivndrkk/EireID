@@ -11,9 +11,6 @@
             .replace(/'/g, '&#039;');
     }
 
-    /**
-     * Debounces a function call.
-     */
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -33,11 +30,9 @@
         const paginationContainer = document.getElementById('services-pagination');
         const loadMoreBtn = document.getElementById('load-more-btn');
         
-        // Custom Dropdown Elements
         const providerDropdown = document.getElementById('provider-dropdown');
         const tagDropdown = document.getElementById('tag-dropdown');
         
-        // Modal Elements
         const modal = document.getElementById('service-modal');
         const mProvider = document.getElementById('sm-provider');
         const mTitle = document.getElementById('sm-title');
@@ -51,7 +46,6 @@
 
         if (!grid) return;
 
-        // State Management
         let allServices = [];
         let filteredData = [];
         let currentPage = 1;
@@ -60,9 +54,6 @@
 
         const resetModalLocal = () => resetModal(stateContainers, faceScanner, loadingSpinner, step2Status);
 
-        /**
-         * Custom Dropdown Logic
-         */
         function setupCustomDropdown(dropdownEl, onSelectCallback) {
             const trigger = dropdownEl?.querySelector('.custom-dropdown__trigger');
             const label = dropdownEl?.querySelector('.custom-dropdown__label');
@@ -148,7 +139,6 @@
             });
         }
 
-        // Close dropdowns on outside click
         document.addEventListener('click', () => {
             document.querySelectorAll('.custom-dropdown.is-open').forEach(el => {
                 el.classList.remove('is-open');
@@ -156,9 +146,6 @@
             });
         });
 
-        /**
-         * Populates the custom dropdown lists
-         */
         function populateFilters(data) {
             const providers = new Set();
             const tags = new Set();
@@ -172,7 +159,6 @@
             const tList = document.getElementById('tag-list');
             if (!pList || !tList) return;
 
-            // Optimization: Use DocumentFragment to batch multiple DOM insertions for filters
             const pFrag = document.createDocumentFragment();
             Array.from(providers).sort().forEach((p, i) => {
                 const li = document.createElement("li");
@@ -198,9 +184,6 @@
             tList.appendChild(tFrag);
         }
 
-        /**
-         * Creates a single service card
-         */
         function createCardElement(service, isFeatured = false) {
             const card = document.createElement("article");
             card.className = "service-card logo-box--glass";
@@ -243,11 +226,6 @@
             return card;
         }
 
-        /**
-         * Renders the services grid with pagination
-         * Optimization: Added isAppend flag to support incremental rendering.
-         * This prevents clearing and re-rendering the entire grid when loading more items.
-         */
         function renderPagination(isAppend = false) {
             if (!grid) return;
 
@@ -268,7 +246,6 @@
 
             const fragment = document.createDocumentFragment();
             dataToShow.forEach((s, idx) => {
-                // Featured card only for the very first item on the first page
                 const isFeatured = !isAppend && idx === 0 && currentPage === 1;
                 const card = createCardElement(s, isFeatured);
                 fragment.appendChild(card);
@@ -277,22 +254,17 @@
 
             paginationContainer.style.display = (end >= filteredData.length) ? 'none' : 'flex';
             
-            // Re-sync scroll height for Locomotive
             setTimeout(() => {
                 if (window.locoScroll) window.locoScroll.update();
                 if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
             }, 150);
         }
 
-        /**
-         * Filters the list based on current UI state
-         */
         function filterData() {
             const query = searchInput?.value.toLowerCase().trim();
             
             filteredData = allServices.filter(s => {
                 const matchProv = currentProviderFilter === 'all' || s.provider === currentProviderFilter;
-                // Optimization: Use pre-computed _tagSet for O(1) membership check
                 const matchTag = currentTagFilter === 'all' || (s._tagSet && s._tagSet.has(currentTagFilter));
                 const matchSearch = !query || s._searchStr.includes(query);
                 return matchProv && matchTag && matchSearch;
@@ -302,9 +274,6 @@
             renderPagination(false);
         }
 
-        /**
-         * Opens the detailed service modal
-         */
         function openModal(service) {
             resetModalLocal();
             if (mProvider) mProvider.textContent = service.provider;
@@ -314,7 +283,6 @@
                 mTags.innerHTML = (service.tags || []).map(t => `<span class="service-card__tag">${escapeHTML(t)}</span>`).join('');
             }
             
-            // Similar services logic: Optimized single-pass greedy collection
             const currentTags = service._tagSet || new Set();
             const similar = [];
             const others = [];
@@ -337,18 +305,15 @@
             if (similar.length < 3) {
                 results = [...similar, ...others].slice(0, 3);
             } else {
-                // Shuffle and pick 3
                 results = similar.sort(() => 0.5 - Math.random()).slice(0, 3);
             }
 
             if (mSimilarGrid) {
                 mSimilarGrid.innerHTML = '';
-                // Optimization: Use DocumentFragment to batch DOM insertions for the similar grid
                 const fragment = document.createDocumentFragment();
 
                 results.forEach(s => {
                     const scard = document.createElement('article');
-                    // Accessibility: Add role and tabindex for keyboard navigation
                     scard.className = 'service-card logo-box--glass';
                     scard.setAttribute('role', 'button');
                     scard.setAttribute('tabindex', '0');
@@ -385,10 +350,8 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Initialize Data and Listeners
         if (typeof irishGovServicesData !== 'undefined') {
             allServices = irishGovServicesData;
-            // Optimization: Pre-compute search strings and tag Sets for O(1) lookups
             allServices.forEach(s => {
                 s._searchStr = `${s.name} ${s.description} ${s.provider}`.toLowerCase();
                 s._tagSet = new Set(s.tags || []);
@@ -426,7 +389,6 @@
         });
 
         if (searchInput) {
-            // Optimization: Debounce search input to prevent redundant filtering and re-renders
             searchInput.addEventListener("input", debounce(() => {
                 currentPage = 1;
                 filterData();
@@ -436,7 +398,6 @@
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
                 currentPage++;
-                // Optimization: Pass true to append new items instead of full re-render
                 renderPagination(true);
             });
         }

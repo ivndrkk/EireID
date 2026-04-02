@@ -1,13 +1,4 @@
-/**
- * js/modal-utils.js
- * Shared modal logic for EireID services pages.
- */
 
-/**
- * Switches the active state of the modal by toggling 'is-active' class on containers.
- * @param {string} stateId - The ID of the container to activate.
- * @param {NodeList} stateContainers - The list of modal state containers.
- */
 function switchModalState(stateId, stateContainers) {
     stateContainers.forEach(container => {
         container.classList.remove('is-active');
@@ -16,18 +7,10 @@ function switchModalState(stateId, stateContainers) {
         }
     });
 
-    // Reset scroll position when switching states
     const modalContent = document.querySelector('.service-modal__content');
     if (modalContent) modalContent.scrollTop = 0;
 }
 
-/**
- * Resets the modal to its initial state.
- * @param {NodeList} stateContainers
- * @param {HTMLElement} faceScanner
- * @param {HTMLElement} loadingSpinner
- * @param {HTMLElement} step2Status
- */
 function resetModal(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-details', stateContainers);
     if (faceScanner) {
@@ -37,18 +20,10 @@ function resetModal(stateContainers, faceScanner, loadingSpinner, step2Status) {
     if (step2Status) step2Status.textContent = 'Verifying identity...';
 }
 
-/**
- * Simulates a face verification process.
- * @param {NodeList} stateContainers
- * @param {HTMLElement} faceScanner
- * @param {HTMLElement} loadingSpinner
- * @param {HTMLElement} step2Status
- */
 function startFaceVerification(stateContainers, faceScanner, loadingSpinner, step2Status) {
     switchModalState('sm-content-step2', stateContainers);
     if (faceScanner) faceScanner.classList.add('is-scanning');
 
-    // Phase 1: Scanning (2.5s)
     setTimeout(() => {
         if (faceScanner) {
             faceScanner.classList.remove('is-scanning');
@@ -57,7 +32,6 @@ function startFaceVerification(stateContainers, faceScanner, loadingSpinner, ste
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (step2Status) step2Status.textContent = 'Analyzing biometrics...';
 
-        // Phase 2: Analyzing (2s)
         setTimeout(() => {
             if (loadingSpinner) loadingSpinner.style.display = 'none';
             if (faceScanner) {
@@ -66,7 +40,6 @@ function startFaceVerification(stateContainers, faceScanner, loadingSpinner, ste
             }
             if (step2Status) step2Status.textContent = 'Identity Verified';
 
-            // Phase 3: Transition to Success (0.8s)
             setTimeout(() => {
                 switchModalState('sm-content-success', stateContainers);
             }, 800);
@@ -75,10 +48,6 @@ function startFaceVerification(stateContainers, faceScanner, loadingSpinner, ste
     }, 2500);
 }
 
-/**
- * Opens a modal with a smooth reveal.
- * @param {HTMLElement} modal 
- */
 function openModal(modal) {
     if (!modal) return;
     modal.style.display = 'block';
@@ -87,15 +56,10 @@ function openModal(modal) {
     });
 }
 
-/**
- * Closes the modal and triggers a reset.
- * @param {HTMLElement} modal
- * @param {Function} [resetModalFn] - Optional callback to reset the modal state.
- */
 function closeModal(modal, resetModalFn) {
     if (!modal) return;
     modal.classList.remove('is-active');
-    modal.classList.remove('is-open'); // Handle both class conventions
+    modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     
@@ -108,10 +72,6 @@ function closeModal(modal, resetModalFn) {
     }
 }
 
-
-/**
- * Sets up event listeners for standard modal controls.
- */
 function setupModalListeners({
     modal,
     modalClose,
