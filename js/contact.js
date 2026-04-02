@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return re.test(String(email).toLowerCase());
     };
 
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => { // <-- Добавили async
         e.preventDefault();
 
         const emailValue = emailInput.value.trim();
@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let hasError = false;
 
-        // Email Validation Logic
         if (!isValidEmail(emailValue)) {
             emailError.style.display = 'block';
             emailInput.style.border = '1px solid #d93025';
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (hasError) return;
 
-        // Premium simulated submission
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
         
@@ -47,9 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.style.opacity = '0.7';
         submitBtn.innerText = 'Transmitting...';
 
-        // Simulate network delay
-        setTimeout(() => {
-            // Elegant transition to success state
+        try {
+            const response = await fetch('https://eireid-backend-9d25b1a7b372.herokuapp.com/support', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: nameValue,
+                    email: emailValue,
+                    message: messageValue
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Server returned an error');
+            }
+
             contactForm.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             contactForm.style.opacity = '0';
             contactForm.style.transform = 'translateY(-20px)';
@@ -78,7 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Smooth scroll to feedback
                 contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 500);
-        }, 1800);
+
+        } catch (error) {
+            console.error('Support submission failed:', error);
+            alert("Something went wrong. Please try again.");
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.innerText = originalText;
+        }
     });
 
     // Clean up error state as user types
