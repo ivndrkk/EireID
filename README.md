@@ -10,7 +10,7 @@
 **[ivndrkk.github.io/EireID/](https://ivndrkk.github.io/EireID/)**
 
 > [!IMPORTANT]
-> This is the primary deployment. The core backend functionality is strictly tied to this domain. Using other methods may result in limited features or broken integrations.
+> This is the primary deployment. The core backend functionality is strictly tied to this domain. Using other methods may or may not result in limited features or broken integrations.
 
 ### 2. Local Launch (index.html)
 1. Download and extract `EireID.zip`.
