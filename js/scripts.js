@@ -231,7 +231,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 if (waitlistForm) {
-    waitlistForm.addEventListener('submit', (e) => {
+    waitlistForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const valid = waitlistEmail.checkValidity();
@@ -239,14 +239,49 @@ if (waitlistForm) {
 
         if (!valid) return;
 
-        console.log({
+        const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Joining...';
+
+        const formData = {
             name: document.getElementById('waitlist-name').value,
             email: waitlistEmail.value,
             message: document.getElementById('waitlist-message').value
-        });
+        };
 
-        waitlistSuccess.hidden = false;
-        waitlistForm.reset();
+        try {
+            const response = await fetch('https://eireid-backend-9d25b1a7b372.herokuapp.com/waitlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                waitlistSuccess.textContent = "Thanks! You are on the list.";
+                waitlistSuccess.style.color = "#a4e5b7";
+                waitlistSuccess.hidden = false;
+                waitlistForm.reset();
+            } else if (response.status === 409) {
+                waitlistSuccess.textContent = "You are already on the waitlist!";
+                waitlistSuccess.style.color = "#fbd38d";    
+                waitlistSuccess.hidden = false;
+            } else {
+                throw new Error(data.error || 'Server error');
+            }
+        } catch (error) {
+            console.error('Waitlist submission failed:', error);
+            waitlistSuccess.textContent = "Something went wrong. Please try again.";
+            waitlistSuccess.style.color = "#fc8181";
+            waitlistSuccess.hidden = false;
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText;
+        }
     });
 }
 
