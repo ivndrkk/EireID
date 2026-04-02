@@ -615,9 +615,10 @@ function initStatCounters() {
   if (!stats.length) return;
 
   // Pre-capture target values to prevent loss during initial IntersectionObserver callback
+  // Optimization: use textContent instead of innerText to avoid forced reflow.
   stats.forEach(el => {
     if (!el.getAttribute('data-target')) {
-      el.setAttribute('data-target', el.innerText.trim());
+      el.setAttribute('data-target', el.textContent.trim());
     }
   });
 
@@ -951,6 +952,9 @@ function initAIChat() {
 
 /* ─── FAQ Accordion ─────────────────── */
 function initFAQAccordion() {
+    // Tracking active item for O(1) closing logic instead of O(N) loop on every click.
+    let activeItemObj = null;
+
     const faqItems = Array.from(document.querySelectorAll('.faq__item')).map(item => ({
         element: item,
         button: item.querySelector('.faq__question')
@@ -960,19 +964,29 @@ function initFAQAccordion() {
         const { element: item, button: questionBtn } = itemObj;
         if (!questionBtn) return;
         
+        // Ensure initial tracking of already open items (if any exist via static HTML)
+        if (questionBtn.getAttribute('aria-expanded') === 'true') {
+            activeItemObj = itemObj;
+        }
+
         questionBtn.addEventListener('click', () => {
-            const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
+            const isExpanding = questionBtn.getAttribute('aria-expanded') !== 'true';
             
-            // Close all items first
-            faqItems.forEach(otherItemObj => {
-                otherItemObj.button.setAttribute('aria-expanded', 'false');
-                otherItemObj.element.classList.remove('is-active');
-            });
+            // Close previously active item if it's not the current one (O(1) complexity)
+            if (activeItemObj && activeItemObj !== itemObj) {
+                activeItemObj.button.setAttribute('aria-expanded', 'false');
+                activeItemObj.element.classList.remove('is-active');
+            }
             
-            // If the clicked item was not expanded, open it
-            if (!isExpanded) {
+            // Toggle current item
+            if (isExpanding) {
                 questionBtn.setAttribute('aria-expanded', 'true');
                 item.classList.add('is-active');
+                activeItemObj = itemObj;
+            } else {
+                questionBtn.setAttribute('aria-expanded', 'false');
+                item.classList.remove('is-active');
+                activeItemObj = null;
             }
         });
     });
