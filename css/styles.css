@@ -7104,17 +7104,19 @@
 .waitlist-modal__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(7, 10, 20, 0.6);
-    backdrop-filter: blur(8px);
+    background: rgba(7, 10, 20, 0.4);
+    backdrop-filter: blur(12px);
 }
 
 .waitlist-modal__dialog {
     position: relative;
-    width: min(92vw, 560px);
+    width: min(92vw, 700px);
     margin: 6vh auto;
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 24px;
     z-index: 2;
+    box-shadow: 0 0 50px rgba(164, 229, 183, 0.1), inset 0 0 0 1px rgba(164, 229, 183, 0.2);
+    border: 1px solid rgba(164, 229, 183, 0.1);
 }
 
 .waitlist-modal__close {
@@ -7130,6 +7132,13 @@
     font-size: 2rem;
     line-height: 1;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.waitlist-modal__close:hover {
+    background: rgba(164, 229, 183, 0.1);
+    color: var(--color-bg-primary);
+    transform: scale(1.05);
 }
 
 .waitlist-modal__content {
@@ -7143,7 +7152,8 @@
     font-size: 0.85rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    opacity: 0.7;
+    color: var(--color-bg-primary);
+    font-weight: 700;
 }
 
 .waitlist-modal__title {
@@ -7158,6 +7168,24 @@
 .waitlist-form {
     display: grid;
     gap: 1rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .waitlist-form {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+    .waitlist-form__group:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+    .waitlist-form__submit {
+        grid-column: 1 / -1;
+    }
+    .waitlist-form__error,
+    .waitlist-form__success {
+        grid-column: 1 / -1;
+    }
 }
 
 .waitlist-form__group {
@@ -7174,11 +7202,13 @@
     width: 100%;
     padding: 0.95rem 1rem;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
     color: inherit;
     font: inherit;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 .waitlist-form__group input::placeholder,
@@ -7193,19 +7223,80 @@
 }
 
 .waitlist-form__group textarea {
-    min-height: 120px;
+    min-height: 80px;
     resize: vertical;
 }
 
 .waitlist-form__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
     min-height: 52px;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 12px;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-heading);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.waitlist-form__submit::after {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 40%;
+    width: 20%;
+    height: 1px;
+    background-color: var(--color-text-heading);
+    transform: scaleX(0) translateZ(0);
+    transform-origin: center;
+    z-index: 5;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s;
+    pointer-events: none;
+}
+
+.waitlist-form__submit:hover::after,
+.waitlist-form__submit:focus-visible::after {
+    transform: scaleX(1) translateZ(0);
+}
+
+.waitlist-form__submit::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.waitlist-form__submit:hover::before,
+.waitlist-form__submit:focus-visible::before {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translate(-50%, -50%) scale(1.02);
+}
+
+.waitlist-form__submit:active::before {
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.1s ease;
+    transform: translate(-50%, -50%) scale(0.98);
 }
 
 .waitlist-form__error {
@@ -7242,4 +7333,62 @@
 
 .waitlist-modal.is-open {
     display: flex;
+}
+
+/* === GDPR CONSENT CHECKBOX === */
+.form-consent-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 1.5rem 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form-consent-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.form-consent-group input[type="checkbox"]:checked {
+    background: var(--color-bg-primary);
+    border-color: var(--color-bg-primary);
+}
+
+.form-consent-group input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #0d1117;
+}
+
+.form-consent-group label {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-body);
+    font-weight: 400;
+}
+
+.form-consent-group label a {
+    color: var(--color-bg-primary);
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+}
+
+.form-consent-group label a:hover {
+    opacity: 0.8;
 }

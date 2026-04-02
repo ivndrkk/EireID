@@ -1,0 +1,50 @@
+Privacy Policy
+Effective Date: April 2, 2026
+
+Welcome to EireID. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you interact with our website, join our waitlist, or contact our support team.
+
+1. Information We Collect
+When you use our website, we may collect the following personal information that you voluntarily provide to us:
+
+Name: The name or alias you choose to provide.
+
+Email Address: To contact you regarding your inquiries or our project.
+
+Message Content: Any text or details you include when submitting a question or contacting us.
+
+2. How We Use Your Information
+We use the collected information solely for the following purposes:
+
+To notify you about the official launch of the EireID project and share relevant updates (Waitlist).
+
+To respond to your questions, support requests, and general inquiries.
+
+3. How We Store and Protect Your Data
+Your privacy is important to us. We do not store your data on public servers. Instead, your information is kept securely using industry-standard cloud storage solutions provided by trusted third-party platforms. We implement appropriate technical and organizational measures to ensure your data is protected against unauthorized access, loss, or misuse.
+
+4. Sharing Your Information
+We do not sell, rent, or trade your personal information to any third parties. We only share your data with essential third-party service providers strictly necessary to operate our services. These include:
+
+Hosting and Infrastructure Providers: To securely host our backend operations.
+
+Communication Services: To facilitate the delivery of our email responses and waitlist notifications.
+
+These providers are bound by strict data protection agreements and are not permitted to use your personal information for their own purposes.
+
+5. Data Retention
+We will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. Specifically, we will keep your email and contact details until you decide to unsubscribe from our waitlist or request the deletion of your data.
+
+6. Your Data Protection Rights (GDPR)
+Under the General Data Protection Regulation (GDPR), if you are a resident of the European Economic Area (EEA), you have the following rights:
+
+The right to access: You have the right to request copies of your personal data.
+
+The right to rectification: You have the right to request that we correct any information you believe is inaccurate or incomplete.
+
+The right to erasure: You have the right to request that we erase your personal data (the "right to be forgotten").
+
+The right to withdraw consent: You can unsubscribe from our emails at any time by contacting us.
+
+7. Contact Us
+If you have any questions about this Privacy Policy, wish to unsubscribe, or want to exercise any of your data protection rights, please contact us at:
+Email: eireid.support@gmail.com
