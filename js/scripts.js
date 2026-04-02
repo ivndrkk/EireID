@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.locoScroll = locoScroll; // Make globally accessible if needed
 
     // Navigation & Menus
+    initTeamCards();
     initFloatingPill();
     initMobileMenu();
     initDropdowns();
@@ -363,6 +364,31 @@ window.addEventListener("load", () => {
 });
 
 /* ─── Navigation ─────────────────── */
+
+function initTeamCards() {
+    const cards = document.querySelectorAll('.team-id-card');
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+        const toggleFlip = (e) => {
+            if (e.target.closest('a')) return; // Ignore link clicks
+            const isFlipped = card.classList.toggle('is-flipped');
+            card.setAttribute('aria-expanded', isFlipped);
+            cards.forEach(other => {
+                if (other !== card && other.classList.contains('is-flipped')) {
+                    other.classList.remove('is-flipped');
+                    other.setAttribute('aria-expanded', 'false');
+                }
+            });
+        };
+        card.addEventListener('click', toggleFlip);
+        card.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('a')) {
+                e.preventDefault(); toggleFlip(e);
+            }
+        });
+    });
+}
 
 function initMobileMenu() {
     const menuToggle = document.getElementById('mobile-menu-toggle');
