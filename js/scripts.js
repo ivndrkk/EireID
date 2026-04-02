@@ -200,17 +200,28 @@ const waitlistCloseBtn = document.getElementById('waitlist-modal-close');
 const waitlistBackdrop = waitlistModal?.querySelector('[data-waitlist-close]');
 const waitlistForm = document.getElementById('waitlist-form');
 const waitlistSuccess = document.getElementById('waitlist-success');
+const waitlistName = document.getElementById('waitlist-name');
+const waitlistNameError = document.getElementById('waitlist-name-error');
 const waitlistEmail = document.getElementById('waitlist-email');
 const waitlistEmailError = document.getElementById('waitlist-email-error');
 
 function openWaitlistModal(e) {
     if (e) e.preventDefault();
+    if (!waitlistModal) return;
     waitlistModal.classList.add('is-open');
+    waitlistModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    // Accessibility: Auto-focus the first field
+    if (waitlistName) {
+        setTimeout(() => waitlistName.focus(), 100);
+    }
 }
 
 function closeWaitlistModal() {
+    if (!waitlistModal) return;
     waitlistModal.classList.remove('is-open');
+    waitlistModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
 }
 
@@ -226,18 +237,50 @@ if (waitlistBackdrop) {
     waitlistBackdrop.addEventListener('click', closeWaitlistModal);
 }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeWaitlistModal();
-});
+// Focus Trap Logic
+if (waitlistModal) {
+    waitlistModal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            const focusableElements = waitlistModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+        if (e.key === 'Escape') closeWaitlistModal();
+    });
+}
 
 if (waitlistForm) {
     waitlistForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const valid = waitlistEmail.checkValidity();
-        waitlistEmailError.style.display = valid ? 'none' : 'block';
+        // Validation logic
+        let hasError = false;
 
-        if (!valid) return;
+        if (waitlistName) {
+            const isNameValid = waitlistName.value.trim().length > 0;
+            waitlistNameError?.classList.toggle('is-visible', !isNameValid);
+            if (!isNameValid) hasError = true;
+        }
+
+        if (waitlistEmail) {
+            const isEmailValid = waitlistEmail.checkValidity();
+            waitlistEmailError?.classList.toggle('is-visible', !isEmailValid);
+            if (!isEmailValid) hasError = true;
+        }
+
+        if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
         const originalBtnText = submitBtn.innerText;
@@ -245,9 +288,9 @@ if (waitlistForm) {
         submitBtn.innerText = 'Joining...';
 
         const formData = {
-            name: document.getElementById('waitlist-name').value,
-            email: waitlistEmail.value,
-            message: document.getElementById('waitlist-message').value
+            name: waitlistName?.value,
+            email: waitlistEmail?.value,
+            message: document.getElementById('waitlist-message')?.value
         };
 
         try {
@@ -1454,32 +1497,6 @@ function initGrowthRoadmap() {
         });
     });
 }
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("WAITLIST FORCE INIT");
-
-    const modal = document.getElementById('waitlist-modal');
-    const triggers = document.querySelectorAll('.waitlist-trigger');
-    const closeBtn = document.getElementById('waitlist-modal-close');
-
-    if (!modal) {
-        console.log("Modal not found");
-        return;
-    }
-
-    triggers.forEach(btn => {
-        btn.addEventListener('click', () => {
-            modal.classList.add('is-open');
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            document.body.style.overflow = '';
-        });
-    }
-});
 
 
 
