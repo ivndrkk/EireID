@@ -7095,6 +7095,8 @@
     inset: 0;
     display: none;
     z-index: 99999;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .waitlist-modal.is-open {
@@ -7102,7 +7104,7 @@
 }
 
 .waitlist-modal__backdrop {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(7, 10, 20, 0.4);
     backdrop-filter: blur(12px);
@@ -7111,12 +7113,14 @@
 .waitlist-modal__dialog {
     position: relative;
     width: min(92vw, 700px);
-    margin: 6vh auto;
+    margin: 3.5rem auto;
     padding: 2.5rem;
     border-radius: 24px;
     z-index: 2;
     box-shadow: 0 0 50px rgba(164, 229, 183, 0.1), inset 0 0 0 1px rgba(164, 229, 183, 0.2);
     border: 1px solid rgba(164, 229, 183, 0.1);
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.85); /* Ensure backdrop filter works over it */
 }
 
 .waitlist-modal__close {
@@ -7223,7 +7227,7 @@
 }
 
 .waitlist-form__group textarea {
-    min-height: 80px;
+    min-height: 100px;
     resize: vertical;
 }
 
@@ -7244,7 +7248,7 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
 }
 
 .waitlist-form__submit::after {
@@ -7319,21 +7323,14 @@
 
 @media (max-width: 640px) {
     .waitlist-modal__dialog {
-        width: calc(100vw - 24px);
-        margin: 3vh auto;
-        padding: 1.25rem;
+        width: 100%;
+        min-height: 100svh;
+        margin: 0;
+        padding: 3rem 1.5rem 5rem; /* More bottom padding for button coverage */
+        border-radius: 0;
     }
 }
 
-/* === WAITLIST MODAL VISIBILITY FIX === */
-
-.waitlist-modal {
-    display: none;
-}
-
-.waitlist-modal.is-open {
-    display: flex;
-}
 
 /* === GDPR CONSENT CHECKBOX === */
 .form-consent-group {
