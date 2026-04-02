@@ -6,14 +6,20 @@
 
 ## How to Run
 
-**Option 1 — ZIP File**
-Download and extract `EireID.zip`, open the extracted folder, find `index.html` and open it in a web browser.
+### 1. GitHub Pages (Recommended)
+**[ivndrkk.github.io/EireID/](https://ivndrkk.github.io/EireID/)**
 
-**Option 2 — GitHub Pages**
-[ivndrkk.github.io/EireID/](https://ivndrkk.github.io/EireID/)
+> [!IMPORTANT]
+> This is the primary deployment. The core backend functionality is strictly tied to this domain. Using other methods may result in limited features or broken integrations.
 
-**Option 3 — DCU Student Server**
-*(link pending)*
+### 2. Local Launch (index.html)
+1. Download and extract `EireID.zip`.
+2. Open the extracted folder.
+3. Find `index.html` and open it in your web browser.
+
+### 3. DCU Student Server
+**[student.computing.dcu.ie/~ivan.dereka2/EireID/](https://student.computing.dcu.ie/~ivan.dereka2/EireID/)**
+An alternative mirror provided for academic purposes.
 
 ---
 
