@@ -87,7 +87,7 @@
 }
 
 .btabs-height {
-    height: 450vh; /* 4 slides */
+    height: 450vh;
 }
 
 .btabs-sticky {
@@ -234,7 +234,7 @@
     overflow: hidden;
     padding: 0 !important;
     border-radius: var(--radius-lg) !important;
-    background: rgba(0,0,0,0.85); /* Dark background for code/video */
+    background: rgba(0,0,0,0.85);
 }
 
 .btabs-visual {
@@ -258,7 +258,6 @@
     display: block;
 }
 
-/* Slide 3 - API Terminal Mock */
 .btabs-terminal {
     width: 80%;
     height: auto;
@@ -339,7 +338,7 @@
     align-items: flex-start;
     padding: var(--space-xl);
     gap: var(--space-lg);
-    background: rgba(255, 255, 255, 0.45); /* Enhanced white glass */
+    background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -360,7 +359,7 @@
     width: 56px;
     height: 56px;
     flex-shrink: 0;
-    background: var(--color-bg-primary); /* Brand green */
+    background: var(--color-bg-primary);
     color: var(--color-text-heading);
     border-radius: var(--radius-md);
     display: flex;
@@ -428,7 +427,7 @@
 }
 
 .pricing-card--highlight {
-    background: rgba(164, 229, 183, 0.35) !important; /* Glass Green */
+    background: rgba(164, 229, 183, 0.35) !important;
     border: 1.5px solid rgba(164, 229, 183, 0.6) !important;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);

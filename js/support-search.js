@@ -1,8 +1,3 @@
-/**
- * js/support-search.js
- * Handles Live Search for the EireID Support Section.
- * VERSION: Offline-Compatible (no fetch, no imports to avoid CORS on file://)
- */
 
 (function() {
     // --- CONFIGURATION ---
@@ -25,14 +20,10 @@
     const mAnswer = modal?.querySelector('.q-modal__answer');
     const mImage = modal?.querySelector('.q-modal__image img');
 
-    // Filter Elements
     const filterBtn = document.getElementById('search-filter-btn');
     const filterDropdown = document.getElementById('search-filter-dropdown');
     const categoriesList = document.getElementById('filter-categories-list');
 
-    /**
-     * Helper: Smooth Open Modal
-     */
     function openModalDirect(modal) {
         if (!modal) return;
         modal.style.display = 'block';
@@ -41,9 +32,6 @@
         });
     }
 
-    /**
-     * Helper: Smooth Close Modal
-     */
     function closeModalDirect(modal) {
         if (!modal) return;
         modal.classList.remove('is-active');
@@ -54,9 +42,6 @@
         }, 400);
     }
 
-    /**
-     * Debounce Function
-     */
     function debounce(func, wait) {
         let timeout;
         return (...args) => {
@@ -65,9 +50,6 @@
         };
     }
 
-    /**
-     * Select a random mascot image for the modal.
-     */
     function setRandomMascot() {
         if (!mImage) return;
         const randomIndex = Math.floor(Math.random() * ALL_IMAGES.length);
@@ -75,9 +57,6 @@
         mImage.src = `${IMG_BASE_PATH}${randomImg}`;
     }
 
-    /**
-     * Opens the answer modal with specific content.
-     */
     function handleOpenModal(trigger) {
         if (!modal || !mQuestion || !mAnswer) return;
 
@@ -92,11 +71,9 @@
         mQuestion.textContent = question;
         mAnswer.textContent = answer;
         
-        // Ensure standard mascot layout
         modal.classList.remove('q-modal--guideline');
         setRandomMascot();
 
-        // Use fixed centering for consistency across scroll depths
         modal.style.left = '50%';
         modal.style.top = '50%';
         modal.style.transform = 'translate(-50%, -50%)';
@@ -104,16 +81,12 @@
         openModalDirect(modal);
     }
 
-    /**
-     * Opens the Guide modal for the guideline cards.
-     */
     function handleOpenGuideModal(trigger) {
         if (!modal || !mQuestion || !mAnswer) return;
 
         const question = trigger.getAttribute('data-question');
         const answer = trigger.getAttribute('data-answer');
 
-        // Guard: If already open for this question, don't re-trigger
         if (modal.classList.contains('is-active') && mQuestion.textContent === question) {
             return;
         }
@@ -130,7 +103,6 @@
 
         modal.classList.add('q-modal--guideline');
         
-        // Centered layout for guides
         modal.style.left = '50%';
         modal.style.top = '50%';
         modal.style.transform = 'translate(-50%, -50%)';
@@ -138,9 +110,6 @@
         openModalDirect(modal);
     }
 
-    /**
-     * Renders the filtered results.
-     */
     function renderResults() {
         if (!suggestionsContainer) return;
         suggestionsContainer.innerHTML = '';
@@ -173,10 +142,6 @@
         }
     }
 
-    /**
-     * Filter the FAQ data.
-     * Optimization: Uses pre-computed search strings and Set-based category lookups.
-     */
     function performSearch() {
         const data = window.SUPPORT_FAQ_DATA || [];
         const query = searchInput?.value.toLowerCase().trim();
@@ -191,17 +156,12 @@
         renderResults();
     }
 
-    /**
-     * Initialize Filters: Categories extraction and list generation
-     */
     function initFilters() {
         const data = window.SUPPORT_FAQ_DATA || [];
         if (!categoriesList || data.length === 0) return;
 
-        // Extract unique categories
         const categories = [...new Set(data.map(item => item.category))].sort();
 
-        // Render checkboxes
         categoriesList.innerHTML = '';
         categories.forEach(cat => {
             const label = document.createElement('label');
@@ -225,7 +185,6 @@
             categoriesList.appendChild(label);
         });
 
-        // Toggle dropdown
         const filterBackdrop = document.getElementById('filter-backdrop');
         const searchContainer = document.querySelector('.hero__search-container');
 
@@ -247,39 +206,29 @@
             toggleFilter(false);
         });
 
-        // Close dropdown on click outside
         document.addEventListener('click', (e) => {
             if (filterDropdown?.classList.contains('is-open') && !filterDropdown.contains(e.target) && e.target !== filterBtn) {
                 toggleFilter(false);
             }
         });
 
-        // ESC key logic (merged into global handler)
         window.closeAllFilters = () => toggleFilter(false);
     }
 
-    /**
-     * Initialize Support Search.
-     */
     function initSupportSearch() {
-        // Data Normalization: Pre-compute search-ready strings for O(1) text matching
         const data = window.SUPPORT_FAQ_DATA || [];
         data.forEach(item => {
             item._searchStr = `${item.question} ${item.answer} ${(item.keywords || []).join(' ')}`.toLowerCase();
         });
 
-        // Init Filters first
         initFilters();
 
-        // Initial render
         performSearch();
         
-        // Listeners for search input
         if (searchInput) {
             searchInput.addEventListener('input', debounce(performSearch, 300));
         }
 
-        // Listeners for guideline cards
         const guidelineCards = document.querySelectorAll('.guideline-card');
         guidelineCards.forEach(card => {
             const triggerAction = () => {
@@ -304,7 +253,6 @@
             });
         }
 
-        // Global Backdrop Closing
         document.addEventListener('click', (e) => {
             if (modal?.classList.contains('is-active') && !modal.contains(e.target)) {
                 closeModalDirect(modal);
@@ -319,7 +267,6 @@
         });
     }
 
-    // Attach to DOM loading
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSupportSearch);
     } else {

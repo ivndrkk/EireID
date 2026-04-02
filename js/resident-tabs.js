@@ -1,8 +1,3 @@
-/**
- * resident-tabs.js
- * Scroll-driven sticky tab section — switches slides based on scroll progress.
- * Works with the .rtabs-* classes in resident-tabs.css
- */
 
 (function () {
   'use strict';
@@ -46,10 +41,6 @@
     const sectionH   = section.offsetHeight;
     const viewportH  = window.innerHeight;
 
-    // scrolled: how many pixels past the top of the section we are.
-    // rect.top is current viewport position. Sticky should start at 5vh (40-100px) but 0 is simpler.
-    // If it's sticky, rect.top stays around 5vh.
-    // Actually, simple progress based on section top relative to container:
     const scrolled   = -rect.top + (viewportH * 0.05); 
     const scrollable = sectionH - viewportH;
 
@@ -72,7 +63,6 @@
     const scrollable  = sectionH - viewportH;
     const ratio       = (targetSlide - 1) / (TOTAL_SLIDES - 1);
 
-    // If Locomotive is active, use its API
     if (window.locoScroll) {
       window.locoScroll.scrollTo(section, {
         offset: ratio * scrollable,
@@ -103,16 +93,13 @@
   }, { passive: true });
 
   function init() {
-    // Check if Locomotive is already available or wait for it
     if (window.locoScroll) {
       window.locoScroll.on('scroll', onScroll);
-      // Also listen for refresh to update our listeners
       ScrollTrigger.addEventListener("refresh", () => onScroll());
     } else {
       window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    // Run once on load
     onScroll();
   }
 
@@ -132,18 +119,15 @@
   function handleSwipe() {
     if (!isMobile) return;
     const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) < 50) return; // threshold to prevent accidental taps triggering swipe
+    if (Math.abs(diff) < 50) return;
 
     if (diff > 0) {
-      // Swipe left → Next
       if (currentSlide < TOTAL_SLIDES) switchTo(currentSlide + 1);
     } else {
-      // Swipe right → Prev
       if (currentSlide > 1) switchTo(currentSlide - 1);
     }
   }
 
-  // To ensure window.locoScroll from scripts.js is ready:
   if (document.readyState === 'complete') {
     setTimeout(init, 100);
   } else {

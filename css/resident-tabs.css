@@ -6,7 +6,6 @@
 /* ── Section wrapper ── */
 .rtabs-section {
   position: relative;
-  /* inherits the body mesh-gradient — no bg override needed */
 }
 
 /* ── Scroll height: 3 slides × 100vh each gives smooth pacing ── */
@@ -44,13 +43,11 @@
   flex-direction: column;
   justify-content: space-between;
   padding: var(--space-xl);
-  /* logo-box--glass provides: background, border, backdrop-filter, border-radius, box-shadow */
   border-radius: var(--radius-lg) !important;
   overflow: hidden;
   position: relative;
 }
 
-/* Subtle decorative top-right accent dot */
 .rtabs-left::before {
   content: '';
   position: absolute;
@@ -80,7 +77,7 @@
   transform: translateY(14px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   pointer-events: none;
-  visibility: hidden; /* extra safety */
+  visibility: hidden;
   will-change: opacity, transform;
 }
 
@@ -97,14 +94,13 @@
   gap: var(--space-md);
 }
 
-/* Step pill badge */
 .rtabs-tag {
   font-family: var(--font-family-base);
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #1a6640;                           /* dark green for legibility on glass */
+  color: #1a6640;
   background: rgba(164, 229, 183, 0.22);
   border: 1px solid rgba(164, 229, 183, 0.5);
   border-radius: var(--radius-full);
@@ -113,54 +109,49 @@
   width: fit-content;
 }
 
-/* Heading */
 .rtabs-heading {
   font-family: var(--font-family-base);
-  font-size: var(--font-size-3xl);          /* 32px */
+  font-size: var(--font-size-3xl);
   font-weight: 700;
   line-height: 1.1;
-  color: var(--color-text-heading);         /* #000 */
+  color: var(--color-text-heading);
   margin: 0;
 }
 
-/* Green accent words inside heading */
 .rtabs-accent {
-  color: #1a6640;                           /* rich dark green, legible on frosted white */
+  color: #1a6640;
 }
 
-/* Horizontal rule below heading */
 .rtabs-line {
   width: 36px;
   height: 3px;
   border-radius: var(--radius-full);
-  background: var(--color-bg-primary);      /* #a4e5b7 */
+  background: var(--color-bg-primary);
   flex-shrink: 0;
 }
 
-/* Body copy */
 .rtabs-body {
   font-family: var(--font-family-base);
-  font-size: var(--font-size-base);         /* 16px */
-  color: var(--color-text-muted);           /* #333 */
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
   line-height: 1.75;
   margin: 0;
 }
 
-/* CTA — only shown on slide 3 */
 .rtabs-cta {
   margin: 0 auto;
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  background: var(--color-btn-primary);     /* #000 */
+  background: var(--color-btn-primary);
   color: #ffffff;
   font-family: var(--font-family-base);
-  font-size: var(--font-size-sm);           /* 14px */
+  font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.8rem var(--space-xl);          /* 0.8rem 40px */
+  padding: 0.8rem var(--space-xl);
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
@@ -174,7 +165,7 @@
 }
 
 .rtabs-cta:hover {
-  background: var(--color-btn-hover);       /* #1a1a1a */
+  background: var(--color-btn-hover);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
@@ -202,7 +193,7 @@
 }
 
 .rtabs-dot.is-active {
-  background: var(--color-bg-primary);      /* #a4e5b7 */
+  background: var(--color-bg-primary);
   width: 26px;
 }
 
@@ -214,7 +205,6 @@
   overflow: hidden;
   padding: 0 !important;
   border-radius: var(--radius-lg) !important;
-  /* logo-box--glass provides the frosted glass look */
 }
 
 .rtabs-video {
@@ -243,7 +233,7 @@
 @media (max-width: 900px) {
   .rtabs-component {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto; /* Swap to auto-auto */
+    grid-template-rows: auto auto;
     height: auto;
     gap: var(--space-md);
   }
@@ -251,7 +241,7 @@
   .rtabs-sticky {
     height: auto;
     min-height: auto;
-    position: relative;          /* disable sticky on mobile */
+    position: relative;
     top: 0;
     padding: var(--space-md) var(--space-md);
   }
@@ -260,7 +250,6 @@
     height: auto;
   }
 
-  /* Swap order: Video on top */
   .rtabs-right {
     order: -1;
     height: 60vw;
@@ -271,8 +260,8 @@
 
   .rtabs-left {
     order: 1;
-    padding: var(--space-xl) var(--space-lg); /* bigger padding for mobile readability */
-    min-height: 380px; /* increased to prevent cut-off */
+    padding: var(--space-xl) var(--space-lg);
+    min-height: 380px;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg) !important;
     justify-content: center;
     align-items: center;
@@ -284,14 +273,13 @@
   }
 
   .rtabs-slide {
-    transform: translateX(15px); /* horizontal shift for mobile */
+    transform: translateX(15px);
   }
 
   .rtabs-slide.is-active {
     transform: translateX(0);
   }
 
-  /* Ensure the text has breathing room */
   .rtabs-body {
     font-size: 0.95rem;
     padding: 0 4px;

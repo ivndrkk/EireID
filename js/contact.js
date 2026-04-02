@@ -6,24 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!contactForm) return;
 
-    /**
-     * Robust email validation
-     * @param {string} email 
-     * @returns {boolean}
-     */
     const isValidEmail = (email) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     };
 
-    contactForm.addEventListener('submit', async (e) => { // <-- Добавили async
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const emailValue = emailInput.value.trim();
         const nameValue = document.getElementById('name').value.trim();
         const messageValue = document.getElementById('message').value.trim();
 
-        // Reset errors
         emailError.style.display = 'none';
         emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
 
@@ -67,25 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 contactForm.style.display = 'none';
                 
-                // Show success card with animation
                 contactSuccess.style.display = 'flex';
                 contactSuccess.style.opacity = '0';
                 contactSuccess.style.transform = 'translateY(20px)';
                 
-                // Trigger reflow
                 contactSuccess.offsetHeight; 
                 
                 contactSuccess.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
                 contactSuccess.style.opacity = '1';
                 contactSuccess.style.transform = 'translateY(0)';
 
-                // Update UI context - hide initial headings
                 const title = document.getElementById('contact-title');
                 const subtitle = title ? title.nextElementSibling : null;
                 if (title) title.style.display = 'none';
                 if (subtitle) subtitle.style.display = 'none';
 
-                // Smooth scroll to feedback
                 contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 500);
 
@@ -98,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Clean up error state as user types
     emailInput.addEventListener('input', () => {
         if (emailError.style.display === 'block') {
             if (isValidEmail(emailInput.value.trim())) {
@@ -108,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Focus state enhancements (synced with CSS)
     const inputs = contactForm.querySelectorAll('input, textarea');
     inputs.forEach(input => {
         input.addEventListener('focus', () => {
