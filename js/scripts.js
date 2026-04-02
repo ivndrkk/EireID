@@ -990,9 +990,13 @@ function initGenesisModal() {
     const leadText = manifestoLead ? manifestoLead.textContent.trim() : "";
 
     // 1. 3D Tilt Logic
+    // Optimization: Use gsap.quickTo for high-frequency updates and cache getBoundingClientRect
+    // to eliminate layout thrashing during the mousemove loop.
     function handleTilt(e) {
         const card = e.currentTarget;
-        const rect = card.getBoundingClientRect();
+        if (!card._rect) card._rect = card.getBoundingClientRect();
+        const rect = card._rect;
+
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
@@ -1000,27 +1004,39 @@ function initGenesisModal() {
         const percentX = (x - centerX) / centerX;
         const percentY = (y - centerY) / centerY;
         
-        gsap.to(card, {
-            rotateX: -percentY * 5,
-            rotateY: percentX * 5,
-            duration: 0.4,
-            ease: "power2.out"
-        });
+        if (card._tiltX) card._tiltX(-percentY * 5);
+        if (card._tiltY) card._tiltY(percentX * 5);
     }
 
     function resetTilt(e) {
-        gsap.to(e.currentTarget, {
-            rotateX: 0,
-            rotateY: 0,
-            duration: 0.6,
-            ease: "power2.out"
-        });
+        const card = e.currentTarget;
+        if (card._tiltX) card._tiltX(0);
+        if (card._tiltY) card._tiltY(0);
     }
 
+    const modalScroller = document.getElementById('genesis-scroller');
+
     bentoCards.forEach(card => {
+        // Pre-create quickTo setters for performance
+        card._tiltX = gsap.quickTo(card, "rotateX", { duration: 0.4, ease: "power2.out" });
+        card._tiltY = gsap.quickTo(card, "rotateY", { duration: 0.4, ease: "power2.out" });
+
+        card.addEventListener('mouseenter', () => {
+            card._rect = card.getBoundingClientRect();
+        });
+
         card.addEventListener('mousemove', handleTilt);
         card.addEventListener('mouseleave', resetTilt);
     });
+
+    // Invalidate cached rects on scroll or resize to ensure tilt accuracy
+    if (modalScroller) {
+        const invalidateCache = () => {
+            bentoCards.forEach(card => { card._rect = null; });
+        };
+        modalScroller.addEventListener('scroll', invalidateCache, { passive: true });
+        window.addEventListener('resize', invalidateCache, { passive: true });
+    }
 
     // 2. SVG Ring Interactivity
     interactiveLayers.forEach(layer => {

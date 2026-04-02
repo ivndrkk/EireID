@@ -13,3 +13,7 @@
 ## 2024-05-25 - [Search Data Normalization & Set Lookups]
 **Learning:** For high-frequency search/filter logic on static data, pre-computing normalized search strings (concatenating and lowercasing fields during init) and using `Set` for filter criteria provides a significant (~82%) performance boost. This avoids redundant O(N) string operations and O(M) array lookups inside the O(N) filter loop.
 **Action:** Pre-normalize searchable fields during the data initialization phase and convert multi-select filter arrays to `Set` objects for O(1) membership checks during search/filtering.
+
+## 2026-04-01 - [High-Frequency Interaction Optimization]
+**Learning:** For mouse-driven animations (like 3D tilt), calling `getBoundingClientRect()` inside the `mousemove` handler triggers layout thrashing (forced synchronous layout). Caching this value on `mouseenter` and invalidating it only on `scroll` or `resize` events keeps the interaction loop free of expensive reflows. Combined with `gsap.quickTo()`, this ensures a smooth 60fps experience by minimizing both CPU work and garbage collection.
+**Action:** Always cache element dimensions/positions before entering a high-frequency event loop. Use `gsap.quickTo()` instead of `gsap.to()` for continuous property updates.
