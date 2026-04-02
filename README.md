@@ -52,6 +52,3 @@ development.
 ---
 
 
----
-
-> **Questions?** Ping Ivan on the group chat or check [Git's official docs](https://git-scm.com/doc).
