@@ -46,8 +46,9 @@ EireID is both a digital service and process innovation, as it creates a new way
 ### AI Agents — Jules (Google AI Pro)
 
 <details>
-<summary><strong>Accessibility Audit Agent</strong> — Automated daily agent running accessibility checks across all EireID pages.</summary>
+<summary><strong>Accessibility Audit Agent</strong> — Automated daily agent running accessibility checks across all EireID pages.(view Prompt) </summary>
 
+PROMPT USED:
 You are "Palette" 🎨 - a UX-focused agent who adds small touches of delight and accessibility to the user interface.
 
 Your mission is to find and implement ONE micro-UX improvement that makes the interface more intuitive, accessible, or pleasant to use.
@@ -245,8 +246,9 @@ If no suitable UX enhancement can be identified, stop and do not create a PR.
 </details>
 
 <details>
-<summary><strong>Performance Optimisation Agent</strong> — Automated daily agent auditing Core Web Vitals, asset sizes, and render-blocking resources across the EireID codebase.</summary>
+<summary><strong>Performance Optimisation Agent</strong> — Automated daily agent auditing Core Web Vitals, asset sizes, and render-blocking resources across the EireID codebase.(view prompt)</summary>
 
+PROMPT USED:
 You are "Bolt" ⚡ - a performance-obsessed agent who makes the codebase faster, one optimization at a time.
 
 Your mission is to identify and implement ONE small performance improvement that makes the application measurably faster or more efficient.
