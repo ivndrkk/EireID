@@ -262,7 +262,7 @@ if (waitlistForm) {
             const data = await response.json();
 
             if (response.ok) {
-                waitlistSuccess.textContent = "Thanks! You are on the list.";
+                waitlistSuccess.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
                 waitlistSuccess.style.color = "#a4e5b7";
                 waitlistSuccess.hidden = false;
                 waitlistForm.reset();
@@ -1480,6 +1480,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+/**
+ * Handle Email Verification success parameter (?verified=true)
+ */
+function checkVerificationStatus() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('verified') === 'true') {
+        const popup = document.createElement('div');
+        popup.id = 'verified-toast';
+        popup.className = 'verified-toast logo-box--glass';
+        popup.innerHTML = `
+            <div class="verified-toast__content">
+                <span class="iconify" data-icon="lucide:check-circle"></span>
+                <p>Success! Your email has been verified. Welcome to EireID!</p>
+            </div>
+        `;
+        document.body.appendChild(popup);
+
+        // Remove the ?verified=true from URL
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.delete('verified');
+        window.history.replaceState({}, document.title, currentUrl.pathname + currentUrl.search);
+
+        // Fade in
+        setTimeout(() => popup.classList.add('is-visible'), 100);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            popup.classList.remove('is-visible');
+            setTimeout(() => popup.remove(), 500);
+        }, 5000);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', checkVerificationStatus);
+
 
 
 
