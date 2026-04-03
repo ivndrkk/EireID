@@ -9,45 +9,63 @@
   let currentSlide = 1;
   let isMobile = window.innerWidth <= 900;
 
-  // ── helpers ──────────────────────────────────────────────
+  // ── Optimization: Cache DOM references & measurements ──
+  let slides = [];
+  let videos = [];
+  let dots = [];
+  let sectionTop = 0;
+  let sectionH = 0;
+  let viewportH = window.innerHeight;
 
-  function getSlides()  { return document.querySelectorAll('.rtabs-slide'); }
-  function getVideos()  { return document.querySelectorAll('.rtabs-video'); }
-  function getDots()    { return document.querySelectorAll('.rtabs-dot'); }
+  function updateMeasurements() {
+    if (isMobile) return;
+    const rect = section.getBoundingClientRect();
+    sectionTop = rect.top + window.scrollY;
+    sectionH = section.offsetHeight;
+    viewportH = window.innerHeight;
+  }
 
-  function setActive(elements, matchFn) {
-    elements.forEach(el => {
-      const n = parseInt(el.dataset.slide || el.dataset.video || el.dataset.target);
-      el.classList.toggle('is-active', matchFn(n));
-    });
+  function cacheDOMElements() {
+    slides = Array.from(document.querySelectorAll('.rtabs-slide')).map(el => ({
+      el,
+      index: parseInt(el.dataset.slide)
+    }));
+    videos = Array.from(document.querySelectorAll('.rtabs-video')).map(el => ({
+      el,
+      index: parseInt(el.dataset.video)
+    }));
+    dots = Array.from(document.querySelectorAll('.rtabs-dot')).map(el => ({
+      el,
+      index: parseInt(el.dataset.target)
+    }));
+  }
+
+  function setActive(cachedItems, matchFn) {
+    for (let i = 0, len = cachedItems.length; i < len; i++) {
+      const item = cachedItems[i];
+      item.el.classList.toggle('is-active', matchFn(item.index));
+    }
   }
 
   function switchTo(n) {
     if (n === currentSlide) return;
     currentSlide = n;
 
-    setActive(getSlides(), idx => idx === n);
-    setActive(getVideos(), idx => idx === n);
-    setActive(getDots(),   idx => idx === n);
+    setActive(slides, idx => idx === n);
+    setActive(videos, idx => idx === n);
+    setActive(dots,   idx => idx === n);
   }
-
-  // ── scroll handler (desktop only) ────────────────────────
 
   // ── scroll handler (desktop only) ────────────────────────
   function onScroll() {
     if (isMobile) return;
 
-    const rect       = section.getBoundingClientRect();
-    const sectionH   = section.offsetHeight;
-    const viewportH  = window.innerHeight;
-
-    const scrolled   = -rect.top + (viewportH * 0.05); 
+    const scrolled = (window.scrollY - sectionTop) + (viewportH * 0.05);
     const scrollable = sectionH - viewportH;
 
     if (scrollable <= 0) return;
 
     const progress = Math.max(0, Math.min(1, scrolled / scrollable));
-
     const slideIndex = Math.min(
       TOTAL_SLIDES,
       Math.max(1, Math.ceil(progress * TOTAL_SLIDES + 0.001))
@@ -56,12 +74,9 @@
     switchTo(slideIndex);
   }
 
-  // ── dot click: smoothly scroll to that slide's position ──
   function dotScrollTo(targetSlide) {
-    const sectionH    = section.offsetHeight;
-    const viewportH   = window.innerHeight;
-    const scrollable  = sectionH - viewportH;
-    const ratio       = (targetSlide - 1) / (TOTAL_SLIDES - 1);
+    const scrollable = sectionH - viewportH;
+    const ratio = (targetSlide - 1) / (TOTAL_SLIDES - 1);
 
     if (window.locoScroll) {
       window.locoScroll.scrollTo(section, {
@@ -70,32 +85,37 @@
         easing: [0.25, 0.00, 0.35, 1.00]
       });
     } else {
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const scrollTo   = sectionTop + ratio * scrollable;
+      const scrollTo = sectionTop + ratio * scrollable;
       window.scrollTo({ top: scrollTo, behavior: 'smooth' });
     }
   }
 
-  getDots().forEach(dot => {
-    dot.addEventListener('click', () => {
-      const t = parseInt(dot.dataset.target);
-      if (isMobile) {
-        switchTo(t);
-      } else {
-        dotScrollTo(t);
-      }
-    });
-  });
-
   // ── on resize: update mobile flag ────────────────────────
   window.addEventListener('resize', () => {
     isMobile = window.innerWidth <= 900;
+    updateMeasurements();
   }, { passive: true });
 
   function init() {
+    cacheDOMElements();
+    updateMeasurements();
+
+    dots.forEach(item => {
+      item.el.addEventListener('click', () => {
+        if (isMobile) {
+          switchTo(item.index);
+        } else {
+          dotScrollTo(item.index);
+        }
+      });
+    });
+
     if (window.locoScroll) {
       window.locoScroll.on('scroll', onScroll);
-      ScrollTrigger.addEventListener("refresh", () => onScroll());
+      ScrollTrigger.addEventListener("refresh", () => {
+        updateMeasurements();
+        onScroll();
+      });
     } else {
       window.addEventListener('scroll', onScroll, { passive: true });
     }
