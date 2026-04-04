@@ -30,3 +30,10 @@
 **Action:** When implementing hover-activated UI elements:
 1. Ensure the container also reacts to `:focus-within`.
 2. Apply the same visibility and transform rules to the focus state as the hover state to maintain a consistent experience across input methods.
+
+## 2025-05-19 - Robust Interaction Patterns for Floating Assistants
+**Learning:** Floating conversational interfaces (like Rua AI) require careful interaction design to feel native and accessible. Key requirements include: 1) Auto-focusing the input field on open (using a ~100ms timeout to account for transitions), 2) Supporting standard dismissal via 'Escape' and outside clicks (ensuring the trigger itself is excluded from the 'outside' check), 3) Using `aria-live="polite"` for message updates, and 4) Restoring focus to the trigger upon dismissal.
+
+**Action:** When building or updating floating modals:
+1. Encapsulate open/close logic in dedicated functions to ensure focus management (focus in on open, focus back to trigger on close) is consistent across all dismissal methods.
+2. Use an `.is-loading` class on submit buttons for async states, leveraging CSS pseudo-elements for spinners to minimize DOM manipulation while providing immediate feedback.

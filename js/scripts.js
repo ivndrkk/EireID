@@ -738,6 +738,22 @@ function initFloatingAssistant() {
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
 
+    function openAssistant() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        const chatInput = document.getElementById('ai-chat-input');
+        if (chatInput) {
+            setTimeout(() => chatInput.focus(), 100);
+        }
+    }
+
+    function closeAssistant() {
+        if (!modal.classList.contains('is-open')) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.focus();
+    }
+
     ScrollTrigger.create({
         trigger: 'body',
         scroller: '[data-scroll-container]',
@@ -747,10 +763,7 @@ function initFloatingAssistant() {
                 fab.classList.add('is-visible');
             } else {
                 fab.classList.remove('is-visible');
-                if (modal.classList.contains('is-open')) {
-                    modal.classList.remove('is-open');
-                    modal.setAttribute('aria-hidden', 'true');
-                }
+                closeAssistant();
             }
         }
     });
@@ -758,20 +771,27 @@ function initFloatingAssistant() {
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
         if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
+            closeAssistant();
         } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
+            openAssistant();
         }
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', closeAssistant);
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeAssistant();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (modal.classList.contains('is-open') && !modal.contains(e.target) && !fab.contains(e.target)) {
+            closeAssistant();
+        }
+    });
 }
 
 function initAIChat() {
@@ -787,6 +807,8 @@ function initAIChat() {
     if (initialTimeEl) {
         initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
+
+    body.setAttribute('aria-live', 'polite');
 
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
@@ -862,8 +884,10 @@ function initAIChat() {
         input.value = '';
         showTyping();
 
+        const submitBtn = form.querySelector('button');
         input.disabled = true;
-        form.querySelector('button').disabled = true;
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
 
         try {
             const res = await fetch(BACKEND_URL, {
@@ -884,7 +908,8 @@ function initAIChat() {
             renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
         } finally {
             input.disabled = false;
-            form.querySelector('button').disabled = false;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
             input.focus();
         }
     });
