@@ -30,3 +30,11 @@
 **Action:** When implementing hover-activated UI elements:
 1. Ensure the container also reacts to `:focus-within`.
 2. Apply the same visibility and transform rules to the focus state as the hover state to maintain a consistent experience across input methods.
+
+## 2025-05-19 - Resettable State for Reusable Modals
+**Learning:** In static sites where modals are hidden/shown rather than unmounted, asynchronous success states (e.g., "Thank You" messages) can become "stale" if the user closes and re-opens the modal. Standardizing a reset mechanism that restores the original form, clears loading indicators (`.is-loading`), and resets accessibility attributes (`aria-busy`) is critical for a predictable user experience.
+
+**Action:** When implementing success states in persistent UI components:
+1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
+2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
+3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
