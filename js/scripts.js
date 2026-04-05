@@ -251,9 +251,9 @@ if (waitlistForm) {
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
-        const originalBtnText = submitBtn.innerText;
+        const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Joining...';
+        submitBtn.textContent = 'Joining...';
 
         const formData = {
             name: waitlistName?.value,
@@ -291,7 +291,7 @@ if (waitlistForm) {
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
+            submitBtn.textContent = originalBtnText;
         }
     });
 }
@@ -336,15 +336,6 @@ window.addEventListener('pageshow', (event) => {
         setTimeout(activateElementsAbove, 100);
     }
 });
-window.escapeHTML = function(str) {
-    if (!str) return "";
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-};
 
 let textRevealObserver;
 
@@ -389,17 +380,24 @@ function initTeamCards() {
     const cards = document.querySelectorAll('.team-id-card');
     if (!cards.length) return;
 
+    let activeCard = null;
+
     cards.forEach(card => {
+        if (card.classList.contains('is-flipped')) {
+            activeCard = card;
+        }
+
         const toggleFlip = (e) => {
             if (e.target.closest('a')) return;
+
+            if (activeCard && activeCard !== card) {
+                activeCard.classList.remove('is-flipped');
+                activeCard.setAttribute('aria-expanded', 'false');
+            }
+
             const isFlipped = card.classList.toggle('is-flipped');
             card.setAttribute('aria-expanded', isFlipped);
-            cards.forEach(other => {
-                if (other !== card && other.classList.contains('is-flipped')) {
-                    other.classList.remove('is-flipped');
-                    other.setAttribute('aria-expanded', 'false');
-                }
-            });
+            activeCard = isFlipped ? card : null;
         };
         card.addEventListener('click', toggleFlip);
         card.addEventListener('keydown', (e) => {
@@ -588,7 +586,8 @@ function initStatCounters() {
 
   if (!stats.length) return;
 
-  stats.forEach(el => {
+  stats.forEach((el, i) => {
+    el._statIndex = i;
     if (!el.getAttribute('data-target')) {
       el.setAttribute('data-target', el.textContent.trim());
     }
@@ -643,9 +642,7 @@ function initStatCounters() {
 
         if (entry.isIntersecting) {
           if (el.getAttribute('data-counted') !== 'true') {
-            const allStats = Array.from(stats);
-            const statIndex = allStats.indexOf(el);
-            animateCount(el, statIndex);
+            animateCount(el, el._statIndex);
             el.setAttribute('data-counted', 'true');
             observer.unobserve(el);
           }
