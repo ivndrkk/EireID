@@ -68,13 +68,13 @@ async def benchmark():
             stats.forEach(el => {
                 el.removeAttribute('data-target');
                 if (!el.getAttribute('data-target')) {
-                    el.setAttribute('data-target', el.innerText.trim());
+                    el.setAttribute('data-target', el.textContent.trim());
                 }
             });
             return performance.now() - start;
         }''')
 
-        print(f"Stat Counters Init (innerText, 200 items): {stat_init_time:.4f} ms")
+        print(f"Stat Counters Init (textContent, 200 items): {stat_init_time:.4f} ms")
 
         await browser.close()
         return faq_duration, stat_init_time
