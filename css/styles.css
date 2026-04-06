@@ -2761,6 +2761,37 @@
     background: var(--color-bg-primary);
     box-shadow: 0 0 10px var(--color-bg-primary), 0 0 20px var(--color-bg-primary);
     animation: scanLine 2.5s infinite linear;
+    display: none;
+}
+
+.face-scanner.is-scanning .face-scanner__line {
+    display: block;
+}
+
+.face-scanner.is-loading::after {
+    width: 180px;
+    height: 180px;
+    top: calc(50% - 90px);
+    left: calc(50% - 90px);
+    border-width: 4px;
+    border-color: var(--color-bg-primary);
+    border-right-color: transparent;
+}
+
+.face-scanner.is-success {
+    border-color: #10b981;
+    border-style: solid;
+}
+
+.face-scanner.is-success::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: #10b981;
+    animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes scanLine {
