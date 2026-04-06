@@ -193,6 +193,19 @@ function closeWaitlistModal() {
     waitlistModal.classList.remove('is-open');
     waitlistModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+
+    if (waitlistForm) {
+        waitlistForm.reset();
+        waitlistForm.style.display = '';
+        const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
+        if (submitBtn) {
+            submitBtn.classList.remove('is-loading');
+            submitBtn.setAttribute('aria-busy', 'false');
+            submitBtn.disabled = false;
+        }
+    }
+    if (waitlistSuccess) waitlistSuccess.hidden = true;
+    [waitlistNameError, waitlistEmailError].forEach(err => err?.classList.remove('is-visible'));
 }
 
 waitlistTriggers.forEach(btn => {
@@ -251,9 +264,9 @@ if (waitlistForm) {
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
-        const originalBtnText = submitBtn.innerText;
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Joining...';
 
         const formData = {
             name: waitlistName?.value,
@@ -273,10 +286,10 @@ if (waitlistForm) {
             const data = await response.json();
 
             if (response.ok) {
+                waitlistForm.style.display = 'none';
                 waitlistSuccess.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
                 waitlistSuccess.style.color = "#a4e5b7";
                 waitlistSuccess.hidden = false;
-                waitlistForm.reset();
             } else if (response.status === 409) {
                 waitlistSuccess.textContent = "You are already on the waitlist!";
                 waitlistSuccess.style.color = "#fbd38d";    
@@ -290,8 +303,9 @@ if (waitlistForm) {
             waitlistSuccess.style.color = "#fc8181";
             waitlistSuccess.hidden = false;
         } finally {
+            submitBtn.classList.remove('is-loading');
+            submitBtn.setAttribute('aria-busy', 'false');
             submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
         }
     });
 }
@@ -863,7 +877,10 @@ function initAIChat() {
         showTyping();
 
         input.disabled = true;
-        form.querySelector('button').disabled = true;
+        const submitBtn = form.querySelector('button');
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
 
         try {
             const res = await fetch(BACKEND_URL, {
@@ -884,7 +901,9 @@ function initAIChat() {
             renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
         } finally {
             input.disabled = false;
-            form.querySelector('button').disabled = false;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+            submitBtn.setAttribute('aria-busy', 'false');
             input.focus();
         }
     });

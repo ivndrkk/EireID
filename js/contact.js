@@ -33,11 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hasError) return;
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerText;
         
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
-        submitBtn.innerText = 'Transmitting...';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
 
         try {
             const response = await fetch('https://eireid-backend-9d25b1a7b372.herokuapp.com/support', {
@@ -83,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Support submission failed:', error);
             alert("Something went wrong. Please try again.");
             submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-            submitBtn.innerText = originalText;
+            submitBtn.classList.remove('is-loading');
+            submitBtn.setAttribute('aria-busy', 'false');
         }
     });
 
