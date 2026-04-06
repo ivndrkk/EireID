@@ -251,9 +251,9 @@ if (waitlistForm) {
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
-        const originalBtnText = submitBtn.innerText;
+        const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Joining...';
+        submitBtn.textContent = 'Joining...';
 
         const formData = {
             name: waitlistName?.value,
@@ -291,7 +291,7 @@ if (waitlistForm) {
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
+            submitBtn.textContent = originalBtnText;
         }
     });
 }
