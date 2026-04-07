@@ -735,8 +735,29 @@ function initFloatingAssistant() {
     const fab = document.getElementById('ai-fab');
     const modal = document.getElementById('ai-modal');
     const closeBtn = document.getElementById('ai-modal-close');
+    const chatInput = document.getElementById('ai-chat-input');
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
+
+    fab.setAttribute('aria-expanded', 'false');
+
+    function openAIModal() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        fab.setAttribute('aria-expanded', 'true');
+        fab.setAttribute('aria-label', 'Close Rua AI');
+        if (chatInput) {
+            setTimeout(() => chatInput.focus(), 100);
+        }
+    }
+
+    function closeAIModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.setAttribute('aria-expanded', 'false');
+        fab.setAttribute('aria-label', 'Open Rua AI');
+        fab.focus();
+    }
 
     ScrollTrigger.create({
         trigger: 'body',
@@ -748,8 +769,7 @@ function initFloatingAssistant() {
             } else {
                 fab.classList.remove('is-visible');
                 if (modal.classList.contains('is-open')) {
-                    modal.classList.remove('is-open');
-                    modal.setAttribute('aria-hidden', 'true');
+                    closeAIModal();
                 }
             }
         }
@@ -758,20 +778,29 @@ function initFloatingAssistant() {
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
         if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
+            closeAIModal();
         } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
+            openAIModal();
         }
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', closeAIModal);
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeAIModal();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (modal.classList.contains('is-open') &&
+            !modal.contains(e.target) &&
+            !fab.contains(e.target)) {
+            closeAIModal();
+        }
+    });
 }
 
 function initAIChat() {
@@ -781,6 +810,8 @@ function initAIChat() {
     const initialTimeEl = document.getElementById('ai-initial-time');
 
     if (!form || !input || !body) return;
+
+    body.setAttribute('aria-live', 'polite');
 
     const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/chat';
 
@@ -862,8 +893,12 @@ function initAIChat() {
         input.value = '';
         showTyping();
 
+        const submitBtn = form.querySelector('.ai-chat-submit');
         input.disabled = true;
-        form.querySelector('button').disabled = true;
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.setAttribute('aria-busy', 'true');
+        }
 
         try {
             const res = await fetch(BACKEND_URL, {
@@ -884,7 +919,10 @@ function initAIChat() {
             renderBotMessage('Sorry, I couldn\'t connect to the server. Please try again.', replyTime);
         } finally {
             input.disabled = false;
-            form.querySelector('button').disabled = false;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.setAttribute('aria-busy', 'false');
+            }
             input.focus();
         }
     });

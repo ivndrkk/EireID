@@ -30,3 +30,11 @@
 **Action:** When implementing hover-activated UI elements:
 1. Ensure the container also reacts to `:focus-within`.
 2. Apply the same visibility and transform rules to the focus state as the hover state to maintain a consistent experience across input methods.
+
+## 2025-05-19 - Accessibility for Floating Assistants
+**Learning:** Floating AI assistants/modals require a robust interaction pattern to be accessible: 1) Auto-focusing the primary input field upon opening (wrapped in a short timeout), 2) Supporting dismissal via the 'Escape' key and clicks outside the modal, 3) Using 'aria-live="polite"' on the chat body for real-time message accessibility, and 4) Restoring focus to the triggering Floating Action Button (FAB) upon closure to maintain sequential navigation.
+
+**Action:** When implementing floating or modal-like components:
+1. Always manage focus explicitly using `element.focus()` on both open and close events.
+2. Ensure the state is communicated via `aria-expanded` and `aria-hidden`.
+3. Use `aria-live` for dynamic content updates that happen without a page reload.
