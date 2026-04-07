@@ -588,7 +588,8 @@ function initStatCounters() {
 
   if (!stats.length) return;
 
-  stats.forEach(el => {
+  stats.forEach((el, idx) => {
+    el._statIndex = idx;
     if (!el.getAttribute('data-target')) {
       el.setAttribute('data-target', el.textContent.trim());
     }
@@ -612,8 +613,7 @@ function initStatCounters() {
         if (isTextNode) {
             renderFn = (val) => { firstNode.textContent = val; };
         } else {
-            const unitHtml = unitSpan.outerHTML;
-            renderFn = (val) => { el.innerHTML = val + unitHtml; };
+            renderFn = (val) => { el.textContent = val; el.appendChild(unitSpan); };
         }
     } else {
         renderFn = (val) => { el.textContent = val + suffix; };
@@ -622,7 +622,6 @@ function initStatCounters() {
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
@@ -638,19 +637,18 @@ function initStatCounters() {
 
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
+      for (let i = 0, len = entries.length; i < len; i++) {
+        const entry = entries[i];
         const el = entry.target;
 
         if (entry.isIntersecting) {
           if (el.getAttribute('data-counted') !== 'true') {
-            const allStats = Array.from(stats);
-            const statIndex = allStats.indexOf(el);
-            animateCount(el, statIndex);
+            animateCount(el, el._statIndex || 0);
             el.setAttribute('data-counted', 'true');
             observer.unobserve(el);
           }
         }
-      });
+      }
     },
     { threshold: 0.5 }
   );
