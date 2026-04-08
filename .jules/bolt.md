@@ -21,3 +21,7 @@
 ## 2026-05-15 - [Accordion & Stat Counter Initialization]
 **Learning:** In components with many interactive elements (e.g., long FAQ lists or numerous stat counters), O(N) operations during event handling and forced reflows during initialization are major bottlenecks. Tracking the active item in a persistent object allows for O(1) state transitions, while using `textContent` instead of `innerText` for initial value setup avoids redundant layout calculations. These changes combined resulted in a ~71-82% performance improvement in our benchmarks.
 **Action:** Use a tracking object/variable for single-active-item components (accordions, tabs) to avoid O(N) loops on every interaction. Favor `textContent` for mass DOM updates where CSS-aware text retrieval is not required.
+
+## 2026-05-16 - [DOM Animation & Observer Optimization]
+**Learning:** Replacing `innerText` with `textContent` in high-frequency animation loops (e.g., a 60fps graph counter in `js/business.js`) eliminates forced synchronous layouts (reflows) caused by CSS-aware text retrieval. For `IntersectionObserver` callbacks managing multiple elements, caching the element's index directly on the DOM node (`el._statIndex`) during initialization converts an O(N) `indexOf` search into an O(1) lookup, significantly reducing frame budget consumption during scroll-triggered animations.
+**Action:** Always prefer `textContent` for dynamic value updates. Attach metadata needed for event handling directly to the element or use a Map to avoid searching arrays inside high-frequency callbacks.
