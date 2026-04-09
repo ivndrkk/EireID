@@ -30,3 +30,8 @@
 **Action:** When implementing hover-activated UI elements:
 1. Ensure the container also reacts to `:focus-within`.
 2. Apply the same visibility and transform rules to the focus state as the hover state to maintain a consistent experience across input methods.
+
+## 2025-05-19 - Robust Modal Lifecycle Management
+**Learning:** For modals in static sites, simply opening and closing the UI is insufficient for a polished experience. Capturing the triggering element's focus and restoring it upon closure prevents keyboard users from losing their place. Additionally, resetting the form and clearing success/error states ensures a fresh experience upon re-entry, preventing "state leakage" between interactions.
+
+**Action:** Always store `document.activeElement` before opening a modal and call `.focus()` on it when the modal is dismissed. Include a `form.reset()` and visibility toggles for success/error containers in the close handler.

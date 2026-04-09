@@ -175,10 +175,12 @@ const waitlistName = document.getElementById('waitlist-name');
 const waitlistNameError = document.getElementById('waitlist-name-error');
 const waitlistEmail = document.getElementById('waitlist-email');
 const waitlistEmailError = document.getElementById('waitlist-email-error');
+let waitlistLastFocus = null;
 
 function openWaitlistModal(e) {
     if (e) e.preventDefault();
     if (!waitlistModal) return;
+    waitlistLastFocus = document.activeElement;
     waitlistModal.classList.add('is-open');
     waitlistModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -193,6 +195,15 @@ function closeWaitlistModal() {
     waitlistModal.classList.remove('is-open');
     waitlistModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+
+    if (waitlistForm) waitlistForm.reset();
+    if (waitlistSuccess) waitlistSuccess.hidden = true;
+    if (waitlistNameError) waitlistNameError.classList.remove('is-visible');
+    if (waitlistEmailError) waitlistEmailError.classList.remove('is-visible');
+
+    if (waitlistLastFocus) {
+        waitlistLastFocus.focus();
+    }
 }
 
 waitlistTriggers.forEach(btn => {
