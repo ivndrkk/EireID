@@ -32,593 +32,675 @@
     </div>
 
     <div id="scroll-wrapper" data-scroll-container>
-    <div class="container">
+        <div class="container">
 
-        <!-- === HEADER NAVIGATION === -->
-        <header class="header">
+            <!-- === HEADER NAVIGATION === -->
+            <header class="header">
 
 
-            <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <button id="mobile-menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
-            <nav class="nav" aria-label="Main Navigation">
-                <ul id="nav-list" class="nav__list">
-                    <li><a href="../index.html" class="nav__link">Home</a></li>
-                    <li class="nav__item nav__item--dropdown">
-                        <a href="./allservices.html" class="nav__link active">Services <span
-                                class="nav__dropdown-icon">▼</span></a>
-                        <div class="nav__dropdown">
-                            <div class="nav__dropdown-inner logo-box--glass">
-                                <a href="./allservices.html" class="nav__dropdown-link">All services</a>
-                                    <a href="./resident.html" class="nav__dropdown-link active" aria-current="page">For residents</a>
-                                <a href="./business.html" class="nav__dropdown-link">For businesses</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="./investor.html" class="nav__link">Invest</a></li>
-                    <li><a href="./support.html" class="nav__link">Support</a></li>
-                    <li><a href="./team.html" class="nav__link">Our Team</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- === RESIDENT LAYOUT REBUILD === -->
-        <main class="resident-hero" id="main-content" tabindex="-1">
-            <div class="hero__content" aria-labelledby="hero-title">
-                <div class="hero-leftcol">
-                    <div class="hero__logos" data-scroll data-scroll-speed="-0.2">
-                    
-
-                        <button class="logo-box logo-box--glass" aria-label="User Profile">
-                            <span class="iconify logo-box__svg" data-icon="lucide:user"
-                                style="width: 52px; height: 52px; display: block; margin: 0 auto; opacity: 0.8; color: var(--color-text-heading);"></span>
-                        </button>
-                    
-
-                        <button class="logo-box logo-box--glass" aria-label="EireID Logo">
-                            <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
-                                style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
-                        </button>
-                    
-                    </div>
-                    
-                    <h2 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2.5">For residents</h2>
-                    <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1.5">Your Identity. Every Service.<br> One Secure Login.</p>
-                    
-                    <div class="resident-services-container" style="margin-top: 2rem; width: 100%; display: flex; flex-direction: column; gap: 1rem;" data-scroll data-scroll-class="is-revealed">
-                        <div class="resident-services-header">
-                            <div class="filter-group filter-group--search" style="margin: 0; width: 100%; max-width: 400px;">
-                                <div class="search-wrapper" style="width: 100%;">
-                                    <span class="iconify search-icon" data-icon="lucide:search"></span>
-                                    <input type="text" id="resident-search-input" class="filter-input" placeholder="Search services..." style="width: 100%;">
+                <nav class="nav" aria-label="Main Navigation">
+                    <ul id="nav-list" class="nav__list">
+                        <li><a href="../index.html" class="nav__link">Home</a></li>
+                        <li class="nav__item nav__item--dropdown">
+                            <a href="./allservices.html" class="nav__link active">Services <span
+                                    class="nav__dropdown-icon">▼</span></a>
+                            <div class="nav__dropdown">
+                                <div class="nav__dropdown-inner logo-box--glass">
+                                    <a href="./allservices.html" class="nav__dropdown-link">All services</a>
+                                    <a href="./resident.html" class="nav__dropdown-link active" aria-current="page">For
+                                        residents</a>
+                                    <a href="./business.html" class="nav__dropdown-link">For businesses</a>
                                 </div>
                             </div>
-                            
-                            <div class="carousel-nav">
-                                <button id="resident-carousel-prev" class="carousel-nav__btn logo-box--glass" aria-label="Previous">
-                                    <span class="iconify" data-icon="lucide:chevron-left"></span>
-                                </button>
-                                <button id="resident-carousel-next" class="carousel-nav__btn logo-box--glass" aria-label="Next">
-                                    <span class="iconify" data-icon="lucide:chevron-right"></span>
-                                </button>
+                        </li>
+                        <li><a href="./investor.html" class="nav__link">Invest</a></li>
+                        <li><a href="./support.html" class="nav__link">Support</a></li>
+                        <li><a href="./team.html" class="nav__link">Our Team</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <!-- === RESIDENT LAYOUT REBUILD === -->
+            <main class="resident-hero" id="main-content" tabindex="-1">
+                <div class="hero__content" aria-labelledby="hero-title">
+                    <div class="hero-leftcol">
+                        <div class="hero__logos" data-scroll data-scroll-speed="-0.2">
+
+
+                            <button class="logo-box logo-box--glass" aria-label="User Profile">
+                                <span class="iconify logo-box__svg" data-icon="lucide:user"
+                                    style="width: 52px; height: 52px; display: block; margin: 0 auto; opacity: 0.8; color: var(--color-text-heading);"></span>
+                            </button>
+
+
+                            <button class="logo-box logo-box--glass" aria-label="EireID Logo">
+                                <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" class="logo-box__svg"
+                                    style="width: 60px; height: 60px; object-fit: contain; display: block; margin: 0 auto;">
+                            </button>
+
+                        </div>
+
+                        <h2 id="hero-title" class="hero__title" data-reveal data-scroll data-scroll-speed="2.5">For
+                            residents</h2>
+                        <p class="hero__subtitle" data-reveal data-scroll data-scroll-speed="1.5">Your Identity. Every
+                            Service.<br> One Secure Login.</p>
+
+                        <div class="resident-services-container"
+                            style="margin-top: 2rem; width: 100%; display: flex; flex-direction: column; gap: 1rem;"
+                            data-scroll data-scroll-class="is-revealed">
+                            <div class="resident-services-header">
+                                <div class="filter-group filter-group--search"
+                                    style="margin: 0; width: 100%; max-width: 400px;">
+                                    <div class="search-wrapper" style="width: 100%;">
+                                        <span class="iconify search-icon" data-icon="lucide:search"></span>
+                                        <input type="text" id="resident-search-input" class="filter-input"
+                                            placeholder="Search services..." style="width: 100%;">
+                                    </div>
+                                </div>
+
+                                <div class="carousel-nav">
+                                    <button id="resident-carousel-prev" class="carousel-nav__btn logo-box--glass"
+                                        aria-label="Previous">
+                                        <span class="iconify" data-icon="lucide:chevron-left"></span>
+                                    </button>
+                                    <button id="resident-carousel-next" class="carousel-nav__btn logo-box--glass"
+                                        aria-label="Next">
+                                        <span class="iconify" data-icon="lucide:chevron-right"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="resident-services-carousel" id="resident-services-carousel">
+
                             </div>
                         </div>
-
-                        <div class="resident-services-carousel" id="resident-services-carousel">
-
-                        </div>
                     </div>
-                </div>
-                <div class="rightcol" style="display: flex; justify-content: end; align-items: center; width: 100%; height: 100%;">
-                    <div class="cyber-container cyber-noselect">
-                      <div class="cyber-canvas">
-                        <div class="cyber-tracker tr-1"></div><div class="cyber-tracker tr-2"></div><div class="cyber-tracker tr-3"></div><div class="cyber-tracker tr-4"></div><div class="cyber-tracker tr-5"></div>
-                        <div class="cyber-tracker tr-6"></div><div class="cyber-tracker tr-7"></div><div class="cyber-tracker tr-8"></div><div class="cyber-tracker tr-9"></div><div class="cyber-tracker tr-10"></div>
-                        <div class="cyber-tracker tr-11"></div><div class="cyber-tracker tr-12"></div><div class="cyber-tracker tr-13"></div><div class="cyber-tracker tr-14"></div><div class="cyber-tracker tr-15"></div>
-                        <div class="cyber-tracker tr-16"></div><div class="cyber-tracker tr-17"></div><div class="cyber-tracker tr-18"></div><div class="cyber-tracker tr-19"></div><div class="cyber-tracker tr-20"></div>
-                        <div class="cyber-tracker tr-21"></div><div class="cyber-tracker tr-22"></div><div class="cyber-tracker tr-23"></div><div class="cyber-tracker tr-24"></div><div class="cyber-tracker tr-25"></div>
-                        <div id="cyber-card">
-                          <div class="cyber-card-content">
-                            <div class="cyber-card-glare"></div>
-                            
+                    <div class="rightcol"
+                        style="display: flex; justify-content: end; align-items: center; width: 100%; height: 100%;">
+                        <div class="cyber-container cyber-noselect">
+                            <div class="cyber-canvas">
+                                <div class="cyber-tracker tr-1"></div>
+                                <div class="cyber-tracker tr-2"></div>
+                                <div class="cyber-tracker tr-3"></div>
+                                <div class="cyber-tracker tr-4"></div>
+                                <div class="cyber-tracker tr-5"></div>
+                                <div class="cyber-tracker tr-6"></div>
+                                <div class="cyber-tracker tr-7"></div>
+                                <div class="cyber-tracker tr-8"></div>
+                                <div class="cyber-tracker tr-9"></div>
+                                <div class="cyber-tracker tr-10"></div>
+                                <div class="cyber-tracker tr-11"></div>
+                                <div class="cyber-tracker tr-12"></div>
+                                <div class="cyber-tracker tr-13"></div>
+                                <div class="cyber-tracker tr-14"></div>
+                                <div class="cyber-tracker tr-15"></div>
+                                <div class="cyber-tracker tr-16"></div>
+                                <div class="cyber-tracker tr-17"></div>
+                                <div class="cyber-tracker tr-18"></div>
+                                <div class="cyber-tracker tr-19"></div>
+                                <div class="cyber-tracker tr-20"></div>
+                                <div class="cyber-tracker tr-21"></div>
+                                <div class="cyber-tracker tr-22"></div>
+                                <div class="cyber-tracker tr-23"></div>
+                                <div class="cyber-tracker tr-24"></div>
+                                <div class="cyber-tracker tr-25"></div>
+                                <div id="cyber-card">
+                                    <div class="cyber-card-content">
+                                        <div class="cyber-card-glare"></div>
 
-                            <div class="cyber-id-info">
-                                <h3 class="cyber-card-context-title">Public Services Card</h3>
-                                
-                                <div class="cyber-card-main-body">
-                                    <div class="cyber-photo-actual"></div>
-                                    
-                                    <div class="cyber-card-details">
-                                        <div class="cyber-data-group">
-                                            <label>Document number:</label>
-                                            <div class="cyber-pill-grey">4837 **** A</div>
-                                        </div>
-                                        
-                                        <div class="cyber-data-group" style="margin-top: 1rem;">
-                                            <label>Date of expiry:</label>
-                                            <div class="cyber-expiry-date">18/09/2031</div>
-                                            <div class="cyber-valid-status">
-                                                <span class="iconify" data-icon="lucide:check-circle"></span> Valid
+
+                                        <div class="cyber-id-info">
+                                            <h3 class="cyber-card-context-title">Public Services Card</h3>
+
+                                            <div class="cyber-card-main-body">
+                                                <div class="cyber-photo-actual"></div>
+
+                                                <div class="cyber-card-details">
+                                                    <div class="cyber-data-group">
+                                                        <label>Document number:</label>
+                                                        <div class="cyber-pill-grey">4837 **** A</div>
+                                                    </div>
+
+                                                    <div class="cyber-data-group" style="margin-top: 1rem;">
+                                                        <label>Date of expiry:</label>
+                                                        <div class="cyber-expiry-date">18/09/2031</div>
+                                                        <div class="cyber-valid-status">
+                                                            <span class="iconify"
+                                                                data-icon="lucide:check-circle"></span> Valid
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="cyber-floating-update-chip">
+                                                <label>Document updated:</label>
+                                                <div>
+                                                    <span class="iconify" data-icon="lucide:file-clock"></span> <span
+                                                        id="cyber-updated-time">14.01.2026 09:42</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="cyber-card-footer">
+                                                <div class="cyber-name-large">
+                                                    Rua<br>Acornstein
+                                                </div>
+                                                <div class="cyber-more-btn">
+                                                    <span></span><span></span><span></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="cyber-floating-update-chip">
-                                    <label>Document updated:</label>
-                                    <div>
-                                        <span class="iconify" data-icon="lucide:file-clock"></span> <span id="cyber-updated-time">14.01.2026 09:42</span>
-                                    </div>
-                                </div>
 
-                                <div class="cyber-card-footer">
-                                    <div class="cyber-name-large">
-                                        Rua<br>Acornstein
-                                    </div>
-                                    <div class="cyber-more-btn">
-                                        <span></span><span></span><span></span>
+
+                                        <div class="cyber-protected-overlay">
+                                            <span class="iconify cyber-shield-icon"
+                                                data-icon="lucide:shield-check"></span>
+                                            <div class="cyber-title">PROTECTED</div>
+                                            <div class="cyber-subtitle">
+                                                <span>DATA IS</span>
+                                                <span class="cyber-highlight">ENCRYPTED</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="cyber-glowing-elements">
+                                            <div class="cyber-glow-1"></div>
+                                            <div class="cyber-glow-2"></div>
+                                            <div class="cyber-glow-3"></div>
+                                        </div>
+
+                                        <div class="cyber-lines">
+                                            <span></span><span></span><span></span><span></span>
+                                        </div>
+                                        <div class="cyber-card-particles">
+                                            <span></span><span></span><span></span><span></span><span></span><span></span>
+                                        </div>
+                                        <div class="cyber-scan-line"></div>
                                     </div>
                                 </div>
                             </div>
-                            
-
-                            <div class="cyber-protected-overlay">
-                                <span class="iconify cyber-shield-icon" data-icon="lucide:shield-check"></span>
-                                <div class="cyber-title">PROTECTED</div>
-                                <div class="cyber-subtitle">
-                                    <span>DATA IS</span>
-                                    <span class="cyber-highlight">ENCRYPTED</span>
-                                </div>
-                            </div>
-
-                            <div class="cyber-glowing-elements">
-                              <div class="cyber-glow-1"></div>
-                              <div class="cyber-glow-2"></div>
-                              <div class="cyber-glow-3"></div>
-                            </div>
-                            
-                            <div class="cyber-lines">
-                              <span></span><span></span><span></span><span></span>
-                            </div>
-                            <div class="cyber-card-particles">
-                              <span></span><span></span><span></span><span></span><span></span><span></span>
-                            </div>
-                            <div class="cyber-scan-line"></div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <div class="scroll-icon resident-scroll-icon" aria-hidden="true"
+                style="margin: 0 auto; margin-top: var(--space-3xl); margin-bottom: calc(var(--space-3xl) * -1);"></div>
+
+
+            <section class="section resident-flow" id="how-it-works-track"
+                style="height: 300vh; display: block; padding-top: var(--space-3xl);">
+                <div class="resident-flow__sticky-wrap" data-scroll data-scroll-sticky
+                    data-scroll-target="#how-it-works-track"
+                    style="height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;">
+                    <div class="container resident-flow__container">
+                        <article id="how-it-works" class="about__tile logo-box--glass how-it-works-grid" data-scroll
+                            data-scroll-class="is-revealed">
+                            <div class="how-it-works__step resident-step">
+                                <div class="flow-icon logo-box--glass">
+                                    <span class="iconify" data-icon="lucide:log-in"></span>
+                                </div>
+                                <div class="step-content">
+                                    <h3 class="step-title">Sign In</h3>
+                                    <p class="step-desc">Enter your document number &mdash; passport, driving licence,
+                                        or residence
+                                        permit. No forms to fill: your details are pulled automatically from secure
+                                        records.</p>
+                                </div>
+                            </div>
+
+                            <div class="how-it-works__step resident-step">
+                                <div class="flow-icon logo-box--glass">
+                                    <span class="iconify" data-icon="lucide:scan-face"></span>
+                                </div>
+                                <div class="step-content">
+                                    <h3 class="step-title">Verify</h3>
+                                    <p class="step-desc">Complete a quick face scan to confirm it's really you. We never
+                                        store or
+                                        photograph your face &mdash; verification happens in real time and leaves no
+                                        trace.</p>
+                                </div>
+                            </div>
+
+                            <div class="how-it-works__step resident-step">
+                                <div class="flow-icon logo-box--glass">
+                                    <span class="iconify" data-icon="lucide:check-circle"></span>
+                                </div>
+                                <div class="step-content">
+                                    <h3 class="step-title">Done</h3>
+                                    <p class="step-desc">Access legally valid digital copies of your documents and 70+
+                                        government
+                                        services &mdash; all from your phone, anytime, anywhere.</p>
+                                </div>
+                            </div>
+
+                        </article>
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </main>  
-        
-        <div class="scroll-icon resident-scroll-icon" aria-hidden="true" style="margin: 0 auto; margin-top: var(--space-3xl); margin-bottom: calc(var(--space-3xl) * -1);"></div>
-
-
-    <section class="section resident-flow" id="how-it-works-track" style="height: 300vh; display: block; padding-top: var(--space-3xl);">
-        <div class="resident-flow__sticky-wrap" data-scroll data-scroll-sticky data-scroll-target="#how-it-works-track" style="height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;">
-            <div class="container resident-flow__container">
-                <article id="how-it-works" class="about__tile logo-box--glass how-it-works-grid" data-scroll data-scroll-class="is-revealed">
-                <div class="how-it-works__step resident-step">
-                    <div class="flow-icon logo-box--glass">
-                        <span class="iconify" data-icon="lucide:log-in"></span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="step-title">Sign In</h3>
-                        <p class="step-desc">Enter your document number &mdash; passport, driving licence, or residence
-                            permit. No forms to fill: your details are pulled automatically from secure records.</p>
-                    </div>
-                </div>
-    
-                <div class="how-it-works__step resident-step">
-                    <div class="flow-icon logo-box--glass">
-                        <span class="iconify" data-icon="lucide:scan-face"></span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="step-title">Verify</h3>
-                        <p class="step-desc">Complete a quick face scan to confirm it's really you. We never store or
-                            photograph your face &mdash; verification happens in real time and leaves no trace.</p>
-                    </div>
-                </div>
-    
-                <div class="how-it-works__step resident-step">
-                    <div class="flow-icon logo-box--glass">
-                        <span class="iconify" data-icon="lucide:check-circle"></span>
-                    </div>
-                    <div class="step-content">
-                        <h3 class="step-title">Done</h3>
-                        <p class="step-desc">Access legally valid digital copies of your documents and 70+ government
-                            services &mdash; all from your phone, anytime, anywhere.</p>
-                    </div>
-                </div>
-    
-            </article>
-        </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
+            <!-- ============================================================
          RESIDENT STICKY TABS SECTION
          Paste into resident.html — after the "Resident flow" section
          Add to <head>: <link rel="stylesheet" href="../css/resident-tabs.css">
          Add before </body>: <script src="../js/resident-tabs.js"></script>
          ============================================================ -->
-    
-    <section class="rtabs-section" id="resident-tabs" style="padding-top: var(--space-3xl);">
-        <div class="rtabs-height">
-            <div class="rtabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#resident-tabs">
-                <div class="rtabs-component">
-    
-                    <!-- ── LEFT PANEL: text slides ── -->
-                    <div class="rtabs-left logo-box--glass">
-                        <div class="rtabs-slides">
-    
 
-                            <div class="rtabs-slide is-active" data-slide="1">
-                                <div class="rtabs-slide-inner">
-                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
-                                    <span class="rtabs-tag">Step 01</span>
-                                    <h2 class="rtabs-heading" data-reveal>
-                                        Track Every Application,
-                                        <span class="rtabs-accent">in Real Time</span>
-                                    </h2>
-                                    <div class="rtabs-line"></div>
-                                    <p class="rtabs-body" data-reveal>
-                                        Know exactly where your request stands at every step of the process. Every status change is delivered straight to your
-                                        phone.
-                                    </p>
+            <section class="rtabs-section" id="resident-tabs" style="padding-top: var(--space-3xl);">
+                <div class="rtabs-height">
+                    <div class="rtabs-sticky" data-scroll data-scroll-sticky data-scroll-target="#resident-tabs">
+                        <div class="rtabs-component">
+
+                            <!-- ── LEFT PANEL: text slides ── -->
+                            <div class="rtabs-left logo-box--glass">
+                                <div class="rtabs-slides">
+
+
+                                    <div class="rtabs-slide is-active" data-slide="1">
+                                        <div class="rtabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">Your
+                                                Life, Simplified</span>
+                                            <span class="rtabs-tag">Step 01</span>
+                                            <h2 class="rtabs-heading" data-reveal>
+                                                Track Every Application,
+                                                <span class="rtabs-accent">in Real Time</span>
+                                            </h2>
+                                            <div class="rtabs-line"></div>
+                                            <p class="rtabs-body" data-reveal>
+                                                Know exactly where your request stands at every step of the process.
+                                                Every status change is delivered straight to your
+                                                phone.
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="rtabs-slide" data-slide="2">
+                                        <div class="rtabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">Your
+                                                Life, Simplified</span>
+                                            <span class="rtabs-tag">Step 02</span>
+                                            <h2 class="rtabs-heading" data-reveal>
+                                                Sign Anything.
+                                                <span class="rtabs-accent">From Anywhere.</span>
+                                            </h2>
+                                            <div class="rtabs-line"></div>
+                                            <p class="rtabs-body" data-reveal>
+                                                Legally binding electronic signatures, recognised across Irish
+                                                government services. The whole process takes under a
+                                                minute — from your phone, wherever you are.
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="rtabs-slide" data-slide="3">
+                                        <div class="rtabs-slide-inner">
+                                            <span class="comparison__badge" data-reveal style="width: fit-content;">Your
+                                                Life, Simplified</span>
+                                            <span class="rtabs-tag">Step 03</span>
+                                            <h2 class="rtabs-heading" data-reveal>
+                                                Free for <span class="rtabs-accent">Every</span> Irish <span
+                                                    class="rtabs-accent">Resident</span>
+                                            </h2>
+                                            <div class="rtabs-line"></div>
+                                            <p class="rtabs-body" data-reveal>
+                                                EireID is a public service, not a product. Downloading the app and
+                                                accessing your documents costs nothing — and it
+                                                always will.
+                                            </p>
+                                            <a href="#waitlist" class="rtabs-cta">Join the Waitlist</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="rtabs-dots" aria-label="Slide navigation">
+                                    <button class="rtabs-dot is-active" data-target="1"
+                                        aria-label="Go to slide 1"></button>
+                                    <button class="rtabs-dot" data-target="2" aria-label="Go to slide 2"></button>
+                                    <button class="rtabs-dot" data-target="3" aria-label="Go to slide 3"></button>
                                 </div>
                             </div>
-    
 
-                            <div class="rtabs-slide" data-slide="2">
-                                <div class="rtabs-slide-inner">
-                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
-                                    <span class="rtabs-tag">Step 02</span>
-                                    <h2 class="rtabs-heading" data-reveal>
-                                        Sign Anything.
-                                        <span class="rtabs-accent">From Anywhere.</span>
-                                    </h2>
-                                    <div class="rtabs-line"></div>
-                                    <p class="rtabs-body" data-reveal>
-                                        Legally binding electronic signatures, recognised across Irish government services. The whole process takes under a
-                                        minute — from your phone, wherever you are.
-                                    </p>
+                            <!-- ── RIGHT PANEL: videos ── -->
+                            <div class="rtabs-right logo-box--glass">
+
+
+                                <div class="rtabs-video is-active" data-video="1">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="../assets/video/application_tracking__video.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+
+                                <div class="rtabs-video" data-video="2">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="../assets/video/signature__video.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+
+                                <div class="rtabs-video" data-video="3">
+                                    <video autoplay loop muted playsinline>
+                                        <source src="../assets/video/free.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="partners-glass-section">
+
+                <div class="marquee-track track-right">
+                    <div class="marquee-content">
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-track track-left">
+                    <div class="marquee-content">
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                        <div class="logo-group">
+                            <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
+                                    alt="Citizens Information"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png"
+                                    alt="Department of Justice">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue">
+                            </div>
+                            <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
+                            <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
+                            <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg"
+                                    alt="An Garda Síochána"></div>
+                            <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <div class="residents-column__container">
+                <section class="trust-section">
+                    <div class="trust-visual">
+                        <div class="trust-center">
+                            <div class="trust-glow"></div>
+                            <div class="trust-shield logo-box--glass">
+                                <span class="iconify" data-icon="lucide:shield-check"></span>
+                            </div>
+                        </div>
+
+                        <div class="trust-pill trust-pill--1 logo-box--glass">
+                            <span class="iconify" data-icon="lucide:file-check-2"></span>
+                            <span>GDPR Compliant</span>
+                        </div>
+
+                        <div class="trust-pill trust-pill--2 logo-box--glass">
+                            <span class="iconify" data-icon="lucide:award"></span>
+                            <span>eIDAS Certified</span>
+                        </div>
+
+                        <div class="trust-pill trust-pill--3 logo-box--glass">
+                            <span class="iconify" data-icon="lucide:lock-keyhole"></span>
+                            <span>End-to-End Encrypted</span>
+                        </div>
+
+                        <div class="trust-pill trust-pill--4 logo-box--glass">
+                            <span class="iconify" data-icon="lucide:fingerprint"></span>
+                            <span>Biometric Only</span>
+                        </div>
+                    </div>
+
+                    <div class="trust-footer">
+                        <span class="iconify" data-icon="lucide:landmark"></span>
+                        <p>Regulated by the Department of Public Expenditure and Reform.</p>
+                    </div>
+                </section>
+                <section class="faq resident-faq">
+                    <div class="faq__container resident-faq__container">
+
+                        <div class="faq__header resident-faq__header">
+                            <h2 class="faq__title">Common Questions</h2>
+                            <p class="faq__subtitle">Everything you need to know about your digital ID.</p>
+                        </div>
+
+                        <div class="faq__accordion">
+                            <div class="faq__item">
+                                <button class="faq__question" aria-expanded="false">
+                                    <span class="faq__question-text">What happens if I lose my phone?</span>
+                                    <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                                </button>
+                                <div class="faq__answer">
+                                    <p>Your data remains completely safe. EireID uses end-to-end encryption, and no
+                                        personal documents
+                                        are stored directly on your device's local storage. You can instantly freeze
+                                        your account from
+                                        any web browser or via our 24/7 support.</p>
                                 </div>
                             </div>
-    
 
-                            <div class="rtabs-slide" data-slide="3">
-                                <div class="rtabs-slide-inner">
-                                    <span class="comparison__badge" data-reveal style="width: fit-content;">Your Life, Simplified</span>
-                                    <span class="rtabs-tag">Step 03</span>
-                                    <h2 class="rtabs-heading" data-reveal>
-                                        Free for <span class="rtabs-accent">Every</span> Irish <span class="rtabs-accent">Resident</span>
-                                    </h2>
-                                    <div class="rtabs-line"></div>
-                                    <p class="rtabs-body" data-reveal>
-                                        EireID is a public service, not a product. Downloading the app and accessing your documents costs nothing — and it
-                                        always will.
-                                    </p>
-                                    <a href="#waitlist" class="rtabs-cta">Join the Waitlist</a>
+                            <div class="faq__item">
+                                <button class="faq__question" aria-expanded="false">
+                                    <span class="faq__question-text">Is EireID free to use?</span>
+                                    <span class="iconify faq__icon" data-icon="lucify:chevron-down"></span>
+                                </button>
+                                <div class="faq__answer">
+                                    <p>Yes. EireID is a core public service initiative funded by the government. It is
+                                        completely free
+                                        for all residents of Ireland, with no hidden fees or premium tiers.</p>
                                 </div>
                             </div>
-    
-                        </div>
-    
 
-                        <div class="rtabs-dots" aria-label="Slide navigation">
-                            <button class="rtabs-dot is-active" data-target="1" aria-label="Go to slide 1"></button>
-                            <button class="rtabs-dot" data-target="2" aria-label="Go to slide 2"></button>
-                            <button class="rtabs-dot" data-target="3" aria-label="Go to slide 3"></button>
-                        </div>
-                    </div>
-    
-                    <!-- ── RIGHT PANEL: videos ── -->
-                    <div class="rtabs-right logo-box--glass">
-    
+                            <div class="faq__item">
+                                <button class="faq__question" aria-expanded="false">
+                                    <span class="faq__question-text">Which documents can I link?</span>
+                                    <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                                </button>
+                                <div class="faq__answer">
+                                    <p>Currently, you can link your Public Services Card (PSC), Irish Driving Licence,
+                                        Passport, and
+                                        Irish Residence Permit (IRP). More documents are being added to the network
+                                        continuously.</p>
+                                </div>
+                            </div>
 
-                        <div class="rtabs-video is-active" data-video="1">
-                            <video autoplay loop muted playsinline>
-                                <source src="../assets/video/application_tracking__video.mp4" type="video/mp4">
-                            </video>
+                            <div class="faq__item">
+                                <button class="faq__question" aria-expanded="false">
+                                    <span class="faq__question-text">Do I need a face scan every time?</span>
+                                    <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
+                                </button>
+                                <div class="faq__answer">
+                                    <p>No. Face verification is only required when signing legally binding documents or
+                                        making
+                                        high-security changes to your account. For regular logins, your phone's standard
+                                        biometrics
+                                        (Face ID / Fingerprint) are sufficient.</p>
+                                </div>
+                            </div>
                         </div>
-    
-                        <div class="rtabs-video" data-video="2">
-                            <video autoplay loop muted playsinline>
-                                <source src="../assets/video/signature__video.mp4" type="video/mp4">
-                            </video>
+
+                        <div class="resident-faq__action">
+                            <a href="support.html" class="btn--branded resident-faq__btn">
+                                <span>VISIT SUPPORT CENTRE</span>
+                            </a>
                         </div>
-    
-                        <div class="rtabs-video" data-video="3">
-                            <video autoplay loop muted playsinline>
-                                <source src="../assets/video/free.mp4" type="video/mp4">
-                            </video>
-                        </div>
-    
+
                     </div>
-    
-                </div>
+                </section>
             </div>
+
+            <!-- === FOOTER === -->
+            <footer class="footer-main" data-reveal>
+                <div class="footer-giant-brand">EireID</div>
+                <div class="footer-main__inner">
+
+                    <div class="footer-brand">
+                        <div class="footer-brand__logo">
+                            <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;"
+                                loading="lazy">
+                            <span>EireID</span>
+                        </div>
+                        <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital
+                            identity —
+                            verified once, trusted everywhere.</p>
+                        <div class="footer-brand__socials">
+                            <a href="#" aria-label="X / Twitter"><span class="iconify"
+                                    data-icon="lucide:twitter"></span></a>
+                            <a href="#" aria-label="Instagram"><span class="iconify"
+                                    data-icon="lucide:instagram"></span></a>
+                            <a href="#" aria-label="LinkedIn"><span class="iconify"
+                                    data-icon="lucide:linkedin"></span></a>
+                            <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
+                        </div>
+                    </div>
+
+
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Product</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="../index.html#about">About EireID</a></li>
+                            <li><a href="../index.html#how-it-works">How It Works</a></li>
+                            <li><a href="../index.html#comparison">Why EireID</a></li>
+                            <li><a href="../index.html#genesis-security">Security</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Services</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="./allservices.html">All Services</a></li>
+                            <li><a href="./resident.html">For Residents</a></li>
+                            <li><a href="./business.html">For Businesses</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Company</h4>
+                        <ul class="footer-col__list">
+                            <li><a href="./investor.html">Invest</a></li>
+                            <li><a href="./team.html">Our Team</a></li>
+                            <li><a href="./support.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-main__bottom">
+                    <span>© 2026 EireID. All rights reserved.</span>
+                    <div class="footer-main__legal">
+                        <a href="./privacy.html">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Settings</a>
+                    </div>
+                </div>
+            </footer>
+
         </div>
-    </section>
-
-    <section class="partners-glass-section">
-    
-        <div class="marquee-track track-right">
-            <div class="marquee-content">
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="marquee-track track-left">
-            <div class="marquee-content">
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-                <div class="logo-group">
-                    <div class="logo-item"><img src="../assets/services_logo/citizen-info_logo.png"
-                            alt="Citizens Information"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DOJHAM_logo.png" alt="Department of Justice">
-                    </div>
-                    <div class="logo-item"><img src="../assets/services_logo/NDLS-logo.png" alt="NDLS"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/Revenue_logo.png" alt="Revenue"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/HSE_logo.jpg" alt="HSE"></div>
-                    <div class="logo-item"><img src="../assets/logo/harp_black.svg" alt="Gov.ie"></div>
-                    <div class="logo-item"><img src="../assets/logo/logo(transparent).png" alt="EireID"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/DCU_logo.png" alt="DCU"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/garda_logo.jpg" alt="An Garda Síochána"></div>
-                    <div class="logo-item"><img src="../assets/services_logo/SUSI_logo.png" alt="SUSI"></div>
-                </div>
-            </div>
-        </div>
-    
-    </section>
-    <div class="residents-column__container">
-        <section class="trust-section">
-            <div class="trust-visual">
-                <div class="trust-center">
-                    <div class="trust-glow"></div>
-                    <div class="trust-shield logo-box--glass">
-                        <span class="iconify" data-icon="lucide:shield-check"></span>
-                    </div>
-                </div>
-        
-                <div class="trust-pill trust-pill--1 logo-box--glass">
-                    <span class="iconify" data-icon="lucide:file-check-2"></span>
-                    <span>GDPR Compliant</span>
-                </div>
-        
-                <div class="trust-pill trust-pill--2 logo-box--glass">
-                    <span class="iconify" data-icon="lucide:award"></span>
-                    <span>eIDAS Certified</span>
-                </div>
-        
-                <div class="trust-pill trust-pill--3 logo-box--glass">
-                    <span class="iconify" data-icon="lucide:lock-keyhole"></span>
-                    <span>End-to-End Encrypted</span>
-                </div>
-        
-                <div class="trust-pill trust-pill--4 logo-box--glass">
-                    <span class="iconify" data-icon="lucide:fingerprint"></span>
-                    <span>Biometric Only</span>
-                </div>
-            </div>
-        
-            <div class="trust-footer">
-                <span class="iconify" data-icon="lucide:landmark"></span>
-                <p>Regulated by the Department of Public Expenditure and Reform.</p>
-            </div>
-        </section>
-        <section class="faq resident-faq">
-            <div class="faq__container resident-faq__container">
-        
-                <div class="faq__header resident-faq__header">
-                    <h2 class="faq__title">Common Questions</h2>
-                    <p class="faq__subtitle">Everything you need to know about your digital ID.</p>
-                </div>
-        
-                <div class="faq__accordion">
-                    <div class="faq__item">
-                        <button class="faq__question" aria-expanded="false">
-                            <span class="faq__question-text">What happens if I lose my phone?</span>
-                            <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
-                        </button>
-                        <div class="faq__answer">
-                            <p>Your data remains completely safe. EireID uses end-to-end encryption, and no personal documents
-                                are stored directly on your device's local storage. You can instantly freeze your account from
-                                any web browser or via our 24/7 support.</p>
-                        </div>
-                    </div>
-        
-                    <div class="faq__item">
-                        <button class="faq__question" aria-expanded="false">
-                            <span class="faq__question-text">Is EireID free to use?</span>
-                            <span class="iconify faq__icon" data-icon="lucify:chevron-down"></span>
-                        </button>
-                        <div class="faq__answer">
-                            <p>Yes. EireID is a core public service initiative funded by the government. It is completely free
-                                for all residents of Ireland, with no hidden fees or premium tiers.</p>
-                        </div>
-                    </div>
-        
-                    <div class="faq__item">
-                        <button class="faq__question" aria-expanded="false">
-                            <span class="faq__question-text">Which documents can I link?</span>
-                            <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
-                        </button>
-                        <div class="faq__answer">
-                            <p>Currently, you can link your Public Services Card (PSC), Irish Driving Licence, Passport, and
-                                Irish Residence Permit (IRP). More documents are being added to the network continuously.</p>
-                        </div>
-                    </div>
-        
-                    <div class="faq__item">
-                        <button class="faq__question" aria-expanded="false">
-                            <span class="faq__question-text">Do I need a face scan every time?</span>
-                            <span class="iconify faq__icon" data-icon="lucide:chevron-down"></span>
-                        </button>
-                        <div class="faq__answer">
-                            <p>No. Face verification is only required when signing legally binding documents or making
-                                high-security changes to your account. For regular logins, your phone's standard biometrics
-                                (Face ID / Fingerprint) are sufficient.</p>
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="resident-faq__action">
-                    <a href="support.html" class="btn--branded resident-faq__btn">
-                        <span>VISIT SUPPORT CENTRE</span>
-                    </a>
-                </div>
-        
-            </div>
-        </section>
-    </div>
-
-    <!-- === FOOTER === -->
-    <footer class="footer-main" data-reveal>
-        <div class="footer-giant-brand">EireID</div>
-        <div class="footer-main__inner">
-
-            <div class="footer-brand">
-                <div class="footer-brand__logo">
-                    <img src="../assets/logo/logo(transparent).png" alt="EireID Logo" style="width: 32px;" loading="lazy">
-                    <span>EireID</span>
-                </div>
-                <p class="footer-brand__desc">EireID gives every resident in Ireland a secure, private digital identity —
-                    verified once, trusted everywhere.</p>
-                <div class="footer-brand__socials">
-                    <a href="#" aria-label="X / Twitter"><span class="iconify" data-icon="lucide:twitter"></span></a>
-                    <a href="#" aria-label="Instagram"><span class="iconify" data-icon="lucide:instagram"></span></a>
-                    <a href="#" aria-label="LinkedIn"><span class="iconify" data-icon="lucide:linkedin"></span></a>
-                    <a href="#" aria-label="GitHub"><span class="iconify" data-icon="lucide:github"></span></a>
-                </div>
-            </div>
-
-
-            <div class="footer-col">
-                <h4 class="footer-col__title">Product</h4>
-                <ul class="footer-col__list">
-                    <li><a href="../index.html#about">About EireID</a></li>
-                    <li><a href="../index.html#how-it-works">How It Works</a></li>
-                    <li><a href="../index.html#comparison">Why EireID</a></li>
-                    <li><a href="../index.html#genesis-security">Security</a></li>
-                </ul>
-            </div>
-
-
-            <div class="footer-col">
-                <h4 class="footer-col__title">Services</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./allservices.html">All Services</a></li>
-                    <li><a href="./resident.html">For Residents</a></li>
-                    <li><a href="./business.html">For Businesses</a></li>
-                </ul>
-            </div>
-
-
-            <div class="footer-col">
-                <h4 class="footer-col__title">Company</h4>
-                <ul class="footer-col__list">
-                    <li><a href="./investor.html">Invest</a></li>
-                    <li><a href="./team.html">Our Team</a></li>
-                    <li><a href="./support.html">Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-main__bottom">
-            <span>© 2026 EireID. All rights reserved.</span>
-            <div class="footer-main__legal">
-                <a href="./privacy.html">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Settings</a>
-            </div>
-        </div>
-    </footer>
-
-    </div>
     </div>
 
     <!-- === SERVICE MODAL === -->
-    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+    <div id="service-modal" class="service-modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="sm-title">
         <div class="service-modal__overlay" id="sm-overlay"></div>
         <div class="service-modal__content logo-box--glass">
             <button id="sm-close" class="service-modal__close" aria-label="Close modal">
                 <span class="iconify" data-icon="lucide:x"></span>
             </button>
-            
+
             <div id="sm-content-details" class="sm-state-container is-active">
                 <div class="service-modal__header">
                     <span id="sm-provider" class="service-modal__provider" data-reveal>Provider</span>
@@ -626,14 +708,14 @@
                     <div id="sm-tags" class="service-card__tags service-modal__tags-container">
                     </div>
                 </div>
-                
+
                 <div class="service-modal__body">
                     <p id="sm-desc" class="service-modal__desc" data-reveal></p>
                     <div class="service-modal__actions">
                         <button class="btn btn--primary" id="sm-apply-btn">Apply Now</button>
                     </div>
                 </div>
-                
+
                 <div class="service-modal__footer">
                     <h3 class="service-modal__similar-title" data-reveal>Similar Services</h3>
                     <div id="sm-similar-grid" class="service-modal__similar-grid">
@@ -647,7 +729,8 @@
                     <h2 class="service-modal__title">Application (1/2) - DEMO</h2>
                 </div>
                 <div class="service-modal__body">
-                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo application.</p>
+                    <p class="service-modal__desc">Please confirm your details before proceeding. This is a demo
+                        application.</p>
                     <div class="demo-form logo-box--glass">
                         <div class="demo-form__row">
                             <span class="demo-form__label">Full Name</span>
@@ -685,7 +768,8 @@
             <div id="sm-content-step2" class="sm-state-container sm-state--center">
                 <div class="service-modal__header">
                     <h2 class="service-modal__title">Face Verification (2/2) - DEMO</h2>
-                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No recording is made)</p>
+                    <p class="service-modal__desc" style="color: #ef4444; font-weight: bold; margin-top: 8px;">(DEMO: No
+                        recording is made)</p>
                 </div>
                 <div class="service-modal__body">
                     <div class="face-scanner" id="sm-face-scanner">
@@ -694,7 +778,8 @@
                         <span class="iconify face-scanner__icon" data-icon="lucide:user"></span>
                     </div>
                     <div class="loading-spinner" id="sm-loading-spinner" style="display: none;"></div>
-                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...</p>
+                    <p class="service-modal__desc" id="sm-step2-status" style="margin-top: 24px;">Verifying identity...
+                    </p>
                 </div>
             </div>
 
@@ -718,44 +803,47 @@
     </button>
 
     <div id="ai-modal" class="ai-modal" aria-hidden="true" aria-labelledby="ai-modal-title">
-      <div class="ai-modal__header">
-        <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
-        <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="ai-modal__body" id="ai-modal-body">
-        <div class="ai-message">
-             <div class="ai-message__avatar-container">
-                <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar" style="mix-blend-mode: multiply;" loading="lazy">
-             </div>
-             <div class="ai-message__bubble">
-                <div class="ai-message__text-container">
-                   <p class="ai-message__text">
-                     Hi! I'm Rua, your digital assistant. How can I help you today?
-                   </p>
+        <div class="ai-modal__header">
+            <h2 id="ai-modal-title">Your Rua AI Assistant</h2>
+            <button id="ai-modal-close" class="ai-modal__close" aria-label="Close Assistant">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="ai-modal__body" id="ai-modal-body">
+            <div class="ai-message">
+                <div class="ai-message__avatar-container">
+                    <img src="../assets/img/mascot_2.png" alt="Rua AI" class="ai-message__avatar"
+                        style="mix-blend-mode: multiply;" loading="lazy">
                 </div>
-                <div class="ai-message__time" id="ai-initial-time"></div>
-             </div>
-          </div>
-      </div>
-      <div class="ai-modal__footer">
-        <form id="ai-chat-form" class="ai-chat-form">
-          <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required autocomplete="off" aria-label="Type your message">
-          <button type="submit" class="ai-chat-submit" aria-label="Send message">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </form>
-      </div>
+                <div class="ai-message__bubble">
+                    <div class="ai-message__text-container">
+                        <p class="ai-message__text">
+                            Hi! I'm Rua, your digital assistant. How can I help you today?
+                        </p>
+                    </div>
+                    <div class="ai-message__time" id="ai-initial-time"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ai-modal__footer">
+            <form id="ai-chat-form" class="ai-chat-form">
+                <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Type your message..." required
+                    autocomplete="off" aria-label="Type your message">
+                <button type="submit" class="ai-chat-submit" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- === SCRIPTS === -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="../data/irish_gov_services.js" defer></script>
     <script src="../js/scripts.js" defer></script>

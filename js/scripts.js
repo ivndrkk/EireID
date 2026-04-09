@@ -193,6 +193,30 @@ function closeWaitlistModal() {
     waitlistModal.classList.remove('is-open');
     waitlistModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+
+    setTimeout(() => {
+        if (waitlistForm) {
+            waitlistForm.style.display = '';
+            waitlistForm.style.opacity = '';
+            waitlistForm.style.transform = '';
+
+            const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('is-loading');
+                submitBtn.removeAttribute('aria-busy');
+            }
+        }
+        if (waitlistSuccess) {
+            waitlistSuccess.hidden = true;
+            waitlistSuccess.style.opacity = '';
+            waitlistSuccess.style.transform = '';
+        }
+        const modalTitle = document.getElementById('waitlist-modal-title');
+        const modalSubtitle = document.getElementById('waitlist-modal-subtitle');
+        if (modalTitle) modalTitle.style.display = '';
+        if (modalSubtitle) modalSubtitle.style.display = '';
+    }, 400);
 }
 
 waitlistTriggers.forEach(btn => {
@@ -266,7 +290,7 @@ if (waitlistForm) {
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
         const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Joining...';
+        submitBtn.classList.add('is-loading');
         submitBtn.setAttribute('aria-busy', 'true');
 
         const formData = {
@@ -289,8 +313,30 @@ if (waitlistForm) {
             waitlistSuccess.classList.remove('is-warning', 'is-error');
 
             if (response.ok) {
-                if (successText) successText.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
-                waitlistSuccess.hidden = false;
+                waitlistForm.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                waitlistForm.style.opacity = '0';
+                waitlistForm.style.transform = 'translateY(-10px)';
+
+                setTimeout(() => {
+                    waitlistForm.style.display = 'none';
+                    const modalTitle = document.getElementById('waitlist-modal-title');
+                    const modalSubtitle = document.getElementById('waitlist-modal-subtitle');
+                    if (modalTitle) modalTitle.style.display = 'none';
+                    if (modalSubtitle) modalSubtitle.style.display = 'none';
+
+                    waitlistSuccess.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
+                    waitlistSuccess.style.color = "#a4e5b7";
+                    waitlistSuccess.hidden = false;
+                    waitlistSuccess.style.opacity = '0';
+                    waitlistSuccess.style.transform = 'translateY(10px)';
+                    waitlistSuccess.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                    requestAnimationFrame(() => {
+                        waitlistSuccess.style.opacity = '1';
+                        waitlistSuccess.style.transform = 'translateY(0)';
+                    });
+                }, 400);
+
                 waitlistForm.reset();
             } else if (response.status === 409) {
                 if (successText) successText.textContent = "You are already on the waitlist!";
@@ -306,7 +352,7 @@ if (waitlistForm) {
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
+            submitBtn.classList.remove('is-loading');
             submitBtn.removeAttribute('aria-busy');
         }
     });
@@ -901,8 +947,10 @@ function initAIChat() {
 
         const submitBtn = form.querySelector('button');
         input.disabled = true;
+        const submitBtn = form.querySelector('button');
         submitBtn.disabled = true;
         submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
 
         try {
             const res = await fetch(BACKEND_URL, {
@@ -925,6 +973,7 @@ function initAIChat() {
             input.disabled = false;
             submitBtn.disabled = false;
             submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
             input.focus();
         }
     });
@@ -1435,6 +1484,8 @@ function checkVerificationStatus() {
         }, 5000);
     }
 }
+
+document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 

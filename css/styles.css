@@ -2806,6 +2806,27 @@
     margin: 0 auto;
 }
 
+.is-loading {
+    position: relative !important;
+    pointer-events: none !important;
+    color: transparent !important;
+}
+
+.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -9px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spinnerRotate 0.8s linear infinite;
+}
+
 @keyframes spinnerRotate {
     0% {
         transform: rotate(0deg);
