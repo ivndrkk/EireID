@@ -38,9 +38,3 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
-## 2025-05-19 - Robust Interaction Patterns for Floating Assistants
-**Learning:** Floating conversational interfaces (like Rua AI) require careful interaction design to feel native and accessible. Key requirements include: 1) Auto-focusing the input field on open (using a ~100ms timeout to account for transitions), 2) Supporting standard dismissal via 'Escape' and outside clicks (ensuring the trigger itself is excluded from the 'outside' check), 3) Using `aria-live="polite"` for message updates, and 4) Restoring focus to the trigger upon dismissal.
-
-**Action:** When building or updating floating modals:
-1. Encapsulate open/close logic in dedicated functions to ensure focus management (focus in on open, focus back to trigger on close) is consistent across all dismissal methods.
-2. Use an `.is-loading` class on submit buttons for async states, leveraging CSS pseudo-elements for spinners to minimize DOM manipulation while providing immediate feedback.

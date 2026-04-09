@@ -259,36 +259,23 @@ if (waitlistForm) {
         e.preventDefault();
 
         let hasError = false;
-        const successText = document.getElementById('waitlist-success-text');
 
         if (waitlistName) {
             const isNameValid = waitlistName.value.trim().length > 0;
             waitlistNameError?.classList.toggle('is-visible', !isNameValid);
-            waitlistName.setAttribute('aria-invalid', !isNameValid);
-            if (!isNameValid) {
-                hasError = true;
-                waitlistName.setAttribute('aria-describedby', 'waitlist-name-error');
-            } else {
-                waitlistName.removeAttribute('aria-describedby');
-            }
+            if (!isNameValid) hasError = true;
         }
 
         if (waitlistEmail) {
             const isEmailValid = waitlistEmail.checkValidity();
             waitlistEmailError?.classList.toggle('is-visible', !isEmailValid);
-            waitlistEmail.setAttribute('aria-invalid', !isEmailValid);
-            if (!isEmailValid) {
-                hasError = true;
-                waitlistEmail.setAttribute('aria-describedby', 'waitlist-email-error');
-            } else {
-                waitlistEmail.removeAttribute('aria-describedby');
-            }
+            if (!isEmailValid) hasError = true;
         }
 
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
-        const originalBtnText = submitBtn.textContent;
+        const originalBtnText = submitBtn.innerText;
         submitBtn.disabled = true;
         submitBtn.classList.add('is-loading');
         submitBtn.setAttribute('aria-busy', 'true');
@@ -309,8 +296,6 @@ if (waitlistForm) {
             });
 
             const data = await response.json();
-
-            waitlistSuccess.classList.remove('is-warning', 'is-error');
 
             if (response.ok) {
                 waitlistForm.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
@@ -339,16 +324,16 @@ if (waitlistForm) {
 
                 waitlistForm.reset();
             } else if (response.status === 409) {
-                if (successText) successText.textContent = "You are already on the waitlist!";
-                waitlistSuccess.classList.add('is-warning');
+                waitlistSuccess.textContent = "You are already on the waitlist!";
+                waitlistSuccess.style.color = "#fbd38d";    
                 waitlistSuccess.hidden = false;
             } else {
                 throw new Error(data.error || 'Server error');
             }
         } catch (error) {
             console.error('Waitlist submission failed:', error);
-            if (successText) successText.textContent = "Something went wrong. Please try again.";
-            waitlistSuccess.classList.add('is-error');
+            waitlistSuccess.textContent = "Something went wrong. Please try again.";
+            waitlistSuccess.style.color = "#fc8181";
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
@@ -398,6 +383,15 @@ window.addEventListener('pageshow', (event) => {
         setTimeout(activateElementsAbove, 100);
     }
 });
+window.escapeHTML = function(str) {
+    if (!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+};
 
 let textRevealObserver;
 
@@ -442,24 +436,17 @@ function initTeamCards() {
     const cards = document.querySelectorAll('.team-id-card');
     if (!cards.length) return;
 
-    let activeCard = null;
-
     cards.forEach(card => {
-        if (card.classList.contains('is-flipped')) {
-            activeCard = card;
-        }
-
         const toggleFlip = (e) => {
             if (e.target.closest('a')) return;
-
-            if (activeCard && activeCard !== card) {
-                activeCard.classList.remove('is-flipped');
-                activeCard.setAttribute('aria-expanded', 'false');
-            }
-
             const isFlipped = card.classList.toggle('is-flipped');
             card.setAttribute('aria-expanded', isFlipped);
-            activeCard = isFlipped ? card : null;
+            cards.forEach(other => {
+                if (other !== card && other.classList.contains('is-flipped')) {
+                    other.classList.remove('is-flipped');
+                    other.setAttribute('aria-expanded', 'false');
+                }
+            });
         };
         card.addEventListener('click', toggleFlip);
         card.addEventListener('keydown', (e) => {
@@ -648,10 +635,7 @@ function initStatCounters() {
 
   if (!stats.length) return;
 
-  // Optimization: Pre-assign indices to avoid O(N) Array.from + indexOf lookups
-  // during IntersectionObserver triggers. Reduces CPU overhead by ~100% per trigger.
-  stats.forEach((el, i) => {
-    el._statIndex = i;
+  stats.forEach(el => {
     if (!el.getAttribute('data-target')) {
       el.setAttribute('data-target', el.textContent.trim());
     }
@@ -706,7 +690,9 @@ function initStatCounters() {
 
         if (entry.isIntersecting) {
           if (el.getAttribute('data-counted') !== 'true') {
-            animateCount(el, el._statIndex);
+            const allStats = Array.from(stats);
+            const statIndex = allStats.indexOf(el);
+            animateCount(el, statIndex);
             el.setAttribute('data-counted', 'true');
             observer.unobserve(el);
           }
@@ -799,22 +785,6 @@ function initFloatingAssistant() {
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
 
-    function openAssistant() {
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        const chatInput = document.getElementById('ai-chat-input');
-        if (chatInput) {
-            setTimeout(() => chatInput.focus(), 100);
-        }
-    }
-
-    function closeAssistant() {
-        if (!modal.classList.contains('is-open')) return;
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        fab.focus();
-    }
-
     ScrollTrigger.create({
         trigger: 'body',
         scroller: '[data-scroll-container]',
@@ -824,7 +794,10 @@ function initFloatingAssistant() {
                 fab.classList.add('is-visible');
             } else {
                 fab.classList.remove('is-visible');
-                closeAssistant();
+                if (modal.classList.contains('is-open')) {
+                    modal.classList.remove('is-open');
+                    modal.setAttribute('aria-hidden', 'true');
+                }
             }
         }
     });
@@ -832,27 +805,20 @@ function initFloatingAssistant() {
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
         if (isOpen) {
-            closeAssistant();
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
         } else {
-            openAssistant();
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
         }
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', closeAssistant);
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+        });
     }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-            closeAssistant();
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (modal.classList.contains('is-open') && !modal.contains(e.target) && !fab.contains(e.target)) {
-            closeAssistant();
-        }
-    });
 }
 
 function initAIChat() {
@@ -868,8 +834,6 @@ function initAIChat() {
     if (initialTimeEl) {
         initialTimeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
-
-    body.setAttribute('aria-live', 'polite');
 
     function renderUserMessage(text, timeStr) {
         const div = document.createElement('div');
@@ -945,7 +909,6 @@ function initAIChat() {
         input.value = '';
         showTyping();
 
-        const submitBtn = form.querySelector('button');
         input.disabled = true;
         const submitBtn = form.querySelector('button');
         submitBtn.disabled = true;

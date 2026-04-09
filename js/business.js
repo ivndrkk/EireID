@@ -95,7 +95,7 @@
             if (valueSpan) {
                 const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.textContent = `${currentVal}M+`;
+                valueSpan.innerText = `${currentVal}M+`;
             }
         }
 
