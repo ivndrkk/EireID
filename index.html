@@ -844,7 +844,15 @@
                         <label for="waitlist-consent">I agree to the processing of my personal data according to the <a href="./pages/privacy.html" target="_blank">Privacy Policy</a>.</label>
                     </div>
 
-                    <button type="submit" class="waitlist-form__submit">Join Waitlist</button>
+                    <button type="submit" class="waitlist-form__submit">
+                        <span class="btn-text">Join Waitlist</span>
+                        <span class="btn-spinner" aria-hidden="true" hidden></span>
+                    </button>
+
+                    <div id="waitlist-success" class="waitlist-form__success" hidden>
+                        <span class="iconify" data-icon="lucide:check-circle"></span>
+                        <span id="waitlist-success-text">Thanks! Your details have been captured.</span>
+                    </div>
                 </form>
             </div>
         </div>
