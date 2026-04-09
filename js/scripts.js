@@ -264,7 +264,9 @@ if (waitlistForm) {
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
+        const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;
+        submitBtn.textContent = 'Joining...';
         submitBtn.setAttribute('aria-busy', 'true');
 
         const formData = {
@@ -304,6 +306,7 @@ if (waitlistForm) {
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
             submitBtn.removeAttribute('aria-busy');
         }
     });
@@ -349,15 +352,6 @@ window.addEventListener('pageshow', (event) => {
         setTimeout(activateElementsAbove, 100);
     }
 });
-window.escapeHTML = function(str) {
-    if (!str) return "";
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-};
 
 let textRevealObserver;
 
@@ -402,17 +396,24 @@ function initTeamCards() {
     const cards = document.querySelectorAll('.team-id-card');
     if (!cards.length) return;
 
+    let activeCard = null;
+
     cards.forEach(card => {
+        if (card.classList.contains('is-flipped')) {
+            activeCard = card;
+        }
+
         const toggleFlip = (e) => {
             if (e.target.closest('a')) return;
+
+            if (activeCard && activeCard !== card) {
+                activeCard.classList.remove('is-flipped');
+                activeCard.setAttribute('aria-expanded', 'false');
+            }
+
             const isFlipped = card.classList.toggle('is-flipped');
             card.setAttribute('aria-expanded', isFlipped);
-            cards.forEach(other => {
-                if (other !== card && other.classList.contains('is-flipped')) {
-                    other.classList.remove('is-flipped');
-                    other.setAttribute('aria-expanded', 'false');
-                }
-            });
+            activeCard = isFlipped ? card : null;
         };
         card.addEventListener('click', toggleFlip);
         card.addEventListener('keydown', (e) => {
