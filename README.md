@@ -11,16 +11,17 @@
 
 > [!IMPORTANT]
 > This is the primary deployment. The core backend functionality is strictly tied to this domain. Using other methods may or may not result in limited features or broken integrations.
+### 2. Netlify Domain
+**[eireid.netlify.app](https://eireid.netlify.app/)**
 
-### 2. Local Launch (index.html)
+### 3. Local Launch (index.html)
 1. Download and extract `EireID.zip`.
 2. Open the extracted folder.
 3. Find `index.html` and open it in your web browser.
 
-### 3. DCU Student Server
+### 4. DCU Student Server
 **[student.computing.dcu.ie/~ivan.dereka2/EireID/](https://student.computing.dcu.ie/~ivan.dereka2/EireID/)**
 An alternative mirror provided for academic purposes.
-
 ---
 
 ## About EireID
