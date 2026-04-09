@@ -235,25 +235,37 @@ if (waitlistForm) {
         e.preventDefault();
 
         let hasError = false;
+        const successText = document.getElementById('waitlist-success-text');
 
         if (waitlistName) {
             const isNameValid = waitlistName.value.trim().length > 0;
             waitlistNameError?.classList.toggle('is-visible', !isNameValid);
-            if (!isNameValid) hasError = true;
+            waitlistName.setAttribute('aria-invalid', !isNameValid);
+            if (!isNameValid) {
+                hasError = true;
+                waitlistName.setAttribute('aria-describedby', 'waitlist-name-error');
+            } else {
+                waitlistName.removeAttribute('aria-describedby');
+            }
         }
 
         if (waitlistEmail) {
             const isEmailValid = waitlistEmail.checkValidity();
             waitlistEmailError?.classList.toggle('is-visible', !isEmailValid);
-            if (!isEmailValid) hasError = true;
+            waitlistEmail.setAttribute('aria-invalid', !isEmailValid);
+            if (!isEmailValid) {
+                hasError = true;
+                waitlistEmail.setAttribute('aria-describedby', 'waitlist-email-error');
+            } else {
+                waitlistEmail.removeAttribute('aria-describedby');
+            }
         }
 
         if (hasError) return;
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
-        const originalBtnText = submitBtn.innerText;
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Joining...';
+        submitBtn.setAttribute('aria-busy', 'true');
 
         const formData = {
             name: waitlistName?.value,
@@ -272,26 +284,27 @@ if (waitlistForm) {
 
             const data = await response.json();
 
+            waitlistSuccess.classList.remove('is-warning', 'is-error');
+
             if (response.ok) {
-                waitlistSuccess.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
-                waitlistSuccess.style.color = "#a4e5b7";
+                if (successText) successText.textContent = "Almost there! We've sent a verification link to your email. Please check your inbox to confirm.";
                 waitlistSuccess.hidden = false;
                 waitlistForm.reset();
             } else if (response.status === 409) {
-                waitlistSuccess.textContent = "You are already on the waitlist!";
-                waitlistSuccess.style.color = "#fbd38d";    
+                if (successText) successText.textContent = "You are already on the waitlist!";
+                waitlistSuccess.classList.add('is-warning');
                 waitlistSuccess.hidden = false;
             } else {
                 throw new Error(data.error || 'Server error');
             }
         } catch (error) {
             console.error('Waitlist submission failed:', error);
-            waitlistSuccess.textContent = "Something went wrong. Please try again.";
-            waitlistSuccess.style.color = "#fc8181";
+            if (successText) successText.textContent = "Something went wrong. Please try again.";
+            waitlistSuccess.classList.add('is-error');
             waitlistSuccess.hidden = false;
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = originalBtnText;
+            submitBtn.removeAttribute('aria-busy');
         }
     });
 }
