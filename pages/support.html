@@ -104,6 +104,7 @@
                                 style="font-size: 24px; margin-right: var(--space-md); opacity: 0.5; color: var(--color-text-heading);"></span>
                             <input type="text" id="support-search-input"
                                 placeholder="Search for PPSN verification, account recovery..."
+                                aria-label="Search knowledge base"
                                 style="background: transparent; border: none; outline: none; width: 100%; color: var(--color-text-heading); font-size: var(--font-size-lg); font-family: inherit;">
 
                             <div class="search-filter-divider"></div>
@@ -220,7 +221,7 @@
                                 verification link to your email.
                                 Please check your inbox to confirm.</p>
                         </div>
-                        <form id="contact-form" class="contact-form">
+                        <form id="contact-form" class="contact-form" novalidate>
                             <div class="form-grid"
                                 style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-lg);">
                                 <div class="form-group">
@@ -233,8 +234,9 @@
                                     <label for="email"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Email</label>
                                     <input type="email" id="email" name="email" placeholder="work@email.com" required
+                                        aria-describedby="email-error"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
-                                    <div id="email-error"
+                                    <div id="email-error" aria-live="polite"
                                         style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
                                         Please enter a valid email address.</div>
                                 </div>
@@ -248,7 +250,7 @@
                             <div class="form-consent-group">
                                 <input type="checkbox" id="support-consent" name="consent" required>
                                 <label for="support-consent">I agree to the processing of my personal data according to
-                                    the <a href="./privacy.html" target="_blank">Privacy Policy</a>.</label>
+                                    the <a href="./privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
                             </div>
                             <div style="text-align: center;">
                                 <button type="submit" class="button--glass">Send Message</button>

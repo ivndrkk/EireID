@@ -855,7 +855,7 @@ function initAIChat() {
         const sourcesHtml = sources.length > 0
             ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
-                 ${sources.map(s => `<a href="${escapeHTML(s.url)}" target="_blank" class="ai-message__source-link">${escapeHTML(s.title)}</a>`).join('')}
+                 ${sources.map(s => `<a href="${escapeHTML(s.url)}" target="_blank" rel="noopener noreferrer" class="ai-message__source-link">${escapeHTML(s.title)}</a>`).join('')}
                </div>`
             : '';
 
