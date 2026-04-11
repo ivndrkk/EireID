@@ -807,9 +807,14 @@ function initFloatingAssistant() {
         if (isOpen) {
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
+            fab.focus();
         } else {
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
+            const chatInput = document.getElementById('ai-chat-input');
+            if (chatInput) {
+                setTimeout(() => chatInput.focus(), 100);
+            }
         }
     });
 
@@ -817,8 +822,17 @@ function initFloatingAssistant() {
         closeBtn.addEventListener('click', () => {
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
+            fab.focus();
         });
     }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            fab.focus();
+        }
+    });
 }
 
 function initAIChat() {
@@ -828,6 +842,8 @@ function initAIChat() {
     const initialTimeEl = document.getElementById('ai-initial-time');
 
     if (!form || !input || !body) return;
+
+    body.setAttribute('aria-live', 'polite');
 
     const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/chat';
 
