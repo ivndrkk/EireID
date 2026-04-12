@@ -805,20 +805,55 @@ function initFloatingAssistant() {
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
         if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
+            closeAssistant();
         } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
+            openAssistant();
         }
     });
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+    function openAssistant() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        const input = document.getElementById('ai-chat-input');
+        if (input) {
+            setTimeout(() => input.focus(), 150);
+        }
     }
+
+    function closeAssistant() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.focus();
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeAssistant);
+    }
+
+    document.addEventListener('click', (e) => {
+        if (modal.classList.contains('is-open') && !modal.contains(e.target) && !fab.contains(e.target)) {
+            closeAssistant();
+        }
+    });
+
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAssistant();
+        } else if (e.key === 'Tab') {
+            const focusable = modal.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
 }
 
 function initAIChat() {
@@ -828,6 +863,8 @@ function initAIChat() {
     const initialTimeEl = document.getElementById('ai-initial-time');
 
     if (!form || !input || !body) return;
+
+    body.setAttribute('aria-live', 'polite');
 
     const BACKEND_URL = 'https://eireid-backend-9d25b1a7b372.herokuapp.com/chat';
 
