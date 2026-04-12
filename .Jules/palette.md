@@ -38,3 +38,11 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Accessibility for Floating Assistants
+**Learning:** Floating AI assistants or chat widgets are often excluded from standard page navigation flows. To make them truly accessible, they require a comprehensive interaction pattern: 1) Auto-focusing the primary input field upon opening, 2) Restoring focus to the triggering button upon closure, 3) Implementing a focus trap while active, 4) Supporting 'Escape' for dismissal, and 5) Using `aria-live="polite"` on the message container so screen readers announce dynamic responses.
+
+**Action:** When implementing persistent floating UI components:
+1. Refactor toggle logic into dedicated `open` and `close` functions to ensure focus management is consistently applied across all triggers (clicks, keys, backdrop).
+2. Use `setTimeout` for focusing the internal input to ensure any entry transitions have begun.
+3. Always verify that the component can be fully operated and dismissed using only the keyboard.
