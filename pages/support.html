@@ -102,7 +102,7 @@
                             style="display: flex; align-items: center; padding: var(--space-md); padding-left: var(--space-lg); border-radius: var(--radius-lg); width: 100%; transition: all 0.3s ease; position: relative;">
                             <span class="iconify" data-icon="lucide:search"
                                 style="font-size: 24px; margin-right: var(--space-md); opacity: 0.5; color: var(--color-text-heading);"></span>
-                            <input type="text" id="support-search-input"
+                            <input type="text" id="support-search-input" aria-label="Search support articles"
                                 placeholder="Search for PPSN verification, account recovery..."
                                 style="background: transparent; border: none; outline: none; width: 100%; color: var(--color-text-heading); font-size: var(--font-size-lg); font-family: inherit;">
 
@@ -129,7 +129,7 @@
                     </div>
 
 
-                    <div class="hero__search-suggestions" data-reveal data-scroll data-scroll-speed="0.4"
+                    <div class="hero__search-suggestions" data-reveal data-scroll data-scroll-speed="0.4" aria-live="polite"
                         style="margin-top: var(--space-lg); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); position: relative;">
 
                     </div>
@@ -146,7 +146,8 @@
 
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
                                 data-scroll-speed="0.1" data-guide="lost-phone" data-question="What if I lose my phone?"
-                                data-answer="If you lose your phone, your EireID remains secure. Because your data is stored exclusively in the Secure Enclave of your hardware, it cannot be accessed without your biometric lock. To restore your ID on a new device, you will use the 'Recovery Vault' process. This requires either your 24-word recovery phrase (generated during setup) or a linked 'Trusted Device' (like an iPad or second phone) to authorize the migration. Never share your recovery phrase with anyone.">
+                                data-answer="If you lose your phone, your EireID remains secure. Because your data is stored exclusively in the Secure Enclave of your hardware, it cannot be accessed without your biometric lock. To restore your ID on a new device, you will use the 'Recovery Vault' process. This requires either your 24-word recovery phrase (generated during setup) or a linked 'Trusted Device' (like an iPad or second phone) to authorize the migration. Never share your recovery phrase with anyone."
+                                role="button" tabindex="0" aria-label="Guideline: What if I lose my phone?">
                                 <div class="icon-circle mb-6"
                                     style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                                     <span class="iconify text-3xl" data-icon="lucide:smartphone-nfc"
@@ -162,7 +163,8 @@
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
                                 data-scroll-speed="0.15" data-guide="new-resident"
                                 data-question="Just arrived in Ireland?"
-                                data-answer="Welcome! Getting verified on EireID as a newcomer is straightforward. All you need is one of the key Irish identity documents — your IRP Card, Passport, or PPSN. Enter the document number, confirm your identity with a quick face biometric scan, and you're done. No paperwork, no queues.">
+                                data-answer="Welcome! Getting verified on EireID as a newcomer is straightforward. All you need is one of the key Irish identity documents — your IRP Card, Passport, or PPSN. Enter the document number, confirm your identity with a quick face biometric scan, and you're done. No paperwork, no queues."
+                                role="button" tabindex="0" aria-label="Guideline: Just arrived in Ireland?">
                                 <div class="icon-circle mb-6"
                                     style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                                     <span class="iconify text-3xl" data-icon="lucide:plane-landing"
@@ -178,7 +180,8 @@
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
                                 data-scroll-speed="0.2" data-guide="privacy"
                                 data-question="How Selective Disclosure works"
-                                data-answer="Selective Disclosure is EireID's core privacy feature. Traditionally, showing an ID reveals your full Name, DOB, and Address just to prove one fact. With EireID, if a shop or venue asks for ID, the app only generates a cryptographically signed 'Over 18' token. The requester gets a simple proof of age without ever seeing your sensitive personal details. You share only the minimum byte of data required for the transaction.">
+                                data-answer="Selective Disclosure is EireID's core privacy feature. Traditionally, showing an ID reveals your full Name, DOB, and Address just to prove one fact. With EireID, if a shop or venue asks for ID, the app only generates a cryptographically signed 'Over 18' token. The requester gets a simple proof of age without ever seeing your sensitive personal details. You share only the minimum byte of data required for the transaction."
+                                role="button" tabindex="0" aria-label="Guideline: How Selective Disclosure works">
                                 <div class="icon-circle mb-6"
                                     style="background: rgba(164, 229, 183, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
                                     <span class="iconify text-3xl" data-icon="lucide:eye-off"
@@ -233,6 +236,7 @@
                                     <label for="email"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Email</label>
                                     <input type="email" id="email" name="email" placeholder="work@email.com" required
+                                        aria-describedby="email-error"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
                                     <div id="email-error"
                                         style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
@@ -376,7 +380,7 @@
     </div>
 
 
-    <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;">
+    <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="q-modal-question">
         <div class="q-modal__content logo-box--glass">
             <button class="q-modal__close" aria-label="Close modal">
                 <span class="iconify" data-icon="lucide:x"></span>
@@ -385,7 +389,7 @@
                 <img src="../assets/img/faq_stickers/sq1.png" alt="Sticker" style="border-radius: 40%;">
             </div>
             <div class="q-modal__text">
-                <h3 class="q-modal__question"></h3>
+                <h3 id="q-modal-question" class="q-modal__question"></h3>
                 <p class="q-modal__answer"></p>
             </div>
             <div class="q-modal__image">
