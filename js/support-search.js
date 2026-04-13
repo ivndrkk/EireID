@@ -11,6 +11,7 @@
     // --- STATE ---
     let filteredData = [];
     let selectedCategories = new Set();
+    let lastActiveElement = null;
 
     // --- DOM ELEMENTS ---
     const searchInput = document.getElementById('support-search-input');
@@ -26,9 +27,14 @@
 
     function openModalDirect(modal) {
         if (!modal) return;
+        lastActiveElement = document.activeElement;
         modal.style.display = 'block';
         requestAnimationFrame(() => {
             modal.classList.add('is-active');
+            const closeBtn = modal.querySelector('.q-modal__close');
+            if (closeBtn) {
+                setTimeout(() => closeBtn.focus(), 100);
+            }
         });
     }
 
@@ -38,6 +44,9 @@
         setTimeout(() => {
             if (!modal.classList.contains('is-active')) {
                 modal.style.display = 'none';
+                if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+                    lastActiveElement.focus();
+                }
             }
         }, 400);
     }
@@ -260,6 +269,25 @@
         });
 
         document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && modal?.classList.contains('is-active')) {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length > 0) {
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstElement) {
+                            e.preventDefault();
+                            lastElement.focus();
+                        }
+                    } else {
+                        if (document.activeElement === lastElement) {
+                            e.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
+            }
             if (e.key === 'Escape') {
                 if (modal?.classList.contains('is-active')) closeModalDirect(modal);
                 if (window.closeAllFilters) window.closeAllFilters();
