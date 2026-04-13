@@ -21,3 +21,7 @@
 ## 2026-05-15 - [Accordion & Stat Counter Initialization]
 **Learning:** In components with many interactive elements (e.g., long FAQ lists or numerous stat counters), O(N) operations during event handling and forced reflows during initialization are major bottlenecks. Tracking the active item in a persistent object allows for O(1) state transitions, while using `textContent` instead of `innerText` for initial value setup avoids redundant layout calculations. These changes combined resulted in a ~71-82% performance improvement in our benchmarks.
 **Action:** Use a tracking object/variable for single-active-item components (accordions, tabs) to avoid O(N) loops on every interaction. Favor `textContent` for mass DOM updates where CSS-aware text retrieval is not required.
+
+## 2026-04-13 - [Animation Loop Optimization]
+**Learning:** Performing expensive canvas operations like `createLinearGradient` and allocating new arrays/objects (via `.slice().map()`) inside a 60fps `requestAnimationFrame` loop causes significant CPU overhead and garbage collection jank. Caching these assets and using direct `for` loops keeps the interaction smooth. Replacing `innerText` with `textContent` further reduces layout thrashing.
+**Action:** Always move object creation and DOM lookups outside of high-frequency animation loops. Use `textContent` for rapid UI updates where layout-awareness isn't required.
