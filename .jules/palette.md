@@ -1,0 +1,3 @@
+## 2025-05-14 - Accessibility/UX Standard for Floating Assistants
+**Learning:** Floating assistants (like Rua AI) require explicit focus management and keyboard traps to be truly accessible. Auto-focusing the input on open and restoring focus to the trigger on close prevents "lost" focus. `aria-live="polite"` on the message container ensures screen readers announce new content without interrupting the user.
+**Action:** Always implement a focus trap, Escape key listener, and focus restoration for any overlay or modal component. Use `aria-expanded` and `aria-haspopup` on the triggering element to signal the interaction to assistive technology.
