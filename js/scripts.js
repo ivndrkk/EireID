@@ -263,12 +263,14 @@ if (waitlistForm) {
         if (waitlistName) {
             const isNameValid = waitlistName.value.trim().length > 0;
             waitlistNameError?.classList.toggle('is-visible', !isNameValid);
+            waitlistName.setAttribute('aria-invalid', isNameValid ? 'false' : 'true');
             if (!isNameValid) hasError = true;
         }
 
         if (waitlistEmail) {
             const isEmailValid = waitlistEmail.checkValidity();
             waitlistEmailError?.classList.toggle('is-visible', !isEmailValid);
+            waitlistEmail.setAttribute('aria-invalid', isEmailValid ? 'false' : 'true');
             if (!isEmailValid) hasError = true;
         }
 
@@ -855,7 +857,7 @@ function initAIChat() {
         const sourcesHtml = sources.length > 0
             ? `<div class="ai-message__sources">
                  <p class="ai-message__sources-label">Sources:</p>
-                 ${sources.map(s => `<a href="${escapeHTML(s.url)}" target="_blank" class="ai-message__source-link">${escapeHTML(s.title)}</a>`).join('')}
+                 ${sources.map(s => `<a href="${escapeHTML(s.url)}" target="_blank" rel="noopener noreferrer" class="ai-message__source-link">${escapeHTML(s.title)}</a>`).join('')}
                </div>`
             : '';
 

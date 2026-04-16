@@ -867,13 +867,13 @@
                 <form id="waitlist-form" class="waitlist-form" novalidate>
                     <div class="waitlist-form__group">
                         <label for="waitlist-name">Name</label>
-                        <input type="text" id="waitlist-name" name="name" required>
+                        <input type="text" id="waitlist-name" name="name" required aria-describedby="waitlist-name-error">
                         <small id="waitlist-name-error" class="waitlist-form__error">Please enter your name.</small>
                     </div>
 
                     <div class="waitlist-form__group">
                         <label for="waitlist-email">Email</label>
-                        <input type="email" id="waitlist-email" name="email" required>
+                        <input type="email" id="waitlist-email" name="email" required aria-describedby="waitlist-email-error">
                         <small id="waitlist-email-error" class="waitlist-form__error">Please enter a valid email
                             address.</small>
                     </div>
@@ -885,7 +885,7 @@
                     <div class="form-consent-group">
                         <input type="checkbox" id="waitlist-consent" name="consent" required>
                         <label for="waitlist-consent">I agree to the processing of my personal data according to the <a
-                                href="./pages/privacy.html" target="_blank">Privacy Policy</a>.</label>
+                                href="./pages/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
                     </div>
 
                     <button type="submit" class="waitlist-form__submit">Join Waitlist</button>
