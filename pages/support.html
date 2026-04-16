@@ -233,6 +233,7 @@
                                     <label for="email"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Email</label>
                                     <input type="email" id="email" name="email" placeholder="work@email.com" required
+                                        aria-describedby="email-error"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
                                     <div id="email-error"
                                         style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
@@ -248,7 +249,7 @@
                             <div class="form-consent-group">
                                 <input type="checkbox" id="support-consent" name="consent" required>
                                 <label for="support-consent">I agree to the processing of my personal data according to
-                                    the <a href="./privacy.html" target="_blank">Privacy Policy</a>.</label>
+                                    the <a href="./privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
                             </div>
                             <div style="text-align: center;">
                                 <button type="submit" class="button--glass">Send Message</button>

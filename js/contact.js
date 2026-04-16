@@ -20,12 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         emailError.style.display = 'none';
         emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+        emailInput.setAttribute('aria-invalid', 'false');
 
         let hasError = false;
 
         if (!isValidEmail(emailValue)) {
             emailError.style.display = 'block';
             emailInput.style.border = '1px solid #d93025';
+            emailInput.setAttribute('aria-invalid', 'true');
             hasError = true;
             emailInput.focus();
         }
@@ -36,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const originalText = submitBtn.innerText;
         
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
         submitBtn.innerText = 'Transmitting...';
 
         try {
@@ -82,8 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Support submission failed:', error);
             alert("Something went wrong. Please try again.");
+        } finally {
             submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
             submitBtn.innerText = originalText;
         }
     });
