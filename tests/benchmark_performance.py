@@ -9,13 +9,12 @@ async def benchmark():
         browser = await p.chromium.launch(args=["--allow-file-access-from-files"])
         page = await browser.new_page()
 
+        # 1. Benchmark FAQ Accordion Toggle
         # Get absolute path to index.html
         path = os.path.abspath("index.html")
         url = f"file://{path}"
 
         await page.goto(url)
-
-        # 1. Benchmark FAQ Accordion Toggle
         # We'll measure the time taken to click multiple FAQ items
         print("--- Benchmarking FAQ Accordion ---")
 
@@ -76,8 +75,30 @@ async def benchmark():
 
         print(f"Stat Counters Init (innerText, 200 items): {stat_init_time:.4f} ms")
 
+        # 3. Benchmark Hero Graph drawGraph (js/business.js)
+        print("\n--- Benchmarking Hero Graph ---")
+        biz_path = os.path.abspath("pages/business.html")
+        biz_url = f"file://{biz_path}"
+        await page.goto(biz_url)
+
+        # Wait for script to load and initialize
+        await page.wait_for_function('() => typeof window.drawGraph === "function"', timeout=5000)
+
+        # Measure 100 calls to drawGraph
+        hero_duration = await page.evaluate('''() => {
+            const start = performance.now();
+            for (let i = 0; i < 100; i++) {
+                // progress from 0.01 to 1.0
+                window.drawGraph(i / 100 + 0.01);
+            }
+            return performance.now() - start;
+        }''')
+
+        print(f"Hero Graph drawGraph (100 iterations): {hero_duration:.4f} ms")
+        print(f"Average per frame: {hero_duration / 100:.4f} ms")
+
         await browser.close()
-        return faq_duration, stat_init_time
+        return faq_duration, stat_init_time, hero_duration
 
 if __name__ == "__main__":
     asyncio.run(benchmark())
