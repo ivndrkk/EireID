@@ -34,10 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
+        const generalError = document.getElementById('contact-general-error');
         
+        if (generalError) {
+            generalError.style.display = 'none';
+            generalError.textContent = '';
+        }
+
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
-        submitBtn.innerText = 'Transmitting...';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
 
         try {
             const response = await fetch('https://eireid-backend-9d25b1a7b372.herokuapp.com/support', {
@@ -81,9 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Support submission failed:', error);
-            alert("Something went wrong. Please try again.");
+            if (generalError) {
+                generalError.textContent = "Something went wrong. Please try again.";
+                generalError.style.display = 'block';
+            }
+        } finally {
             submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
             submitBtn.innerText = originalText;
         }
     });
