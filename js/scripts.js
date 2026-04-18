@@ -782,8 +782,31 @@ function initFloatingAssistant() {
     const fab = document.getElementById('ai-fab');
     const modal = document.getElementById('ai-modal');
     const closeBtn = document.getElementById('ai-modal-close');
+    const chatInput = document.getElementById('ai-chat-input');
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
+
+    fab.setAttribute('aria-haspopup', 'dialog');
+    fab.setAttribute('aria-expanded', 'false');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-hidden', 'true');
+
+    function openAssistant() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        fab.setAttribute('aria-expanded', 'true');
+        if (chatInput) {
+            setTimeout(() => chatInput.focus(), 300);
+        }
+    }
+
+    function closeAssistant(restoreFocus = true) {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) fab.focus();
+    }
 
     ScrollTrigger.create({
         trigger: 'body',
@@ -795,8 +818,7 @@ function initFloatingAssistant() {
             } else {
                 fab.classList.remove('is-visible');
                 if (modal.classList.contains('is-open')) {
-                    modal.classList.remove('is-open');
-                    modal.setAttribute('aria-hidden', 'true');
+                    closeAssistant(false);
                 }
             }
         }
@@ -804,21 +826,34 @@ function initFloatingAssistant() {
 
     fab.addEventListener('click', () => {
         const isOpen = modal.classList.contains('is-open');
-        if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-        }
+        if (isOpen) closeAssistant();
+        else openAssistant();
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', () => closeAssistant());
     }
+
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            const focusables = Array.from(modal.querySelectorAll(focusableSelectors));
+            if (focusables.length === 0) return;
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        } else if (e.key === 'Escape') {
+            closeAssistant();
+        }
+    });
 }
 
 function initAIChat() {
