@@ -632,22 +632,26 @@ function initAboutFadeIn() {
 
 function initStatCounters() {
   const stats = document.querySelectorAll('.stat-bar__number');
-
   if (!stats.length) return;
 
-  stats.forEach(el => {
+  // Bolt: Pre-calculate indices and cache target values to avoid O(N) searches
+  // and redundant DOM/parsing work during high-frequency animation frames.
+  stats.forEach((el, index) => {
+    el._statIndex = index;
+    const targetText = el.getAttribute('data-target') || el.textContent.trim();
     if (!el.getAttribute('data-target')) {
-      el.setAttribute('data-target', el.textContent.trim());
+      el.setAttribute('data-target', targetText);
     }
+    el._targetValue = parseFloat(targetText.replace(/[^0-9.]/g, '')) || 0;
+    el._suffix = targetText.replace(/[0-9.]/g, '');
   });
 
-  function animateCount(el, index) {
-    const targetText = el.getAttribute('data-target');
-    const targetValue = parseFloat(targetText.replace(/[^0-9.]/g, '')) || 0;
-    const suffix = targetText.replace(/[0-9.]/g, '');
-
+  function animateCount(el) {
+    const targetValue = el._targetValue;
+    const suffix = el._suffix;
     if (targetValue === 0) return;
-    const duration = 1000 + (index * 500);
+
+    const duration = 1000 + (el._statIndex * 500);
     const startTime = performance.now();
 
     const unitSpan = el.querySelector('.stat-bar__unit');
@@ -656,20 +660,19 @@ function initStatCounters() {
 
     let renderFn;
     if (unitSpan) {
-        if (isTextNode) {
-            renderFn = (val) => { firstNode.textContent = val; };
-        } else {
-            const unitHtml = unitSpan.outerHTML;
-            renderFn = (val) => { el.innerHTML = val + unitHtml; };
-        }
+      if (isTextNode) {
+        renderFn = (val) => { firstNode.textContent = val; };
+      } else {
+        const unitHtml = unitSpan.outerHTML;
+        renderFn = (val) => { el.innerHTML = val + unitHtml; };
+      }
     } else {
-        renderFn = (val) => { el.textContent = val + suffix; };
+      renderFn = (val) => { el.textContent = val + suffix; };
     }
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentValue = Math.floor(easeProgress * targetValue);
 
@@ -687,15 +690,10 @@ function initStatCounters() {
     (entries) => {
       entries.forEach((entry) => {
         const el = entry.target;
-
-        if (entry.isIntersecting) {
-          if (el.getAttribute('data-counted') !== 'true') {
-            const allStats = Array.from(stats);
-            const statIndex = allStats.indexOf(el);
-            animateCount(el, statIndex);
-            el.setAttribute('data-counted', 'true');
-            observer.unobserve(el);
-          }
+        if (entry.isIntersecting && el.getAttribute('data-counted') !== 'true') {
+          animateCount(el);
+          el.setAttribute('data-counted', 'true');
+          observer.unobserve(el);
         }
       });
     },
