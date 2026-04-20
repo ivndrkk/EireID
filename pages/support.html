@@ -145,6 +145,7 @@
                         <div class="grid-3">
 
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
+                                role="button" tabindex="0" aria-labelledby="lost-phone-title"
                                 data-scroll-speed="0.1" data-guide="lost-phone" data-question="What if I lose my phone?"
                                 data-answer="If you lose your phone, your EireID remains secure. Because your data is stored exclusively in the Secure Enclave of your hardware, it cannot be accessed without your biometric lock. To restore your ID on a new device, you will use the 'Recovery Vault' process. This requires either your 24-word recovery phrase (generated during setup) or a linked 'Trusted Device' (like an iPad or second phone) to authorize the migration. Never share your recovery phrase with anyone.">
                                 <div class="icon-circle mb-6"
@@ -152,7 +153,7 @@
                                     <span class="iconify text-3xl" data-icon="lucide:smartphone-nfc"
                                         style="color: var(--color-bg-primary);"></span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3" style="text-align: center;">What if I lose my phone?
+                                <h3 id="lost-phone-title" class="text-xl font-bold mb-3" style="text-align: center;">What if I lose my phone?
                                 </h3>
                                 <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">Guidelines
                                     for the 'Recovery Vault' and restoring your identity.</p>
@@ -160,6 +161,7 @@
 
 
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
+                                role="button" tabindex="0" aria-labelledby="new-resident-title"
                                 data-scroll-speed="0.15" data-guide="new-resident"
                                 data-question="Just arrived in Ireland?"
                                 data-answer="Welcome! Getting verified on EireID as a newcomer is straightforward. All you need is one of the key Irish identity documents — your IRP Card, Passport, or PPSN. Enter the document number, confirm your identity with a quick face biometric scan, and you're done. No paperwork, no queues.">
@@ -168,7 +170,7 @@
                                     <span class="iconify text-3xl" data-icon="lucide:plane-landing"
                                         style="color: var(--color-bg-primary);"></span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3" style="text-align: center;">Just arrived in Ireland?
+                                <h3 id="new-resident-title" class="text-xl font-bold mb-3" style="text-align: center;">Just arrived in Ireland?
                                 </h3>
                                 <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">A checklist
                                     and guide for new residents getting their digital PPSN.</p>
@@ -176,6 +178,7 @@
 
 
                             <div class="guideline-card logo-box--glass rounded-3xl" data-reveal data-scroll
+                                role="button" tabindex="0" aria-labelledby="privacy-title"
                                 data-scroll-speed="0.2" data-guide="privacy"
                                 data-question="How Selective Disclosure works"
                                 data-answer="Selective Disclosure is EireID's core privacy feature. Traditionally, showing an ID reveals your full Name, DOB, and Address just to prove one fact. With EireID, if a shop or venue asks for ID, the app only generates a cryptographically signed 'Over 18' token. The requester gets a simple proof of age without ever seeing your sensitive personal details. You share only the minimum byte of data required for the transaction.">
@@ -184,7 +187,7 @@
                                     <span class="iconify text-3xl" data-icon="lucide:eye-off"
                                         style="color: var(--color-bg-primary);"></span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3" style="text-align: center;">How Selective Disclosure
+                                <h3 id="privacy-title" class="text-xl font-bold mb-3" style="text-align: center;">How Selective Disclosure
                                     works</h3>
                                 <p class="opacity-50 text-sm" style="text-align: center; line-height: 1.5;">How we
                                     protect your data using Zero-Knowledge standards.</p>
@@ -376,7 +379,7 @@
     </div>
 
 
-    <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;">
+    <div id="q-modal" class="q-modal" aria-hidden="true" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="q-modal-title">
         <div class="q-modal__content logo-box--glass">
             <button class="q-modal__close" aria-label="Close modal">
                 <span class="iconify" data-icon="lucide:x"></span>
@@ -385,7 +388,7 @@
                 <img src="../assets/img/faq_stickers/sq1.png" alt="Sticker" style="border-radius: 40%;">
             </div>
             <div class="q-modal__text">
-                <h3 class="q-modal__question"></h3>
+                <h3 id="q-modal-title" class="q-modal__question"></h3>
                 <p class="q-modal__answer"></p>
             </div>
             <div class="q-modal__image">
