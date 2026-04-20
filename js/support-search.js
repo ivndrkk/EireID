@@ -11,33 +11,38 @@
     // --- STATE ---
     let filteredData = [];
     let selectedCategories = new Set();
+    let lastFocusedElement = null;
 
-    // --- DOM ELEMENTS ---
-    const searchInput = document.getElementById('support-search-input');
-    const suggestionsContainer = document.querySelector('.hero__search-suggestions');
-    const modal = document.getElementById('q-modal');
-    const mQuestion = modal?.querySelector('.q-modal__question');
-    const mAnswer = modal?.querySelector('.q-modal__answer');
-    const mImage = modal?.querySelector('.q-modal__image img');
+    // --- DOM ELEMENTS (Assigned in init) ---
+    let searchInput, suggestionsContainer, modal, mQuestion, mAnswer, mImage;
+    let filterBtn, filterDropdown, categoriesList;
 
-    const filterBtn = document.getElementById('search-filter-btn');
-    const filterDropdown = document.getElementById('search-filter-dropdown');
-    const categoriesList = document.getElementById('filter-categories-list');
+    function openModalDirect(modalEl) {
+        if (!modalEl) return;
+        lastFocusedElement = document.activeElement;
+        modalEl.style.display = 'block';
+        modalEl.setAttribute('aria-hidden', 'false');
 
-    function openModalDirect(modal) {
-        if (!modal) return;
-        modal.style.display = 'block';
         requestAnimationFrame(() => {
-            modal.classList.add('is-active');
+            modalEl.classList.add('is-active');
+            const closeBtn = modalEl.querySelector('.q-modal__close');
+            if (closeBtn) {
+                setTimeout(() => closeBtn.focus(), 100);
+            }
         });
     }
 
-    function closeModalDirect(modal) {
-        if (!modal) return;
-        modal.classList.remove('is-active');
+    function closeModalDirect(modalEl) {
+        if (!modalEl) return;
+        modalEl.classList.remove('is-active');
+        modalEl.setAttribute('aria-hidden', 'true');
+
         setTimeout(() => {
-            if (!modal.classList.contains('is-active')) {
-                modal.style.display = 'none';
+            if (!modalEl.classList.contains('is-active')) {
+                modalEl.style.display = 'none';
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
             }
         }, 400);
     }
@@ -216,6 +221,17 @@
     }
 
     function initSupportSearch() {
+        searchInput = document.getElementById('support-search-input');
+        suggestionsContainer = document.querySelector('.hero__search-suggestions');
+        modal = document.getElementById('q-modal');
+        mQuestion = modal?.querySelector('.q-modal__question');
+        mAnswer = modal?.querySelector('.q-modal__answer');
+        mImage = modal?.querySelector('.q-modal__image img');
+
+        filterBtn = document.getElementById('search-filter-btn');
+        filterDropdown = document.getElementById('search-filter-dropdown');
+        categoriesList = document.getElementById('filter-categories-list');
+
         const data = window.SUPPORT_FAQ_DATA || [];
         data.forEach(item => {
             item._searchStr = `${item.question} ${item.answer} ${(item.keywords || []).join(' ')}`.toLowerCase();
@@ -263,6 +279,26 @@
             if (e.key === 'Escape') {
                 if (modal?.classList.contains('is-active')) closeModalDirect(modal);
                 if (window.closeAllFilters) window.closeAllFilters();
+            }
+
+            if (e.key === 'Tab' && modal && modal.classList.contains('is-active')) {
+                const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable.length === 0) return;
+
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
             }
         });
     }
