@@ -21,3 +21,7 @@
 ## 2026-05-15 - [Accordion & Stat Counter Initialization]
 **Learning:** In components with many interactive elements (e.g., long FAQ lists or numerous stat counters), O(N) operations during event handling and forced reflows during initialization are major bottlenecks. Tracking the active item in a persistent object allows for O(1) state transitions, while using `textContent` instead of `innerText` for initial value setup avoids redundant layout calculations. These changes combined resulted in a ~71-82% performance improvement in our benchmarks.
 **Action:** Use a tracking object/variable for single-active-item components (accordions, tabs) to avoid O(N) loops on every interaction. Favor `textContent` for mass DOM updates where CSS-aware text retrieval is not required.
+
+## 2026-05-22 - [Canvas Path & Asset Caching]
+**Learning:** For high-frequency Canvas animations (60fps), caching gradients and DOM elements outside the render loop is table stakes. However, a significant boost comes from utilizing `Path2D` to pre-define complex paths and avoiding all array methods (like `.slice().map()`) inside the frame loop. Even small allocations on every frame can pressure the GC and cause micro-stuttering in dense interactive sections.
+**Action:** Always pre-calculate Canvas paths using `Path2D` where possible. Eliminate any and all array allocations inside `requestAnimationFrame` callbacks.
