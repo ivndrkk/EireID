@@ -38,3 +38,12 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2026-04-21 - Accessible Inline Form Validation
+**Learning:** Standardizing form validation to use inline messaging instead of browser `alert()` dialogs improves UX by maintaining user context and enhances accessibility when paired with ARIA attributes. Linking inputs to their specific error messages via `aria-describedby` and using `aria-invalid="true"` ensures screen readers accurately report field status.
+
+**Action:**
+1. Use the `novalidate` attribute on forms to handle validation via custom JS logic.
+2. Replace `alert()` with hidden inline error containers that use `aria-live="polite"` or `aria-live="assertive"`.
+3. Dynamically manage `aria-invalid` on inputs and provide visual feedback using existing `.is-loading` states and `aria-busy` on buttons.
+4. Ensure the submit button state (text and loading spinner) is restored in a `finally` block or upon modal/form reset.
