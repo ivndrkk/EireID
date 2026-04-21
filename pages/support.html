@@ -220,21 +220,26 @@
                                 verification link to your email.
                                 Please check your inbox to confirm.</p>
                         </div>
-                        <form id="contact-form" class="contact-form">
+                        <form id="contact-form" class="contact-form" novalidate>
                             <div class="form-grid"
                                 style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-lg);">
                                 <div class="form-group">
                                     <label for="name"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Name</label>
                                     <input type="text" id="name" name="name" placeholder="Your full name" required
+                                        aria-describedby="name-error"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
+                                    <div id="name-error" aria-live="polite"
+                                        style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
+                                        Please enter your name.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Email</label>
                                     <input type="email" id="email" name="email" placeholder="work@email.com" required
+                                        aria-describedby="email-error"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
-                                    <div id="email-error"
+                                    <div id="email-error" aria-live="polite"
                                         style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
                                         Please enter a valid email address.</div>
                                 </div>
@@ -243,13 +248,25 @@
                                 <label for="message"
                                     style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Message</label>
                                 <textarea id="message" name="message" placeholder="How can we help you today?" required
+                                    aria-describedby="message-error"
                                     style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit; min-height: 150px; resize: vertical;"></textarea>
+                                <div id="message-error" aria-live="polite"
+                                    style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
+                                    Please enter your message.</div>
                             </div>
                             <div class="form-consent-group">
-                                <input type="checkbox" id="support-consent" name="consent" required>
+                                <input type="checkbox" id="support-consent" name="consent" required aria-describedby="consent-error">
                                 <label for="support-consent">I agree to the processing of my personal data according to
                                     the <a href="./privacy.html" target="_blank">Privacy Policy</a>.</label>
+                                <div id="consent-error" aria-live="polite"
+                                    style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
+                                    You must agree to the privacy policy.</div>
                             </div>
+
+                            <div id="contact-form-error" aria-live="assertive"
+                                style="display: none; color: #d93025; background: rgba(217, 48, 37, 0.1); padding: var(--space-md); border-radius: var(--radius-md); margin-bottom: var(--space-lg); text-align: center; font-size: var(--font-size-sm); font-weight: 600;">
+                            </div>
+
                             <div style="text-align: center;">
                                 <button type="submit" class="button--glass">Send Message</button>
                             </div>
