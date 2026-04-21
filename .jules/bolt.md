@@ -10,6 +10,10 @@
 **Learning:** In vanilla JS applications with large datasets, clearing the entire parent container for pagination ("Load More") causes significant DOM churn and layout thrashing. Utilizing an `isAppend` flag combined with `DocumentFragment` allows for O(1) DOM insertions that preserve existing nodes, resulting in smoother transitions and better memory efficiency.
 **Action:** Always implement incremental rendering (appending) for "Load More" patterns instead of full-grid re-renders. Use `DocumentFragment` to batch the new items before a single insertion into the live DOM.
 
+## 2024-05-24 - [Canvas Animation & Memory Optimization]
+**Learning:** For high-frequency Canvas animations (60fps), caching gradients and DOM elements outside the render loop is table stakes. However, the real win comes from replacing standard array manipulations (`.slice().map()`) with a pre-allocated `Float32Array` for coordinate storage. This eliminates frame-by-frame object allocations and reduces garbage collection pressure, which often causes micro-stuttering. Additionally, switching to `textContent` for real-time numeric updates avoids layout thrashing that `innerText` can trigger.
+**Action:** Always pre-allocate TypedArrays for animation coordinates and cache all reusable Canvas objects (gradients, Path2D) and DOM references outside the animation loop.
+
 ## 2024-05-25 - [Search Data Normalization & Set Lookups]
 **Learning:** For high-frequency search/filter logic on static data, pre-computing normalized search strings (concatenating and lowercasing fields during init) and using `Set` for filter criteria provides a significant (~82%) performance boost. This avoids redundant O(N) string operations and O(M) array lookups inside the O(N) filter loop.
 **Action:** Pre-normalize searchable fields during the data initialization phase and convert multi-select filter arrays to `Set` objects for O(1) membership checks during search/filtering.
