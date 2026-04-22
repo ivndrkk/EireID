@@ -477,12 +477,45 @@ function initDropdowns() {
     
     dropdownItems.forEach(item => {
         const link = item.querySelector('.nav__link');
+        const dropdown = item.querySelector('.nav__dropdown');
+        const dropdownLinks = dropdown ? dropdown.querySelectorAll('.nav__dropdown-link') : [];
         
+        const setExpanded = (expanded) => {
+            if (link) link.setAttribute('aria-expanded', expanded);
+            if (expanded) item.classList.add('is-active');
+            else item.classList.remove('is-active');
+        };
+
         if (link) {
             link.addEventListener('click', (e) => {
                 if (window.innerWidth < 768) {
                     e.preventDefault();
-                    item.classList.toggle('is-active');
+                    const isExpanded = link.getAttribute('aria-expanded') === 'true';
+                    setExpanded(!isExpanded);
+                }
+            });
+
+            item.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 768) setExpanded(true);
+            });
+            item.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 768) setExpanded(false);
+            });
+
+            item.addEventListener('focusin', () => {
+                if (window.innerWidth >= 768) setExpanded(true);
+            });
+
+            item.addEventListener('focusout', (e) => {
+                if (window.innerWidth >= 768 && !item.contains(e.relatedTarget)) {
+                    setExpanded(false);
+                }
+            });
+
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    setExpanded(false);
+                    link.focus();
                 }
             });
         }
@@ -491,6 +524,8 @@ function initDropdowns() {
     document.addEventListener('click', (e) => {
         dropdownItems.forEach(item => {
             if (!item.contains(e.target)) {
+                const link = item.querySelector('.nav__link');
+                if (link) link.setAttribute('aria-expanded', 'false');
                 item.classList.remove('is-active');
             }
         });
