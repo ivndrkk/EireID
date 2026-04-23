@@ -1,8 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const contactSuccess = document.getElementById('contact-success');
+    const contactErrorContainer = document.getElementById('contact-error');
     const emailInput = document.getElementById('email');
+    const nameInput = document.getElementById('name');
+    const messageInput = document.getElementById('message');
+    const consentInput = document.getElementById('support-consent');
+
     const emailError = document.getElementById('email-error');
+    const nameError = document.getElementById('name-error');
+    const messageError = document.getElementById('message-error');
+    const consentError = document.getElementById('consent-error');
 
     if (!contactForm) return;
 
@@ -11,23 +19,58 @@ document.addEventListener('DOMContentLoaded', () => {
         return re.test(String(email).toLowerCase());
     };
 
+    const toggleError = (input, errorEl, show, message) => {
+        if (errorEl) {
+            errorEl.style.display = show ? 'block' : 'none';
+            if (message && show) errorEl.textContent = message;
+        }
+        if (input && input.type !== 'checkbox') {
+            input.style.border = show ? '1px solid #d93025' : '1px solid rgba(0,0,0,0.1)';
+            input.setAttribute('aria-invalid', show ? 'true' : 'false');
+        }
+    };
+
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const emailValue = emailInput.value.trim();
-        const nameValue = document.getElementById('name').value.trim();
-        const messageValue = document.getElementById('message').value.trim();
+        if (contactErrorContainer) contactErrorContainer.style.display = 'none';
 
-        emailError.style.display = 'none';
-        emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+        const emailValue = emailInput.value.trim();
+        const nameValue = nameInput.value.trim();
+        const messageValue = messageInput.value.trim();
+        const isConsentChecked = consentInput ? consentInput.checked : true;
 
         let hasError = false;
 
-        if (!isValidEmail(emailValue)) {
-            emailError.style.display = 'block';
-            emailInput.style.border = '1px solid #d93025';
+        if (!nameValue) {
+            toggleError(nameInput, nameError, true);
+            if (!hasError) nameInput.focus();
             hasError = true;
-            emailInput.focus();
+        } else {
+            toggleError(nameInput, nameError, false);
+        }
+
+        if (!isValidEmail(emailValue)) {
+            toggleError(emailInput, emailError, true);
+            if (!hasError) emailInput.focus();
+            hasError = true;
+        } else {
+            toggleError(emailInput, emailError, false);
+        }
+
+        if (!messageValue) {
+            toggleError(messageInput, messageError, true);
+            if (!hasError) messageInput.focus();
+            hasError = true;
+        } else {
+            toggleError(messageInput, messageError, false);
+        }
+
+        if (!isConsentChecked) {
+            toggleError(consentInput, consentError, true);
+            hasError = true;
+        } else {
+            toggleError(consentInput, consentError, false);
         }
 
         if (hasError) return;
@@ -36,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const originalText = submitBtn.innerText;
         
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
         submitBtn.innerText = 'Transmitting...';
 
         try {
@@ -81,21 +125,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Support submission failed:', error);
-            alert("Something went wrong. Please try again.");
+            if (contactErrorContainer) contactErrorContainer.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
             submitBtn.innerText = originalText;
         }
     });
 
-    emailInput.addEventListener('input', () => {
-        if (emailError.style.display === 'block') {
-            if (isValidEmail(emailInput.value.trim())) {
-                emailError.style.display = 'none';
-                emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+    [nameInput, emailInput, messageInput].forEach(input => {
+        input.addEventListener('input', () => {
+            const errorEl = document.getElementById(`${input.id}-error`);
+            if (errorEl && errorEl.style.display === 'block') {
+                const isValid = input.id === 'email' ? isValidEmail(input.value.trim()) : input.value.trim() !== '';
+                if (isValid) {
+                    toggleError(input, errorEl, false);
+                }
             }
-        }
+        });
     });
+
+    if (consentInput) {
+        consentInput.addEventListener('change', () => {
+            if (consentInput.checked) {
+                toggleError(consentInput, consentError, false);
+            }
+        });
+    }
 
     const inputs = contactForm.querySelectorAll('input, textarea');
     inputs.forEach(input => {
