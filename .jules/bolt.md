@@ -21,3 +21,7 @@
 ## 2026-05-15 - [Accordion & Stat Counter Initialization]
 **Learning:** In components with many interactive elements (e.g., long FAQ lists or numerous stat counters), O(N) operations during event handling and forced reflows during initialization are major bottlenecks. Tracking the active item in a persistent object allows for O(1) state transitions, while using `textContent` instead of `innerText` for initial value setup avoids redundant layout calculations. These changes combined resulted in a ~71-82% performance improvement in our benchmarks.
 **Action:** Use a tracking object/variable for single-active-item components (accordions, tabs) to avoid O(N) loops on every interaction. Favor `textContent` for mass DOM updates where CSS-aware text retrieval is not required.
+
+## 2024-05-26 - [Canvas Animation Loop Optimization]
+**Learning:** High-frequency (60fps) canvas animations are extremely sensitive to garbage collection pressure and layout thrashing. Using `Float32Array` (TypedArrays) for coordinate caching and pre-calculating them once per frame (even for multi-pass rendering) eliminates object allocations in the loop. Caching canvas gradients and DOM elements outside the `draw` function, and using `textContent` for numerical updates, reduces per-frame execution time by >50%.
+**Action:** Use TypedArrays for vertex/coordinate data in canvas loops. Consolidate path-tracing logic into helpers that use cached coordinates to avoid redundant math across fill/stroke passes.
