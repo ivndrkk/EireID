@@ -38,3 +38,11 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-22 - WAI-ARIA Patterns for Floating Assistant Modals
+**Learning:** Floating action buttons (FABs) that trigger assistant-style dialogs must follow the complete WAI-ARIA Dialog pattern. Simply toggling visibility is insufficient for screen reader and keyboard users. A robust implementation requires: (1) state synchronization via `aria-expanded` and `aria-hidden`, (2) a focus trap within the modal, (3) auto-focusing the primary input on open (with a slight delay for transitions), (4) focus restoration to the FAB on close, and (5) Escape key dismissal support.
+
+**Action:** When implementing floating assistants or similar modular dialogs:
+1. Use encapsulated `open` and `close` functions to manage multiple state changes (focus, ARIA attributes, visibility) atomically.
+2. Use `setTimeout` (approx 300ms) for auto-focusing elements if there are opening transitions to ensure the element is visible and focusable by the browser.
+3. Always implement a focus trap using a single `keydown` listener that checks for `Tab` and `Shift+Tab` to wrap focus between the first and last interactive elements of the modal.
