@@ -16,6 +16,7 @@
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            updateGradient();
             drawGraph(1);
         });
 
@@ -31,71 +32,61 @@
         let animationProgress = 0;
         let animationRequestId;
 
+        const valueSpan = document.getElementById('hero-graph-value');
+        let cachedGradient = null;
+
+        function updateGradient() {
+            cachedGradient = ctx.createLinearGradient(0, 0, 0, height);
+            cachedGradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            cachedGradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        updateGradient();
+
+        /**
+         * Core drawing logic extracted to avoid redundancy and allocations.
+         * Optimization: Single loop over points, no slice/map.
+         */
+        function tracePath(progress) {
+            let lastX = 0;
+            let lastY = height - (points[0].y * height);
+            ctx.moveTo(lastX, lastY);
+
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
+                
+                const midX = lastX + (ptX - lastX) / 2;
+
+                ctx.bezierCurveTo(midX, lastY, midX, ptY, ptX, ptY);
+                lastX = ptX;
+                lastY = ptY;
+            }
+            return { lastX, lastY };
+        }
+
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
-
+            // Fill Path
             ctx.beginPath();
             ctx.moveTo(0, height);
-
-            let lastX = 0;
-            let lastY = height - (points[0].y * height);
-
-            ctx.lineTo(lastX, lastY);
-
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
-            }
-
+            const { lastX } = tracePath(progress);
             ctx.lineTo(lastX, height);
             ctx.lineTo(0, height);
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = cachedGradient;
             ctx.fill();
 
+            // Stroke Path
             ctx.beginPath();
-            lastX = 0;
-            lastY = height - (points[0].y * height);
-            ctx.moveTo(lastX, lastY);
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
-            }
-
+            tracePath(progress);
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
-                const maxVal = 24.5;
-                const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                // Optimization: textContent is faster than innerText (no reflow)
+                valueSpan.textContent = `${(24.5 * progress).toFixed(1)}M+`;
             }
         }
 
