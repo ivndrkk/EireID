@@ -38,3 +38,7 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2026-04-26 - Support Page Accessibility & Form UX
+**Learning:** Combining 'novalidate' on forms with manual ARIA-linked error containers ('aria-describedby' + 'aria-live="polite"') provides a much more accessible and consistent experience than relying on browser-default validation bubbles, especially when combined with async loading states.
+**Action:** Standardize form validation by (1) linking inputs to specific error message containers via 'aria-describedby', (2) using 'aria-live="polite"' for dynamic feedback, and (3) using '.is-loading' with 'aria-busy' for submit buttons.

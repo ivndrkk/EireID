@@ -104,6 +104,7 @@
                                 style="font-size: 24px; margin-right: var(--space-md); opacity: 0.5; color: var(--color-text-heading);"></span>
                             <input type="text" id="support-search-input"
                                 placeholder="Search for PPSN verification, account recovery..."
+                                aria-label="Search help articles"
                                 style="background: transparent; border: none; outline: none; width: 100%; color: var(--color-text-heading); font-size: var(--font-size-lg); font-family: inherit;">
 
                             <div class="search-filter-divider"></div>
@@ -130,6 +131,7 @@
 
 
                     <div class="hero__search-suggestions" data-reveal data-scroll data-scroll-speed="0.4"
+                        aria-live="polite"
                         style="margin-top: var(--space-lg); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); position: relative;">
 
                     </div>
@@ -220,21 +222,26 @@
                                 verification link to your email.
                                 Please check your inbox to confirm.</p>
                         </div>
-                        <form id="contact-form" class="contact-form">
+                        <form id="contact-form" class="contact-form" novalidate>
                             <div class="form-grid"
                                 style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-lg);">
                                 <div class="form-group">
                                     <label for="name"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Name</label>
                                     <input type="text" id="name" name="name" placeholder="Your full name" required
+                                        aria-describedby="name-error" aria-invalid="false"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
+                                    <div id="name-error" aria-live="polite"
+                                        style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
+                                        Please enter your name.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email"
                                         style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Email</label>
                                     <input type="email" id="email" name="email" placeholder="work@email.com" required
+                                        aria-describedby="email-error" aria-invalid="false"
                                         style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit;">
-                                    <div id="email-error"
+                                    <div id="email-error" aria-live="polite"
                                         style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
                                         Please enter a valid email address.</div>
                                 </div>
@@ -243,7 +250,11 @@
                                 <label for="message"
                                     style="display: block; font-size: var(--font-size-sm); font-weight: 700; margin-bottom: var(--space-xs); text-align: left;">Message</label>
                                 <textarea id="message" name="message" placeholder="How can we help you today?" required
+                                    aria-describedby="message-error" aria-invalid="false"
                                     style="width: 100%; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); font-family: inherit; min-height: 150px; resize: vertical;"></textarea>
+                                <div id="message-error" aria-live="polite"
+                                    style="color: #d93025; font-size: var(--font-size-xs); margin-top: 4px; display: none;">
+                                    Please enter your message.</div>
                             </div>
                             <div class="form-consent-group">
                                 <input type="checkbox" id="support-consent" name="consent" required>
