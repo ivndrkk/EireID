@@ -14,30 +14,60 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const nameInput = document.getElementById('name');
+        const messageInput = document.getElementById('message');
+        const nameError = document.getElementById('name-error');
+        const messageError = document.getElementById('message-error');
+
         const emailValue = emailInput.value.trim();
-        const nameValue = document.getElementById('name').value.trim();
-        const messageValue = document.getElementById('message').value.trim();
+        const nameValue = nameInput.value.trim();
+        const messageValue = messageInput.value.trim();
 
-        emailError.style.display = 'none';
-        emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+        // Reset states
+        [emailInput, nameInput, messageInput].forEach(input => {
+            input.style.border = '1px solid rgba(0,0,0,0.1)';
+            input.setAttribute('aria-invalid', 'false');
+        });
+        [emailError, nameError, messageError].forEach(err => {
+            if (err) err.style.display = 'none';
+        });
 
-        let hasError = false;
+        let firstInvalidField = null;
+
+        if (messageValue.length === 0) {
+            if (messageError) messageError.style.display = 'block';
+            messageInput.style.border = '1px solid #d93025';
+            messageInput.setAttribute('aria-invalid', 'true');
+            firstInvalidField = messageInput;
+        }
 
         if (!isValidEmail(emailValue)) {
             emailError.style.display = 'block';
             emailInput.style.border = '1px solid #d93025';
-            hasError = true;
-            emailInput.focus();
+            emailInput.setAttribute('aria-invalid', 'true');
+            firstInvalidField = emailInput;
         }
 
-        if (hasError) return;
+        if (nameValue.length === 0) {
+            if (nameError) nameError.style.display = 'block';
+            nameInput.style.border = '1px solid #d93025';
+            nameInput.setAttribute('aria-invalid', 'true');
+            firstInvalidField = nameInput;
+        }
+
+        if (firstInvalidField) {
+            firstInvalidField.focus();
+            return;
+        }
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerText;
+        const originalText = submitBtn.textContent;
+        let isSuccess = false;
         
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
-        submitBtn.innerText = 'Transmitting...';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
+        submitBtn.textContent = 'Transmitting...';
 
         try {
             const response = await fetch('https://eireid-backend-9d25b1a7b372.herokuapp.com/support', {
@@ -54,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Server returned an error');
             }
 
+            isSuccess = true;
             contactForm.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             contactForm.style.opacity = '0';
             contactForm.style.transform = 'translateY(-20px)';
@@ -82,9 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Support submission failed:', error);
             alert("Something went wrong. Please try again.");
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-            submitBtn.innerText = originalText;
+        } finally {
+            if (!isSuccess) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('is-loading');
+                submitBtn.removeAttribute('aria-busy');
+                submitBtn.textContent = originalText;
+            }
         }
     });
 
@@ -93,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isValidEmail(emailInput.value.trim())) {
                 emailError.style.display = 'none';
                 emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+                emailInput.setAttribute('aria-invalid', 'false');
             }
         }
     });
