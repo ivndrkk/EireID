@@ -13,9 +13,21 @@
         let width = canvas.width = canvas.parentElement.clientWidth;
         let height = canvas.height = canvas.parentElement.clientHeight * 0.7;
 
+        // Optimization: Cache gradient and DOM element outside the render loop
+        let gradient;
+        const valueSpan = document.getElementById('hero-graph-value');
+
+        function initGradient() {
+            gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        initGradient();
+
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            initGradient(); // Re-initialize gradient on resize
             drawGraph(1);
         });
 
@@ -28,74 +40,82 @@
             { x: 1, y: 0.95 }
         ];
 
+        // Optimization: Pre-calculate reusable coordinates using Float32Array to avoid object allocations
+        const pointsLen = points.length;
+        const coordsX = new Float32Array(pointsLen);
+        const coordsY = new Float32Array(pointsLen);
+        for (let i = 0; i < pointsLen; i++) {
+            coordsX[i] = points[i].x;
+            coordsY[i] = points[i].y;
+        }
+
         let animationProgress = 0;
         let animationRequestId;
 
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
-
             ctx.beginPath();
             ctx.moveTo(0, height);
 
             let lastX = 0;
-            let lastY = height - (points[0].y * height);
+            let lastY = height - (coordsY[0] * height);
 
             ctx.lineTo(lastX, lastY);
 
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
+            // Optimization: Single-pass coordinate calculation to avoid .slice().map() garbage collection pressure
+            for (let i = 1; i < pointsLen; i++) {
+                const ptX = coordsX[i] * width * progress;
+                const ptY = height - (coordsY[i] * height);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
+                const cp1x = lastX + (ptX - lastX) / 2;
                 const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+                const cp2x = lastX + (ptX - lastX) / 2;
+                const cp2y = ptY;
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ptX, ptY);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = ptX;
+                lastY = ptY;
             }
 
+            // Fill pass
             ctx.lineTo(lastX, height);
             ctx.lineTo(0, height);
             ctx.fillStyle = gradient;
             ctx.fill();
 
+            // Stroke pass (reuse same path if possible, but the original logic had two separate paths)
+            // Re-drawing the path for the stroke to match original behavior exactly
             ctx.beginPath();
             lastX = 0;
-            lastY = height - (points[0].y * height);
+            lastY = height - (coordsY[0] * height);
             ctx.moveTo(lastX, lastY);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+            for (let i = 1; i < pointsLen; i++) {
+                const ptX = coordsX[i] * width * progress;
+                const ptY = height - (coordsY[i] * height);
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                const cp1x = lastX + (ptX - lastX) / 2;
+                const cp1y = lastY;
+                const cp2x = lastX + (ptX - lastX) / 2;
+                const cp2y = ptY;
+
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ptX, ptY);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = ptX;
+                lastY = ptY;
             }
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
                 const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                // Optimization: Use textContent instead of innerText to avoid forced reflows
+                valueSpan.textContent = `${currentVal}M+`;
             }
         }
 
