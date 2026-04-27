@@ -14,29 +14,56 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const nameInput = document.getElementById('name');
+        const messageInput = document.getElementById('message');
+        const nameValue = nameInput.value.trim();
         const emailValue = emailInput.value.trim();
-        const nameValue = document.getElementById('name').value.trim();
-        const messageValue = document.getElementById('message').value.trim();
+        const messageValue = messageInput.value.trim();
 
+        // Reset states
+        [nameInput, emailInput, messageInput].forEach(input => {
+            input.style.border = '1px solid rgba(0,0,0,0.1)';
+            input.setAttribute('aria-invalid', 'false');
+        });
         emailError.style.display = 'none';
-        emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
 
         let hasError = false;
+        let firstInvalidField = null;
+
+        if (!messageValue) {
+            messageInput.style.border = '1px solid #d93025';
+            messageInput.setAttribute('aria-invalid', 'true');
+            hasError = true;
+            firstInvalidField = messageInput;
+        }
 
         if (!isValidEmail(emailValue)) {
             emailError.style.display = 'block';
             emailInput.style.border = '1px solid #d93025';
+            emailInput.setAttribute('aria-invalid', 'true');
             hasError = true;
-            emailInput.focus();
+            firstInvalidField = emailInput;
         }
 
-        if (hasError) return;
+        if (!nameValue) {
+            nameInput.style.border = '1px solid #d93025';
+            nameInput.setAttribute('aria-invalid', 'true');
+            hasError = true;
+            firstInvalidField = nameInput;
+        }
+
+        if (hasError) {
+            if (firstInvalidField) firstInvalidField.focus();
+            return;
+        }
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
+        let isSuccess = false;
         
         submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
         submitBtn.innerText = 'Transmitting...';
 
         try {
@@ -54,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Server returned an error');
             }
 
+            isSuccess = true;
             contactForm.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             contactForm.style.opacity = '0';
             contactForm.style.transform = 'translateY(-20px)';
@@ -82,9 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Support submission failed:', error);
             alert("Something went wrong. Please try again.");
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-            submitBtn.innerText = originalText;
+        } finally {
+            if (!isSuccess) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('is-loading');
+                submitBtn.removeAttribute('aria-busy');
+                submitBtn.innerText = originalText;
+            }
         }
     });
 
@@ -93,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isValidEmail(emailInput.value.trim())) {
                 emailError.style.display = 'none';
                 emailInput.style.border = '1px solid rgba(0,0,0,0.1)';
+                emailInput.setAttribute('aria-invalid', 'false');
             }
         }
     });
