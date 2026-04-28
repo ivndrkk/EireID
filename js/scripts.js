@@ -16,9 +16,6 @@ function escapeHTML(str) {
     return str.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-function initScrollReveal() {
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
     if (document.querySelector('[data-scroll-container]')) {
@@ -125,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     initDocCarousel();
     initAboutFadeIn();
-    initScrollReveal();
     initTextReveal();
     initStatCounters();
     initHowItWorksAnimation();
@@ -1447,8 +1443,6 @@ function checkVerificationStatus() {
         }, 5000);
     }
 }
-
-document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 

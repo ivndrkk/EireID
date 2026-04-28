@@ -10,14 +10,25 @@
         if (!canvas) return;
 
         const ctx = canvas.getContext('2d');
+        const valueSpan = document.getElementById('hero-graph-value');
         let width = canvas.width = canvas.parentElement.clientWidth;
         let height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+
+        // Bolt optimization: Cache gradient and re-calculate only on resize
+        let gradient;
+        function updateGradient() {
+            gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        updateGradient();
 
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            updateGradient();
             drawGraph(1);
-        });
+        }, { passive: true });
 
         const points = [
             { x: 0, y: 0.1 },
@@ -28,40 +39,39 @@
             { x: 1, y: 0.95 }
         ];
 
+        // Bolt optimization: Use TypedArray to avoid per-frame allocations and garbage collection
+        const normalizedPoints = new Float32Array(points.length * 2);
+        for (let i = 0; i < points.length; i++) {
+            normalizedPoints[i * 2] = points[i].x;
+            normalizedPoints[i * 2 + 1] = points[i].y;
+        }
+
         let animationProgress = 0;
         let animationRequestId;
 
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+            const firstX = 0;
+            const firstY = height - (normalizedPoints[1] * height);
 
+            // Path for filled area
             ctx.beginPath();
             ctx.moveTo(0, height);
+            ctx.lineTo(firstX, firstY);
 
-            let lastX = 0;
-            let lastY = height - (points[0].y * height);
+            let lastX = firstX;
+            let lastY = firstY;
 
-            ctx.lineTo(lastX, lastY);
-
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+            for (let i = 1; i < points.length; i++) {
+                const px = normalizedPoints[i * 2] * width * progress;
+                const py = height - (normalizedPoints[i * 2 + 1] * height);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                const cpX = lastX + (px - lastX) / 2;
+                ctx.bezierCurveTo(cpX, lastY, cpX, py, px, py);
+
+                lastX = px;
+                lastY = py;
             }
 
             ctx.lineTo(lastX, height);
@@ -69,33 +79,28 @@
             ctx.fillStyle = gradient;
             ctx.fill();
 
+            // Path for stroke line
             ctx.beginPath();
-            lastX = 0;
-            lastY = height - (points[0].y * height);
-            ctx.moveTo(lastX, lastY);
+            ctx.moveTo(firstX, firstY);
+            lastX = firstX;
+            lastY = firstY;
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
+            for (let i = 1; i < points.length; i++) {
+                const px = normalizedPoints[i * 2] * width * progress;
+                const py = height - (normalizedPoints[i * 2 + 1] * height);
+                const cpX = lastX + (px - lastX) / 2;
+                ctx.bezierCurveTo(cpX, lastY, cpX, py, px, py);
+                lastX = px;
+                lastY = py;
             }
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
-                const maxVal = 24.5;
-                const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                // Bolt optimization: textContent is faster than innerText as it doesn't trigger reflow
+                valueSpan.textContent = `${(24.5 * progress).toFixed(1)}M+`;
             }
         }
 
@@ -108,6 +113,8 @@
                 animationRequestId = requestAnimationFrame(animate);
             }
         }
+
+        window._drawHeroGraph = drawGraph;
 
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
