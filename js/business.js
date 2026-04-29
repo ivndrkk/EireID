@@ -16,6 +16,7 @@
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            updateGradient();
             drawGraph(1);
         });
 
@@ -28,74 +29,72 @@
             { x: 1, y: 0.95 }
         ];
 
+        // Cache for performance
+        let gradient;
+        const valueSpan = document.getElementById('hero-graph-value');
+        const maxVal = 24.5;
+
+        function updateGradient() {
+            gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        updateGradient();
+
         let animationProgress = 0;
         let animationRequestId;
 
+        /**
+         * Optimized drawGraph function.
+         * - Caches gradient and DOM elements.
+         * - Uses a single loop for both fill and stroke paths.
+         * - Eliminates object allocations (slice/map) in the animation loop.
+         * - Uses textContent instead of innerText for faster updates.
+         */
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+            const startY = height - (points[0].y * height);
 
-            ctx.beginPath();
-            ctx.moveTo(0, height);
+            // Optimization: Create both paths in a single pass
+            // We use a separate Path2D for the fill to allow reuse of the curve logic
+            const curve = new Path2D();
+            curve.moveTo(0, startY);
 
             let lastX = 0;
-            let lastY = height - (points[0].y * height);
+            let lastY = startY;
 
-            ctx.lineTo(lastX, lastY);
-
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+            // Single loop avoids multiple iterations and intermediate array allocations
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                const cpX = lastX + (ptX - lastX) / 2;
+                curve.bezierCurveTo(cpX, lastY, cpX, ptY, ptX, ptY);
+
+                lastX = ptX;
+                lastY = ptY;
             }
 
-            ctx.lineTo(lastX, height);
-            ctx.lineTo(0, height);
+            // Fill area
+            const fillPath = new Path2D(curve);
+            fillPath.lineTo(lastX, height);
+            fillPath.lineTo(0, height);
+            fillPath.closePath();
+
             ctx.fillStyle = gradient;
-            ctx.fill();
+            ctx.fill(fillPath);
 
-            ctx.beginPath();
-            lastX = 0;
-            lastY = height - (points[0].y * height);
-            ctx.moveTo(lastX, lastY);
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
-            }
-
+            // Stroke line
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
-            ctx.stroke();
+            ctx.stroke(curve);
 
-            const valueSpan = document.getElementById('hero-graph-value');
+            // Optimization: Use cached element and textContent
             if (valueSpan) {
-                const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                valueSpan.textContent = `${currentVal}M+`;
             }
         }
 
