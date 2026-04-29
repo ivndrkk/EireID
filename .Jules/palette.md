@@ -38,3 +38,11 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Focus Management in Persistent Modals
+**Learning:** Transition-based modals in vanilla JS often fail to auto-focus internal elements (like inputs) if the `focus()` call happens before the CSS transition completes or the element is fully visible to the accessibility tree. This is especially true in headless testing environments. Implementing a slight delay (e.g., 300ms) ensures the element is in a focusable state, providing a consistent experience for keyboard users.
+
+**Action:** When auto-focusing elements in a modal triggered by a transition:
+1. Wrap the `focus()` call in a `setTimeout` with a duration matching the CSS transition (e.g., 300ms).
+2. Ensure the focus trap correctly captures all interactive elements, including the close button and form inputs.
+3. Use a centralized `closeModal` function to return focus to the trigger element and clean up keyboard listeners.
