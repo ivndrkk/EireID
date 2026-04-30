@@ -38,3 +38,12 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Centralized Focus and State Management for Accessible Modals
+**Learning:** When implementing accessible floating assistants or modals in vanilla JS, centralized state management (e.g., a `toggleAssistant` function) is superior to multiple disparate click handlers. This ensures that accessibility attributes (`aria-expanded`, `aria-hidden`) are updated consistently, and focus management (auto-focusing input on open, returning focus on close) is handled in one place. Furthermore, global `keydown` listeners for 'Escape' on the `document` are more reliable for dismissal than modal-level listeners, which may not capture events if focus is trapped or on the backdrop.
+
+**Action:** When building interactive overlay components:
+1. Use a single toggle function to handle modal state transitions and keep `aria-expanded` and `aria-hidden` in sync.
+2. Use a short `setTimeout` (e.g., 300ms matching CSS duration) for `focus()` calls to ensure elements are in the accessibility tree before focus shifts.
+3. Implement a vanilla JS focus trap that intercepts `Tab` to keep navigation within the modal landmarks.
+4. Capture the `Escape` key at the `document` level to ensure the modal can be dismissed from any focused sub-element.
