@@ -31,37 +31,42 @@
         let animationProgress = 0;
         let animationRequestId;
 
+        // Optimization: Cache gradient and value element to avoid repeated creation and DOM lookups
+        let gradient;
+        const valueSpan = document.getElementById('hero-graph-value');
+
+        function updateGradient() {
+            gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        updateGradient();
+
+        /**
+         * Optimized drawing logic:
+         * 1. Uses cached gradient and value element.
+         * 2. Eliminates slice().map() allocations.
+         * 3. Single pass for construction to avoid redundant calculations.
+         * 4. Uses textContent instead of innerText to avoid reflows.
+         */
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
-
+            // Optimization: Two separate passes for fill and stroke are faster than Path2D object creation in this animation loop.
+            // Pass 1: Fill
             ctx.beginPath();
-            ctx.moveTo(0, height);
-
             let lastX = 0;
             let lastY = height - (points[0].y * height);
+            ctx.moveTo(lastX, lastY);
 
-            ctx.lineTo(lastX, lastY);
-
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
+                const cp1x = lastX + (ptX - lastX) / 2;
+                ctx.bezierCurveTo(cp1x, lastY, cp1x, ptY, ptX, ptY);
+                lastX = ptX;
+                lastY = ptY;
             }
 
             ctx.lineTo(lastX, height);
@@ -69,33 +74,29 @@
             ctx.fillStyle = gradient;
             ctx.fill();
 
+            // Pass 2: Stroke
             ctx.beginPath();
             lastX = 0;
             lastY = height - (points[0].y * height);
             ctx.moveTo(lastX, lastY);
-
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
-
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
-                
-                lastX = pt.x;
-                lastY = pt.y;
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
+                const cp1x = lastX + (ptX - lastX) / 2;
+                ctx.bezierCurveTo(cp1x, lastY, cp1x, ptY, ptX, ptY);
+                lastX = ptX;
+                lastY = ptY;
             }
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
                 const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                valueSpan.textContent = `${currentVal}M+`;
             }
         }
 
