@@ -782,8 +782,36 @@ function initFloatingAssistant() {
     const fab = document.getElementById('ai-fab');
     const modal = document.getElementById('ai-modal');
     const closeBtn = document.getElementById('ai-modal-close');
+    const chatInput = document.getElementById('ai-chat-input');
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
+
+    // Initialize Accessibility Attributes
+    fab.setAttribute('aria-haspopup', 'dialog');
+    fab.setAttribute('aria-expanded', 'false');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+
+    function toggleAssistant(forceClose = false) {
+        const isOpen = modal.classList.contains('is-open');
+        const shouldOpen = !forceClose && !isOpen;
+
+        if (shouldOpen) {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            fab.setAttribute('aria-expanded', 'true');
+            // UX: Auto-focus input after transition
+            if (chatInput) {
+                setTimeout(() => chatInput.focus(), 300);
+            }
+        } else {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            fab.setAttribute('aria-expanded', 'false');
+            // UX: Return focus to trigger
+            fab.focus();
+        }
+    }
 
     ScrollTrigger.create({
         trigger: 'body',
@@ -795,30 +823,44 @@ function initFloatingAssistant() {
             } else {
                 fab.classList.remove('is-visible');
                 if (modal.classList.contains('is-open')) {
-                    modal.classList.remove('is-open');
-                    modal.setAttribute('aria-hidden', 'true');
+                    toggleAssistant(true);
                 }
             }
         }
     });
 
-    fab.addEventListener('click', () => {
-        const isOpen = modal.classList.contains('is-open');
-        if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-        }
-    });
+    fab.addEventListener('click', () => toggleAssistant());
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', () => toggleAssistant(true));
     }
+
+    // Keyboard Accessibility: Focus Trap & Escape Key
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+
+        if (e.key === 'Tab') {
+            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+
+        if (e.key === 'Escape') {
+            toggleAssistant(true);
+        }
+    });
 }
 
 function initAIChat() {
@@ -1447,8 +1489,6 @@ function checkVerificationStatus() {
         }, 5000);
     }
 }
-
-document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
