@@ -38,3 +38,13 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - WAI-ARIA Standard for Floating Assistants
+**Learning:** Floating AI Assistants implemented as custom modals require explicit WAI-ARIA interaction patterns to be accessible. This includes managing `aria-haspopup` and `aria-expanded` on the trigger, `role="dialog"` and `aria-modal="true"` on the container, and implementing a focus trap with `Escape` key support. Autofocusing the primary input (with a short delay to account for CSS visibility transitions) significantly improves immediacy and provides a clear interaction target for both mouse and keyboard users.
+
+**Action:** When implementing floating assistants or similar custom modals:
+1. Use `role="dialog"` and `aria-modal="true"` for the container.
+2. Manage `aria-expanded` and `aria-haspopup="dialog"` on the trigger FAB.
+3. Implement a vanilla JS focus trap to keep sequential tabbing within the modal.
+4. Support `Escape` to close the assistant and return focus to the trigger.
+5. Autofocus the primary input after a short delay (e.g., 300ms) to ensure the element is focusable and visible in the accessibility tree before the browser shifts focus.
