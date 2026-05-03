@@ -38,3 +38,12 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Accessibility for Floating Assistants
+**Learning:** Floating Action Button (FAB) triggers for modals require specific ARIA management to be accessible. A FAB should have `aria-haspopup="dialog"` and `aria-expanded` (true/false) synchronized with the modal's state. Crucially, if the modal uses a CSS transition (e.g., sliding up), `focus()` on internal elements like chat inputs must be delayed (e.g., 600ms) to ensure the element is visible and "focusable" in the browser's accessibility tree, otherwise focus may fail silently.
+
+**Action:** When implementing floating modals:
+1. Synchronize FAB `aria-expanded` and `aria-label` with the modal state.
+2. Implement a focus trap and `Escape` key listener for the modal container.
+3. Use a `setTimeout` for `focus()` calls if the modal has a show/hide transition.
+4. Always return focus to the trigger (FAB) upon closing to preserve the user's sequential navigation flow.
