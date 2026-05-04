@@ -11,6 +11,7 @@
     // --- STATE ---
     let filteredData = [];
     let selectedCategories = new Set();
+    let lastFocusedElement = null;
 
     // --- DOM ELEMENTS ---
     const searchInput = document.getElementById('support-search-input');
@@ -26,9 +27,14 @@
 
     function openModalDirect(modal) {
         if (!modal) return;
+        lastFocusedElement = document.activeElement;
         modal.style.display = 'block';
         requestAnimationFrame(() => {
             modal.classList.add('is-active');
+            const closeBtn = modal.querySelector('.q-modal__close');
+            if (closeBtn) {
+                setTimeout(() => closeBtn.focus(), 300);
+            }
         });
     }
 
@@ -38,6 +44,10 @@
         setTimeout(() => {
             if (!modal.classList.contains('is-active')) {
                 modal.style.display = 'none';
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                    lastFocusedElement = null;
+                }
             }
         }, 400);
     }
@@ -197,9 +207,17 @@
             filterBtn?.setAttribute('aria-expanded', isOpen);
         }
 
-        filterBtn?.addEventListener('click', (e) => {
+        const handleFilterTrigger = (e) => {
             e.stopPropagation();
             toggleFilter();
+        };
+
+        filterBtn?.addEventListener('click', handleFilterTrigger);
+        filterBtn?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleFilterTrigger(e);
+            }
         });
 
         filterBackdrop?.addEventListener('click', () => {
@@ -256,6 +274,26 @@
         document.addEventListener('click', (e) => {
             if (modal?.classList.contains('is-active') && !modal.contains(e.target)) {
                 closeModalDirect(modal);
+            }
+        });
+
+        modal?.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
             }
         });
 
