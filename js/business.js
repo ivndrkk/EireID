@@ -13,9 +13,21 @@
         let width = canvas.width = canvas.parentElement.clientWidth;
         let height = canvas.height = canvas.parentElement.clientHeight * 0.7;
 
+        // ⚡ Performance: Cache DOM and Gradient
+        const valueSpan = document.getElementById('hero-graph-value');
+        let gradient;
+
+        function initGradient() {
+            gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+        initGradient();
+
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            initGradient();
             drawGraph(1);
         });
 
@@ -34,10 +46,6 @@
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
-
             ctx.beginPath();
             ctx.moveTo(0, height);
 
@@ -46,22 +54,21 @@
 
             ctx.lineTo(lastX, lastY);
 
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
+            // ⚡ Performance: Replace slice().map() with direct loop to avoid GC pressure
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const px = p.x * width * progress;
+                const py = height - (p.y * height);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
+                const cp1x = lastX + (px - lastX) / 2;
                 const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+                const cp2x = lastX + (px - lastX) / 2;
+                const cp2y = py;
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, px, py);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = px;
+                lastY = py;
             }
 
             ctx.lineTo(lastX, height);
@@ -74,28 +81,31 @@
             lastY = height - (points[0].y * height);
             ctx.moveTo(lastX, lastY);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const px = p.x * width * progress;
+                const py = height - (p.y * height);
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                const cp1x = lastX + (px - lastX) / 2;
+                const cp1y = lastY;
+                const cp2x = lastX + (px - lastX) / 2;
+                const cp2y = py;
+
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, px, py);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = px;
+                lastY = py;
             }
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
             if (valueSpan) {
                 const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                // ⚡ Performance: Use textContent to avoid forced reflows
+                valueSpan.textContent = `${currentVal}M+`;
             }
         }
 
