@@ -38,3 +38,12 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Robust Focus Management for Vanilla JS Modals
+**Learning:** For modals in a vanilla JS environment to be truly accessible, they must implement a full focus lifecycle: capturing the trigger element, shifting focus on open, trapping focus within the modal boundaries, and restoring focus on close. Simply toggling visibility or using `aria-hidden` is insufficient for keyboard and screen reader users who may lose their place in the DOM or escape to background content.
+
+**Action:** When implementing modals without a framework:
+1. Capture `document.activeElement` before the modal opens.
+2. Explicitly move focus to an internal element (e.g., the Close button or first input) after the opening transition.
+3. Use a `keydown` listener to trap `Tab` navigation (cycling from last to first and vice-versa) and handle `Escape` for dismissal.
+4. Ensure the trigger element receives focus back immediately upon modal closure to maintain the user's sequential navigation flow.
