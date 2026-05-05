@@ -21,3 +21,7 @@
 ## 2026-05-15 - [Accordion & Stat Counter Initialization]
 **Learning:** In components with many interactive elements (e.g., long FAQ lists or numerous stat counters), O(N) operations during event handling and forced reflows during initialization are major bottlenecks. Tracking the active item in a persistent object allows for O(1) state transitions, while using `textContent` instead of `innerText` for initial value setup avoids redundant layout calculations. These changes combined resulted in a ~71-82% performance improvement in our benchmarks.
 **Action:** Use a tracking object/variable for single-active-item components (accordions, tabs) to avoid O(N) loops on every interaction. Favor `textContent` for mass DOM updates where CSS-aware text retrieval is not required.
+
+## 2026-05-18 - Optimize Hero Graph Animation Loop
+**Learning:** High-frequency (60fps) DOM updates using `innerText` inside a `requestAnimationFrame` loop trigger forced synchronous layouts (reflows). Switching to `textContent` eliminates this overhead. Additionally, re-creating `CanvasGradient` and using intermediate array allocations (`.slice().map()`) every frame adds significant GC pressure and CPU cycles.
+**Action:** Cache DOM elements and canvas gradients outside the animation loop. Re-initialize gradients only on resize. Replace `innerText` with `textContent`. Use direct loops instead of array methods that create new instances in tight loops.
