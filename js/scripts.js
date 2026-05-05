@@ -802,23 +802,56 @@ function initFloatingAssistant() {
         }
     });
 
+    function openAIModal() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        const input = document.getElementById('ai-chat-input');
+        if (input) {
+            setTimeout(() => input.focus(), 300);
+        }
+    }
+
+    function closeAIModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.focus();
+    }
+
     fab.addEventListener('click', () => {
-        const isOpen = modal.classList.contains('is-open');
-        if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
+        if (modal.classList.contains('is-open')) {
+            closeAIModal();
         } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
+            openAIModal();
         }
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', closeAIModal);
     }
+
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAIModal();
+        }
+
+        if (e.key === 'Tab') {
+            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+    });
 }
 
 function initAIChat() {
