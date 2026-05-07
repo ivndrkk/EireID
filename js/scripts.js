@@ -184,7 +184,7 @@ function openWaitlistModal(e) {
     document.body.style.overflow = 'hidden';
 
     if (waitlistName) {
-        setTimeout(() => waitlistName.focus(), 100);
+        setTimeout(() => waitlistName.focus(), 300);
     }
 }
 
@@ -259,20 +259,32 @@ if (waitlistForm) {
         e.preventDefault();
 
         let hasError = false;
+        let firstInvalidField = null;
 
         if (waitlistName) {
             const isNameValid = waitlistName.value.trim().length > 0;
             waitlistNameError?.classList.toggle('is-visible', !isNameValid);
-            if (!isNameValid) hasError = true;
+            waitlistName.setAttribute('aria-invalid', !isNameValid);
+            if (!isNameValid) {
+                hasError = true;
+                if (!firstInvalidField) firstInvalidField = waitlistName;
+            }
         }
 
         if (waitlistEmail) {
             const isEmailValid = waitlistEmail.checkValidity();
             waitlistEmailError?.classList.toggle('is-visible', !isEmailValid);
-            if (!isEmailValid) hasError = true;
+            waitlistEmail.setAttribute('aria-invalid', !isEmailValid);
+            if (!isEmailValid) {
+                hasError = true;
+                if (!firstInvalidField) firstInvalidField = waitlistEmail;
+            }
         }
 
-        if (hasError) return;
+        if (hasError) {
+            if (firstInvalidField) firstInvalidField.focus();
+            return;
+        }
 
         const submitBtn = waitlistForm.querySelector('.waitlist-form__submit');
         const originalBtnText = submitBtn.innerText;
