@@ -38,3 +38,13 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2026-05-20 - Standardizing Form Validation Accessibility
+**Learning:** For forms in persistent UI components (like modals), accessibility and usability can be significantly improved by implementing a deterministic "auto-focus on first error" pattern combined with explicit ARIA attribute management. Linking inputs to error messages via 'aria-describedby' and dynamically toggling 'aria-invalid' states ensures that screen reader users receive immediate, contextual feedback. Furthermore, increasing focus timeouts for transition-based modals (e.g., 300ms) prevents focus from being dropped or causing visual jumps before the accessibility tree is fully updated.
+
+**Action:** When implementing custom form validation:
+1. Link every input to its error message using 'aria-describedby'.
+2. Use a 'firstInvalidField' variable during validation to track the first failing element.
+3. Programmatically call '.focus()' on the 'firstInvalidField' after all validation checks are complete.
+4. Dynamically update 'aria-invalid' on all validated inputs.
+5. Use a sufficient timeout (match CSS duration) when auto-focusing elements inside animated containers.
