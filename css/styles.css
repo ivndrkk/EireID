@@ -6074,6 +6074,13 @@
     z-index: 1;
     pointer-events: auto;
     font-family: var(--font-family-base) !important;
+    outline: none;
+}
+
+.bmc-tile:focus-visible {
+    border-color: rgba(164, 229, 183, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(164, 229, 183, 0.3), 0 8px 32px rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
 }
 
 @media (max-width: 1023px) {
