@@ -1269,7 +1269,7 @@ function initBMCInteractiveGrid() {
     if (!tiles.length) return;
 
     tiles.forEach(tile => {
-        tile.addEventListener('click', (e) => {
+        const toggleTile = (e) => {
             const cell = tile.closest('.bmc-cell');
             if (!cell) return;
             const isExpanded = cell.classList.contains('is-expanded');
@@ -1283,6 +1283,10 @@ function initBMCInteractiveGrid() {
                     const otherTile = otherCell.querySelector('.bmc-tile');
                     const otherExpandRaw = otherTile.getAttribute('data-expand');
                     
+                    if (otherTile) {
+                        otherTile.setAttribute('aria-expanded', 'false');
+                    }
+
                     if (otherExpandRaw !== 'none' && !isMobile) {
                         gsap.to(otherTile, {
                             width: "100%",
@@ -1296,7 +1300,7 @@ function initBMCInteractiveGrid() {
                         gsap.set(otherTile, { clearProps: "width,left,right" });
                     }
                     
-                    const otherContent = otherTile.querySelector('.bmc-tile-content');
+                    const otherContent = otherTile?.querySelector('.bmc-tile-content');
                     if(otherContent) {
                         gsap.killTweensOf(otherContent);
                         gsap.to(otherContent, { opacity: 0, duration: 0.2, onComplete: () => {
@@ -1308,6 +1312,7 @@ function initBMCInteractiveGrid() {
 
             if (!isExpanded) {
                 cell.classList.add('is-expanded');
+                tile.setAttribute('aria-expanded', 'true');
                 
                 if (expandDirection !== 'none') {
                     const gap = 24; 
@@ -1339,6 +1344,7 @@ function initBMCInteractiveGrid() {
                 
             } else {
                 cell.classList.remove('is-expanded');
+                tile.setAttribute('aria-expanded', 'false');
                 
                 if (expandDirection !== 'none') {
                     gsap.to(tile, {
@@ -1357,9 +1363,18 @@ function initBMCInteractiveGrid() {
                     }});
                 }
             }
+        };
+
+        tile.addEventListener('click', toggleTile);
+        tile.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTile(e);
+            }
         });
     });
 }
+
 
 /* ─── Growth Roadmap (Investor Page) ──────────────── */
 function initGrowthRoadmap() {
@@ -1447,8 +1462,6 @@ function checkVerificationStatus() {
         }, 5000);
     }
 }
-
-document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
