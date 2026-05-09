@@ -13,9 +13,22 @@
         let width = canvas.width = canvas.parentElement.clientWidth;
         let height = canvas.height = canvas.parentElement.clientHeight * 0.7;
 
+        // Cache for performance
+        let cachedGradient = null;
+        let cachedValueSpan = document.getElementById('hero-graph-value');
+
+        function updateGradient() {
+            cachedGradient = ctx.createLinearGradient(0, 0, 0, height);
+            cachedGradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
+            cachedGradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
+        }
+
+        updateGradient();
+
         window.addEventListener('resize', () => {
             width = canvas.width = canvas.parentElement.clientWidth;
             height = canvas.height = canvas.parentElement.clientHeight * 0.7;
+            updateGradient();
             drawGraph(1);
         });
 
@@ -34,10 +47,6 @@
         function drawGraph(progress) {
             ctx.clearRect(0, 0, width, height);
 
-            const gradient = ctx.createLinearGradient(0, 0, 0, height);
-            gradient.addColorStop(0, 'rgba(164, 229, 183, 0.4)');
-            gradient.addColorStop(1, 'rgba(164, 229, 183, 0)');
-
             ctx.beginPath();
             ctx.moveTo(0, height);
 
@@ -46,56 +55,59 @@
 
             ctx.lineTo(lastX, lastY);
 
-            const drawnPoints = points.slice(1).map(p => ({
-                x: p.x * width * progress,
-                y: height - (p.y * height)
-            }));
+            // Optimized: Iterating directly over points to avoid slice().map() allocations
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
+                const cp1x = lastX + (ptX - lastX) / 2;
                 const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+                const cp2x = lastX + (ptX - lastX) / 2;
+                const cp2y = ptY;
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ptX, ptY);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = ptX;
+                lastY = ptY;
             }
 
             ctx.lineTo(lastX, height);
             ctx.lineTo(0, height);
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = cachedGradient;
             ctx.fill();
 
+            // Draw line
             ctx.beginPath();
             lastX = 0;
             lastY = height - (points[0].y * height);
             ctx.moveTo(lastX, lastY);
 
-            for (let i = 0; i < drawnPoints.length; i++) {
-                const pt = drawnPoints[i];
-                const cp1x = lastX + (pt.x - lastX) / 2;
-                const cp1y = lastY;
-                const cp2x = lastX + (pt.x - lastX) / 2;
-                const cp2y = pt.y;
+            for (let i = 1; i < points.length; i++) {
+                const p = points[i];
+                const ptX = p.x * width * progress;
+                const ptY = height - (p.y * height);
 
-                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, pt.x, pt.y);
+                const cp1x = lastX + (ptX - lastX) / 2;
+                const cp1y = lastY;
+                const cp2x = lastX + (ptX - lastX) / 2;
+                const cp2y = ptY;
+
+                ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ptX, ptY);
                 
-                lastX = pt.x;
-                lastY = pt.y;
+                lastX = ptX;
+                lastY = ptY;
             }
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#a4e5b7';
             ctx.stroke();
 
-            const valueSpan = document.getElementById('hero-graph-value');
-            if (valueSpan) {
+            if (cachedValueSpan) {
                 const maxVal = 24.5;
                 const currentVal = (maxVal * progress).toFixed(1);
-                valueSpan.innerText = `${currentVal}M+`;
+                // Optimized: textContent is slightly faster than innerText and avoids forced reflow
+                cachedValueSpan.textContent = `${currentVal}M+`;
             }
         }
 
