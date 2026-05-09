@@ -782,8 +782,23 @@ function initFloatingAssistant() {
     const fab = document.getElementById('ai-fab');
     const modal = document.getElementById('ai-modal');
     const closeBtn = document.getElementById('ai-modal-close');
+    const chatInput = document.getElementById('ai-chat-input');
 
     if (!fab || !modal || typeof ScrollTrigger === 'undefined') return;
+
+    const openAIModal = () => {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        fab.setAttribute('aria-expanded', 'true');
+        setTimeout(() => chatInput?.focus(), 300);
+    };
+
+    const closeAIModal = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        fab.setAttribute('aria-expanded', 'false');
+        fab.focus();
+    };
 
     ScrollTrigger.create({
         trigger: 'body',
@@ -795,30 +810,42 @@ function initFloatingAssistant() {
             } else {
                 fab.classList.remove('is-visible');
                 if (modal.classList.contains('is-open')) {
-                    modal.classList.remove('is-open');
-                    modal.setAttribute('aria-hidden', 'true');
+                    closeAIModal();
                 }
             }
         }
     });
 
     fab.addEventListener('click', () => {
-        const isOpen = modal.classList.contains('is-open');
-        if (isOpen) {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        } else {
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-        }
+        if (modal.classList.contains('is-open')) closeAIModal();
+        else openAIModal();
     });
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-        });
+        closeBtn.addEventListener('click', closeAIModal);
     }
+
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAIModal();
+
+        if (e.key === 'Tab') {
+            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+    });
 }
 
 function initAIChat() {
@@ -1447,8 +1474,6 @@ function checkVerificationStatus() {
         }, 5000);
     }
 }
-
-document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 

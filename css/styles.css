@@ -1797,6 +1797,11 @@
     box-shadow: var(--shadow-hover);
 }
 
+.ai-fab:focus-visible {
+    outline: 3px solid var(--color-bg-primary);
+    outline-offset: 4px;
+}
+
 .ai-fab__img {
     width: 120%;
     height: 120%;
