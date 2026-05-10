@@ -1450,5 +1450,4 @@ function checkVerificationStatus() {
 
 document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
-document.addEventListener('DOMContentLoaded', checkVerificationStatus);
 
