@@ -38,3 +38,13 @@
 1. Create a `resetModal` function (or equivalent) that is called on both 'Close' button clicks and backdrop clicks.
 2. Ensure the reset logic covers: form visibility, success message hiding, clearing input values, and restoring button states (enabled, no spinner, `aria-busy="false"`).
 3. Use CSS transitions (e.g., `opacity` and `transform`) to make the switch between form and success states feel fluid rather than abrupt.
+
+## 2025-05-20 - Standardized Accessible Modals for Floating Assistants
+**Learning:** Floating assistants and persistent dialogs in vanilla JS require proactive focus management to meet WAI-ARIA standards. Key requirements include landmark roles (`role="dialog"`, `aria-modal="true"`), transition-aware auto-focus (using `setTimeout` to wait for CSS animations), focus containment (focus traps), and focus restoration to the triggering element. Without these, keyboard and screen reader users can lose their place or interact with background content while the modal is open.
+
+**Action:** When implementing persistent floating components:
+1. Standardize HTML with `role="dialog"`, `aria-modal="true"`, and appropriate `aria-labelledby` attributes.
+2. Ensure the trigger element manages `aria-expanded` and `aria-haspopup`.
+3. Implement a focus trap that cycles through interactive elements (`button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])`).
+4. Support the `Escape` key for closure and always restore focus to the triggering element upon exit.
+5. Use a small delay (e.g., 300ms) when calling `.focus()` on internal elements like inputs to ensure they are fully visible in the accessibility tree after animations.
